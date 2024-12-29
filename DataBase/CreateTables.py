@@ -41,6 +41,13 @@ async def create_users_table():
                 time_end TIMESTAMP DEFAULT NULL
             );
         """)
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS ready_parts (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                serial_name VARCHAR(100) NOT NULL
+            );
+        """)
         print("Tables created successfully.")
     except Exception as e:
         print(f"Error creating table: {e}")
