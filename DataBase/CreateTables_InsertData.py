@@ -6,7 +6,7 @@ async def create_and_insert_data():
         user='dytt',
         password='dyttadmin',
         database='main',
-        host='192.168.3.15',
+        host='109.191.82.85',
         port=5432
     )
     
