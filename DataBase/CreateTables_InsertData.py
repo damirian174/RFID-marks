@@ -6,11 +6,21 @@ async def create_and_insert_data():
         user='dytt',
         password='dyttadmin',
         database='main',
-        host='109.191.82.85',
+        host='192.168.3.15',
         port=5432
     )
     
     try:
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                surname VARCHAR(100) NOT NULL,
+                profession VARCHAR(100) NOT NULL,
+                uid VARCHAR(100) NOT NULL
+            );
+        """)
+
         await conn.execute("""
             CREATE TABLE IF NOT EXISTS stage (
                 id SERIAL PRIMARY KEY,
@@ -23,14 +33,7 @@ async def create_and_insert_data():
             );
         """)
 
-        await conn.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
-                surname VARCHAR(100) NOT NULL,
-                profession VARCHAR(100) NOT NULL
-            );
-        """)
+
 
         await conn.execute("""
             CREATE TABLE IF NOT EXISTS details (
@@ -74,10 +77,10 @@ async def create_and_insert_data():
         """)
 
         await conn.execute("""
-            INSERT INTO users (name, surname, profession) VALUES
-            ('Иван', 'Иванов', 'Инженер'),
-            ('Анна', 'Петрова', 'Техник'),
-            ('Олег', 'Сидоров', 'Контролёр');
+            INSERT INTO users (name, surname, profession, uid) VALUES
+            ('Иван', 'Иванов', 'Инженер', '3623956375836'),
+            ('Анна', 'Петрова', 'Техник', '7685768565579'),
+            ('Олег', 'Сидоров', 'Контролёр', '5489756968671');
         """)
 
         await conn.execute("""
