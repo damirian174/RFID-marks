@@ -1,5 +1,14 @@
 import asyncpg
 import asyncio
+import uuid
+
+async def generate_unique_uid(conn):
+    new_uid = str(uuid.uuid4())[:13]
+
+    while await conn.fetchval("SELECT COUNT(*) FROM users WHERE uid = $1", new_uid) > 0:
+        new_uid = str(uuid.uuid4())[:13]
+
+    return new_uid
 
 async def create_and_insert_data():
     conn = await asyncpg.connect(
@@ -17,9 +26,10 @@ async def create_and_insert_data():
                 name VARCHAR(100) NOT NULL,
                 surname VARCHAR(100) NOT NULL,
                 profession VARCHAR(100) NOT NULL,
-                uid VARCHAR(100) NOT NULL
+                uid VARCHAR(13) NOT NULL UNIQUE
             );
         """)
+
 
         await conn.execute("""
             CREATE TABLE IF NOT EXISTS stage (
@@ -78,10 +88,10 @@ async def create_and_insert_data():
 
         await conn.execute("""
             INSERT INTO users (name, surname, profession, uid) VALUES
-            ('Иван', 'Иванов', 'Инженер', '3623956375836'),
-            ('Анна', 'Петрова', 'Техник', '7685768565579'),
-            ('Олег', 'Сидоров', 'Контролёр', '5489756968671');
-        """)
+            ('Иван', 'Иванов', 'Инженер', $1),
+            ('Анна', 'Петрова', 'Техник', $2),
+            ('Олег', 'Сидоров', 'Контролёр', $3);
+        """, await generate_unique_uid(conn), await generate_unique_uid(conn), await generate_unique_uid(conn))
 
         await conn.execute("""
             INSERT INTO stage (name, serial_number, time_start, time_end, responsible_user) VALUES
