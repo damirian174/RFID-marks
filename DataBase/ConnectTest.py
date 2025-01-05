@@ -1,12 +1,11 @@
 import psycopg2
-import datetime  # type: ignore
 
 # Параметры подключения к серверу PostgreSQL
 conn_params = {
-    "dbname": "",  # Подключаемся к базе данных test
-    "user": "",  # Имя пользователя
-    "password": "",  # Пароль
-    "host": "",  # Адрес сервера (можно заменить на IP-адрес сервера)
+    "dbname": "main",  # Подключаемся к базе данных test
+    "user": "dytt",  # Имя пользователя
+    "password": "dyttadmin",  # Пароль
+    "host": "109.191.82.85",  # Адрес сервера (можно заменить на IP-адрес сервера)
     "port": 5432  # Порт PostgreSQL
 }
 
@@ -19,21 +18,12 @@ try:
     cur = conn.cursor()
 
     # SQL-запрос для извлечения всех данных из таблицы
-    select_query = "SELECT * FROM employees;"
+    select_query = "SELECT * FROM details"y
     cur.execute(select_query)
 
     # Получение всех строк из результата
     rows = cur.fetchall()
-
-    # Печать данных
-    print("Данные в таблице:")
-    for row in rows:
-        # Преобразуем дату в строку
-        formatted_row = tuple(
-            str(item) if isinstance(item, (datetime.date, datetime.datetime)) else item
-            for item in row
-        )
-        print(formatted_row)
+    print(rows)
 
 except psycopg2.OperationalError as e:
     print(f"Ошибка подключения: {e}")
