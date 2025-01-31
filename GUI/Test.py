@@ -1,0 +1,182 @@
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel,
+    QMainWindow, QPushButton, QSizePolicy, QWidget)
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'TestsBMlVKs.ui'
+##
+## Created by: Qt User Interface Compiler version 6.8.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel,
+    QMainWindow, QPushButton, QSizePolicy, QWidget)
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        if not MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(998, 805)
+        self.centralwidget = QWidget(MainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.widget_2 = QWidget(self.centralwidget)
+        self.widget_2.setObjectName(u"widget_2")
+        self.widget_2.setGeometry(QRect(0, 50, 1000, 750))
+        self.widget_2.setStyleSheet(u"background-color: rgb(235, 240, 255);")
+        self.widget_3 = QWidget(self.widget_2)
+        self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setGeometry(QRect(0, 0, 550, 750))
+        self.widget_5 = QWidget(self.widget_3)
+        self.widget_5.setObjectName(u"widget_5")
+        self.widget_5.setGeometry(QRect(0, 0, 550, 70))
+        self.widget_5.setStyleSheet(u"background-color: rgb(235, 240, 255);\n"
+"color: #26292B;")
+        self.label_2 = QLabel(self.widget_5)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(50, 10, 450, 40))
+        self.label_2.setStyleSheet(u"font: 35px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.widget_6 = QWidget(self.widget_3)
+        self.widget_6.setObjectName(u"widget_6")
+        self.widget_6.setGeometry(QRect(0, 70, 550, 680))
+        self.label = QLabel(self.widget_6)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(175, 30, 200, 50))
+        self.label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: #2E3239;\n"
+"font: 35px;\n"
+"font-weight: 700;\n"
+"border-radius: 15px;")
+        self.pushButton_3 = QPushButton(self.widget_6)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(25, 600, 237, 50))
+        self.pushButton_3.setStyleSheet(u"background-color: #2E3239;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.widget_7 = QWidget(self.widget_6)
+        self.widget_7.setObjectName(u"widget_7")
+        self.widget_7.setGeometry(QRect(0, 100, 550, 450))
+        self.widget_7.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 50px;")
+        self.pushButton = QPushButton(self.widget_7)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(100, 370, 350, 60))
+        self.pushButton.setStyleSheet(u"font: 25px;\n"
+"font-weight: 600;\n"
+"background-color: #2E3239;\n"
+"border-radius: 30px;")
+        self.checkBox = QCheckBox(self.widget_7)
+        self.checkBox.setObjectName(u"checkBox")
+        self.checkBox.setGeometry(QRect(100, 60, 400, 40))
+        self.checkBox.setStyleSheet(u"font: 20px;\n"
+"font-weight: 600;")
+        self.checkBox_2 = QCheckBox(self.widget_7)
+        self.checkBox_2.setObjectName(u"checkBox_2")
+        self.checkBox_2.setGeometry(QRect(100, 160, 400, 40))
+        self.checkBox_2.setStyleSheet(u"font: 20px;\n"
+"font-weight: 600;")
+        self.checkBox_3 = QCheckBox(self.widget_7)
+        self.checkBox_3.setObjectName(u"checkBox_3")
+        self.checkBox_3.setGeometry(QRect(100, 260, 400, 40))
+        self.checkBox_3.setStyleSheet(u"font: 20px;\n"
+"font-weight: 600;")
+        self.pushButton_4 = QPushButton(self.widget_6)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setGeometry(QRect(280, 600, 237, 50))
+        self.pushButton_4.setStyleSheet(u"background-color: #2E3239;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.widget_4 = QWidget(self.widget_2)
+        self.widget_4.setObjectName(u"widget_4")
+        self.widget_4.setGeometry(QRect(550, 0, 450, 750))
+        self.label_1 = QLabel(self.widget_4)
+        self.label_1.setObjectName(u"label_1")
+        self.label_1.setGeometry(QRect(50, 50, 350, 650))
+        self.label_1.setStyleSheet(u"background-color: #2E3239; color: white;")
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(0, 0, 1000, 50))
+        self.widget.setStyleSheet(u"color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
+"")
+        self.pushButton_7 = QPushButton(self.widget)
+        self.pushButton_7.setObjectName(u"pushButton_7")
+        self.pushButton_7.setGeometry(QRect(110, 0, 180, 50))
+        self.pushButton_2 = QPushButton(self.widget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setGeometry(QRect(470, 0, 180, 50))
+        self.pushButton_2.setStyleSheet(u"")
+        self.pushButton_5 = QPushButton(self.widget)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+        self.pushButton_5.setGeometry(QRect(650, 0, 180, 50))
+        self.pushButton_6 = QPushButton(self.widget)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+        self.pushButton_6.setGeometry(QRect(830, 0, 180, 50))
+        self.pushButton_8 = QPushButton(self.widget)
+        self.pushButton_8.setObjectName(u"pushButton_8")
+        self.pushButton_8.setGeometry(QRect(290, 0, 180, 50))
+        self.widget_8 = QWidget(self.widget)
+        self.widget_8.setObjectName(u"widget_8")
+        self.widget_8.setGeometry(QRect(0, 0, 110, 50))
+        self.label_9 = QLabel(self.widget_8)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setGeometry(QRect(0, 0, 110, 50))
+        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        self.retranslateUi(MainWindow)
+
+        QMetaObject.connectSlotsByName(MainWindow)
+    # setupUi
+    def updateName(self, name):
+        
+        self.label_2.setText(name)
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Tests", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"     \u0422\u0435\u0441\u0442\u044b", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u0431\u0440\u0430\u043a\u0435", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044c \u0442\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
+        self.checkBox.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u043f\u0440\u0438 \u0440\u0430\u0437\u043d\u044b\u0445 \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0430\u0445", None))
+        self.checkBox_2.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u043f\u043e\u043f\u0430\u0434\u0430\u043d\u0438\u0435 \u0432\u043e\u0434\u044b", None))
+        self.checkBox_3.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0435\u0442 \u043f\u043e \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u0430\u043c", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0435", None))
+        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0430\u043a\u043e\u0432\u043a\u0430", None))
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u043c\u0438\u043d \u043f\u0430\u043d\u0435\u043b\u044c", None))
+        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430", None))
+        self.label_9.setText("")
+
+    # retranslateUi
+
+if __name__ == "__main__":
+    import sys
+    app = QApplication(sys.argv)
+    MainWindow = QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec())
