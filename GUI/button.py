@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QStackedWidget, QLabel, QPushButton,
-    QVBoxLayout, QWidget, QLineEdit, QHBoxLayout
+    QVBoxLayout, QWidget, QLineEdit, QMessageBox, QHBoxLayout
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QImage, QPixmap
@@ -17,12 +17,9 @@ import hashlib
 import threading
 from pyzbar.pyzbar import decode, ZBarSymbol
 from database import database
-from config import name, auth, work
-from COM import SerialListener
+from config import auth, work
 
-
-
-
+# from COM import SerialListener
 
 
 class MainApp(QMainWindow):
@@ -38,9 +35,9 @@ class MainApp(QMainWindow):
 
         self.init_pages()
         self.connect_header_buttons()
-        self.serial_listener = SerialListener("COM4", 9600)
-        self.serial_listener.data_received.connect(self.handle_serial_data)
-        self.serial_listener.start()
+        # self.serial_listener = SerialListener("COM4", 9600)
+        # self.serial_listener.data_received.connect(self.handle_serial_data)
+        # self.serial_listener.start()
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -98,7 +95,6 @@ class MainApp(QMainWindow):
         getDetail(data, self.mark_ui)
         work = True
 
-
     def closeEvent(self, event):
         self.serial_listener.stop()
         self.serial_listener.wait()
@@ -124,36 +120,38 @@ class MainApp(QMainWindow):
         # Start scanning immediately
         self.start_scan()
 
-    def vefify(self, user):
+    def verify(self, user):
         data = {
-        "type": "user",
-        "uid": user
-    }
+            "type": "user",
+            "uid": user
+        }
         worker = database(data)
-        # 0251031010156
-        print(worker)
-
         if worker["status"] == "ok":
             name = worker["surname"] + " " + worker["name"]
-            self.work_ui.updateName(name=name)
-            self.tests_ui.updateName(name=name)
-            self.packing_ui.updateName(name=name)
-            self.mark_ui.updateName(name=name)
-            self.stacked_widget.setCurrentWidget(self.work_page)
-            auth = True
+            
+            # Окно подтверждения
+            reply = QMessageBox.question(self, 'Подтверждение',
+                                          f'Вы {name}?',
+                                          QMessageBox.Yes | QMessageBox.No,
+                                          QMessageBox.No)
+            
+            if reply == QMessageBox.Yes:
+                self.work_ui.updateName(name=name)
+                self.tests_ui.updateName(name=name)
+                self.packing_ui.updateName(name=name)
+                self.mark_ui.updateName(name=name)
+                self.stacked_widget.setCurrentWidget(self.work_page)
+                auth = True
+            else:
+                self.stacked_widget.setCurrentWidget(self.login_page)  # Возвращаем пользователя на страницу регистрации
         else:
             self.stacked_widget.setCurrentWidget(self.error_page)
             self.error_ui.label_3.setText("Пользователь не найден")
-            
-            
 
     def manual_entry(self):
         entered_code = self.manual_input.text()
         print(f"Штрихкод введен вручную: {entered_code}")
-        user = self.vefify(entered_code)
-        print(f"User retrieved: {user}")  # Debugging output
-
-
+        self.verify(entered_code)
 
     def start_scan(self):
         self.capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -190,7 +188,7 @@ class MainApp(QMainWindow):
                     try:
                         data = obj.data.decode("utf-8")
                         print(f"Штрихкод: {data}")
-                        user = self.vefify(data)
+                        self.verify(data)
                     except Exception as e:
                         print(f"Ошибка при декодировании: {e}")
 
@@ -202,6 +200,7 @@ class MainApp(QMainWindow):
 
     def init_login_page(self):
         layout = QVBoxLayout()
+        self.login_page = QWidget()  # Ensure the login_page is initialized
         self.login_page.setLayout(layout)
 
         back_button = QPushButton("Назад")
@@ -244,36 +243,14 @@ class MainApp(QMainWindow):
             self.stacked_widget.setCurrentWidget(self.admin_page_ui)
         else:
             self.password_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid red; border-radius: 5px;")
-            self.login_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid red; border-radius: 5px;")
-            self.error_message.setText("Неправильный логин или пароль. Попробуйте заново.")
+            self.error_message.setText("Неверный логин или пароль")
 
     def connect_header_buttons(self):
-        self.setup_buttons(self.work_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
-        self.setup_buttons(self.mark_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
-        self.setup_buttons(self.tests_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
-        self.setup_buttons(self.packing_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
-        self.setup_buttons(self.admin_ui, self.work_page, self.mark_page, self.tests_page, self.packing_page, self.login_page)
-
-    def setup_buttons(self, ui, mark_page, tests_page, packing_page, login_page, admin_page=None):
-        if hasattr(ui, 'pushButton_7'):
-            ui.pushButton_7.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(mark_page))
-        if hasattr(ui, 'pushButton_2'):
-            ui.pushButton_2.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(tests_page))
-        if hasattr(ui, 'pushButton_5'):
-            ui.pushButton_5.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(packing_page))
-        if hasattr(ui, 'pushButton_6'):
-            ui.pushButton_6.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(login_page))
-        if hasattr(ui, 'pushButton_8'):
-            ui.pushButton_8.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.work_page))
-        if admin_page:
-            if hasattr(ui, 'pushButton_9'):
-                ui.pushButton_9.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(admin_page))
-
-    
+        pass
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainApp()
     window.show()
-    app.exec()
+    sys.exit(app.exec())

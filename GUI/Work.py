@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QWidget)
 
 
-from config import name
+
 # -*- coding: utf-8 -*-
 
 ################################################################################
@@ -39,7 +39,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
-    QPushButton, QSizePolicy, QWidget)
+    QPushButton, QSizePolicy, QWidget, QLabel)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -84,10 +84,6 @@ class Ui_MainWindow(object):
         self.widget_7 = QWidget(self.widget)
         self.widget_7.setObjectName(u"widget_7")
         self.widget_7.setGeometry(QRect(0, 0, 110, 50))
-        self.label_9 = QLabel(self.widget_7)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(0, 0, 110, 50))
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
         self.widget_2 = QWidget(self.centralwidget)
         self.widget_2.setObjectName(u"widget_2")
         self.widget_2.setGeometry(QRect(0, 50, 1000, 750))
@@ -96,6 +92,10 @@ class Ui_MainWindow(object):
         self.widget_3.setObjectName(u"widget_3")
         self.widget_3.setGeometry(QRect(580, 0, 450, 750))
         self.widget_3.setStyleSheet(u"background-color: rgb(235, 240, 255);")
+        self.label_9 = QLabel(self.widget_3)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setGeometry(QRect(0, 0, 110, 50))
+        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
         self.label_1 = QLabel(self.widget_3)
         self.label_1.setObjectName(u"label_1")
         self.label_1.setGeometry(QRect(80, 50, 300, 650))
@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
         self.widget_4 = QWidget(self.widget_2)
         self.widget_4.setObjectName(u"widget_4")
         self.widget_4.setGeometry(QRect(0, 0, 550, 70))
-        self.label_2 = QLabel(self.widget_4)
+        self.label_2 = QLabel(self.widget_3)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(50, 10, 450, 40))
         self.label_2.setStyleSheet(u"font: 35px;\n"
@@ -116,18 +116,18 @@ class Ui_MainWindow(object):
         self.widget_5.setStyleSheet(u"background-color: #5F7ADB;\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 50px;")
-        self.label = QLabel(self.widget_5)
+        self.label = QLabel(self.widget_3)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(200, 50, 170, 170)) #self.label.setGeometry(QRect(220, 100, 110, 50))
         self.label.setStyleSheet(u"font: 40px;\n"
 "font-weight: 800;\n"
 "text-align: center;")
-        self.label_3 = QLabel(self.widget_5)
+        self.label_3 = QLabel(self.widget_3)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(150, 30, 260, 45))
         self.label_3.setStyleSheet(u"font: 30px;\n"
 "fonr-weight: 600px;")
-        self.pushButton = QPushButton(self.widget_5)
+        self.pushButton = QPushButton(self.widget_3)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(125, 210, 300, 60))
         self.pushButton.setStyleSheet(u"font: 25px;\n"
