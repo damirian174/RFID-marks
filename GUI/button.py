@@ -11,7 +11,6 @@ from Mark import Ui_MainWindow as MarkUI
 from Test import Ui_MainWindow as TestsUI
 from Packing import Ui_MainWindow as PackingUI
 from admin import Ui_MainWindow as AdminUI
-from Error import Ui_MainWindow as ErrorUI
 import cv2
 import hashlib
 import threading
@@ -19,7 +18,7 @@ from pyzbar.pyzbar import decode, ZBarSymbol
 from database import database
 from config import auth, work
 
-# from COM import SerialListener
+from COM import SerialListener
 
 
 class MainApp(QMainWindow):
@@ -35,9 +34,9 @@ class MainApp(QMainWindow):
 
         self.init_pages()
         self.connect_header_buttons()
-        # self.serial_listener = SerialListener("COM4", 9600)
-        # self.serial_listener.data_received.connect(self.handle_serial_data)
-        # self.serial_listener.start()
+        self.serial_listener = SerialListener("COM8", 9600)
+        self.serial_listener.data_received.connect(self.handle_serial_data)
+        self.serial_listener.start()
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -71,8 +70,6 @@ class MainApp(QMainWindow):
         self.admin_ui = AdminUI()
         self.admin_ui.setupUi(self.admin_page_ui)
 
-        self.error_ui = ErrorUI()
-        self.error_ui.setupUi(self.error_page)
 
         self.init_login_page()
 
@@ -90,8 +87,6 @@ class MainApp(QMainWindow):
     def handle_serial_data(self, data):
         from GetDetail import getDetail
         print(f"Получены данные из порта: {data}")
-        if work:    
-            return
         getDetail(data, self.mark_ui)
         work = True
 
@@ -141,12 +136,7 @@ class MainApp(QMainWindow):
                 self.packing_ui.updateName(name=name)
                 self.mark_ui.updateName(name=name)
                 self.stacked_widget.setCurrentWidget(self.work_page)
-                auth = True
-            else:
-                self.stacked_widget.setCurrentWidget(self.login_page)  # Возвращаем пользователя на страницу регистрации
-        else:
-            self.stacked_widget.setCurrentWidget(self.error_page)
-            self.error_ui.label_3.setText("Пользователь не найден")
+                auth = True                                                  # Возвращаем пользователя на страницу регистрации
 
     def manual_entry(self):
         entered_code = self.manual_input.text()

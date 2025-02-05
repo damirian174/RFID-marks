@@ -4,7 +4,7 @@ import time
 from GetDetail import getDetail
 
 # Настройки порта
-arduino_port = "COM3"  # Ваш порт
+arduino_port = "COM8"  # Ваш порт
 baud_rate = 9600
 
 class SerialListener(QThread):

@@ -216,7 +216,7 @@ class Ui_MainWindow(object):
                 # sector VARCHAR(100) DEFAULT NULL,
         self.label_name.setText(data['name'])
         self.label_name2.setText(data['serial_number'])
-        self.label_name3.setText(data['defective'])
+        self.label_name3.setText(str(data['defective']))
         self.label_name4.setText(data['stage'])
         self.label_name5.setText(data['sector'])     
     def updateName(self, name):
