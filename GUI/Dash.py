@@ -14,7 +14,7 @@ import sys
 class Dashboard(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Метран - Производственный дэшборд")
+        self.setWindowTitle("Метран ")
         self.setFixedSize(800, 600)
 
         # Основной виджет
@@ -40,7 +40,7 @@ class Dashboard(QMainWindow):
 
         performance_chart.addSeries(series)
 
-        categories = ["Давление", "Температура", "Общие"]
+        categories = ["Метран 150", "Метран 75", "Метран 55"]
         axis_x = QBarCategoryAxis()
         axis_x.append(categories)
         performance_chart.addAxis(axis_x, Qt.AlignmentFlag.AlignBottom)
