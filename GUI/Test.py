@@ -110,10 +110,52 @@ class Ui_MainWindow(object):
         self.widget_4 = QWidget(self.widget_2)
         self.widget_4.setObjectName(u"widget_4")
         self.widget_4.setGeometry(QRect(550, 0, 450, 750))
-        self.label_1 = QLabel(self.widget_4)
-        self.label_1.setObjectName(u"label_1")
-        self.label_1.setGeometry(QRect(50, 50, 350, 650))
-        self.label_1.setStyleSheet(u"background-color: #2E3239; color: white;")
+         # self.tableView = QTableView(self.widget_3)
+        # self.tableView.setObjectName(u"tableView")
+        # self.tableView.setGeometry(QRect(80, 50, 300, 650))
+        # self.tableView.setStyleSheet(u"background-color: #2E3239;")
+        self.label_name = QLabel(self.widget_4)
+        self.label_name.setAlignment(Qt.AlignHCenter)
+        self.label_name.setText("Текст")
+        self.label_name.setObjectName(u"label_name")
+        self.label_name.setGeometry(QRect(0, 100, 450, 50))
+        self.label_name.setStyleSheet(u"font: 20px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.label_name2 = QLabel(self.widget_4)
+        self.label_name2.setAlignment(Qt.AlignHCenter)
+        self.label_name2.setText("Текст")
+        self.label_name2.setObjectName(u"label_name2")
+        self.label_name2.setGeometry(QRect(0, 200, 450, 50))
+        self.label_name2.setStyleSheet(u"font: 20px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.label_name3 = QLabel(self.widget_4)
+        self.label_name3.setAlignment(Qt.AlignHCenter)
+        self.label_name3.setText("Текст")
+        self.label_name3.setObjectName(u"label_name3")
+        self.label_name3.setGeometry(QRect(0, 300, 450, 50))
+        self.label_name3.setStyleSheet(u"font: 20px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.label_name4 = QLabel(self.widget_4)
+        self.label_name4.setAlignment(Qt.AlignHCenter)
+        self.label_name4.setText("Текст")
+        self.label_name4.setObjectName(u"label_name4")
+        self.label_name4.setGeometry(QRect(0, 400, 450, 50))
+        self.label_name4.setStyleSheet(u"font: 20px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.label_name5 = QLabel(self.widget_4)
+        self.label_name5.setAlignment(Qt.AlignHCenter)
+        self.label_name5.setText("Текст")
+        self.label_name5.setObjectName(u"label_name5")
+        self.label_name5.setGeometry(QRect(0, 500, 450, 50))
+        self.label_name5.setStyleSheet(u"font: 20px;\n"
+"padding-left: 10px;\n"
+"font-weight: 600;")
+        self.label_name2.setAlignment(Qt.AlignHCenter)
+        self.label_name2.setText("Текст")
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
         self.widget.setGeometry(QRect(0, 0, 1000, 50))
