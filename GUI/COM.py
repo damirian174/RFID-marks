@@ -31,3 +31,4 @@ class SerialListener(QThread):
 
     def stop(self):
         self.running = False
+ 
