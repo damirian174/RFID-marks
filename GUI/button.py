@@ -34,9 +34,9 @@ class MainApp(QMainWindow):
 
         self.init_pages()
         self.connect_header_buttons()
-        self.serial_listener = SerialListener("COM8", 9600)
-        self.serial_listener.data_received.connect(self.handle_serial_data)
-        self.serial_listener.start()
+        # self.serial_listener = SerialListener("COM8", 9600)
+        # self.serial_listener.data_received.connect(self.handle_serial_data)
+        # self.serial_listener.start()
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
