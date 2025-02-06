@@ -24,7 +24,7 @@ from COM import SerialListener
 class MainApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Метран - Сканирование")
+        self.setWindowTitle("Ао Метран")
         self.setGeometry(100, 100, 1000, 800)
 
         self.stacked_widget = QStackedWidget()
@@ -45,7 +45,7 @@ class MainApp(QMainWindow):
         self.scan_page = QMainWindow()
         self.menu_ui = MenuUI()
         self.menu_ui.setupUi(self.scan_page)
-        self.menu_ui.label.setText("Отсканируйте штрихкод или введите его вручную")
+        self.menu_ui.label.setText("Введите штрихкод")
 
         self.work_page = QMainWindow()
         self.mark_page = QMainWindow()
@@ -104,7 +104,7 @@ class MainApp(QMainWindow):
         self.manual_input.setGeometry(300, 400, 400, 40)
 
         manual_button = QPushButton("Подтвердить", self.scan_page)
-        manual_button.setGeometry(400, 450, 200, 40)
+        manual_button.setGeometry(400, 550, 200, 40)
         manual_button.clicked.connect(self.manual_entry)
 
         # Add a QLabel for displaying the camera feed
