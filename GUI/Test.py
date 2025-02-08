@@ -1,16 +1,7 @@
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QWidget)
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'TestsBMlVKs.ui'
+## Form generated from reading UI file 'TestsTzlgnq.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -24,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLayout,
+    QMainWindow, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(998, 805)
+        MainWindow.resize(1300, 750)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.widget_2 = QWidget(self.centralwidget)
@@ -63,14 +55,6 @@ class Ui_MainWindow(object):
 "font: 35px;\n"
 "font-weight: 700;\n"
 "border-radius: 15px;")
-        self.pushButton_3 = QPushButton(self.widget_6)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(25, 600, 237, 50))
-        self.pushButton_3.setStyleSheet(u"background-color: #2E3239;\n"
-"color: rgb(255, 255, 255);\n"
-"border-radius: 20px;\n"
-"font: 20px;\n"
-"font-weight: 700;")
         self.widget_7 = QWidget(self.widget_6)
         self.widget_7.setObjectName(u"widget_7")
         self.widget_7.setGeometry(QRect(0, 100, 550, 450))
@@ -99,66 +83,44 @@ class Ui_MainWindow(object):
         self.checkBox_3.setGeometry(QRect(100, 260, 400, 40))
         self.checkBox_3.setStyleSheet(u"font: 20px;\n"
 "font-weight: 600;")
-        self.pushButton_4 = QPushButton(self.widget_6)
+        self.widget_4 = QWidget(self.widget_2)
+        self.widget_4.setObjectName(u"widget_4")
+        self.widget_4.setGeometry(QRect(550, 0, 450, 750))
+        self.pushButton_9 = QPushButton(self.widget_4)
+        self.pushButton_9.setObjectName(u"pushButton_9")
+        self.pushButton_9.setGeometry(QRect(90, 310, 300, 50))
+        self.pushButton_9.setStyleSheet(u"background-color: #2E3239;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.pushButton_4 = QPushButton(self.widget_4)
         self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(280, 600, 237, 50))
+        self.pushButton_4.setGeometry(QRect(90, 90, 300, 50))
         self.pushButton_4.setStyleSheet(u"background-color: #2E3239;\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 20px;\n"
 "font: 20px;\n"
 "font-weight: 700;")
-        self.widget_4 = QWidget(self.widget_2)
-        self.widget_4.setObjectName(u"widget_4")
-        self.widget_4.setGeometry(QRect(550, 0, 450, 750))
-         # self.tableView = QTableView(self.widget_3)
-        # self.tableView.setObjectName(u"tableView")
-        # self.tableView.setGeometry(QRect(80, 50, 300, 650))
-        # self.tableView.setStyleSheet(u"background-color: #2E3239;")
-        self.label_name = QLabel(self.widget_4)
-        self.label_name.setAlignment(Qt.AlignHCenter)
-        self.label_name.setText("Текст")
-        self.label_name.setObjectName(u"label_name")
-        self.label_name.setGeometry(QRect(0, 100, 450, 50))
-        self.label_name.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.label_name2 = QLabel(self.widget_4)
-        self.label_name2.setAlignment(Qt.AlignHCenter)
-        self.label_name2.setText("Текст")
-        self.label_name2.setObjectName(u"label_name2")
-        self.label_name2.setGeometry(QRect(0, 200, 450, 50))
-        self.label_name2.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.label_name3 = QLabel(self.widget_4)
-        self.label_name3.setAlignment(Qt.AlignHCenter)
-        self.label_name3.setText("Текст")
-        self.label_name3.setObjectName(u"label_name3")
-        self.label_name3.setGeometry(QRect(0, 300, 450, 50))
-        self.label_name3.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.label_name4 = QLabel(self.widget_4)
-        self.label_name4.setAlignment(Qt.AlignHCenter)
-        self.label_name4.setText("Текст")
-        self.label_name4.setObjectName(u"label_name4")
-        self.label_name4.setGeometry(QRect(0, 400, 450, 50))
-        self.label_name4.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.label_name5 = QLabel(self.widget_4)
-        self.label_name5.setAlignment(Qt.AlignHCenter)
-        self.label_name5.setText("Текст")
-        self.label_name5.setObjectName(u"label_name5")
-        self.label_name5.setGeometry(QRect(0, 500, 450, 50))
-        self.label_name5.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.label_name2.setAlignment(Qt.AlignHCenter)
-        self.label_name2.setText("Текст")
+        self.pushButton_3 = QPushButton(self.widget_4)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(90, 200, 300, 50))
+        self.pushButton_3.setStyleSheet(u"background-color: #2E3239;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.pushButton_15 = QPushButton(self.widget_4)
+        self.pushButton_15.setObjectName(u"pushButton_15")
+        self.pushButton_15.setGeometry(QRect(90, 420, 300, 50))
+        self.pushButton_15.setStyleSheet(u"background-color: #2E3239;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(0, 0, 1000, 50))
+        self.widget.setGeometry(QRect(0, 0, 1300, 50))
         self.widget.setStyleSheet(u"color: #5F7ADB;\n"
 "font: 20px;\n"
 "background-color: #2E3239;\n"
@@ -166,51 +128,133 @@ class Ui_MainWindow(object):
 "")
         self.pushButton_7 = QPushButton(self.widget)
         self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(110, 0, 180, 50))
+        self.pushButton_7.setGeometry(QRect(110, 0, 240, 50))
         self.pushButton_2 = QPushButton(self.widget)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(470, 0, 180, 50))
+        self.pushButton_2.setGeometry(QRect(590, 0, 240, 50))
         self.pushButton_2.setStyleSheet(u"")
         self.pushButton_5 = QPushButton(self.widget)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(650, 0, 180, 50))
-        self.pushButton_6 = QPushButton(self.widget)
-        self.pushButton_6.setObjectName(u"pushButton_6")
-        self.pushButton_6.setGeometry(QRect(830, 0, 180, 50))
+        self.pushButton_5.setGeometry(QRect(830, 0, 240, 50))
         self.pushButton_8 = QPushButton(self.widget)
         self.pushButton_8.setObjectName(u"pushButton_8")
-        self.pushButton_8.setGeometry(QRect(290, 0, 180, 50))
+        self.pushButton_8.setGeometry(QRect(350, 0, 240, 50))
         self.widget_8 = QWidget(self.widget)
         self.widget_8.setObjectName(u"widget_8")
         self.widget_8.setGeometry(QRect(0, 0, 110, 50))
         self.label_9 = QLabel(self.widget_8)
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(0, 0, 110, 50))
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        self.label_9.setPixmap(QPixmap(u"\u041c\u0435\u0442\u0440\u0430\u043d.jpg"))
+        self.pushButton_6 = QPushButton(self.widget)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+        self.pushButton_6.setGeometry(QRect(1070, 0, 230, 50))
+        self.widget_9 = QWidget(self.centralwidget)
+        self.widget_9.setObjectName(u"widget_9")
+        self.widget_9.setGeometry(QRect(1000, 50, 301, 711))
+        self.widget_9.setStyleSheet(u"background-color: rgb(235, 240, 255);")
+        self.verticalLayoutWidget = QWidget(self.widget_9)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(10, 50, 271, 611))
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.serial = QLabel(self.verticalLayoutWidget)
+        self.serial.setObjectName(u"serial")
+        self.serial.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.serial.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.serial)
+
+        self.name = QLabel(self.verticalLayoutWidget)
+        self.name.setObjectName(u"name")
+        self.name.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.name)
+
+        self.defective = QLabel(self.verticalLayoutWidget)
+        self.defective.setObjectName(u"defective")
+        self.defective.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.defective.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.defective)
+
+        self.stage = QLabel(self.verticalLayoutWidget)
+        self.stage.setObjectName(u"stage")
+        self.stage.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.stage.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.stage.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.stage)
+
+        self.sector = QLabel(self.verticalLayoutWidget)
+        self.sector.setObjectName(u"sector")
+        self.sector.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.sector.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.sector)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
-    def updateName(self, name):
-        
-        self.label_2.setText(name)
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Tests", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0430\u0441\u0438\u043b\u0438\u0439 \u041f\u0443\u043f\u043a\u0438\u043d", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"     \u0422\u0435\u0441\u0442\u044b", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u0431\u0440\u0430\u043a\u0435", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044c \u0442\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
         self.checkBox.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u043f\u0440\u0438 \u0440\u0430\u0437\u043d\u044b\u0445 \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0430\u0445", None))
         self.checkBox_2.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u043f\u043e\u043f\u0430\u0434\u0430\u043d\u0438\u0435 \u0432\u043e\u0434\u044b", None))
         self.checkBox_3.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0435\u0442 \u043f\u043e \u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u0430\u043c", None))
+        self.pushButton_9.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044c \u0440\u0430\u0431\u043e\u0442\u0443", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0435", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u0431\u0440\u0430\u043a\u0435", None))
+        self.pushButton_15.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043e\u0439\u0442\u0438", None))
         self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0430\u043a\u043e\u0432\u043a\u0430", None))
-        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u043c\u0438\u043d \u043f\u0430\u043d\u0435\u043b\u044c", None))
         self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430", None))
         self.label_9.setText("")
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u043c\u0438\u043d \u043f\u0430\u043d\u0435\u043b\u044c", None))
+        self.serial.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.defective.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.stage.setText(QCoreApplication.translate("MainWindow", u"stage", None))
+        self.sector.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+    # retranslateUi
+
+
+        QMetaObject.connectSlotsByName(MainWindow)
+    # setupUi
+    def updateName(self, name):
+        
+        self.label_2.setText(name)
+    
 
     # retranslateUi
 

@@ -4,3 +4,5 @@ port = 12345
 auth = False
 
 work = False
+
+detail = None

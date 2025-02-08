@@ -10,7 +10,8 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 import sys
-
+import sqlite3
+from database import database
 class Dashboard(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -32,8 +33,69 @@ class Dashboard(QMainWindow):
         performance_chart = QChart()
         performance_chart.setTitle("Общая производительность")
 
-        bar_set = QBarSet("Производительность")
-        bar_set.append([50, 70, 80])  # Примерные данные
+        METRAN_150 = ''
+        METRAN_75 = ''
+        METRAN_50 = ''
+
+        x = {"type": "getStats", "name": "МЕТРАН150"}
+        
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+
+
+        # metran = database(x)
+        metran = {'status': "ok", "all": 1234, 'count_fake': 13, 'count_natural': 15}
+        # cursor.execute("SELECT COUNT(*) FROM getstat")
+        # total_METRAN_150 = cursor.fetchone()[0]
+
+        
+        # cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_150 = 'count_fake'")
+        # normal_METRAN_150 = cursor.fetchone()[0]
+
+        
+        if metran["all"] > 0:
+            METRAN_150 = (metran["count_natural"] / metran["all"]) * 100
+        else:
+            METRAN_150 = 0
+
+        
+        
+        cursor.execute("SELECT COUNT(*) FROM getstat")
+        total_METRAN_75 = cursor.fetchone()[0]
+
+        
+        cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_75 = 'count_fake'")
+        normal_METRAN_75 = cursor.fetchone()[0]
+
+        
+        if total_METRAN_75 > 0:
+            METRAN_75 = (normal_METRAN_75 / total_METRAN_75) * 100
+        else:
+            METRAN_75 = 0
+
+        
+        
+        cursor.execute("SELECT COUNT(*) FROM getstat")
+        total_METRAN_50 = cursor.fetchone()[0]
+
+        
+        cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_50 = 'count_fake'")
+        normal_METRAN_50 = cursor.fetchone()[0]
+
+        
+        if total_METRAN_50 > 0:
+            METRAN_50 = (normal_METRAN_50 / total_METRAN_50) * 100
+        else:
+            METRAN_50 = 0
+
+        # Закрытие соединения
+        conn.close()
+
+
+
+
+        bar_set = QBarSet("Процент нормальных деталей")
+        bar_set.append([METRAN_150, METRAN_75, METRAN_50])  # Примерные данные
 
         series = QBarSeries()
         series.append(bar_set)

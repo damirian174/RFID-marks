@@ -5,7 +5,7 @@ from config import serverip, port
 
 def database(request_data):
     if request_data['type'] == 'user':
-        return {'status': "ok",'name': "Беспалов", "surname": 'Дмитрий'}
+        return {'status': "ok", 'name': "Беспалов", "surname": 'Дмитрий'}
     # try:
     #     print(request_data)
     #     # Создаем соединение с сервером

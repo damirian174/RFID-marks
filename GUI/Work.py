@@ -261,7 +261,19 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
         self.update_time()
         
-        
+    def pause_timer(self):
+        if self.running:
+            self.timer.stop()  # Остановка таймера
+            self.running = False
+            self.elapsed_pause_time = time.time() - self.start_time  # Сохранение прошедшего времени
+
+    def resume_timer(self):
+        if not self.running:
+            self.start_time = time.time() - self.elapsed_pause_time  # Возвращаем прошедшее время
+            self.timer.start(100)  # Возобновляем работу таймера
+            self.running = True
+
+
     # setupUi
 
     def update_time(self):

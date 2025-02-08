@@ -87,7 +87,7 @@ class MainApp(QMainWindow):
     def handle_serial_data(self, data):
         from GetDetail import getDetail
         print(f"Получены данные из порта: {data}")
-        getDetail(data, self.mark_ui)
+        getDetail(data, self.mark_ui, self.work_ui)
         work = True
 
     def closeEvent(self, event):

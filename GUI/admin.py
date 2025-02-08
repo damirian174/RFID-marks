@@ -16,14 +16,14 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         self.main_window = MainWindow
-        MainWindow.resize(1000, 800)
+        MainWindow.resize(1300, 750)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         
         # Header Section
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(0, 0, 1000, 50))
+        self.widget.setGeometry(QRect(0, 0, 1300, 50))
         self.widget.setStyleSheet(u"color: #5F7ADB;\n"
 "font: 20px;\n"
 "background-color: #2E3239;\n"
@@ -37,30 +37,37 @@ class Ui_MainWindow(object):
 
         self.pushButton_7 = QPushButton(self.widget)
         self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(110, 0, 180, 50))
+        self.pushButton_7.setGeometry(QRect(110, 0, 240, 50))
         self.pushButton_2 = QPushButton(self.widget)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(470, 0, 180, 50))
+        self.pushButton_2.setGeometry(QRect(590, 0, 240, 50))
         self.pushButton_2.setStyleSheet(u"")
         self.pushButton_5 = QPushButton(self.widget)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(650, 0, 180, 50))
-        self.pushButton_6 = QPushButton(self.widget)
-        self.pushButton_6.setObjectName(u"pushButton_6")
-        self.pushButton_6.setGeometry(QRect(830, 0, 180, 50))
+        self.pushButton_5.setGeometry(QRect(830, 0, 240, 50))
         self.pushButton_8 = QPushButton(self.widget)
         self.pushButton_8.setObjectName(u"pushButton_8")
-        self.pushButton_8.setGeometry(QRect(290, 0, 180, 50))
-        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"Маркировка", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Тестирование", None))
-        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"Упаковка", None))
-        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"Админ панель", None))
-        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"Обработка", None))
-
+        self.pushButton_8.setGeometry(QRect(350, 0, 240, 50))
+        self.widget_7 = QWidget(self.widget)
+        self.widget_7.setObjectName(u"widget_7")
+        self.widget_7.setGeometry(QRect(0, 0, 110, 50))
+        self.label_9 = QLabel(self.widget_7)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setGeometry(QRect(0, 0, 110, 50))
+        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        self.pushButton_6 = QPushButton(self.widget)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+        self.pushButton_6.setGeometry(QRect(1070, 0, 230, 50))
+        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0430\u043a\u043e\u0432\u043a\u0430", None))
+        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430", None))
+        self.label_9.setText("")
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u043c\u0438\u043d \u043f\u0430\u043d\u0435\u043b\u044c", None))
         # Tree Widget Section
         self.treeWidget = QTreeWidget(self.centralwidget)
         self.treeWidget.setObjectName(u"treeWidget")
-        self.treeWidget.setGeometry(QRect(10, 60, 250, 730))
+        self.treeWidget.setGeometry(QRect(20, 60, 250, 730))
         self.treeWidget.setStyleSheet(u"QTreeWidget {\n"
 "    background-color: #2E3239;\n"
 "    color: white;\n"
@@ -93,12 +100,13 @@ class Ui_MainWindow(object):
 
         top_item_1 = QTreeWidgetItem(self.treeWidget, ["Добавление пользователя"])
         top_item_2 = QTreeWidgetItem(self.treeWidget, ["Добавление датчика"])
-        top_item_3 = QTreeWidgetItem(self.treeWidget, ["Датчики"])
-        child_item_1 = QTreeWidgetItem(top_item_3, ["Датчики давления"])
+        top_item_3 = QTreeWidgetItem(self.treeWidget, ["Брак"])
+        top_item_4 = QTreeWidgetItem(self.treeWidget, ["Датчики"])
+        child_item_1 = QTreeWidgetItem(top_item_4, ["Датчики давления"])
         metran_150_item = QTreeWidgetItem(child_item_1, ["Метран 150"])
         metran_75_item = QTreeWidgetItem(child_item_1, ["Метран 75"])
         metran_55_item = QTreeWidgetItem(child_item_1, ["Метран 55"])
-        child_item_2 = QTreeWidgetItem(top_item_3, ["Датчик температуры"])
+        child_item_2 = QTreeWidgetItem(top_item_4, ["Датчик температуры"])
         dashboard_item = QTreeWidgetItem(self.treeWidget, ["Дэшборд"])
         exit_item = QTreeWidgetItem(self.treeWidget, ["Выход"])
 
@@ -106,7 +114,7 @@ class Ui_MainWindow(object):
 
         # Main Content Area
         self.content_area = QWidget(self.centralwidget)
-        self.content_area.setGeometry(QRect(270, 60, 720, 730))
+        self.content_area.setGeometry(QRect(330, 60, 900, 680))
         self.content_area.setObjectName(u"content_area")
         self.content_area.setStyleSheet(u"background-color: #EBF0FF; border-radius: 8px; padding: 10px; border: 2px solid #5F7ADB;")
 
