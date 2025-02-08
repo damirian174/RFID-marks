@@ -88,7 +88,7 @@ class Dashboard(QMainWindow):
 
         return chart_view
 
-
+ 
 def main():
     app = QApplication(sys.argv)
     window = Dashboard()
