@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton
 from PySide6.QtCore import Qt
+# --------------
 
 class CustomDialog(QDialog):
     def __init__(self, error):
