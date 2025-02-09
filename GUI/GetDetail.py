@@ -11,6 +11,8 @@ def start_work(ser, mark_ui_instance, response, work_ui_instance):
 
 
 def end_work(work_ui_instance):
+    work = False
+    detail = None
     work_ui_instance.stop_timer()  # Остановка таймера
     work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
 
