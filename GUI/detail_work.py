@@ -1,6 +1,8 @@
 from database import database
 from error_test import show_error_dialog
 from config import work, detail
+from datetime import datetime, timedelta
+import time
 
 mark_ui_instance = None
 work_ui_instance = None
@@ -8,6 +10,20 @@ packing_ui_instance = None
 test_ui_instance = None
 
 data_detail = None
+
+time_start = None 
+time_end = None 
+
+time_stage = None
+
+def GetTime():
+    utc = datetime.utcnow()
+    time_c = utc + timedelta(hours=5)
+    
+    date_part = time_c.strftime("%Y-%m-%d") 
+    time_part = time_c.strftime("%H:%M:%S")
+    
+    return {'date': date_part, 'time': time_part}
 
 def getUI(mark_ui, work_ui, packing_ui, test_ui):
     global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
@@ -19,12 +35,17 @@ def getUI(mark_ui, work_ui, packing_ui, test_ui):
 
 
 def start_work(ser, response):
+    global time_start
     global work
     global detail
     work = True
     detail = ser
-    global mark_ui_instance, work_ui_instance
+    time_start = GetTime()
+    global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
     mark_ui_instance.detail(response)
+    work_ui_instance.detail(response)
+    packing_ui_instance.detail(response)
+    test_ui_instance.detail(response)
     work_ui_instance.running = True  # Это должно теперь работать
     work_ui_instance.start_timer()
 
@@ -32,20 +53,32 @@ def start_work(ser, response):
 def end_work():
     global work
     global detail
+    global time_end 
     global data_detail
+    global time_stage
+    global time_start
     data = False
     work = False
-    detail = None
-    global mark_ui_instance, work_ui_instance
+    detail = None 
+    time_end = GetTime()
+    
+    global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
     mark_ui_instance.detail(False)
+    work_ui_instance.detail(False)
+    packing_ui_instance.detail(False)
+    test_ui_instance.detail(False)
     work_ui_instance.running = False
     work_ui_instance.stop_timer()  # Остановка таймера
     work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
-    print(data_detail["stage"])
+    print(data_detail)
 
     if data_detail["stage"] == "Маркировка":
-        response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"]}
-        print(response_data)
+        print(time_start)
+        print(time_end)
+        time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
+        response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
+        
+        # print(response_data)
         # response = database(response_data)
 
     

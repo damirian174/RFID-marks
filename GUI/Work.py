@@ -214,52 +214,71 @@ class Ui_MainWindow(object):
         # self.tableView.setObjectName(u"tableView")
         # self.tableView.setGeometry(QRect(80, 50, 300, 650))
         # self.tableView.setStyleSheet(u"background-color: #2E3239;")
-        self.label_name = QLabel(self.widget_3)
-        self.label_name.setAlignment(Qt.AlignHCenter)
-        self.label_name.setText("Текст")
-        self.label_name.setObjectName(u"label_name")
-        self.label_name.setGeometry(QRect(50, 100, 450, 50))
-        self.label_name.setStyleSheet(u"font: 20px;\n"
+        self.name = QLabel(self.widget_3)
+        self.name.setAlignment(Qt.AlignHCenter)
+        self.name.setText("Текст")
+        self.name.setObjectName(u"label_name")
+        self.name.setGeometry(QRect(50, 100, 450, 50))
+        self.name.setStyleSheet(u"font: 20px;\n"
 "padding-left: 10px;\n"
 "font-weight: 600;")
-        self.label_name2 = QLabel(self.widget_3)
-        self.label_name2.setAlignment(Qt.AlignHCenter)
-        self.label_name2.setText("Текст")
-        self.label_name2.setObjectName(u"label_name2")
-        self.label_name2.setGeometry(QRect(50, 225, 450, 50))
-        self.label_name2.setStyleSheet(u"font: 20px;\n"
+        self.serial = QLabel(self.widget_3)
+        self.serial.setAlignment(Qt.AlignHCenter)
+        self.serial.setText("Текст")
+        self.serial.setObjectName(u"label_name2")
+        self.serial.setGeometry(QRect(50, 225, 450, 50))
+        self.serial.setStyleSheet(u"font: 20px;\n"
 "padding-left: 10px;\n"
 "font-weight: 600;")
-        self.label_name3 = QLabel(self.widget_3)
-        self.label_name3.setAlignment(Qt.AlignHCenter)
-        self.label_name3.setText("Текст")
-        self.label_name3.setObjectName(u"label_name3")
-        self.label_name3.setGeometry(QRect(50, 350, 450, 50))
-        self.label_name3.setStyleSheet(u"font: 20px;\n"
+        self.defective = QLabel(self.widget_3)
+        self.defective.setAlignment(Qt.AlignHCenter)
+        self.defective.setText("Текст")
+        self.defective.setObjectName(u"label_name3")
+        self.defective.setGeometry(QRect(50, 350, 450, 50))
+        self.defective.setStyleSheet(u"font: 20px;\n"
 "padding-left: 10px;\n"
 "font-weight: 600;")
-        self.label_name4 = QLabel(self.widget_3)
-        self.label_name4.setAlignment(Qt.AlignHCenter)
-        self.label_name4.setText("Текст")
-        self.label_name4.setObjectName(u"label_name4")
-        self.label_name4.setGeometry(QRect(50, 475, 450, 50))
-        self.label_name4.setStyleSheet(u"font: 20px;\n"
+        self.stage = QLabel(self.widget_3)
+        self.stage.setAlignment(Qt.AlignHCenter)
+        self.stage.setText("Текст")
+        self.stage.setObjectName(u"label_name4")
+        self.stage.setGeometry(QRect(50, 475, 450, 50))
+        self.stage.setStyleSheet(u"font: 20px;\n"
 "padding-left: 10px;\n"
 "font-weight: 600;")
-        self.label_name5 = QLabel(self.widget_3)
-        self.label_name5.setAlignment(Qt.AlignHCenter)
-        self.label_name5.setText("Текст")
-        self.label_name5.setObjectName(u"label_name5")
-        self.label_name5.setGeometry(QRect(50, 600, 450, 50))
-        self.label_name5.setStyleSheet(u"font: 20px;\n"
+        self.sector = QLabel(self.widget_3)
+        self.sector.setAlignment(Qt.AlignHCenter)
+        self.sector.setText("Текст")
+        self.sector.setObjectName(u"label_name5")
+        self.sector.setGeometry(QRect(50, 600, 450, 50))
+        self.sector.setStyleSheet(u"font: 20px;\n"
 "padding-left: 10px;\n"
 "font-weight: 600;")
-        self.label_name2.setAlignment(Qt.AlignHCenter)
-        self.label_name2.setText("Текст")
+
 
 
         QMetaObject.connectSlotsByName(MainWindow)
         self.update_time()
+
+    def detail(self, data=None):
+        
+                # name VARCHAR(100) NOT NULL,
+                # serial_number VARCHAR(100) NOT NULL UNIQUE,
+                # defective BOOLEAN DEFAULT FALSE,
+                # stage VARCHAR(50),
+                # sector VARCHAR(100) DEFAULT NULL,
+        if data:
+                self.name.setText(str(data['name']))
+                self.serial.setText(str(data['serial_number']))
+                self.defective.setText(str(data['defective']))
+                self.stage.setText(str(data['stage']))
+                self.sector.setText(str(data['sector']))
+        else: 
+            self.name.setText("Отсканируй деталь")
+            self.serial.setText("Отсканируй деталь")
+            self.defective.setText("Отсканируй деталь")
+            self.stage.setText("Отсканируй деталь")
+            self.sector.setText("Отсканируй деталь")    
         
     def pause_timer(self):
         if self.running:

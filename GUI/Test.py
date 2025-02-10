@@ -250,6 +250,25 @@ class Ui_MainWindow(object):
 
 
         QMetaObject.connectSlotsByName(MainWindow)
+    def detail(self, data=None):
+        
+                # name VARCHAR(100) NOT NULL,
+                # serial_number VARCHAR(100) NOT NULL UNIQUE,
+                # defective BOOLEAN DEFAULT FALSE,
+                # stage VARCHAR(50),
+                # sector VARCHAR(100) DEFAULT NULL,
+        if data:
+                self.name.setText(str(data['name']))
+                self.serial.setText(str(data['serial_number']))
+                self.defective.setText(str(data['defective']))
+                self.stage.setText(str(data['stage']))
+                self.sector.setText(str(data['sector']))
+        else: 
+            self.name.setText("Отсканируй деталь")
+            self.serial.setText("Отсканируй деталь")
+            self.defective.setText("Отсканируй деталь")
+            self.stage.setText("Отсканируй деталь")
+            self.sector.setText("Отсканируй деталь")    
     # setupUi
     def updateName(self, name):
         
