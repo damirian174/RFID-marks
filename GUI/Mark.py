@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLayout,
     QLineEdit, QMainWindow, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget)
+from detail_work import end_work
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -209,6 +210,7 @@ class Ui_MainWindow(object):
 "font: 20px;\n"
 "font-weight: 700;")
         self.sector.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
 
         self.verticalLayout.addWidget(self.sector)
 
@@ -223,7 +225,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044e \u0434\u0435\u0442\u0430\u043b\u0438:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0443 \u0442\u043e\u0432\u0430\u0440\u0430:", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0435\u0441\u0442\u0438 \u0434\u0435\u0442\u0430\u043b\u044c ", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", "\u0412\u043d\u0435\u0441\u0442\u0438 \u0434\u0435\u0442\u0430\u043b\u044c ", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u043a\u0430 \u0434\u0435\u0442\u0430\u043b\u0438:", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u0440\u0430\u043d 150", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u0440\u0430\u043d 75", None))
@@ -245,24 +247,33 @@ class Ui_MainWindow(object):
         self.defective.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.stage.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.sector.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.pushButton.clicked.connect(self.open_confirmation_window)
+        self.detail()
     # retranslateUi
 
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
-    def detail(self, data):
+    def detail(self, data=None):
         
                 # name VARCHAR(100) NOT NULL,
                 # serial_number VARCHAR(100) NOT NULL UNIQUE,
                 # defective BOOLEAN DEFAULT FALSE,
                 # stage VARCHAR(50),
                 # sector VARCHAR(100) DEFAULT NULL,
-        self.label_name.setText(data['name'])
-        self.label_name2.setText(data['serial_number'])
-        self.label_name3.setText(str(data['defective']))
-        self.label_name4.setText(data['stage'])
-        self.label_name5.setText(data['sector'])     
+        if data:
+                self.name.setText(str(data['name']))
+                self.serial.setText(str(data['serial_number']))
+                self.defective.setText(str(data['defective']))
+                self.stage.setText(str(data['stage']))
+                self.sector.setText(str(data['sector']))
+        else: 
+            self.name.setText("Отсканируй деталь")
+            self.serial.setText("Отсканируй деталь")
+            self.defective.setText("Отсканируй деталь")
+            self.stage.setText("Отсканируй деталь")
+            self.sector.setText("Отсканируй деталь")     
     def updateName(self, name):
         
         self.label_2.setText(name)
@@ -292,9 +303,11 @@ class Ui_MainWindow(object):
         self.confirmation_window.show()
 
     def confirm_data(self):
+        end_work()
         self.lineEdit.clear()
         self.comboBox.clear()
         self.lineEdit_3.clear()
+        
         self.confirmation_window.close()
 
     def edit_data(self):

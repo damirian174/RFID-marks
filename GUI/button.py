@@ -17,6 +17,7 @@ import threading
 from pyzbar.pyzbar import decode, ZBarSymbol
 from database import database
 from config import auth, work
+from detail_work import *
 
 from COM import SerialListener
 
@@ -70,6 +71,12 @@ class MainApp(QMainWindow):
         self.admin_ui = AdminUI()
         self.admin_ui.setupUi(self.admin_page_ui)
 
+        # mark_ui_instance = self.mark_ui
+        # work_ui_instance = self.work_ui
+        # test_ui_instance = self.tests_ui
+        # packing_ui_instance = self.packing_ui
+        getUI(self.mark_ui, self.work_ui, self.packing_ui, self.tests_ui)
+
 
         self.init_login_page()
 
@@ -85,9 +92,9 @@ class MainApp(QMainWindow):
         self.setup_scan_page()
 
     def handle_serial_data(self, data):
-        from GetDetail import getDetail
+        from detail_work import getDetail
         print(f"Получены данные из порта: {data}")
-        getDetail(data, self.mark_ui, self.work_ui)
+        getDetail(data)
         work = True
 
     def closeEvent(self, event):
@@ -136,7 +143,8 @@ class MainApp(QMainWindow):
                 self.packing_ui.updateName(name=name)
                 self.mark_ui.updateName(name=name)
                 self.stacked_widget.setCurrentWidget(self.work_page)
-                auth = True                                                  # Возвращаем пользователя на страницу регистрации
+                auth = True       
+                getDetail(12312)                                           # Возвращаем пользователя на страницу регистрации
 
     def manual_entry(self):
         entered_code = self.manual_input.text()
@@ -236,7 +244,26 @@ class MainApp(QMainWindow):
             self.error_message.setText("Неверный логин или пароль")
 
     def connect_header_buttons(self):
-        pass
+        self.setup_buttons(self.work_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        self.setup_buttons(self.mark_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        self.setup_buttons(self.tests_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        self.setup_buttons(self.packing_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        self.setup_buttons(self.admin_ui, self.work_page, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        
+    def setup_buttons(self, ui, mark_page, tests_page, packing_page, login_page, admin_page=None):
+        if hasattr(ui, 'pushButton_7'):
+            ui.pushButton_7.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(mark_page))
+        if hasattr(ui, 'pushButton_2'):
+            ui.pushButton_2.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(tests_page))
+        if hasattr(ui, 'pushButton_5'):
+            ui.pushButton_5.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(packing_page))
+        if hasattr(ui, 'pushButton_6'):
+            ui.pushButton_6.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(login_page))
+        if hasattr(ui, 'pushButton_8'):
+            ui.pushButton_8.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.work_page))
+        if admin_page:
+            if hasattr(ui, 'pushButton_9'):
+                ui.pushButton_9.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(admin_page))
 
 
 if __name__ == "__main__":

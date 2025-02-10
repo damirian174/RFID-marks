@@ -1,7 +1,7 @@
 from PySide6.QtCore import QThread, Signal
 import serial
 import time
-from GetDetail import getDetail
+from detail_work import getDetail
 
 # Настройки порта
 arduino_port = "COM8"  # Ваш порт

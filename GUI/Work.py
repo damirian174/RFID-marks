@@ -291,17 +291,15 @@ class Ui_MainWindow(object):
             self.label.setText("00:00:00")
 
     def start_timer(self):
-        if not self.running:
 
-            self.start_time = time.time()  # Запоминаем время старта
-            self.timer.start(100)  # Запуск таймера (каждые 100 мс)
-            self.running = True
+        self.start_time = time.time()  # Запоминаем время старта
+        self.timer.start(100)  # Запуск таймера (каждые 100 мс)
+        self.running = True
 
         
     def stop_timer(self):
-        if self.running:
-            self.timer.stop()  # Остановка таймера
-            self.running = False
+        self.timer.stop()  # Остановка таймера
+        self.running = False
         
 
     def updateName(self, name):
