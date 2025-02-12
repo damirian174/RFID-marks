@@ -16,7 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLayout, QMainWindow,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QVBoxLayout, QWidget, QMessageBox)
+from detail_work import end_work, pause_work, couintine_work
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -207,11 +209,28 @@ class Ui_MainWindow(object):
         self.pushButton_11.setObjectName(u"pushButton_11")
         self.pushButton_11.setGeometry(QRect(1070, 0, 230, 50))
         MainWindow.setCentralWidget(self.centralwidget)
+        self.pushButton_15.clicked.connect(self.away)
 
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
+
+    def countine(self):
+        self.centralwidget.setEnabled(True)
+        couintine_work()
+    def away(self):
+        self.centralwidget.setEnabled(False)
+
+        pause_work()
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Отошел")
+        msg_box.setText("Нажми, чтобы продолжить работать")
+        msg_box.setStandardButtons(QMessageBox.Ok)
+
+        msg_box.buttonClicked.connect(self.countine)
+
+        msg_box.exec()
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))

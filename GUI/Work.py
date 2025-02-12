@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
-    QPushButton, QSizePolicy, QWidget)
-
+    QPushButton, QSizePolicy, QWidget, QMessageBox)
+from detail_work import end_work, pause_work, couintine_work
 
 
 # -*- coding: utf-8 -*-
@@ -256,7 +256,7 @@ class Ui_MainWindow(object):
 "font-weight: 600;")
 
 
-
+        self.pushButton_10.clicked.connect(self.away)
         QMetaObject.connectSlotsByName(MainWindow)
         self.update_time()
 
@@ -278,7 +278,22 @@ class Ui_MainWindow(object):
             self.serial.setText("Отсканируй деталь")
             self.defective.setText("Отсканируй деталь")
             self.stage.setText("Отсканируй деталь")
-            self.sector.setText("Отсканируй деталь")    
+            self.sector.setText("Отсканируй деталь") 
+    def countine(self):
+        self.centralwidget.setEnabled(True)
+        couintine_work()
+    def away(self):
+        self.centralwidget.setEnabled(False)
+
+        pause_work()
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Отошел")
+        msg_box.setText("Нажми, чтобы продолжить работать")
+        msg_box.setStandardButtons(QMessageBox.Ok)
+
+        msg_box.buttonClicked.connect(self.countine)
+
+        msg_box.exec()   
         
     def pause_timer(self):
         if self.running:

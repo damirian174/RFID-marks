@@ -17,7 +17,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLayout,
     QMainWindow, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+    QWidget, QMessageBox)
+from detail_work import end_work, pause_work, couintine_work
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -219,7 +221,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-
+        self.pushButton_15.clicked.connect(self.away)
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
@@ -269,6 +271,21 @@ class Ui_MainWindow(object):
             self.defective.setText("Отсканируй деталь")
             self.stage.setText("Отсканируй деталь")
             self.sector.setText("Отсканируй деталь")    
+    def countine(self):
+        self.centralwidget.setEnabled(True)
+        couintine_work()
+    def away(self):
+        self.centralwidget.setEnabled(False)
+
+        pause_work()
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Отошел")
+        msg_box.setText("Нажми, чтобы продолжить работать")
+        msg_box.setStandardButtons(QMessageBox.Ok)
+
+        msg_box.buttonClicked.connect(self.countine)
+
+        msg_box.exec()
     # setupUi
     def updateName(self, name):
         

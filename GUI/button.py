@@ -26,7 +26,7 @@ class MainApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Ао Метран")
-        self.setGeometry(100, 100, 1000, 800)
+        self.setGeometry(100, 100, 1300, 700)
 
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -35,9 +35,9 @@ class MainApp(QMainWindow):
 
         self.init_pages()
         self.connect_header_buttons()
-        # self.serial_listener = SerialListener("COM8", 9600)
-        # self.serial_listener.data_received.connect(self.handle_serial_data)
-        # self.serial_listener.start()
+        self.serial_listener = SerialListener("COM8", 9600)
+        self.serial_listener.data_received.connect(self.handle_serial_data)
+        self.serial_listener.start()
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -102,6 +102,7 @@ class MainApp(QMainWindow):
         self.serial_listener.wait()
         event.accept()
 
+
     def setup_scan_page(self):
         self.menu_ui.label.setText("Сканирование штрихкода активно")
         self.menu_ui.label.setAlignment(Qt.AlignCenter)
@@ -144,7 +145,7 @@ class MainApp(QMainWindow):
                 self.mark_ui.updateName(name=name)
                 self.stacked_widget.setCurrentWidget(self.work_page)
                 auth = True       
-                getDetail(12312)                                           # Возвращаем пользователя на страницу регистрации
+                                         # Возвращаем пользователя на страницу регистрации
 
     def manual_entry(self):
         entered_code = self.manual_input.text()

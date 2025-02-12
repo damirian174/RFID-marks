@@ -49,6 +49,14 @@ def start_work(ser, response):
     work_ui_instance.running = True  # Это должно теперь работать
     work_ui_instance.start_timer()
 
+def pause_work():
+    work_ui_instance.pause_timer()
+
+def couintine_work():
+    work_ui_instance.resume_timer()
+
+
+
 
 def end_work():
     global work
@@ -79,7 +87,7 @@ def end_work():
         response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
         
         # print(response_data)
-        # response = database(response_data)
+        response = database(response_data)
 
     
 
@@ -88,24 +96,27 @@ def end_work():
 
 
 def getDetail(serial_number):
-    # data = {"type": "details", "serial": serial_number}
+    data = {"type": "details", "serial": serial_number}
     global data_detail
     global mark_ui_instance, work_ui_instance
-    data2 = {'name': 'МЕТРАН 150','serial_number': serial_number,'defective':'Да','stage':'Маркировка','sector':'аааа'}
-    data_detail = data2
-    # mark_ui_instance.detail(data2)
-    start_work(data2["serial_number"], data2)
-    # response = database(data)
-    # if "data" in response:
-    #     # Вызываем метод detail через экземпляр интерфейса
-    #     start_work(serial_number, response, work_ui_instance)
+    # data2 = {'name': 'МЕТРАН 150','serial_number': serial_number,'defective':'Да','stage':'Маркировка','sector':'аааа'}
 
-    # else: 
-    #     show_error_dialog(f"Деталь c серийным номером {serial_number} не найдена, хотите ее Промаркировать? ")
-    #     if show_error_dialog:
-    #         start_work(serial_number, mark_ui_instance, response)
-    #     else:
-    #         return
+    # mark_ui_instance.detail(data2)
+    
+    response = database(data)
+    data_detail = response
+    response = response['data']
+    start_work(response["serial_number"], response)
+    if "data" in response:
+        # Вызываем метод detail через экземпляр интерфейса
+        start_work(serial_number, response, work_ui_instance)
+
+    else: 
+        show_error_dialog(f"Деталь c серийным номером {serial_number} не найдена, хотите ее Промаркировать? ")
+        if show_error_dialog:
+            start_work(serial_number, mark_ui_instance, response)
+        else:
+            return
 
         
 
