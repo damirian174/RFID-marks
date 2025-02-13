@@ -31,7 +31,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(200, 250, 600, 400))
+        self.widget.setGeometry(QRect(350, 250, 600, 400))
         self.widget.setStyleSheet(u"background-color: #5F7ADB;\n"
 "border-radius: 50px;\n"
 "color: rgb(255, 255, 255);")

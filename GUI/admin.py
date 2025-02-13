@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
 
         # Main Content Area
         self.content_area = QWidget(self.centralwidget)
-        self.content_area.setGeometry(QRect(330, 60, 900, 680))
+        self.content_area.setGeometry(QRect(330, 60, 900, 600))
         self.content_area.setObjectName(u"content_area")
         self.content_area.setStyleSheet(u"background-color: #EBF0FF; border-radius: 8px; padding: 10px; border: 2px solid #5F7ADB;")
 

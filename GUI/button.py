@@ -109,10 +109,10 @@ class MainApp(QMainWindow):
 
         self.manual_input = QLineEdit(self.scan_page)
         self.manual_input.setPlaceholderText("Введите штрихкод вручную")
-        self.manual_input.setGeometry(300, 400, 400, 40)
+        self.manual_input.setGeometry(450, 400, 400, 40)
 
         manual_button = QPushButton("Подтвердить", self.scan_page)
-        manual_button.setGeometry(400, 550, 200, 40)
+        manual_button.setGeometry(550, 550, 200, 40)
         manual_button.clicked.connect(self.manual_entry)
 
         # Add a QLabel for displaying the camera feed

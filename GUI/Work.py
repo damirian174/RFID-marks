@@ -17,49 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
-    QPushButton, QSizePolicy, QWidget, QMessageBox)
+    QPushButton, QSizePolicy, QWidget, QMessageBox, QVBoxLayout, QLayout)
 from detail_work import end_work, pause_work, couintine_work
-
-
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'WorkfsCCjY.ui'
-##
-## Created by: Qt User Interface Compiler version 6.8.1
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
-    QPushButton, QSizePolicy, QWidget, QLabel, QTableView)
-
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'WorkwkPuEc.ui'
-##
-## Created by: Qt User Interface Compiler version 6.8.1
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton,
-    QSizePolicy, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -171,7 +130,7 @@ class Ui_MainWindow(object):
 "font-weight: 700;")
         self.widget_3 = QWidget(self.centralwidget)
         self.widget_3.setObjectName(u"widget_3")
-        self.widget_3.setGeometry(QRect(780, 50, 520, 700))
+        self.widget_3.setGeometry(QRect(900, 50, 520, 700))
         self.widget_3.setStyleSheet(u"background-color: rgb(235, 240, 255);")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -210,51 +169,69 @@ class Ui_MainWindow(object):
         self.running = True     # Состояние таймера, True для автостарта
 
         
-        # self.tableView = QTableView(self.widget_3)
-        # self.tableView.setObjectName(u"tableView")
-        # self.tableView.setGeometry(QRect(80, 50, 300, 650))
-        # self.tableView.setStyleSheet(u"background-color: #2E3239;")
-        self.name = QLabel(self.widget_3)
-        self.name.setAlignment(Qt.AlignHCenter)
-        self.name.setText("Текст")
-        self.name.setObjectName(u"label_name")
-        self.name.setGeometry(QRect(50, 100, 450, 50))
-        self.name.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.serial = QLabel(self.widget_3)
-        self.serial.setAlignment(Qt.AlignHCenter)
-        self.serial.setText("Текст")
-        self.serial.setObjectName(u"label_name2")
-        self.serial.setGeometry(QRect(50, 225, 450, 50))
-        self.serial.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.defective = QLabel(self.widget_3)
-        self.defective.setAlignment(Qt.AlignHCenter)
-        self.defective.setText("Текст")
-        self.defective.setObjectName(u"label_name3")
-        self.defective.setGeometry(QRect(50, 350, 450, 50))
-        self.defective.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.stage = QLabel(self.widget_3)
-        self.stage.setAlignment(Qt.AlignHCenter)
-        self.stage.setText("Текст")
-        self.stage.setObjectName(u"label_name4")
-        self.stage.setGeometry(QRect(50, 475, 450, 50))
-        self.stage.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
-        self.sector = QLabel(self.widget_3)
-        self.sector.setAlignment(Qt.AlignHCenter)
-        self.sector.setText("Текст")
-        self.sector.setObjectName(u"label_name5")
-        self.sector.setGeometry(QRect(50, 600, 450, 50))
-        self.sector.setStyleSheet(u"font: 20px;\n"
-"padding-left: 10px;\n"
-"font-weight: 600;")
+        self.verticalLayoutWidget = QWidget(self.widget_3)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(10, 30, 250, 600))
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.serial = QLabel(self.verticalLayoutWidget)
+        self.serial.setObjectName(u"serial")
+        self.serial.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.serial.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+        self.verticalLayout.addWidget(self.serial)
+
+        self.name = QLabel(self.verticalLayoutWidget)
+        self.name.setObjectName(u"name")
+        self.name.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.name)
+
+        self.defective = QLabel(self.verticalLayoutWidget)
+        self.defective.setObjectName(u"defective")
+        self.defective.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.defective.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.defective)
+
+        self.stage = QLabel(self.verticalLayoutWidget)
+        self.stage.setObjectName(u"stage")
+        self.stage.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.stage.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.stage.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.stage)
+
+        self.sector = QLabel(self.verticalLayoutWidget)
+        self.sector.setObjectName(u"sector")
+        self.sector.setStyleSheet(u"background-color: #5F7ADB;\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 20px;\n"
+"font: 20px;\n"
+"font-weight: 700;")
+        self.sector.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.sector)
+        self.detail()
 
         self.pushButton_10.clicked.connect(self.away)
         QMetaObject.connectSlotsByName(MainWindow)

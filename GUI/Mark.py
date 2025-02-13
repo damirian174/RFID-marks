@@ -152,7 +152,7 @@ class Ui_MainWindow(object):
         self.widget_5.setStyleSheet(u"background-color: rgb(235, 240, 255);")
         self.verticalLayoutWidget = QWidget(self.widget_5)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 40, 271, 611))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 30, 250, 600))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMaximumSize)
