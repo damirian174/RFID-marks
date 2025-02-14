@@ -10,6 +10,24 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from database import *
+from PySide6.QtCore import QThread, Signal, Slot
+import time
+
+class DatabaseWorker(QThread):
+    # Сигнал для передачи данных в основной поток
+    finished = Signal(dict)
+
+    def __init__(self, query):
+        super().__init__()
+        self.query = query  # Запрос к базе данных
+
+    def run(self):
+        # Выполняем запрос к базе данных
+        result = database(self.query)
+        # Передаем результат в основной поток через сигнал
+        self.finished.emit(result)
+
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -154,38 +172,17 @@ class Ui_MainWindow(object):
         self.submit_button.setStyleSheet("background-color: #5F7ADB; color: white; border-radius: 5px; font-size: 14px;")
         self.form_layout.addWidget(self.submit_button)
         self.submit_button.hide()
+        
 
-        self.metran_150_table = QTableWidget(3, 2, self.content_area)
-        self.metran_150_table.setHorizontalHeaderLabels(["Параметр", "Значение"])
-        self.metran_150_table.setItem(0, 0, QTableWidgetItem("Масса"))
-        self.metran_150_table.setItem(0, 1, QTableWidgetItem("5 кг"))
-        self.metran_150_table.setItem(1, 0, QTableWidgetItem("Диаметр"))
-        self.metran_150_table.setItem(1, 1, QTableWidgetItem("10 см"))
-        self.metran_150_table.setItem(2, 0, QTableWidgetItem("Давление"))
-        self.metran_150_table.setItem(2, 1, QTableWidgetItem("150 бар"))
+        self.metran_150_table = QTableWidget(0, 6, self.content_area)
         self.metran_150_table.hide()
         self.form_layout.addWidget(self.metran_150_table)
 
 
-        self.metran_75_table = QTableWidget(3, 2, self.content_area)
-        self.metran_75_table.setHorizontalHeaderLabels(["Параметр", "Значение"])
-        self.metran_75_table.setItem(0, 0, QTableWidgetItem("Масса"))
-        self.metran_75_table.setItem(0, 1, QTableWidgetItem("3 кг"))
-        self.metran_75_table.setItem(1, 0, QTableWidgetItem("Диаметр"))
-        self.metran_75_table.setItem(1, 1, QTableWidgetItem("8 см"))
-        self.metran_75_table.setItem(2, 0, QTableWidgetItem("Давление"))
-        self.metran_75_table.setItem(2, 1, QTableWidgetItem("75 бар"))
-        self.metran_75_table.hide()
+        self.metran_75_table = QTableWidget(0, 6, self.content_area)
         self.form_layout.addWidget(self.metran_75_table)
 
-        self.metran_55_table = QTableWidget(99999999, 6, self.content_area)
-        self.metran_55_table.setHorizontalHeaderLabels(["Параметр", "Значение"])
-        self.metran_55_table.setItem(0, 0, QTableWidgetItem("Идентификационный номер"))
-        self.metran_55_table.setItem(0, 1, QTableWidgetItem("Наименование"))
-        self.metran_55_table.setItem(0, 2, QTableWidgetItem("Серийный номер"))
-        self.metran_55_table.setItem(0, 3, QTableWidgetItem("Дефектный"))
-        self.metran_55_table.setItem(0, 4, QTableWidgetItem("Стадия производства"))
-        self.metran_55_table.setItem(0, 5, QTableWidgetItem("Сектор хранения"))
+        self.metran_55_table = QTableWidget(0, 6, self.content_area)
         self.metran_55_table.hide()
         self.form_layout.addWidget(self.metran_55_table)
 
@@ -199,29 +196,42 @@ class Ui_MainWindow(object):
         self.timer.start()
         # Привязываем нажатие кнопки к методу обработки
         self.submit_button.clicked.connect(self.handle_submit)
-
+        self.treeWidget.itemClicked.connect(self.handle_item_clicked)
 
         self.retranslateUi(MainWindow)
         QMetaObject.connectSlotsByName(MainWindow)
         
     
-    def updateDetails(self, detail):
-        data = {"type": "allDetails", "detail": detail}
-        x = database(data)
-        count = 1
-        if x:
-            for i in x['data']:
-                self.metran_55_table.setItem(0, count, QTableWidgetItem(i["id"]))
-                self.metran_55_table.setItem(1, count, QTableWidgetItem(i["name"]))
-                self.metran_55_table.setItem(2, count, QTableWidgetItem(i["serial_number"]))
-                self.metran_55_table.setItem(3, count, QTableWidgetItem(i["defective"]))
-                self.metran_55_table.setItem(4, count, QTableWidgetItem(i["stage"]))
-                self.metran_55_table.setItem(5, count, QTableWidgetItem(i["sector"]))
-                count +=1
+    def updateTable(self, table, detail):
+        table.setRowCount(0)
+        query = {"type": "allDetails", "detail": detail}
 
-            
+        if not hasattr(self, 'workers'):
+            self.workers = []
+        worker = DatabaseWorker(query)
+        worker.finished.connect(lambda result, t=table: self.on_database_finished_generic(result, t))
+        worker.finished.connect(lambda: self.workers.remove(worker))
+        worker.finished.connect(worker.deleteLater)
+        self.workers.append(worker)
+        worker.start()
+
+
+
+    @Slot(dict)
+    def on_database_finished_generic(self, result, table):
+        if result and result.get('status') == 'ok':
+            details = result['data']
+            table.setRowCount(len(details))  # устанавливаем нужное число строк
+            for row, detail_data in enumerate(details):
+                table.setItem(row, 0, QTableWidgetItem(str(detail_data.get("id", ""))))
+                table.setItem(row, 1, QTableWidgetItem(detail_data.get("name", "")))
+                table.setItem(row, 2, QTableWidgetItem(detail_data.get("serial_number", "")))
+                table.setItem(row, 3, QTableWidgetItem(str(detail_data.get("defective", ""))))
+                table.setItem(row, 4, QTableWidgetItem(detail_data.get("stage", "")))
+                table.setItem(row, 5, QTableWidgetItem(detail_data.get("sector", "")))
         else:
-            return None
+            print("Ошибка при получении данных из базы данных")
+
     
     def handle_submit(self):
     # Проверяем, какой элемент был выбран
@@ -283,18 +293,17 @@ class Ui_MainWindow(object):
 
 
     def check_active_table(self):
-        """Проверяет активность окна и отображаемой таблицы каждые 15 секунд."""
-        if self.main_window.isActiveWindow():  # Используем экземпляр окна
+        if self.main_window.isActiveWindow():
             if self.metran_150_table.isVisible():
-                self.updateDetails("МЕТРАН 150")
-            elif self.metran_75_table.isVisible():
-                self.updateDetails("МЕТРАН 75")
-            elif self.metran_55_table.isVisible():
-                self.updateDetails("МЕТРАН 55")
-            else:
-                print("Ни одна из таблиц Метран не активна")
+                self.updateTable(self.metran_150_table, "МЕТРАН 150")
+            if self.metran_75_table.isVisible():
+                self.updateTable(self.metran_75_table, "МЕТРАН 75")
+            if self.metran_55_table.isVisible():
+                self.updateTable(self.metran_55_table, "МЕТРАН 55")
+            # Если есть другие таблицы, добавьте проверки и вызовы для них
         else:
             print("Окно не активно")
+
 
     def log_active_table(self, table_name):
         """Логирует или выполняет действие при входе в таблицу."""
@@ -302,6 +311,7 @@ class Ui_MainWindow(object):
         # Здесь можно добавить логику, например обновление данных
 
     def handle_item_clicked(self, item):
+        self.timer.stop()
         """Обрабатывает клики по элементам дерева."""
         self.metran_150_table.hide()
         self.metran_75_table.hide()
@@ -318,15 +328,15 @@ class Ui_MainWindow(object):
         elif item.text(0) == "Метран 150":
             self.form_title.setText("Метран 150")
             self.metran_150_table.show()
-            self.updateDetails("МЕТРАН 150")  # Вызов функции при заходе
+            self.updateTable(self.metran_150_table, "МЕТРАН 150")
         elif item.text(0) == "Метран 75":
             self.form_title.setText("Метран 75")
             self.metran_75_table.show()
-            self.updateDetails("МЕТРАН 75")  # Вызов функции при заходе
+            self.updateTable(self.metran_75_table, "МЕТРАН 75")
         elif item.text(0) == "Метран 55":
             self.form_title.setText("Метран 55")
             self.metran_55_table.show()
-            self.updateDetails("МЕТРАН 55")  # Вызов функции при заходе
+            self.updateTable(self.metran_55_table, "МЕТРАН 55")
         elif item.text(0) == "Добавление пользователя":
             self.form_title.setText("Добавление пользователя")
             self.line_edit_1.setPlaceholderText("Фамилия")
@@ -349,6 +359,7 @@ class Ui_MainWindow(object):
             QApplication.instance().quit()
         else:
             self.form_title.setText("")
+        self.timer.start()
 
     def show_dashboard(self):
         from Dash import Dashboard
