@@ -102,6 +102,18 @@ def update(name, serial):
         response_data = {'type': 'mark', 'name': 'name', 'serial': serial}
         # print(response_data)
         response = database(response_data)
+    elif data_detail['serial_number'] == "Маркировка":
+        response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': serial}
+        # print(response_data)
+        response = database(response_data)
+    elif data_detail['serial_number'] == "Сборка":
+        response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': serial}
+        # print(response_data)
+        response = database(response_data)
+    elif data_detail['serial_number'] == "Тестирование":
+        response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': serial}
+        # print(response_data)
+        response = database(response_data)
     
     
 
