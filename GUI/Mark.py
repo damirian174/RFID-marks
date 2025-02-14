@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLayout,
     QLineEdit, QMainWindow, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget, QMessageBox)
-from detail_work import end_work, pause_work, couintine_work
+from detail_work import end_work, pause_work, couintine_work, update
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -227,9 +227,9 @@ class Ui_MainWindow(object):
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0443 \u0442\u043e\u0432\u0430\u0440\u0430:", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", "\u0412\u043d\u0435\u0441\u0442\u0438 \u0434\u0435\u0442\u0430\u043b\u044c ", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u043a\u0430 \u0434\u0435\u0442\u0430\u043b\u0438:", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u0440\u0430\u043d 150", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u0440\u0430\u043d 75", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u0440\u0430\u043d 55", None))
+        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", "МЕТРАН 150", None))
+        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", "МЕТРАН 75", None))
+        self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", "МЕТРАН 55", None))
 
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0435", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u043e\u0431\u0449\u0438\u0442\u044c \u043e \u0431\u0440\u0430\u043a\u0435", None))
@@ -239,7 +239,7 @@ class Ui_MainWindow(object):
         self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0430\u043a\u043e\u0432\u043a\u0430", None))
-        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430", None))
+        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"Сборка", None))
         self.label_9.setText("")
         self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0434\u043c\u0438\u043d \u043f\u0430\u043d\u0435\u043b\u044c", None))
         self.name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -308,7 +308,7 @@ class Ui_MainWindow(object):
         layout = QVBoxLayout(self.confirmation_window)
         layout.addWidget(QLabel(f"Категория детали: {self.lineEdit.text()}"))
         layout.addWidget(QLabel(f"Маркировка товара: {self.comboBox.currentText()}"))
-        layout.addWidget(QLabel(f"######: {self.lineEdit_3.text()}"))
+        layout.addWidget(QLabel(f"Серийный номер: {self.lineEdit_3.text()}"))
 
         button_confirm = QPushButton("Данные верны")
         button_confirm.clicked.connect(self.confirm_data)
@@ -321,7 +321,7 @@ class Ui_MainWindow(object):
         self.confirmation_window.show()
 
     def confirm_data(self):
-        end_work()
+        update(self.comboBox.currentText(), self.lineEdit_3.text())
         self.lineEdit.clear()
         self.comboBox.clear()
         self.lineEdit_3.clear()

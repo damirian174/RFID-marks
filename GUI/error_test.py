@@ -2,8 +2,8 @@ import sys
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QPushButton, QWidget
 from Error import CustomDialog  # Импортируем диалог из другого файла
 
-def show_error_dialog():
-    dialog = CustomDialog()
+def show_error_dialog(text, type):
+    dialog = CustomDialog(text, type)
     if dialog.exec():  # Ждет ответа от пользователя
         return True
     else:

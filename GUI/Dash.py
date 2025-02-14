@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 import sys
-import sqlite3
+
 from database import database
 class Dashboard(QMainWindow):
     def __init__(self):
@@ -37,59 +37,32 @@ class Dashboard(QMainWindow):
         METRAN_75 = ''
         METRAN_50 = ''
 
-        x = {"type": "getStats", "name": "МЕТРАН150"}
-        
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
+        x = {"type": "getstats", "name": "МЕТРАН 150"}
+        x2 = {"type": "getstats", "name": "МЕТРАН 75"}
+        x3 = {"type": "getstats", "name": "МЕТРАН 55"}
 
 
-        # metran = database(x)
-        metran = {'status': "ok", "all": 1234, 'count_fake': 13, 'count_natural': 15}
-        # cursor.execute("SELECT COUNT(*) FROM getstat")
-        # total_METRAN_150 = cursor.fetchone()[0]
+        metran150 = database(x)
+        metran75 = database(x2)    
+        metran50 = database(x3)
 
-        
-        # cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_150 = 'count_fake'")
-        # normal_METRAN_150 = cursor.fetchone()[0]
 
         
-        if metran["all"] > 0:
-            METRAN_150 = (metran["count_natural"] / metran["all"]) * 100
+        if metran150["total"] > 0:
+            METRAN_150 = (metran150["non_defective"] / metran150["total"]) * 100
         else:
             METRAN_150 = 0
 
         
-        
-        cursor.execute("SELECT COUNT(*) FROM getstat")
-        total_METRAN_75 = cursor.fetchone()[0]
-
-        
-        cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_75 = 'count_fake'")
-        normal_METRAN_75 = cursor.fetchone()[0]
-
-        
-        if total_METRAN_75 > 0:
-            METRAN_75 = (normal_METRAN_75 / total_METRAN_75) * 100
+        if metran75["total"] > 0:
+            METRAN_75 = (metran75["non_defective"] / metran75["total"]) * 100
         else:
             METRAN_75 = 0
 
-        
-        
-        cursor.execute("SELECT COUNT(*) FROM getstat")
-        total_METRAN_50 = cursor.fetchone()[0]
-
-        
-        cursor.execute("SELECT COUNT(*) FROM details WHERE getstat name: METRAN_50 = 'count_fake'")
-        normal_METRAN_50 = cursor.fetchone()[0]
-
-        
-        if total_METRAN_50 > 0:
-            METRAN_50 = (normal_METRAN_50 / total_METRAN_50) * 100
+        if metran50["total"] > 0:
+            METRAN_50 = (metran50["non_defective"] / metran50["total"]) * 100
         else:
             METRAN_50 = 0
-
-        # Закрытие соединения
-        conn.close()
 
 
 

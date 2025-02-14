@@ -3,6 +3,7 @@ import serial
 import time
 from detail_work import getDetail
 
+
 # Настройки порта
 arduino_port = "COM8"  # Ваш порт
 baud_rate = 9600
@@ -25,6 +26,8 @@ class SerialListener(QThread):
                     self.data_received.emit(data)
         except serial.SerialException as e:
             print(f"Ошибка при работе с COM портом: {e}")
+        # except UnboundLocalError as a:
+            
         finally:
             if ser.is_open:
                 ser.close()

@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt
 # --------------
 
 class CustomDialog(QDialog):
-    def __init__(self, error):
+    def __init__(self, error, type):
         super().__init__()
         self.setWindowTitle("Ошибка")
         
@@ -43,14 +43,23 @@ class CustomDialog(QDialog):
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
 
-        # Кнопки "Да" и "Нет"
-        button_yes = QPushButton("Да")
-        button_no = QPushButton("Нет")
-        button_yes.clicked.connect(self.accept)
-        button_no.clicked.connect(self.reject)
+        if type == "choice":
 
-        # Добавляем кнопки в макет
-        layout.addWidget(button_yes)
-        layout.addWidget(button_no)
+            # Кнопки "Да" и "Нет"
+            button_yes = QPushButton("Да")
+            button_no = QPushButton("Нет")
+            button_yes.clicked.connect(self.accept)
+            button_no.clicked.connect(self.reject)
+
+                    # Добавляем кнопки в макет
+            layout.addWidget(button_yes)
+            layout.addWidget(button_no)
+        else:
+            button_ok = QPushButton("Ok")
+            button_ok.clicked.connect(self.accept)
+
+            layout.addWidget(button_ok)
+
+
 
         self.setLayout(layout)

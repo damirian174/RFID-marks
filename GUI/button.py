@@ -20,6 +20,7 @@ from config import auth, work
 from detail_work import *
 
 from COM import SerialListener
+from error_test import show_error_dialog
 
 
 class MainApp(QMainWindow):
@@ -77,7 +78,7 @@ class MainApp(QMainWindow):
         # packing_ui_instance = self.packing_ui
         getUI(self.mark_ui, self.work_ui, self.packing_ui, self.tests_ui)
 
-
+        self.uid = None
         self.init_login_page()
 
         self.stacked_widget.addWidget(self.scan_page)
@@ -104,12 +105,13 @@ class MainApp(QMainWindow):
 
 
     def setup_scan_page(self):
-        self.menu_ui.label.setText("Сканирование штрихкода активно")
+        self.menu_ui.label.setText("Отсканируйте штрихкод")
         self.menu_ui.label.setAlignment(Qt.AlignCenter)
 
         self.manual_input = QLineEdit(self.scan_page)
         self.manual_input.setPlaceholderText("Введите штрихкод вручную")
         self.manual_input.setGeometry(450, 400, 400, 40)
+        self.manual_input.returnPressed.connect(self.verify)
 
         manual_button = QPushButton("Подтвердить", self.scan_page)
         manual_button.setGeometry(550, 550, 200, 40)
@@ -123,14 +125,18 @@ class MainApp(QMainWindow):
         # Start scanning immediately
         self.start_scan()
 
-    def verify(self, user):
+    def verify(self):
+        
         data = {
             "type": "user",
-            "uid": user
+            "uid": self.manual_input.text() or self.uid
         }
+        
+
         worker = database(data)
         if worker["status"] == "ok":
             name = worker["surname"] + " " + worker["name"]
+
             
             # Окно подтверждения
             reply = QMessageBox.question(self, 'Подтверждение',
@@ -145,12 +151,19 @@ class MainApp(QMainWindow):
                 self.mark_ui.updateName(name=name)
                 self.stacked_widget.setCurrentWidget(self.work_page)
                 auth = True       
-                                         # Возвращаем пользователя на страницу регистрации
+                self.work_ui.running = True  # Это должно теперь работать
+                self.work_ui.start_timer()
+                                         # Возвращаем пользователя на страницу регистраци
+        else:
+            show_error_dialog('Пользователь не найден!', False)
+            
 
+                                         
     def manual_entry(self):
         entered_code = self.manual_input.text()
-        print(f"Штрихкод введен вручную: {entered_code}")
-        self.verify(entered_code)
+        # print(f"Штрихкод введен вручную: {entered_code}")
+        self.uid = entered_code
+        self.verify()
 
     def start_scan(self):
         self.capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -186,8 +199,9 @@ class MainApp(QMainWindow):
                 for obj in decoded_objects:
                     try:
                         data = obj.data.decode("utf-8")
-                        print(f"Штрихкод: {data}")
-                        self.verify(data)
+                        # print(f"Штрихкод: {data}")
+                        self.uid = data
+                        self.verify()
                     except Exception as e:
                         print(f"Ошибка при декодировании: {e}")
 
@@ -210,12 +224,14 @@ class MainApp(QMainWindow):
         self.login_input = QLineEdit()
         self.login_input.setPlaceholderText("Введите логин")
         self.login_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid gray; border-radius: 5px;")
+        self.login_input.returnPressed.connect(self.check_admin_credentials)
         layout.addWidget(self.login_input)
 
         self.password_input = QLineEdit()
         self.password_input.setEchoMode(QLineEdit.Password)
         self.password_input.setPlaceholderText("Введите пароль")
         self.password_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid gray; border-radius: 5px;")
+        self.password_input.returnPressed.connect(self.check_admin_credentials)
         layout.addWidget(self.password_input)
 
         self.error_message = QLabel()
@@ -224,7 +240,7 @@ class MainApp(QMainWindow):
 
         login_button = QPushButton("Войти")
         login_button.setStyleSheet("background-color: #5F7ADB; color: white; font: 16px; padding: 10px; border-radius: 5px;")
-        login_button.clicked.connect(self.check_admin_credentials)
+        login_button.clicked.connect(self.check_admin_credentials) 
         layout.addWidget(login_button)
 
         layout.setSpacing(10)
@@ -240,8 +256,11 @@ class MainApp(QMainWindow):
             self.password_input.clear()
             self.error_message.clear()
             self.stacked_widget.setCurrentWidget(self.admin_page_ui)
+            self.password_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid gray; border-radius: 5px;")
+            self.login_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid gray; border-radius: 5px;")
         else:
             self.password_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid red; border-radius: 5px;")
+            self.login_input.setStyleSheet("font: 16px; padding: 10px; border: 2px solid red; border-radius: 5px;")
             self.error_message.setText("Неверный логин или пароль")
 
     def connect_header_buttons(self):

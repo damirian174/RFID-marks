@@ -46,8 +46,8 @@ def start_work(ser, response):
     work_ui_instance.detail(response)
     packing_ui_instance.detail(response)
     test_ui_instance.detail(response)
-    work_ui_instance.running = True  # Это должно теперь работать
-    work_ui_instance.start_timer()
+    # work_ui_instance.running = True  # Это должно теперь работать
+    # work_ui_instance.start_timer()
 
 def pause_work():
     work_ui_instance.pause_timer()
@@ -78,19 +78,31 @@ def end_work():
     work_ui_instance.running = False
     work_ui_instance.stop_timer()  # Остановка таймера
     work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
-    print(data_detail)
 
-    if data_detail["stage"] == "Маркировка":
-        print(time_start)
-        print(time_end)
-        time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
-        response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
-        
-        # print(response_data)
-        response = database(response_data)
+    # if data_detail["stage"] == "Маркировка":
+    #     # print(time_start)
+    #     # print(time_end)
+    #     # time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
+    #     # response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
+    #     response_data = {'type': 'mark', 'name': '', 'serial': data_detail["serial_number"]}
+    #     # print(response_data)
+    #     response = database(response_data)
 
     
-
+def update(name, serial):
+    global work
+    if work:
+        end_work()
+    if data_detail == None:
+        
+        # print(time_start)
+        # print(time_end)
+        # time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
+        # response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
+        response_data = {'type': 'mark', 'name': 'name', 'serial': serial}
+        # print(response_data)
+        response = database(response_data)
+    
     
 
 
@@ -112,7 +124,7 @@ def getDetail(serial_number):
         start_work(serial_number, response, work_ui_instance)
 
     else: 
-        show_error_dialog(f"Деталь c серийным номером {serial_number} не найдена, хотите ее Промаркировать? ")
+        show_error_dialog(f"Деталь c серийным номером {serial_number} не найдена, хотите ее Промаркировать? ", "choice")
         if show_error_dialog:
             start_work(serial_number, mark_ui_instance, response)
         else:
