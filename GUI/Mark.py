@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect)
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QSizePolicy)
 from detail_work import end_work, pause_work, couintine_work, update
@@ -64,13 +64,13 @@ class Ui_MainWindow(object):
         self.pushButton_7 = QPushButton(self.widget)
         self.pushButton_7.setObjectName(u"pushButton_7")
         self.pushButton_7.setText(u"Маркировка")
+        self.pushButton_7.setFixedHeight(50)
         self.pushButton_7.setStyleSheet(u"""
         QPushButton {
-                background-color: #5F7ADB;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
+                color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
         }
         QPushButton:hover {
                 background-color: #4A6ED9;
@@ -81,13 +81,13 @@ class Ui_MainWindow(object):
         self.pushButton_8 = QPushButton(self.widget)
         self.pushButton_8.setObjectName(u"pushButton_8")
         self.pushButton_8.setText(u"Сборка")
+        self.pushButton_8.setFixedHeight(50)
         self.pushButton_8.setStyleSheet(u"""
         QPushButton {
-                background-color: #5F7ADB;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
+                color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
         }
         QPushButton:hover {
                 background-color: #4A6ED9;
@@ -98,13 +98,14 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QPushButton(self.widget)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setText(u"Тестирование")
+        self.pushButton_2.setFixedHeight(50)
         self.pushButton_2.setStyleSheet(u"""
         QPushButton {
-                background-color: #5F7ADB;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
+                color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
+
         }
         QPushButton:hover {
                 background-color: #4A6ED9;
@@ -115,14 +116,14 @@ class Ui_MainWindow(object):
         self.pushButton_5 = QPushButton(self.widget)
         self.pushButton_5.setObjectName(u"pushButton_5")
         self.pushButton_5.setText(u"Упаковка")
+        self.pushButton_5.setFixedHeight(50)
         self.pushButton_5.setStyleSheet(u"""
         QPushButton {
-                background-color: #5F7ADB;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
-        }
+                color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
+}
         QPushButton:hover {
                 background-color: #4A6ED9;
         }
@@ -132,14 +133,14 @@ class Ui_MainWindow(object):
         self.pushButton_6 = QPushButton(self.widget)
         self.pushButton_6.setObjectName(u"pushButton_6")
         self.pushButton_6.setText(u"Админ панель")
+        self.pushButton_6.setFixedHeight(50)
         self.pushButton_6.setStyleSheet(u"""
-        QPushButton {
-                background-color: #5F7ADB;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
-        }
+                QPushButton {
+                color: #5F7ADB;\n"
+"font: 20px;\n"
+"background-color: #2E3239;\n"
+"font-weight: 700;\n"
+}
         QPushButton:hover {
                 background-color: #4A6ED9;
         }
@@ -161,6 +162,20 @@ class Ui_MainWindow(object):
         self.verticalLayoutLeft.setContentsMargins(20, 20, 20, 20)
         self.verticalLayoutLeft.setSpacing(15)
 
+        # Добавляем label_2 в верхнюю часть левой панели
+        self.label_2 = QLabel(self.widget_2)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setText(u"Василий Пупкин")
+        self.label_2.setFixedHeight(45)
+        self.label_2.setStyleSheet(u"""
+            font: 30px;
+            font-weight: 600;
+            color: black;
+        """)
+        self.label_2.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)  # Выравнивание по левому краю
+        self.verticalLayoutLeft.addWidget(self.label_2)
+
+        # Остальные элементы левой панели
         self.label = QLabel(self.widget_2)
         self.label.setObjectName(u"label")
         self.label.setStyleSheet(u"font-size: 18px; font-weight: 600;")
@@ -227,16 +242,13 @@ class Ui_MainWindow(object):
                 border-radius: 15px;
                 padding: 10px 20px;
             }
-            QPushButton:hover {
-                background-color: #4A6ED9;
-            }
         """)
         self.pushButton.setText(u"Внести деталь")
         self.pushButton.clicked.connect(self.open_confirmation_window)
         self.verticalLayoutLeft.addWidget(self.pushButton, alignment=Qt.AlignCenter)
 
-        self.horizontalLayoutMain.addWidget(self.widget_2, stretch=1)
-
+        # Добавляем левую панель в основной макет
+        self.horizontalLayoutMain.addWidget(self.widget_2, stretch=15)
         # Центральная панель (Действия)
         self.widget_3 = QWidget(self.centralwidget)
         self.widget_3.setObjectName(u"widget_3")
@@ -256,9 +268,6 @@ class Ui_MainWindow(object):
                 border-radius: 15px;
                 padding: 10px 20px;
             }
-            QPushButton:hover {
-                background-color: #3E4249;
-            }
         """)
         self.pushButton_4.setText(u"Сообщить о проблеме")
         self.verticalLayoutCenter.addWidget(self.pushButton_4)
@@ -273,9 +282,6 @@ class Ui_MainWindow(object):
                 font-weight: bold;
                 border-radius: 15px;
                 padding: 10px 20px;
-            }
-            QPushButton:hover {
-                background-color: #3E4249;
             }
         """)
         self.pushButton_3.setText(u"Сообщить о браке")
@@ -292,9 +298,6 @@ class Ui_MainWindow(object):
                 border-radius: 15px;
                 padding: 10px 20px;
             }
-            QPushButton:hover {
-                background-color: #3E4249;
-            }
         """)
         self.pushButton_9.setText(u"Завершить работу")
         self.verticalLayoutCenter.addWidget(self.pushButton_9)
@@ -310,15 +313,12 @@ class Ui_MainWindow(object):
                 border-radius: 15px;
                 padding: 10px 20px;
             }
-            QPushButton:hover {
-                background-color: #3E4249;
-            }
         """)
         self.pushButton_15.setText(u"Отойти")
         self.pushButton_15.clicked.connect(self.away)
         self.verticalLayoutCenter.addWidget(self.pushButton_15)
 
-        self.horizontalLayoutMain.addWidget(self.widget_3, stretch=1)
+        self.horizontalLayoutMain.addWidget(self.widget_3, stretch=10)
 
         # Правая панель (Информация о детали)
         self.widget_5 = QWidget(self.centralwidget)
@@ -398,7 +398,7 @@ class Ui_MainWindow(object):
         self.sector.setText(u"Отсканируй деталь")
         self.verticalLayoutRight.addWidget(self.sector)
 
-        self.horizontalLayoutMain.addWidget(self.widget_5, stretch=1)
+        self.horizontalLayoutMain.addWidget(self.widget_5, stretch=10)
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
 
@@ -463,6 +463,10 @@ class Ui_MainWindow(object):
             self.defective.setText("Отсканируй деталь")
             self.stage.setText("Отсканируй деталь")
             self.sector.setText("Отсканируй деталь")
+            
+    def updateName(self, name):
+        self.label_2.setText(name)
+            
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
