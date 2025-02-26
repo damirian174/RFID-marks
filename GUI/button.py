@@ -289,8 +289,11 @@ class MainApp(QMainWindow):
                     # Переходим на рабочую страницу
                     self.stacked_widget.setCurrentWidget(self.work_page)
                     auth = True
+                    self.is_verified = False
                     self.work_ui.running = True
                     self.work_ui.start_timer()
+                else: 
+                    self.is_verified = False
             else:
                 show_error_dialog('Пользователь не найден!', False)
 

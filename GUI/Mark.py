@@ -17,7 +17,9 @@ import sys
 import os
 import serial
 import serial.tools.list_ports
-
+import button
+import database
+import datetime
 class SerialWorker(QThread):
     finished = Signal(bool, str)
     status_update = Signal(str)
@@ -33,7 +35,6 @@ class SerialWorker(QThread):
         try:
             # ★ Вывод информации о подключении
             self.status_update.emit(f"Подключаюсь к {self.port}...")
-            
             with serial.Serial(
                 self.port,
                 self.baudrate,
@@ -454,9 +455,23 @@ class Ui_MainWindow(object):
         self.horizontalLayoutMain.addWidget(self.widget_5, stretch=10)
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
+        self.pushButton_9.clicked.connect(button.MainApp.setup_scan_page)
+        self.pushButton_4.clicked.connect(self.init_problem)
 
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
+    def init_problem(self):
+        
+
+        data = {"type": "report", "text": 123, "time": datetime.datetime(), "name": self.label_2.text()}
+        x = database(data)
+        if x: 
+            # Успешно отправлено, ждите специалиста
+            return
+        else: 
+            # Не успешно
+            return
+
 
     def get_image_path(self, image_name):
         """
@@ -502,6 +517,7 @@ class Ui_MainWindow(object):
         layout.addWidget(button_edit)
 
         self.confirmation_window.show()
+    
 
     def confirm_data(self):
         # Получаем данные из полей ввода
@@ -580,6 +596,7 @@ class Ui_MainWindow(object):
         self.serial_thread.start()
         
         self.write_dialog.exec_()
+
     def update_status(self, message):
         self.status_label.setText(message)
         if "WRITE_SUCCESS" in message:
