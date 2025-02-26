@@ -462,8 +462,8 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
     def init_problem(self):
         
-
-        data = {"type": "report", "text": 123, "time": datetime.datetime(), "name": self.label_2.text()}
+        report_text = self.label.text()
+        data = {"type": "report", "text": report_text, "time": datetime.datetime(), "name": self.label_2.text()}
         x = database(data)
         if x: 
             # Успешно отправлено, ждите специалиста
