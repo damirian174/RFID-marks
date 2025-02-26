@@ -2,11 +2,13 @@
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QTimer, QRect)
 from PySide6.QtGui import QPixmap, QIcon
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout)
+from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout, QDialog, QTextEdit)
 from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import time
 import os, sys
-
+from datetime import datetime
+import button
+import database
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -474,6 +476,53 @@ class Ui_MainWindow(object):
 
     def updateName(self, name):
         self.label_2.setText(name)
+    def init_problem(self):
+        self.dialog = QDialog()
+        self.dialog.setWindowTitle("Сообщить о проблеме")  
+        self.dialog.setFixedSize(300, 200)  
+        global dialog
+        self.layout = QVBoxLayout()
+
+        self.text_edit = QTextEdit()
+        global text_edit
+        self.text_edit.setPlaceholderText("Опишите вашу проблему здесь...")  
+        self.layout.addWidget(self.text_edit)  
+
+        self.send_button = QPushButton("Отправить")
+        global send_button
+        self.layout.addWidget(self.send_button)  
+        self.send_button.clicked.connect(self.send_report)
+
+        self.dialog.setLayout(self.layout)
+
+        self.dialog.show()
+
+    # Функция, которая вызывается при нажатии на кнопку "Отправить"
+    def send_report(self):
+        report_text = self.text_edit.toPlainText()
+        
+        
+        if not report_text.strip():
+            QMessageBox.warning(self.dialog, "Ошибка", "Пожалуйста, опишите вашу проблему перед отправкой.")
+            return
+           # Исправлено: вызываем now() для получения текущего времени
+        vrema = datetime.datetime.now()  # Теперь vrema — это объект datetime
+        time = vrema.strftime("%Y-%m-%d %H:%M")  # Форматируем вре
+        data = {
+            "type": "report",  
+            "text": report_text,  
+            "time": time,  
+            "name": self.label_2.text()  
+        }
+        print(type(vrema))
+        
+        if database.database(data):  
+            QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
+            self.dialog.close()  
+        else:
+            QMessageBox.critical(self.dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
+
+
 
 if __name__ == "__main__":
     import sys

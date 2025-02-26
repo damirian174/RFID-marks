@@ -8,8 +8,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLayout,
     QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QVBoxLayout, QWidget, QMessageBox, QDialog, QProgressBar, QHBoxLayout, QDialogButtonBox, QTextEdit)
-from detail_work import end_work, pause_work, couintine_work, update
+    QVBoxLayout, QWidget, QMessageBox, QDialog, QProgressBar, QHBoxLayout, QDialogButtonBox, QTextEdit, )
+from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import serial
 from PySide6.QtCore import QThread, Signal, QTimer
 import time
@@ -676,6 +676,8 @@ class Ui_MainWindow(object):
     def updateName(self, name):
         self.label_2.setText(name)
             
+    def kocak(self):
+        zakurit()
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
