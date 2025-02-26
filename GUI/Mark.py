@@ -459,39 +459,41 @@ class Ui_MainWindow(object):
         self.pushButton_4.clicked.connect(self.init_problem)
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
-    def init_problem(self):
+    # def init_problem(self):
         
-        report_text = self.label.text()
-        data = {"type": "report", "text": report_text, "time": datetime.datetime(), "name": self.label_2.text()}
-        x = database(data)
-        if x: 
-            # Успешно отправлено, ждите специалиста
-            return
-        else: 
-            # Не успешно
-            return
+    #     report_text = self.label.text()
+    #     data = {"type": "report", "text": report_text, "time": datetime.datetime(), "name": self.label_2.text()}
+    #     x = database(data)
+    #     if x: 
+    #         # Успешно отправлено, ждите специалиста
+    #         return
+    #     else: 
+    #         # Не успешно
+    #         return
     def init_problem(self):
         self.dialog = QDialog()
         self.dialog.setWindowTitle("Сообщить о проблеме")  
         self.dialog.setFixedSize(300, 200)  
         global dialog
-        layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
 
         self.text_edit = QTextEdit()
         global text_edit
-        text_edit.setPlaceholderText("Опишите вашу проблему здесь...")  
-        layout.addWidget(text_edit)  
+        self.text_edit.setPlaceholderText("Опишите вашу проблему здесь...")  
+        self.layout.addWidget(self.text_edit)  
 
         self.send_button = QPushButton("Отправить")
         global send_button
-        layout.addWidget(self.send_button)  
+        self.layout.addWidget(self.send_button)  
         self.send_button.clicked.connect(self.send_report)
 
-        self.dialog.setLayout(layout)
+        self.dialog.setLayout(self.layout)
+
+        self.dialog.show()
 
     # Функция, которая вызывается при нажатии на кнопку "Отправить"
     def send_report(self):
-        report_text = text_edit.toPlainText()
+        report_text = self.text_edit.toPlainText()
         
         
         if not report_text.strip():
@@ -505,13 +507,13 @@ class Ui_MainWindow(object):
             "time": datetime.datetime.now(),  
             "name": self.label_2.text()  
         }
-
+        print()
         
-        if database(data):  
-            QMessageBox.information(dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
-            dialog.close()  
+        if database.database(data):  
+            QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
+            self.dialog.close()  
         else:
-            QMessageBox.critical(dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
+            QMessageBox.critical(self.dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
 
 
 
