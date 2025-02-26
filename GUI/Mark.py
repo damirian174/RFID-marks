@@ -19,7 +19,7 @@ import serial
 import serial.tools.list_ports
 import button
 import database
-import datetime
+from datetime import datetime
 class SerialWorker(QThread):
     finished = Signal(bool, str)
     status_update = Signal(str)
@@ -499,15 +499,16 @@ class Ui_MainWindow(object):
         if not report_text.strip():
             QMessageBox.warning(self.dialog, "Ошибка", "Пожалуйста, опишите вашу проблему перед отправкой.")
             return
-
-        
+           # Исправлено: вызываем now() для получения текущего времени
+        vrema = datetime.datetime.now()  # Теперь vrema — это объект datetime
+        time = vrema.strftime("%Y-%m-%d %H:%M")  # Форматируем вре
         data = {
             "type": "report",  
             "text": report_text,  
-            "time": datetime.datetime.now(),  
+            "time": time,  
             "name": self.label_2.text()  
         }
-        print()
+        print(type(vrema))
         
         if database.database(data):  
             QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
