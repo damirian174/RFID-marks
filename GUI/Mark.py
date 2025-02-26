@@ -8,7 +8,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLayout,
     QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QVBoxLayout, QWidget, QMessageBox, QDialog, QProgressBar, QHBoxLayout)
+    QVBoxLayout, QWidget, QMessageBox, QDialog, QProgressBar, QHBoxLayout, QDialogButtonBox, QTextEdit)
 from detail_work import end_work, pause_work, couintine_work, update
 import serial
 from PySide6.QtCore import QThread, Signal, QTimer
@@ -457,7 +457,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
         self.pushButton_9.clicked.connect(button.MainApp.setup_scan_page)
         self.pushButton_4.clicked.connect(self.init_problem)
-
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
     def init_problem(self):
@@ -471,6 +470,49 @@ class Ui_MainWindow(object):
         else: 
             # Не успешно
             return
+    def init_problem(self):
+        self.dialog = QDialog()
+        self.dialog.setWindowTitle("Сообщить о проблеме")  
+        self.dialog.setFixedSize(300, 200)  
+        global dialog
+        layout = QVBoxLayout()
+
+        self.text_edit = QTextEdit()
+        global text_edit
+        text_edit.setPlaceholderText("Опишите вашу проблему здесь...")  
+        layout.addWidget(text_edit)  
+
+        self.send_button = QPushButton("Отправить")
+        global send_button
+        layout.addWidget(self.send_button)  
+        self.send_button.clicked.connect(self.send_report)
+
+        self.dialog.setLayout(layout)
+
+    # Функция, которая вызывается при нажатии на кнопку "Отправить"
+    def send_report(self):
+        report_text = text_edit.toPlainText()
+        
+        
+        if not report_text.strip():
+            QMessageBox.warning(self.dialog, "Ошибка", "Пожалуйста, опишите вашу проблему перед отправкой.")
+            return
+
+        
+        data = {
+            "type": "report",  
+            "text": report_text,  
+            "time": datetime.datetime.now(),  
+            "name": self.label_2.text()  
+        }
+
+        
+        if database(data):  
+            QMessageBox.information(dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
+            dialog.close()  
+        else:
+            QMessageBox.critical(dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
+
 
 
     def get_image_path(self, image_name):
