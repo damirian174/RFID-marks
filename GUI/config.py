@@ -6,3 +6,5 @@ auth = False
 work = False
 
 detail = None
+
+mark = False

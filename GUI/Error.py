@@ -55,7 +55,7 @@ class CustomDialog(QDialog):
             layout.addWidget(button_yes)
             layout.addWidget(button_no)
         else:
-            button_ok = QPushButton("Ok")
+            button_ok = QPushButton("Хорошо")
             button_ok.clicked.connect(self.accept)
 
             layout.addWidget(button_ok)

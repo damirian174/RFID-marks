@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QTimer, QRect)
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout)
-from detail_work import end_work, pause_work, couintine_work, update
+from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import time
+import os, sys
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -57,7 +58,8 @@ class Ui_MainWindow(object):
         self.widget_7.setFixedSize(110, 50)  # Фиксированный размер логотипа
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        image_path = self.get_image_path("main.jpg")
+        self.label_9.setPixmap(QPixmap(image_path))
         self.horizontalLayout.addWidget(self.widget_7)
 
         # Кнопки шапки (адаптируются по ширине)
@@ -259,6 +261,7 @@ class Ui_MainWindow(object):
         """)
         self.pushButton_3.setText(u"Сообщить о браке")
         self.verticalLayoutCenter.addWidget(self.pushButton_3)
+        self.pushButton_3.clicked.connect(self.kocak)
 
         self.pushButton_9 = QPushButton(self.widget_3)
         self.pushButton_9.setObjectName(u"pushButton_9")
@@ -305,6 +308,20 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight.setContentsMargins(20, 20, 20, 20)
         self.verticalLayoutRight.setSpacing(15)
 
+        self.name = QLabel(self.widget_3)
+        self.name.setObjectName(u"name")
+        self.name.setStyleSheet(u"""
+            background-color: #5F7ADB;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            padding: 10px;
+        """)
+        self.name.setAlignment(Qt.AlignCenter)
+        self.name.setText(u"Отсканируй деталь")
+        self.verticalLayoutRight.addWidget(self.name)
+
         self.serial = QLabel(self.widget_3)
         self.serial.setObjectName(u"serial")
         self.serial.setStyleSheet(u"""
@@ -319,19 +336,8 @@ class Ui_MainWindow(object):
         self.serial.setText(u"Отсканируй деталь")
         self.verticalLayoutRight.addWidget(self.serial)
 
-        self.name = QLabel(self.widget_3)
-        self.name.setObjectName(u"name")
-        self.name.setStyleSheet(u"""
-            background-color: #5F7ADB;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 15px;
-            padding: 10px;
-        """)
-        self.name.setAlignment(Qt.AlignCenter)
-        self.name.setText(u"Отсканируй деталь")
-        self.verticalLayoutRight.addWidget(self.name)
+
+
 
         self.defective = QLabel(self.widget_3)
         self.defective.setObjectName(u"defective")
@@ -378,7 +384,7 @@ class Ui_MainWindow(object):
         self.horizontalLayoutMain.addWidget(self.widget_3, stretch=10)  # Правая панель занимает меньше места
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
-
+        self.pushButton.clicked.connect(self.update2)
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
 
@@ -396,6 +402,26 @@ class Ui_MainWindow(object):
             seconds = int(elapsed % 60)
             time_string = f"{hours:02}:{minutes:02}:{seconds:02}"
             self.label.setText(time_string)
+    def update2(self):
+        update()
+    def get_image_path(self, image_name):
+        """
+        Получение правильного пути к изображению в зависимости от того,
+        запущено ли приложение как .exe или как скрипт.
+        """
+        if getattr(sys, 'frozen', False):
+            # Если приложение запущено как .exe
+            base_path = sys._MEIPASS
+        else:
+            # Если в режиме разработки
+            base_path = os.path.abspath(".")
+
+        # Формируем полный путь к изображению
+        image_path = os.path.join(base_path, image_name)
+        return image_path
+
+    def kocak(self):
+        zakurit()
 
     def start_timer(self):
         self.start_time = time.time()

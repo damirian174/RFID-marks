@@ -1,9 +1,77 @@
 # -*- coding: utf-8 -*-
-
-from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect)
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QSizePolicy)
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLayout,
+    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+    QVBoxLayout, QWidget, QMessageBox, QDialog, QProgressBar, QHBoxLayout)
 from detail_work import end_work, pause_work, couintine_work, update
+import serial
+from PySide6.QtCore import QThread, Signal, QTimer
+import time
+import sys
+import os
+import serial
+import serial.tools.list_ports
+
+class SerialWorker(QThread):
+    finished = Signal(bool, str)
+    status_update = Signal(str)
+    
+    def __init__(self, text, port):
+        super().__init__()
+        self.text = text.ljust(16)[:16]
+        self.port = port #self.find_arduino()  # ★ Проверьте правильность порта!
+        self.baudrate = 9600
+        self.timeout = 5
+
+    def run(self):
+        try:
+            # ★ Вывод информации о подключении
+            self.status_update.emit(f"Подключаюсь к {self.port}...")
+            
+            with serial.Serial(
+                self.port,
+                self.baudrate,
+                timeout=self.timeout,
+                write_timeout=self.timeout
+            ) as ser:
+                time.sleep(2)
+                
+                # ★ Принудительная очистка буферов
+                ser.reset_input_buffer()
+                ser.reset_output_buffer()
+                
+                # ★ Отправка данных с подтверждением
+                data_to_send = f"{self.text}\n"
+                self.status_update.emit(f"Отправляю: '{data_to_send.strip()}'")
+                ser.write(data_to_send.encode('utf-8'))
+                ser.flush()  # ★ Важно: принудительная отправка
+                
+                # ★ Ожидание ответа
+                start_time = time.time()
+                while time.time() - start_time < self.timeout:
+                    if ser.in_waiting:
+                        line = ser.readline().decode('utf-8').strip()
+                        self.status_update.emit(f"Получено: '{line}'")
+                        if "WRITE_SUCCESS" in line:
+                            self.finished.emit(True, "Успех!")
+                            return
+                        elif "WRITE_ERROR" in line:
+                            self.finished.emit(False, "Ошибка Arduino")
+                            return
+                    time.sleep(0.1)
+                
+                self.finished.emit(False, "Таймаут ответа")
+
+        except serial.SerialException as e:
+            self.finished.emit(False, f"Ошибка порта: {str(e)}")
+        except Exception as e:
+            self.finished.emit(False, f"Неизвестная ошибка: {str(e)}")
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -11,7 +79,6 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1300, 750)
         MainWindow.setStyleSheet(u"background-color:rgb(255, 255, 255)")
-
         # Центральный виджет
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -57,7 +124,8 @@ class Ui_MainWindow(object):
         self.widget_7.setFixedSize(110, 50)  # Фиксированный размер логотипа
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        image_path = self.get_image_path("main.jpg")
+        self.label_9.setPixmap(QPixmap(image_path))
         self.horizontalLayout.addWidget(self.widget_7)
 
         # Кнопки шапки (адаптируются по ширине)
@@ -71,9 +139,6 @@ class Ui_MainWindow(object):
 "font: 20px;\n"
 "background-color: #2E3239;\n"
 "font-weight: 700;\n"
-        }
-        QPushButton:hover {
-                background-color: #4A6ED9;
         }
         """)
         self.horizontalLayout.addWidget(self.pushButton_7)
@@ -89,9 +154,6 @@ class Ui_MainWindow(object):
 "background-color: #2E3239;\n"
 "font-weight: 700;\n"
         }
-        QPushButton:hover {
-                background-color: #4A6ED9;
-        }
         """)
         self.horizontalLayout.addWidget(self.pushButton_8)
 
@@ -105,10 +167,6 @@ class Ui_MainWindow(object):
 "font: 20px;\n"
 "background-color: #2E3239;\n"
 "font-weight: 700;\n"
-
-        }
-        QPushButton:hover {
-                background-color: #4A6ED9;
         }
         """)
         self.horizontalLayout.addWidget(self.pushButton_2)
@@ -124,9 +182,6 @@ class Ui_MainWindow(object):
 "background-color: #2E3239;\n"
 "font-weight: 700;\n"
 }
-        QPushButton:hover {
-                background-color: #4A6ED9;
-        }
         """)
         self.horizontalLayout.addWidget(self.pushButton_5)
 
@@ -141,9 +196,6 @@ class Ui_MainWindow(object):
 "background-color: #2E3239;\n"
 "font-weight: 700;\n"
 }
-        QPushButton:hover {
-                background-color: #4A6ED9;
-        }
         """)
         self.horizontalLayout.addWidget(self.pushButton_6)
 
@@ -329,6 +381,7 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight.setSpacing(15)
 
         self.name = QLabel(self.widget_5)
+        print("name widget initialized")
         self.name.setObjectName(u"name")
         self.name.setStyleSheet(u"""
             background-color: #5F7ADB;
@@ -404,8 +457,32 @@ class Ui_MainWindow(object):
 
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
+
+    def get_image_path(self, image_name):
+        """
+        Получение правильного пути к изображению в зависимости от того,
+        запущено ли приложение как .exe или как скрипт.
+        """
+        if getattr(sys, 'frozen', False):
+            # Если приложение запущено как .exe
+            base_path = sys._MEIPASS
+        else:
+            # Если в режиме разработки
+            base_path = os.path.abspath(".")
+
+        # Формируем полный путь к изображению
+        image_path = os.path.join(base_path, image_name)
+        return image_path
+    def find_arduino(self):
+        ports = serial.tools.list_ports.comports()
+        for port in ports:
+            if "USB Serial Port" in port.description:
+                return port.device
+            
+        return None
         
     def open_confirmation_window(self):
+        # Создание окна подтверждения
         self.confirmation_window = QWidget()
         self.confirmation_window.setWindowTitle("Подтверждение данных")
         self.confirmation_window.setGeometry(375, 150, 250, 500)
@@ -427,9 +504,19 @@ class Ui_MainWindow(object):
         self.confirmation_window.show()
 
     def confirm_data(self):
-        update(self.comboBox.currentText(), self.lineEdit_3.text())
+        # Получаем данные из полей ввода
+        category = self.lineEdit.text()
+        marking = self.comboBox.currentText()
+        serial_number = self.lineEdit_3.text()
+        
+        # Формируем текст для записи (пример формата)
+        text_to_write = f"{serial_number}"
+        
+        # Вызываем функцию записи
+        self.write(text_to_write)
+        
+        # Очищаем поля и закрываем окно
         self.lineEdit.clear()
-        self.comboBox.clear()
         self.lineEdit_3.clear()
         self.confirmation_window.close()
 
@@ -451,6 +538,11 @@ class Ui_MainWindow(object):
         couintine_work()
 
     def detail(self, data=None):
+        if not hasattr(self, 'name'):
+            print("name widget not initialized!")
+            return  # or some other handling mechanism
+        
+        # Proceed with the normal logic
         if data:
             self.name.setText(str(data['name']))
             self.serial.setText(str(data['serial_number']))
@@ -463,6 +555,61 @@ class Ui_MainWindow(object):
             self.defective.setText("Отсканируй деталь")
             self.stage.setText("Отсканируй деталь")
             self.sector.setText("Отсканируй деталь")
+
+    def write(self, text):
+        self.write_dialog = QDialog()
+        self.write_dialog.setWindowTitle("Запись на метку")
+        self.write_dialog.setGeometry(375, 150, 400, 200)  # Увеличено окно
+        layout = QVBoxLayout()
+        
+        self.status_label = QLabel("Идет запись...")
+        self.status_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.status_label)
+        
+        # Добавляем прогресс-бар
+        self.progress = QProgressBar()
+        self.progress.setRange(0, 0)  # Индикатор процесса
+        layout.addWidget(self.progress)
+        
+        self.write_dialog.setLayout(layout)
+        self.write_dialog.setWindowModality(Qt.ApplicationModal)
+        
+        self.serial_thread = SerialWorker(text, self.find_arduino())
+        self.serial_thread.finished.connect(self.handle_write_result)
+        self.serial_thread.status_update.connect(self.update_status)  # Новый обработчик
+        self.serial_thread.start()
+        
+        self.write_dialog.exec_()
+    def update_status(self, message):
+        self.status_label.setText(message)
+        if "WRITE_SUCCESS" in message:
+            self.progress.setRange(0, 1)
+            self.progress.setValue(1)
+    def handle_write_result(self, success, message):
+        if success:
+                self.status_label.setText("Успешная запись!")
+                print(self.comboBox.currentText(), self.lineEdit_3.text())
+                update(self.comboBox.currentText(), self.lineEdit_3.text())
+                QTimer.singleShot(2000, self.write_dialog.close)
+        else:
+                self.status_label.setText(f"Ошибка: {message}")
+                retry_button = QPushButton("Повторить")
+                retry_button.clicked.connect(lambda: self.retry_write(self.serial_thread.text))
+                close_button = QPushButton("Закрыть")
+                close_button.clicked.connect(self.write_dialog.close)
+                self.write_dialog.layout().addWidget(retry_button)
+                self.write_dialog.layout().addWidget(close_button)
+
+    def retry_write(self, text):
+        # Очистка предыдущих кнопок
+        for i in reversed(range(self.write_dialog.layout().count())):
+                widget = self.write_dialog.layout().itemAt(i).widget()
+                if isinstance(widget, QPushButton):
+                        widget.deleteLater()
+        self.status_label.setText("Идет запись на метку...")
+        self.serial_thread = SerialWorker(text, self.find_arduino())
+        self.serial_thread.finished.connect(self.handle_write_result)
+        self.serial_thread.start()
             
     def updateName(self, name):
         self.label_2.setText(name)

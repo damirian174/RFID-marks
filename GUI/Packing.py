@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QTimer, QRect)
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout, QCheckBox)
 from detail_work import end_work, pause_work, couintine_work, update
 import time
-
+import os
+import sys
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -57,8 +58,10 @@ class Ui_MainWindow(object):
         self.widget_7.setFixedSize(110, 50)  # Фиксированный размер логотипа
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        image_path = self.get_image_path("main.jpg")
+        self.label_9.setPixmap(QPixmap(image_path))
         self.horizontalLayout.addWidget(self.widget_7)
+
 
         # Кнопки шапки (адаптируются по ширине)
         self.pushButton_7 = QPushButton(self.widget)
@@ -319,6 +322,19 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight = QVBoxLayout(self.widget_3)
         self.verticalLayoutRight.setContentsMargins(20, 20, 20, 20)
         self.verticalLayoutRight.setSpacing(15)
+        self.name = QLabel(self.widget_3)
+        self.name.setObjectName(u"name")
+        self.name.setStyleSheet(u"""
+            background-color: #5F7ADB;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            padding: 10px;
+        """)
+        self.name.setAlignment(Qt.AlignCenter)
+        self.name.setText(u"Отсканируй деталь")
+        self.verticalLayoutRight.addWidget(self.name)
 
         self.serial = QLabel(self.widget_3)
         self.serial.setObjectName(u"serial")
@@ -334,19 +350,6 @@ class Ui_MainWindow(object):
         self.serial.setText(u"Отсканируй деталь")
         self.verticalLayoutRight.addWidget(self.serial)
 
-        self.name = QLabel(self.widget_3)
-        self.name.setObjectName(u"name")
-        self.name.setStyleSheet(u"""
-            background-color: #5F7ADB;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 15px;
-            padding: 10px;
-        """)
-        self.name.setAlignment(Qt.AlignCenter)
-        self.name.setText(u"Отсканируй деталь")
-        self.verticalLayoutRight.addWidget(self.name)
 
         self.defective = QLabel(self.widget_3)
         self.defective.setObjectName(u"defective")
@@ -393,23 +396,40 @@ class Ui_MainWindow(object):
         self.horizontalLayoutMain.addWidget(self.widget_3, stretch=10)  # Правая панель занимает меньше места
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
-
+        self.pushButton.clicked.connect(self.update2)
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
-        
-        def detail(self, data=None):
-                if data:
-                        self.name.setText(str(data['name']))
-                        self.serial.setText(str(data['serial_number']))
-                        self.defective.setText(str(data['defective']))
-                        self.stage.setText(str(data['stage']))
-                        self.sector.setText(str(data['sector']))
-                else:
-                        self.name.setText("Отсканируй деталь")
-                        self.serial.setText("Отсканируй деталь")
-                        self.defective.setText("Отсканируй деталь")
-                        self.stage.setText("Отсканируй деталь")
-                        self.sector.setText("Отсканируй деталь")
+    def get_image_path(self, image_name):
+        """
+        Получение правильного пути к изображению в зависимости от того,
+        запущено ли приложение как .exe или как скрипт.
+        """
+        if getattr(sys, 'frozen', False):
+            # Если приложение запущено как .exe
+            base_path = sys._MEIPASS
+        else:
+            # Если в режиме разработки
+            base_path = os.path.abspath(".")
+
+        # Формируем полный путь к изображению
+        image_path = os.path.join(base_path, image_name)
+        return image_path
+
+    def update2(self):
+        update()
+    def detail(self, data=None):
+        if data:
+            self.name.setText(str(data['name']))
+            self.serial.setText(str(data['serial_number']))
+            self.defective.setText(str(data['defective']))
+            self.stage.setText(str(data['stage']))
+            self.sector.setText(str(data['sector']))
+        else:
+            self.name.setText("Отсканируй деталь")
+            self.serial.setText("Отсканируй деталь")
+            self.defective.setText("Отсканируй деталь")
+            self.stage.setText("Отсканируй деталь")
+            self.sector.setText("Отсканируй деталь")
 
     def away(self):
         self.centralwidget.setEnabled(False)

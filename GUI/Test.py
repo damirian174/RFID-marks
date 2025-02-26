@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect)
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QSizePolicy, QCheckBox)
+import os
+import sys
 from detail_work import end_work, pause_work, couintine_work, update
 
 class Ui_MainWindow(object):
@@ -35,14 +37,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
-
         # Логотип (фиксированный размер)
         self.widget_7 = QWidget(self.widget)
         self.widget_7.setObjectName(u"widget_7")
         self.widget_7.setFixedSize(110, 50)  # Фиксированный размер логотипа
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setPixmap(QPixmap(u"Frame 1 (1).png"))
+        image_path = self.get_image_path("main.jpg")
+        self.label_9.setPixmap(QPixmap(image_path))
         self.horizontalLayout.addWidget(self.widget_7)
 
         # Кнопки шапки (адаптируются по ширине)
@@ -56,9 +58,6 @@ class Ui_MainWindow(object):
                 font: 20px;
                 background-color: #2E3239;
                 font-weight: 700;
-        }
-        QPushButton:hover {
-                background-color: #4A6ED9;
         }
         """)
         self.horizontalLayout.addWidget(self.pushButton_7)
@@ -74,9 +73,6 @@ class Ui_MainWindow(object):
                 background-color: #2E3239;
                 font-weight: 700;
         }
-        QPushButton:hover {
-                background-color: #4A6ED9;
-        }
         """)
         self.horizontalLayout.addWidget(self.pushButton_8)
 
@@ -90,9 +86,6 @@ class Ui_MainWindow(object):
                 font: 20px;
                 background-color: #2E3239;
                 font-weight: 700;
-        }
-        QPushButton:hover {
-                background-color: #4A6ED9;
         }
         """)
         self.horizontalLayout.addWidget(self.pushButton_2)
@@ -108,9 +101,6 @@ class Ui_MainWindow(object):
                 background-color: #2E3239;
                 font-weight: 700;
         }
-        QPushButton:hover {
-                background-color: #4A6ED9;
-        }
         """)
         self.horizontalLayout.addWidget(self.pushButton_5)
 
@@ -124,9 +114,6 @@ class Ui_MainWindow(object):
                 font: 20px;
                 background-color: #2E3239;
                 font-weight: 700;
-        }
-        QPushButton:hover {
-                background-color: #4A6ED9;
         }
         """)
         self.horizontalLayout.addWidget(self.pushButton_6)
@@ -317,7 +304,7 @@ class Ui_MainWindow(object):
         self.name.setAlignment(Qt.AlignCenter)
         self.name.setText(u"Отсканируй деталь")
         self.verticalLayoutRight.addWidget(self.name)
-
+        self.pushButton.clicked.connect(self.update2)
         self.serial = QLabel(self.widget_5)
         self.serial.setObjectName(u"serial")
         self.serial.setStyleSheet(u"""
@@ -380,8 +367,24 @@ class Ui_MainWindow(object):
 
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
+    def update2(self):
+        update()
 
+    def get_image_path(self, image_name):
+        """
+        Получение правильного пути к изображению в зависимости от того,
+        запущено ли приложение как .exe или как скрипт.
+        """
+        if getattr(sys, 'frozen', False):
+            # Если приложение запущено как .exe
+            base_path = sys._MEIPASS
+        else:
+            # Если в режиме разработки
+            base_path = os.path.abspath(".")
 
+        # Формируем полный путь к изображению
+        image_path = os.path.join(base_path, image_name)
+        return image_path
 
     def away(self):
         self.centralwidget.setEnabled(False)

@@ -75,9 +75,8 @@ def end_work():
     work_ui_instance.detail(False)
     packing_ui_instance.detail(False)
     test_ui_instance.detail(False)
-    work_ui_instance.running = False
-    work_ui_instance.stop_timer()  # Остановка таймера
-    work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
+    # work_ui_instance.stop_timer()  # Остановка таймера
+    # work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
 
     # if data_detail["stage"] == "Маркировка":
     #     # print(time_start)
@@ -89,31 +88,41 @@ def end_work():
     #     response = database(response_data)
 
     
-def update(name, serial):
+def update(name=None, serial=None):
     global work
-    if work:
-        end_work()
-    if data_detail == None:
+    global data_detail
+    print(data_detail)
+    if data_detail:
+        x = data_detail["data"]
+
+    if data_detail == None and name and serial:
         
         # print(time_start)
         # print(time_end)
         # time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
         # response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
-        response_data = {'type': 'mark', 'name': 'name', 'serial': serial}
+        response_data = {'type': 'mark', "name": name, 'serial': serial}
         # print(response_data)
         response = database(response_data)
-    elif data_detail['serial_number'] == "Маркировка":
-        response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': serial}
+
+    elif x['stage'] == "Маркировка":
+        response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}
         # print(response_data)
         response = database(response_data)
-    elif data_detail['serial_number'] == "Сборка":
-        response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': serial}
+        if work:
+            end_work()
+    elif x['stage'] == "Сборка":
+        response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number']}
         # print(response_data)
         response = database(response_data)
-    elif data_detail['serial_number'] == "Тестирование":
-        response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': serial}
+        if work:
+            end_work()
+    elif x['stage'] == "Тестирование":
+        response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number']}
         # print(response_data)
         response = database(response_data)
+        if work:
+            end_work()
     
     
 
@@ -131,18 +140,28 @@ def getDetail(serial_number):
     data_detail = response
     response = response['data']
     start_work(response["serial_number"], response)
-    if "data" in response:
+    if response:
         # Вызываем метод detail через экземпляр интерфейса
-        start_work(serial_number, response, work_ui_instance)
+        start_work(serial_number, response)
 
     else: 
         show_error_dialog(f"Деталь c серийным номером {serial_number} не найдена, хотите ее Промаркировать? ", "choice")
         if show_error_dialog:
-            start_work(serial_number, mark_ui_instance, response)
+            start_work(serial_number, response)
         else:
             return
 
+def zakurit():
+    global data_detail
+    if data_detail:
+        x = data_detail["data"]
+        response = {"type": "kocak", "serial": x["serial_number"]}
+        if database(response):
+            end_work()
+            data_detail = None
+        else:
+            show_error_dialog("Нет доступа к серверу.", "hgfd")
         
 
-        
+            
 # 0444390041824

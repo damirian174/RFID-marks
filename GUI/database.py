@@ -6,12 +6,6 @@ from config import serverip, port
 def database(request_data):
     # if request_data['type'] == 'user':
         # return {'status': "ok", 'name': "Беспалов", "surname": 'Дмитрий'}
-    if request_data['type'] == 'allDetails':
-        return {'status': 'ok', 'data': [{'id': 5, 'name': 'МЕТРАН 55', 'serial_number': 'SN003', 'defective': False, 'stage': 'Сборка', 'sector': None, 'identified_by': None, 'defect_stage_id': None},
-        {'id': 6, 'name': 'МЕТРАН 55', 'serial_number': 'SN006', 'defective': False, 'stage': 'Сборка', 'sector': None, 'identified_by': None, 'defect_stage_id': None}                     
-                                         
-                                         
-                                         ]}
     try:
         print(request_data)
         # Создаем соединение с сервером
