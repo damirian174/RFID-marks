@@ -5,7 +5,7 @@ a = Analysis(
     ['button.py'],
     pathex=[],
     binaries=[('libiconv.dll', 'pyzbar'), ('libzbar-64.dll', 'pyzbar')],
-    datas=[('main.jpg', '.'), ('Work.py', '.'), ('favicon.ico', '.')],
+    datas=[('main.jpg', '.'), ('Work.py', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
