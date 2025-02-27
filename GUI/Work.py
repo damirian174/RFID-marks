@@ -7,7 +7,7 @@ from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import time
 import os, sys
 from datetime import datetime
-import button
+# import button
 import database
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit, QMain
 import os
 import sys
 from detail_work import end_work, pause_work, couintine_work, update, zakurit
-import button
+# import button
 import database
 from datetime import datetime
 

@@ -17,7 +17,7 @@ import sys
 import os
 import serial
 import serial.tools.list_ports
-import button
+# import button
 import database
 from datetime import datetime
 class SerialWorker(QThread):
@@ -455,7 +455,7 @@ class Ui_MainWindow(object):
         self.horizontalLayoutMain.addWidget(self.widget_5, stretch=10)
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
-        self.pushButton_9.clicked.connect(button.MainApp.setup_scan_page)
+        # self.pushButton_9.clicked.connect(button.MainApp.setup_scan_page)
         self.pushButton_4.clicked.connect(self.init_problem)
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
