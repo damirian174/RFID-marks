@@ -213,7 +213,7 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet(u"font: 40px; font-weight: 800; text-align: center;")
         self.label.setText(u"00:00")
         self.verticalLayoutBlue.addWidget(self.label, alignment=Qt.AlignCenter)
-
+        self.pushButton_4.clicked.connect(self.init_problem)
         self.pushButton = QPushButton(self.widget_5)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setStyleSheet(u"""

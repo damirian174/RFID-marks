@@ -339,6 +339,7 @@ class Ui_MainWindow(object):
         """)
         self.pushButton_3.setText(u"Сообщить о браке")
         self.verticalLayoutCenter.addWidget(self.pushButton_3)
+        self.pushButton_3.clicked.connect(self.kocak)
 
         self.pushButton_9 = QPushButton(self.widget_3)
         self.pushButton_9.setObjectName(u"pushButton_9")
@@ -677,6 +678,22 @@ class Ui_MainWindow(object):
         self.label_2.setText(name)
             
     def kocak(self):
+        self.dialog = QDialog()
+        self.dialog.setGeometry(0, 0, 400, 200)
+        self.dialog.setObjectName("dialog")
+        self.dialog.setWindowTitle("Бракованная деталь")
+        self.kocak_widget = QWidget()
+        self.kocak_widget.setObjectName("kocak_widget")
+        self.kocak_widget.setGeometry(0, 0, 400, 200)
+        self.kocak_widget.setStyleSheet("border-radius: 20px; border-color: red")
+        #self.dialog.setCentralWidget(self.kocak_widget)
+        
+        self.kocak_label = QLabel(self.kocak_widget)
+        self.kocak_label.setObjectName("kocak_label")
+        self.kocak_label.setText("Датчик успешно забракован!")
+        self.kocak_label.setStyleSheet("Font: 20px; color: red; font-weight: 600")
+        self.kocak_label.setAlignment(Qt.AlignCenter)
+        self.dialog.show()
         zakurit()
 if __name__ == "__main__":
     import sys

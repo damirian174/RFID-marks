@@ -339,6 +339,8 @@ class Ui_MainWindow(object):
         self.name.setText(u"Отсканируй деталь")
         self.verticalLayoutRight.addWidget(self.name)
 
+        self.pushButton_4.clicked.connect(self.init_problem)
+
         self.serial = QLabel(self.widget_3)
         self.serial.setObjectName(u"serial")
         self.serial.setStyleSheet(u"""

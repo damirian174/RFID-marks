@@ -137,6 +137,11 @@ class MainApp(QMainWindow):
         self.stacked_widget.addWidget(self.admin_page_ui)
         self.stacked_widget.addWidget(self.error_page)
 
+        self.mark_ui.pushButton_9.clicked.connect(self.setup_scan_page)
+        self.packing_ui.pushButton_9.clicked.connect(self.setup_scan_page)
+        self.tests_ui.pushButton_9.clicked.connect(self.setup_scan_page)
+        self.work_ui.pushButton_9.clicked.connect(self.setup_scan_page)
+
         self.setup_scan_page()
 
     def setup_scan_page(self):

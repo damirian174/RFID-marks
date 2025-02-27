@@ -368,6 +368,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
 
+        self.pushButton_4.clicked.connect(self.init_problem)
+
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
     def update2(self):
