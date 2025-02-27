@@ -4,8 +4,8 @@ from config import serverip, port
 
 
 def database(request_data):
-    # if request_data['type'] == 'user':
-        # return {'status': "ok", 'name': "Беспалов", "surname": 'Дмитрий'}
+    if request_data['type'] == 'report':
+        return "OK"
     try:
         print(request_data)
         # Создаем соединение с сервером
