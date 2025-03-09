@@ -13,6 +13,7 @@ from database import *
 from PySide6.QtCore import QThread, Signal, Slot
 import time
 import os, sys
+from logger import log_event, log_error
 
 class DatabaseWorker(QThread):
     # Сигнал для передачи данных в основной поток
@@ -21,14 +22,16 @@ class DatabaseWorker(QThread):
     def __init__(self, query):
         super().__init__()
         self.query = query
+        log_event(f"Создан поток DatabaseWorker с запросом: {query}")
         self.run()  # Запрос к базе данных
 
     def run(self):
-        # Выполняем запрос к базе данных
-        result = database(self.query)
-        print(result)
-        # Передаем результат в основной поток через сигнал
-        self.finished.emit(result)
+        try:
+            result = database(self.query)
+            log_event(f"Выполнен запрос к БД: {self.query}")
+            self.finished.emit(result)
+        except Exception as e:
+            log_error(f"Ошибка при запросе к базе данных: {e}")
 
 
 class Ui_MainWindow(object):
@@ -38,6 +41,7 @@ class Ui_MainWindow(object):
         self.main_window = MainWindow
         MainWindow.resize(1300, 750)
         MainWindow.setStyleSheet(u"background-color:rgb(255, 255, 255)")
+        log_event("Создан интерфейс админ-панели")
 
         # Центральный виджет
         self.centralwidget = QWidget(MainWindow)
@@ -304,7 +308,6 @@ class Ui_MainWindow(object):
     def updateTable(self, table, detail):
         table.setRowCount(0)
         query = {"type": "allDetails", "detail": detail}
-        print(2)
         if not hasattr(self, 'workers'):
             self.workers = []
         worker = DatabaseWorker(query)
@@ -343,7 +346,7 @@ class Ui_MainWindow(object):
                 table.setItem(row, 4, QTableWidgetItem(detail_data.get("stage", "")))
                 table.setItem(row, 5, QTableWidgetItem(detail_data.get("sector", "")))
         else:
-            print("Ошибка при получении данных из базы данных")
+            log_error("Ошибка при получении данных из базы данных")
 
     
     def handle_submit(self):
@@ -356,11 +359,10 @@ class Ui_MainWindow(object):
                 "prof": self.line_edit_3.text()
             }
             result = self.addUser(user_data)
-            print(user_data)
             if result:
-                print("Пользователь добавлен:", result)
+                log_event(f"Добавление пользователя: {user_data}")
             else:
-                print("Ошибка добавления пользователя. Проверьте данные.")
+                log_error(f"Ошибка добавления пользователя: {user_data}")
         elif self.form_title.text() == "Добавление детали":
             # Получаем данные из полей и вызываем функцию addDetail
             detail_data = { 
@@ -371,11 +373,11 @@ class Ui_MainWindow(object):
             }
             result = self.addDetail(detail_data)
             if result:
-                print("Деталь добавлена:", result)
+                log_event(f"Добавление датчика: {user_data}")
             else:
-                print("Ошибка добавления детали. Проверьте данные.")
+                log_error("Ошибка добавления детали. Проверьте данные.")
         else:
-            print("Неверная операция или не выбрана форма.")
+            log_error("Неверная операция или не выбрана форма.")
     def addDetail(self, data):
         if data["sensor"] and data["model"] and data["index"]:
             query = {
@@ -387,7 +389,7 @@ class Ui_MainWindow(object):
             }
             return database(query)
         else:
-            print("Поля детали не заполнены.")
+            log_error("Поля детали не заполнены.")
             return None
 
         
@@ -401,7 +403,7 @@ class Ui_MainWindow(object):
             }
             return database(query)
         else:
-            print("Поля пользователя не заполнены.")
+            log_error("Поля пользователя не заполнены.")
             return None
 
 
@@ -410,7 +412,7 @@ class Ui_MainWindow(object):
 
     def log_active_table(self, table_name):
         """Логирует или выполняет действие при входе в таблицу."""
-        print(f"Вход в таблицу: {table_name}")
+        log_event(f"Вход в таблицу: {table_name}")
         # Здесь можно добавить логику, например обновление данных
     def handle_item_clicked(self, item):
         self.timer.stop()  # Останавливаем таймер при клике по элементу
@@ -478,9 +480,6 @@ class Ui_MainWindow(object):
                 self.updateTable(self.metran_75_table, "МЕТРАН 75")
             if self.metran_55_table.isVisible():
                 self.updateTable(self.metran_55_table, "МЕТРАН 55")
-        else:
-            print("Окно не активно")
-
     def show_dashboard(self):
         from Dash import Dashboard
         dashboard = Dashboard()

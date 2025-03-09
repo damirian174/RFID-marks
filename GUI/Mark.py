@@ -20,6 +20,9 @@ import serial.tools.list_ports
 # import button
 import database
 from datetime import datetime
+from logger import log_event, log_error
+
+
 class SerialWorker(QThread):
     finished = Signal(bool, str)
     status_update = Signal(str)
@@ -61,9 +64,11 @@ class SerialWorker(QThread):
                         self.status_update.emit(f"Получено: '{line}'")
                         if "WRITE_SUCCESS" in line:
                             self.finished.emit(True, "Успех!")
+                            log_event("Успешная запись на метку")
                             return
                         elif "WRITE_ERROR" in line:
                             self.finished.emit(False, "Ошибка Arduino")
+                            log_error("Ошибка Arduino")
                             return
                     time.sleep(0.1)
                 
@@ -71,8 +76,10 @@ class SerialWorker(QThread):
 
         except serial.SerialException as e:
             self.finished.emit(False, f"Ошибка порта: {str(e)}")
+            log_error(f"Ошибка при работе с COM портом: {e}")
         except Exception as e:
             self.finished.emit(False, f"Неизвестная ошибка: {str(e)}")
+            log_error(f"Неизвестная ошибка: {str(e)}")
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -383,7 +390,6 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight.setSpacing(15)
 
         self.name = QLabel(self.widget_5)
-        print("name widget initialized")
         self.name.setObjectName(u"name")
         self.name.setStyleSheet(u"""
             background-color: #5F7ADB;
@@ -489,7 +495,7 @@ class Ui_MainWindow(object):
         self.send_button.clicked.connect(self.send_report)
 
         self.dialog.setLayout(self.layout)
-
+        log_event("окно репорта открыто")
         self.dialog.show()
 
     # Функция, которая вызывается при нажатии на кнопку "Отправить"
@@ -499,6 +505,7 @@ class Ui_MainWindow(object):
         
         if not report_text.strip():
             QMessageBox.warning(self.dialog, "Ошибка", "Пожалуйста, опишите вашу проблему перед отправкой.")
+            log_error("Отчет о проблеме не отправлен.")
             return
            # Исправлено: вызываем now() для получения текущего времени
         vrema = datetime.datetime.now()  # Теперь vrema — это объект datetime
@@ -509,13 +516,13 @@ class Ui_MainWindow(object):
             "time": time,  
             "name": self.label_2.text()  
         }
-        print(type(vrema))
-        
         if database.database(data):  
             QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
+            log_event("Отчет о ошибке успешно отправлен.")
             self.dialog.close()  
         else:
             QMessageBox.critical(self.dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
+            log_error("Отчет о ошибке успешно отправлен.")
 
 
 
@@ -561,6 +568,7 @@ class Ui_MainWindow(object):
         button_edit = QPushButton("Изменить данные")
         button_edit.clicked.connect(self.edit_data)
         layout.addWidget(button_edit)
+        log_event("окно подтверждения открыто")
 
         self.confirmation_window.show()
     
@@ -573,6 +581,7 @@ class Ui_MainWindow(object):
         
         # Формируем текст для записи (пример формата)
         text_to_write = f"{serial_number}"
+        log_event("Данные маркировки подтверждены")
         
         # Вызываем функцию записи
         self.write(text_to_write)
@@ -601,7 +610,6 @@ class Ui_MainWindow(object):
 
     def detail(self, data=None):
         if not hasattr(self, 'name'):
-            print("name widget not initialized!")
             return  # or some other handling mechanism
         
         # Proceed with the normal logic
@@ -651,7 +659,6 @@ class Ui_MainWindow(object):
     def handle_write_result(self, success, message):
         if success:
                 self.status_label.setText("Успешная запись!")
-                print(self.comboBox.currentText(), self.lineEdit_3.text())
                 update(self.comboBox.currentText(), self.lineEdit_3.text())
                 QTimer.singleShot(2000, self.write_dialog.close)
         else:

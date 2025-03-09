@@ -3,7 +3,7 @@ import serial
 import time
 from detail_work import getDetail
 import re
-
+from logger import *
 
 # Настройки порта
 baud_rate = 9600
@@ -24,7 +24,7 @@ class SerialListener(QThread):
                 if ser.in_waiting > 0:
                     # Чтение сырых данных
                     raw_data = ser.readline()
-                    print(f"Raw data: {raw_data}")  # Логирование сырых данных
+                    log_event(f"Raw data: {raw_data}")  # Логирование сырых данных
 
                     try:
                         # Попытка декодирования в UTF-8
@@ -34,12 +34,12 @@ class SerialListener(QThread):
                     except UnicodeDecodeError:
                         # Если декодирование не удалось, используем замену недопустимых символов
                         data = raw_data.decode('utf-8', errors='replace').strip()
-                        print(f"Decoded with errors: {data}")  # Логирование данных с ошибками
+                        log_error(f"Decoded with errors: {data}")  # Логирование данных с ошибками
                         x = data.split(" ")
                         self.data_received.emit(x[0])
                     
         except serial.SerialException as e:
-            print(f"Ошибка при работе с COM портом: {e}")
+            log_error(f"Ошибка при работе с COM портом: {e}")
         finally:
             if ser.is_open:
                 ser.close()

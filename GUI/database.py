@@ -1,13 +1,13 @@
 import socket
 import json
 from config import serverip, port
+from logger import *
 
 
 def database(request_data):
     if request_data['type'] == 'report':
         return "OK"
     try:
-        print(request_data)
         # Создаем соединение с сервером
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
             client_socket.connect((serverip, port))
@@ -27,15 +27,15 @@ def database(request_data):
             response = response_data.decode('utf-8')
             try:
                 worker = json.loads(response)
-                print(f"Запрос: {request_data}")
-                print(f"Ответ: {worker}")
+                log_event(f"Запрос: {request_data}")
+                log_event(f"Ответ: {worker}")
                 return worker  # Возвращаем объект Python (словарь)
             except json.JSONDecodeError:
-                print(f"Ошибка декодирования JSON: {response}")
+                log_error(f"Ошибка декодирования JSON: {response}")
                 return None
     except (socket.error, socket.timeout) as e:
-        print(f"Ошибка при подключении к серверу: {e}")
+        log_error(f"Ошибка при подключении к серверу: {e}")
         return None
     except Exception as e:
-        print(f"Непредвиденная ошибка: {e}")
+        log_error(f"Непредвиденная ошибка: {e}")
         return None

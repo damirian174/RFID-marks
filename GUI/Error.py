@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton
 from PySide6.QtCore import Qt
 # --------------
+from logger import log_event
 
 class CustomDialog(QDialog):
     def __init__(self, error, type):
@@ -37,6 +38,7 @@ class CustomDialog(QDialog):
         """)
 
         layout = QVBoxLayout()
+        log_event("Вызванно окно ошибки")
 
         # Создаем элементы интерфейса
         label = QLabel(f"Произошла ошибка:\n{error}")

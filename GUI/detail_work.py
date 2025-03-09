@@ -104,6 +104,7 @@ def update(name=None, serial=None):
         response_data = {'type': 'mark', "name": name, 'serial': serial}
         # print(response_data)
         response = database(response_data)
+        
 
     elif x['stage'] == "Маркировка":
         response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}

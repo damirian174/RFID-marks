@@ -10,6 +10,7 @@ import sys
 # import button
 import database
 from datetime import datetime
+from logger import log_event, log_error
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -421,6 +422,7 @@ class Ui_MainWindow(object):
         return image_path
 
     def update2(self):
+        log_event("Работа над деталью закончена")
         update()
     def detail(self, data=None):
         if data:
@@ -429,7 +431,9 @@ class Ui_MainWindow(object):
             self.defective.setText(str(data['defective']))
             self.stage.setText(str(data['stage']))
             self.sector.setText(str(data['sector']))
+            log_event("Деталь принята в работу")
         else:
+            log_event("Деталь не принята")
             self.name.setText("Отсканируй деталь")
             self.serial.setText("Отсканируй деталь")
             self.defective.setText("Отсканируй деталь")
@@ -490,7 +494,6 @@ class Ui_MainWindow(object):
             "time": time,  
             "name": self.label_2.text()  
         }
-        print(type(vrema))
         
         if database.database(data):  
             QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")

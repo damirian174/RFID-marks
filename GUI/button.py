@@ -20,7 +20,7 @@ from error_test import show_error_dialog
 import serial
 import serial.tools.list_ports
 import hashlib
-import os, sys
+from logger import *
 
 class CameraWorker(QObject):
     image_ready = Signal(QPixmap)
@@ -51,7 +51,7 @@ class CameraWorker(QObject):
                     data = obj.data.decode("utf-8")
                     self.barcode_scanned.emit(data)
                 except Exception as e:
-                    print(f"Ошибка при декодировании: {e}")
+                    log_error(f"Ошибка при декодировании штрихкода: {str(e)}")
 
         self.capture.release()
 
@@ -63,9 +63,9 @@ class MainApp(QMainWindow):
         super().__init__()
         self.setWindowTitle("Ао Метран")
         self.setGeometry(100, 100, 1300, 700)
-
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
+        log_event("Главное окно приложения создано")
 
         self.correct_password_hash = self.hash_password("Метран")
         self.is_verified = False 
@@ -75,9 +75,13 @@ class MainApp(QMainWindow):
         if mark == False:
             self.x = self.find_arduino()
             if self.x:
+                log_event(f"Найден COM-порт: {self.x}")
                 self.serial_listener = SerialListener(self.x, 9600)
                 self.serial_listener.data_received.connect(self.handle_serial_data)
                 self.serial_listener.start()
+            else:
+                log_error("Не найден подходящий COM-порт")
+
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -188,7 +192,7 @@ class MainApp(QMainWindow):
 
     def handle_serial_data(self, data):
         from detail_work import getDetail
-        print(f"Получены данные из порта: {data}")
+        log_event(f"Получены данные из порта: {data}")
         getDetail(data)
         work = True
     
@@ -207,7 +211,7 @@ class MainApp(QMainWindow):
         self.available_cameras = self.get_available_cameras()
 
         if not self.available_cameras:
-            print("Нет доступных камер.")
+            log_error("Камеры не найдены")
             return
 
         # Добавляем камеры в ComboBox
@@ -248,7 +252,7 @@ class MainApp(QMainWindow):
         self.camera_feed.setPixmap(pixmap)
 
     def handle_scanned_barcode(self, barcode):
-        print(f"Сканирован штрихкод: {barcode}")
+        log_event(f"Отсканированный штрихкод: {barcode}")
         self.uid = barcode
         self.verify()
 
@@ -257,50 +261,56 @@ class MainApp(QMainWindow):
         if self.is_verified:
             return  # Прерываем выполнение, если уже прошел верификацию
 
-        data = {
-            "type": "user",
-            "uid": self.manual_input.text() or self.uid
-        }
+        data = {"type": "user", "uid": self.manual_input.text() or self.uid}
+        log_event(f"Попытка аутентификации пользователя с UID: {data['uid']}")
         if self.is_verified == False:
-            worker = database(data)
+            try: 
+                worker = database(data)
             
-            if worker["status"] == "ok":
-                name = worker["surname"] + " " + worker["name"]
+                if worker["status"] == "ok":
+                    name = worker["surname"] + " " + worker["name"]
 
-                self.is_verified = True
+                    self.is_verified = True
 
 
 
-                reply = QMessageBox.question(self, 'Подтверждение',
-                                            f'Вы {name}?',
-                                            QMessageBox.Yes | QMessageBox.No,
-                                            QMessageBox.No)
+                    reply = QMessageBox.question(self, 'Подтверждение',
+                                                f'Вы {name}?',
+                                                QMessageBox.Yes | QMessageBox.No,
+                                                QMessageBox.No)
 
-                if reply == QMessageBox.Yes:
-                    
+                    if reply == QMessageBox.Yes:
+                        
 
-                    # Останавливаем камеру после успешного входа
-                    if hasattr(self, 'worker') and self.worker.running:
-                        self.worker.stop()
-                        self.thread.quit()
-                        self.thread.wait()
+                        # Останавливаем камеру после успешного входа
+                        if hasattr(self, 'worker') and self.worker.running:
+                            self.worker.stop()
+                            self.thread.quit()
+                            self.thread.wait()
 
-                    # Обновляем имя пользователя в разных страницах
-                    self.work_ui.updateName(name=name)
-                    self.tests_ui.updateName(name=name)
-                    self.packing_ui.updateName(name=name)
-                    self.mark_ui.updateName(name=name)
+                        # Обновляем имя пользователя в разных страницах
+                        self.work_ui.updateName(name=name)
+                        self.tests_ui.updateName(name=name)
+                        self.packing_ui.updateName(name=name)
+                        self.mark_ui.updateName(name=name)
 
-                    # Переходим на рабочую страницу
-                    self.stacked_widget.setCurrentWidget(self.work_page)
-                    auth = True
-                    self.is_verified = False
-                    self.work_ui.running = True
-                    self.work_ui.start_timer()
-                else: 
-                    self.is_verified = False
-            else:
-                show_error_dialog('Пользователь не найден!', False)
+                        # Переходим на рабочую страницу
+                        self.stacked_widget.setCurrentWidget(self.work_page)
+                        log_event(f"Успешная аутентификация пользователя: {name}")
+                        auth = True
+                        self.is_verified = False
+                        self.work_ui.running = True
+                        self.work_ui.start_timer()
+                    else: 
+                        self.is_verified = False
+                        log_error("Пользователь не найден")
+                        show_error_dialog('Пользователь не найден!', False)
+                else:
+                    show_error_dialog('Пользователь не найден!', False)
+            except Exception as e:
+                log_error(f"Ошибка при аутентификации: {str(e)}")
+
+
 
     def get_ico_path(self, image_name):
         if getattr(sys, 'frozen', False):
@@ -321,10 +331,11 @@ class MainApp(QMainWindow):
         self.verify()
 
     def closeEvent(self, event):
+        log_event("Закрытие приложения button.py")
         if mark == False:
             self.serial_listener.stop()
             self.serial_listener.wait()
-            event.accept()
+        event.accept()
 
     def init_login_page(self):
         layout = QVBoxLayout()

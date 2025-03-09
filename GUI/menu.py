@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QSizePolicy,
 from pyzbar import pyzbar
 import cv2
 import numpy as np
+from logger import log_event, log_error
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -97,10 +98,7 @@ def decode(image):
     decoded_objects = pyzbar.decode(preprocessed_image)
 
     for obj in decoded_objects:
-        # Отображаем информацию о штрих-коде
-        print("Тип:", obj.type)
-        print("Данные:", obj.data.decode('utf-8'))
-        print()
+        # Отображаем информацию о штрих-ко
         
         # Рисуем прямоугольник вокруг штрих-кода на изображении
         image = draw_barcode(obj, image)
@@ -129,7 +127,7 @@ if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
-        print("Ошибка: не удалось открыть камеру.")
+        log_error("Не удалось открыть камеру")
         exit()
 
     show_frame(cap)
