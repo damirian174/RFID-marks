@@ -213,7 +213,7 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet(u"font: 40px; font-weight: 800; text-align: center;")
         self.label.setText(u"00:00")
         self.verticalLayoutBlue.addWidget(self.label, alignment=Qt.AlignCenter)
-        self.pushButton_4.clicked.connect(self.init_problem)
+
         self.pushButton = QPushButton(self.widget_5)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setStyleSheet(u"""
@@ -248,6 +248,7 @@ class Ui_MainWindow(object):
         """)
         self.pushButton_4.setText(u"Сообщить о проблеме")
         self.verticalLayoutCenter.addWidget(self.pushButton_4)
+        self.pushButton_4.clicked.connect(self.init_problem)
 
         self.pushButton_3 = QPushButton(self.widget_3)
         self.pushButton_3.setObjectName(u"pushButton_3")
@@ -445,6 +446,36 @@ class Ui_MainWindow(object):
             self.start_time = time.time() - self.elapsed_pause_time
             self.timer.start(100)
             self.running = True
+    def change_color(self, status):
+        if status == 2:
+            # Зеленый фон – успешное состояние
+            color = "#4CAF50"  # зеленый
+        elif status == 1:
+            # Красный фон – ошибка
+            color = "#F44336"  # красный
+        else:
+            # Стандартный синий фон
+            color = "#5F7ADB"
+        style = f"background-color: {color}; color: white; font-size: 18px; font-weight: bold; border-radius: 15px; padding: 10px;"
+        self.name.setStyleSheet(style)
+        self.serial.setStyleSheet(style)
+        self.defective.setStyleSheet(style)
+        self.stage.setStyleSheet(style)
+        self.sector.setStyleSheet(style)
+        # Через 7 секунд вернуть стандартный цвет
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(7000, self.revert_color)
+
+    def revert_color(self):
+        # Стандартный синий фон
+        default_color = "#5F7ADB"
+        style = f"background-color: {default_color}; color: white; font-size: 18px; font-weight: bold; border-radius: 15px; padding: 10px;"
+        self.name.setStyleSheet(style)
+        self.serial.setStyleSheet(style)
+        self.defective.setStyleSheet(style)
+        self.stage.setStyleSheet(style)
+        self.sector.setStyleSheet(style)
+
 
     def detail(self, data=None):
         if data:
@@ -453,6 +484,7 @@ class Ui_MainWindow(object):
             self.defective.setText(str(data['defective']))
             self.stage.setText(str(data['stage']))
             self.sector.setText(str(data['sector']))
+            self.change_color(2)
         else:
             self.name.setText("Отсканируй деталь")
             self.serial.setText("Отсканируй деталь")

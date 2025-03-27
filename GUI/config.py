@@ -8,3 +8,7 @@ work = False
 detail = None
 
 mark = True
+
+data = None
+
+user = None

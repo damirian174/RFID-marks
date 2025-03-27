@@ -22,8 +22,7 @@ def database(request_data):
                 if not chunk:  # Если данных больше нет, выходим из цикла
                     break
                 response_data += chunk
-            
-            # Декодируем и преобразуем ответ
+
             response = response_data.decode('utf-8')
             try:
                 worker = json.loads(response)

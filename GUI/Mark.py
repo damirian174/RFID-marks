@@ -21,58 +21,53 @@ import serial.tools.list_ports
 import database
 from datetime import datetime
 from logger import log_event, log_error
+from COM import *
 
 
 class SerialWorker(QThread):
     finished = Signal(bool, str)
     status_update = Signal(str)
     
-    def __init__(self, text, port):
+    def __init__(self, text, serial_manager):
         super().__init__()
         self.text = text.ljust(16)[:16]
-        self.port = port #self.find_arduino()  # ★ Проверьте правильность порта!
-        self.baudrate = 9600
-        self.timeout = 5
+        self.serial_manager = serial_manager
+        self.ser = serial_manager.get_serial()
+        self.timeout = 20
 
     def run(self):
         try:
-            # ★ Вывод информации о подключении
-            self.status_update.emit(f"Подключаюсь к {self.port}...")
-            with serial.Serial(
-                self.port,
-                self.baudrate,
-                timeout=self.timeout,
-                write_timeout=self.timeout
-            ) as ser:
-                time.sleep(2)
-                
-                # ★ Принудительная очистка буферов
-                ser.reset_input_buffer()
-                ser.reset_output_buffer()
-                
-                # ★ Отправка данных с подтверждением
-                data_to_send = f"{self.text}\n"
-                self.status_update.emit(f"Отправляю: '{data_to_send.strip()}'")
-                ser.write(data_to_send.encode('utf-8'))
-                ser.flush()  # ★ Важно: принудительная отправка
-                
-                # ★ Ожидание ответа
-                start_time = time.time()
-                while time.time() - start_time < self.timeout:
-                    if ser.in_waiting:
-                        line = ser.readline().decode('utf-8').strip()
-                        self.status_update.emit(f"Получено: '{line}'")
-                        if "WRITE_SUCCESS" in line:
-                            self.finished.emit(True, "Успех!")
-                            log_event("Успешная запись на метку")
-                            return
-                        elif "WRITE_ERROR" in line:
-                            self.finished.emit(False, "Ошибка Arduino")
-                            log_error("Ошибка Arduino")
-                            return
-                    time.sleep(0.1)
-                
-                self.finished.emit(False, "Таймаут ответа")
+            self.status_update.emit(f"Отправляю данные...")
+            self.ser.reset_input_buffer()
+            self.ser.reset_output_buffer()
+            
+            data_to_send = f"w{self.text.strip()}_detail..............\n"
+            log_event(f"Send to write {data_to_send.strip()}")
+            self.status_update.emit(f"Отправляю: '{data_to_send.strip()}'")
+
+            self.ser.write(data_to_send.encode('utf-8'))
+            self.ser.flush()  
+
+            start_time = time.time()
+            while time.time() - start_time < self.timeout:
+                if self.ser.in_waiting:
+                    line = self.ser.readline().decode('utf-8').strip()
+                    self.status_update.emit(f"Получено: '{line}'")
+                    if "Поднесите карту для записи данных" in line:
+                        self.status_update.emit(line)
+                        log_event("Ожидание карты подтверждено")
+                        continue
+                    if "WRITE_SUCCESS" in line:
+                        self.finished.emit(True, "Успех!")
+                        log_event("Успешная запись на метку")
+                        return
+                    elif "WRITE_ERROR" in line:
+                        self.finished.emit(False, "Ошибка Arduino")
+                        log_error("Ошибка Arduino")
+                        return
+                time.sleep(0.1)
+
+            self.finished.emit(False, "Таймаут ответа")
 
         except serial.SerialException as e:
             self.finished.emit(False, f"Ошибка порта: {str(e)}")
@@ -81,10 +76,15 @@ class SerialWorker(QThread):
             self.finished.emit(False, f"Неизвестная ошибка: {str(e)}")
             log_error(f"Неизвестная ошибка: {str(e)}")
 
+
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, serial_manager=None):
+        self.serial_manager = serial_manager
+        if self.serial_manager is None:
+            log_error("SerialManager не передан! COM-порт не будет работать.")
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
+
         MainWindow.resize(1300, 750)
         MainWindow.setStyleSheet(u"background-color:rgb(255, 255, 255)")
         # Центральный виджет
@@ -644,23 +644,30 @@ class Ui_MainWindow(object):
         self.write_dialog.setLayout(layout)
         self.write_dialog.setWindowModality(Qt.ApplicationModal)
         
-        self.serial_thread = SerialWorker(text, self.find_arduino())
+        # Используем `serial_manager`, а не `find_arduino()`
+        self.serial_thread = SerialWorker(text, self.serial_manager)
         self.serial_thread.finished.connect(self.handle_write_result)
-        self.serial_thread.status_update.connect(self.update_status)  # Новый обработчик
+        self.serial_thread.status_update.connect(self.update_status)
         self.serial_thread.start()
         
         self.write_dialog.exec_()
 
     def update_status(self, message):
         self.status_label.setText(message)
-        if "WRITE_SUCCESS" in message:
+        if "Поднесите карту" in message:
+            self.progress.setRange(0, 0)  # Индикатор бесконечного ожидания
+        elif "WRITE_SUCCESS" in message:
             self.progress.setRange(0, 1)
             self.progress.setValue(1)
+
     def handle_write_result(self, success, message):
         if success:
                 self.status_label.setText("Успешная запись!")
                 update(self.comboBox.currentText(), self.lineEdit_3.text())
                 QTimer.singleShot(2000, self.write_dialog.close)
+                self.lineEdit_3.clear()
+                self.lineEdit.clear()
+
         else:
                 self.status_label.setText(f"Ошибка: {message}")
                 retry_button = QPushButton("Повторить")
@@ -702,11 +709,37 @@ class Ui_MainWindow(object):
         self.kocak_label.setAlignment(Qt.AlignCenter)
         self.dialog.show()
         zakurit()
+
 if __name__ == "__main__":
     import sys
+
     app = QApplication(sys.argv)
+
+    def find_arduino():
+        ports = serial.tools.list_ports.comports()
+        for port in ports:
+            if "USB Serial Port" in port.description:
+                return port.device
+        return None
+
+    port = find_arduino()
+    if not port:
+        log_error("Не найден COM-порт")
+        sys.exit(1)
+
+    serial_manager = SerialManager(port, 9600)  # Создаём один экземпляр
+
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui.setupUi(MainWindow, serial_manager)
+
     MainWindow.show()
-    sys.exit(app.exec())
+
+    serial_listener = SerialListener(serial_manager)  # Используем общий менеджер
+    serial_listener.start()
+
+    try:
+        sys.exit(app.exec())
+    finally:
+        serial_listener.stop()
+        serial_manager.close()

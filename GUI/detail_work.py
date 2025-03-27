@@ -3,6 +3,7 @@ from error_test import show_error_dialog
 from config import work, detail
 from datetime import datetime, timedelta
 import time
+from logger import *
 
 mark_ui_instance = None
 work_ui_instance = None
@@ -88,46 +89,34 @@ def end_work():
     #     response = database(response_data)
 
     
+
 def update(name=None, serial=None):
     global work
     global data_detail
-    print(data_detail)
+    if name and serial:
+        response_data = {'type': 'mark', "name": name, 'serial': serial}
+        log_event(f"Маркировка вручную: {response_data}")
+        response = database(response_data)
+        log_event(f"Ответ от сервера: {response}")
+        return
+
     if data_detail:
         x = data_detail["data"]
-
-    if data_detail == None and name and serial:
-        
-        # print(time_start)
-        # print(time_end)
-        # time_stage = {"stage": "Маркировка", "time_start": time_start, "time_end": time_end}
-        # response_data = {'type': 'updatestage', 'stage': 'Маркировка', 'serial': data_detail["serial_number"], "time": time_stage}
-        response_data = {'type': 'mark', "name": name, 'serial': serial}
-        # print(response_data)
-        response = database(response_data)
-        
-
-    elif x['stage'] == "Маркировка":
-        response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}
-        # print(response_data)
-        response = database(response_data)
-        if work:
-            end_work()
-    elif x['stage'] == "Сборка":
-        response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number']}
-        # print(response_data)
-        response = database(response_data)
-        if work:
-            end_work()
-    elif x['stage'] == "Тестирование":
-        response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number']}
-        # print(response_data)
-        response = database(response_data)
-        if work:
-            end_work()
-    
-    
-
-
+        if x['stage'] == "Маркировка":
+            response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}
+            response = database(response_data)
+            if work:
+                end_work()
+        elif x['stage'] == "Сборка":
+            response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number']}
+            response = database(response_data)
+            if work:
+                end_work()
+        elif x['stage'] == "Тестирование":
+            response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number']}
+            response = database(response_data)
+            if work:
+                end_work()
 
 def getDetail(serial_number):
     data = {"type": "details", "serial": serial_number}

@@ -4,45 +4,89 @@ import time
 from detail_work import getDetail
 import re
 from logger import *
+import config
+from error_test import *
 
 # Настройки порта
 baud_rate = 9600
 
-class SerialListener(QThread):
-    data_received = Signal(str)
 
-    def __init__(self, port, baud_rate):
+class SerialManager:
+    _instance = None
+
+    def __new__(cls, port, baud_rate):
+        if cls._instance is None:
+            cls._instance = super(SerialManager, cls).__new__(cls)
+            cls._instance.port = port
+            cls._instance.baud_rate = baud_rate
+            cls._instance.serial = serial.Serial(port, baud_rate, timeout=1)
+        return cls._instance
+
+    def get_serial(self):
+        return self.serial
+
+    def close(self):
+        if self.serial and self.serial.is_open:
+            self.serial.close()
+            SerialManager._instance = None
+
+class SerialListener(QThread):
+    data_received = Signal(object)
+
+    def __init__(self, serial_manager):
         super().__init__()
-        self.port = port
-        self.baud_rate = baud_rate
+        self.serial_manager = serial_manager
+        self.ser = serial_manager.get_serial()
         self.running = True
 
     def run(self):
         try:
-            ser = serial.Serial(self.port, self.baud_rate)
             while self.running:
-                if ser.in_waiting > 0:
-                    # Чтение сырых данных
-                    raw_data = ser.readline()
-                    log_event(f"Raw data: {raw_data}")  # Логирование сырых данных
+                if self.ser.in_waiting > 0:
+                    raw_data = self.ser.readline()
+                    log_event(f"Raw data (bytes): {raw_data}")  
 
                     try:
-                        # Попытка декодирования в UTF-8
                         data = raw_data.decode('utf-8').strip()
-                        x = data.split(" ")
-                        self.data_received.emit(x[0])
-                    except UnicodeDecodeError:
-                        # Если декодирование не удалось, используем замену недопустимых символов
-                        data = raw_data.decode('utf-8', errors='replace').strip()
-                        log_error(f"Decoded with errors: {data}")  # Логирование данных с ошибками
-                        x = data.split(" ")
-                        self.data_received.emit(x[0])
-                    
-        except serial.SerialException as e:
-            log_error(f"Ошибка при работе с COM портом: {e}")
-        finally:
-            if ser.is_open:
-                ser.close()
+                        log_event(f"Decoded data (str): {data}")  
+                        if "Поднесите карту для записи данных" in data:
+                            self.data_received.emit(["WAIT_CARD", data])
+                            log_event("Ожидание поднесения карты")
+                            continue
 
+
+                        if not data:
+                            log_event("Get NULL")
+                            continue  
+
+                        x = data.split(".", maxsplit=1)    
+                        if x[0] == "READ_ERROR":
+                            log_error("Error with read")
+                            self.data_received.emit("READ_ERROR")
+                            continue             
+                        if x[0] == "WRITE_SUCCESS":
+                            log_event("Write secces")
+                            self.data_received.emit(["WRITE_SUCCESS", "status"])
+                            continue
+                        b = x[0].split("_")  
+                        log_event(f"Parsed Data: {b}")
+                        if b[0] == "Агуагу":
+                            log_event("System Arduino init")
+                            continue
+
+                        config.user = b
+
+                        if len(b) >= 2:
+                            log_event(f"Send data to handle_serial_data: {b}")  
+                            self.data_received.emit(b)
+                        else:
+                            log_error(f"Error, Incorrect data to send: {b}")
+
+                    except UnicodeDecodeError:
+                        log_error(f"Decode Error: {raw_data}")
+                        continue
+
+        except serial.SerialException as e:
+            log_error(f"Error work with COM port: {e}")
     def stop(self):
         self.running = False
