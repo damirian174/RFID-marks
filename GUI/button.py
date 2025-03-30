@@ -5,17 +5,16 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt, QThread, Signal, QObject, QTimer
 from PySide6.QtGui import QImage, QPixmap, QIcon, QTransform, QPainter
+from database import test_connection
 from menu import Ui_MainWindow as MenuUI
 from Work import Ui_MainWindow as WorkUI
 from Mark import Ui_MainWindow as MarkUI
 from Test import Ui_MainWindow as TestsUI
 from Packing import Ui_MainWindow as PackingUI
 from admin import Ui_MainWindow as AdminUI
-from database import database
 import config
 from detail_work import *
 from COM import SerialManager, SerialListener  # Импорт нового менеджера
-
 from error_test import show_error_dialog
 import serial
 import serial.tools.list_ports
@@ -219,55 +218,50 @@ class MainApp(QMainWindow):
         data = {"type": "user", "uid": self.manual_input.text() or self.uid}
         log_event(f"Попытка аутентификации пользователя с UID: {data['uid']}")
         if self.is_verified == False and not config.data:
-            try: 
-                worker = database(data)
-            
-                if worker["status"] == "ok":
-                    name = worker["surname"] + " " + worker["name"]
+            # Используем синхронный запрос
+            worker = database(data)
+            if worker and worker["status"] == "ok":
+                name = worker["surname"] + " " + worker["name"]
+                self.is_verified = True
 
-                    self.is_verified = True
+                reply = QMessageBox.question(self, 'Подтверждение',
+                                            f'Вы {name}?',
+                                            QMessageBox.Yes | QMessageBox.No,
+                                            QMessageBox.No)
 
-
-
-                    reply = QMessageBox.question(self, 'Подтверждение',
-                                                f'Вы {name}?',
-                                                QMessageBox.Yes | QMessageBox.No,
-                                                QMessageBox.No)
-
-                    if reply == QMessageBox.Yes:
-                        
-                        config.data = True
+                if reply == QMessageBox.Yes:
+                    config.data = True
+                    
+                    # Создаем запрос деталей синхронно
+                    detail_response = database({"type": "details"})
+                    if detail_response:
                         getDetail("")
 
-                        # Останавливаем камеру после успешного входа
-                        if hasattr(self, 'worker') and self.worker.running:
-                            self.worker.stop()
-                            self.thread.quit()
-                            self.thread.wait()
-                        # Обновляем имя пользователя в разных страницах
-                        config.user = name
-                        self.work_ui.updateName(name=name)
-                        self.tests_ui.updateName(name=name)
-                        self.packing_ui.updateName(name=name)
-                        self.mark_ui.updateName(name=name)
+                    # Останавливаем камеру после успешного входа
+                    if hasattr(self, 'worker') and self.worker.running:
+                        self.worker.stop()
+                        self.thread.quit()
+                        self.thread.wait()
+                    # Обновляем имя пользователя в разных страницах
+                    config.user = name
+                    self.work_ui.updateName(name=name)
+                    self.tests_ui.updateName(name=name)
+                    self.packing_ui.updateName(name=name)
+                    self.mark_ui.updateName(name=name)
 
-                        # Переходим на рабочую страницу
-                        self.stacked_widget.setCurrentWidget(self.work_page)
-                        log_event(f"Успешная аутентификация пользователя: {name}")
-                        config.auth = True
-                        self.is_verified = False
-                        self.work_ui.running = True
-                        self.work_ui.start_timer()
-                    else: 
-                        self.is_verified = False
-                        log_error("Пользователь не найден")
-                        show_error_dialog('Пользователь не найден!', False)
+                    # Переходим на рабочую страницу
+                    self.stacked_widget.setCurrentWidget(self.work_page)
+                    log_event(f"Успешная аутентификация пользователя: {name}")
+                    config.auth = True
+                    self.is_verified = False
+                    self.work_ui.running = True
+                    self.work_ui.start_timer()
                 else:
-                    show_error_dialog('Пользователь не найден!', False)
-            except Exception as e:
-                log_error(f"Ошибка при аутентификации: {str(e)}")
-
-
+                    config.auth = False
+                    config.data = None
+                    config.user = None
+                    self.is_verified = False
+                    log_error(f"Не удалось аутентифицировать пользователя: {name}")
 
     def get_ico_path(self, image_name):
         if getattr(sys, 'frozen', False):
@@ -475,10 +469,78 @@ if __name__ == "__main__":
     # Таймер для вращения
     rotation_timer = QTimer()
     rotation_timer.timeout.connect(rotate_splash)
-    rotation_timer.start(10)  # Обновление каждые 200 мс
+    rotation_timer.start(10)  # Обновление каждые 10 мс
     
     # Начальное вращение
     rotate_splash()
+    
+    def show_connection_error_dialog():
+        """Показывает диалоговое окно при ошибке соединения с сервером"""
+        # Остановим вращение загрузочного экрана
+        rotation_timer.stop()
+        splash.hide()
+        
+        # Создаём диалоговое окно
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Ошибка соединения")
+        msg_box.setText("Нет соединения с сервером!\nПроверьте подключение к Wi-Fi или обратитесь к системному администратору.")
+        
+        # Настраиваем стиль
+        msg_box.setStyleSheet("""
+            QMessageBox {
+                background-color: #f8f9fa;
+                border: 2px solid #dc3545;
+                border-radius: 10px;
+                min-width: 500px;
+                min-height: 250px;
+                padding: 20px;
+            }
+            QLabel {
+                color: #212529;
+                font-size: 16px;
+                font-weight: bold;
+                min-width: 450px;
+                margin: 20px;
+                padding: 10px;
+                line-height: 1.6;
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: 1px solid #dee2e6;
+            }
+            QPushButton {
+                background-color: #0056b3;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 10px 25px;
+                font-weight: bold;
+                font-size: 14px;
+                min-width: 120px;
+                margin: 15px;
+            }
+            QPushButton:hover {
+                background-color: #0069d9;
+            }
+            QPushButton:pressed {
+                background-color: #004494;
+            }
+        """)
+        
+        # Добавляем кнопки
+        exit_button = msg_box.addButton("Выйти", QMessageBox.RejectRole)
+        continue_button = msg_box.addButton("Продолжить", QMessageBox.AcceptRole)
+        
+        # Выполняем диалог
+        result = msg_box.exec()
+        
+        # Проверяем результат
+        if msg_box.clickedButton() == exit_button:
+            log_event("Пользователь выбрал выход из программы")
+            sys.exit(0)
+        else:
+            log_event("Пользователь выбрал продолжить без соединения")
+            # Показываем главное окно
+            show_main_window()
     
     # Запуск приложения с небольшой задержкой для отображения загрузочного экрана
     def show_main_window():
@@ -488,6 +550,19 @@ if __name__ == "__main__":
         rotation_timer.stop()
         rotate_splash.window_shown = True
     
-    QTimer.singleShot(1500, show_main_window)  # 1.5 секунды на отображение сплеша
+    # Проверка соединения с сервером
+    def check_server_connection():
+        # Используем синхронную проверку соединения
+        if test_connection():
+            # Сервер доступен, запускаем приложение
+            log_event("Сервер доступен")
+            show_main_window()
+        else:
+            log_error("Ошибка соединения с сервером")
+            # Сервер недоступен, показываем диалог
+            show_connection_error_dialog()
+    
+    # Сначала показываем загрузочный экран, а затем проверяем соединение
+    QTimer.singleShot(1500, check_server_connection)  # 1.5 секунды на отображение сплеша
     
     sys.exit(app.exec())

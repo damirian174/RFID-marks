@@ -119,17 +119,18 @@ def handle_problem_submission(input_dialog, problem_text, error_label):
             "name": config.user if config.user else "Неизвестный пользователь"
         }
         
-        # Отправляем данные в базу
-        if database.database(data):
+        # Отправляем данные синхронно
+        result = database(data)
+        if result:
             # Устанавливаем флаг проблемы в конфиге
             config.problem = True
             
             input_dialog.close()
+            global wait_dialog_global
             wait_dialog_global = init_wait_dialog()
             wait_dialog_global.exec()  # Используем exec() вместо show() для блокирующего режима
         else:
-            # Если возникла ошибка при отправке в базу данных
-            error_label.setText("Ошибка отправки. Попробуйте еще раз.")
+            error_label.setText("Ошибка отправки: Не удалось отправить данные")
             error_label.setVisible(True)
     else:
         # Показываем предупреждение, что поле не может быть пустым
