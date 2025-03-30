@@ -232,6 +232,19 @@ class Ui_MainWindow(object):
         self.checkBox_3.setText(u"3. Упаковано в коробку.")
         self.verticalLayoutWidget7.addWidget(self.checkBox_3)
 
+        # Добавляем обработчики событий для чекбоксов
+        self.checkBox.stateChanged.connect(self.check_box_1_state_changed)
+        self.checkBox_2.stateChanged.connect(self.check_box_2_state_changed)
+        self.checkBox_3.stateChanged.connect(self.check_box_3_state_changed)
+        
+        # Инициализируем состояние чекбоксов (сбрасываем все галочки)
+        self.reset_checkboxes()
+        
+        # Создаем таймер для периодической проверки состояния чекбоксов
+        self.validation_timer = QTimer()
+        self.validation_timer.timeout.connect(self.validate_checkboxes)
+        self.validation_timer.start(500)  # Проверка каждые 500 мс
+
         # Кнопка "Закончить упаковку"
         self.pushButton = QPushButton(self.widget_7)
         self.pushButton.setObjectName(u"pushButton")
@@ -453,6 +466,71 @@ class Ui_MainWindow(object):
         self.stage.setStyleSheet(style)
         self.sector.setStyleSheet(style)
 
+    # Добавляем функцию для стилизации MessageBox
+    def style_message_box(self, msg_box):
+        """
+        Применяет стилизацию к диалоговому окну с улучшенным дизайном
+        """
+        # Установим минимальную ширину и высоту для диалога
+        msg_box.setMinimumWidth(500)
+        msg_box.setMinimumHeight(250)
+        
+        # Найдем текстовую метку внутри диалога и установим перенос слов
+        for child in msg_box.children():
+            if isinstance(child, QLabel):
+                child.setWordWrap(True)
+                child.setMinimumWidth(450)
+                child.setMinimumHeight(100)
+                child.setTextFormat(Qt.PlainText)  # Использовать обычный текст без HTML
+        
+        msg_box.setStyleSheet("""
+            QMessageBox {
+                background-color: #f8f9fa;
+                border: 2px solid #0056b3;
+                border-radius: 10px;
+                min-width: 500px;
+                min-height: 250px;
+                padding: 20px;
+            }
+            QLabel {
+                color: #212529;
+                font-size: 16px;
+                font-weight: bold;
+                min-width: 450px;
+                margin: 20px;
+                padding: 10px;
+                line-height: 1.6;
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: 1px solid #dee2e6;
+            }
+            QPushButton {
+                background-color: #0056b3;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 10px 25px;
+                font-weight: bold;
+                font-size: 14px;
+                min-width: 120px;
+                margin: 15px;
+            }
+            QPushButton:hover {
+                background-color: #0069d9;
+            }
+            QPushButton:pressed {
+                background-color: #004494;
+            }
+            QMessageBox QLabel#qt_msgbox_informativelabel {
+                font-size: 14px;
+                font-weight: normal;
+                background-color: transparent;
+                border: none;
+                color: #495057;
+                margin-top: 0;
+            }
+        """)
+        return msg_box
 
     def update2(self):
         # Получаем информацию о детали из меток
@@ -463,20 +541,99 @@ class Ui_MainWindow(object):
             msg_box.setWindowTitle("Предупреждение")
             msg_box.setText("Сначала необходимо отсканировать деталь")
             msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
             msg_box.exec()
             return
         
-        # Создаем окно подтверждения
+        # Проверяем, все ли пункты упаковки выполнены
+        all_items_checked = (self.checkBox.isChecked() and 
+                            self.checkBox_2.isChecked() and 
+                            self.checkBox_3.isChecked())
+                            
+        if not all_items_checked:
+            # Проверяем, в правильной ли последовательности отмечены пункты
+            if self.checkBox_2.isChecked() and not self.checkBox.isChecked():
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle("Ошибка порядка действий")
+                msg_box.setText("Обнаружено нарушение последовательности действий!\nПункт 2 отмечен, но пункт 1 пропущен.")
+                msg_box.setInformativeText("Выполните действия в правильном порядке.")
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                self.style_message_box(msg_box)
+                msg_box.exec()
+                # Восстанавливаем правильное состояние
+                self.reset_checkboxes()
+                return
+                
+            if self.checkBox_3.isChecked() and (not self.checkBox.isChecked() or not self.checkBox_2.isChecked()):
+                missing = "пункты 1 и 2" if not self.checkBox.isChecked() and not self.checkBox_2.isChecked() else "пункт 1" if not self.checkBox.isChecked() else "пункт 2"
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle("Ошибка порядка действий")
+                msg_box.setText(f"Обнаружено нарушение последовательности действий!\nПункт 3 отмечен, но {missing} пропущен.")
+                msg_box.setInformativeText("Выполните действия в правильном порядке.")
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                self.style_message_box(msg_box)
+                msg_box.exec()
+                # Восстанавливаем правильное состояние
+                self.reset_checkboxes()
+                return
+            
+            # Если не все пункты отмечены, но порядок правильный, не даем завершить этап
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            formatted_text = f"Упаковка не завершена для детали\nс серийным номером\n\n{serial_number}"
+            msg_box.setText(formatted_text)
+            msg_box.setInformativeText("Пожалуйста, выполните все пункты упаковки перед завершением этапа.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+            return
+            
+        # Если все пункты выполнены, показываем диалог подтверждения
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText(f"Вы выполнили все действия над данной деталью?")
+        formatted_text = f"Вы выполнили все действия над деталью\nс серийным номером\n\n{serial_number}?"
+        msg_box.setText(formatted_text)
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
         
         # Если пользователь подтвердил действие
         if msg_box.exec() == QMessageBox.Yes:
             log_event("Работа над деталью закончена")
             update()
+            # Сбрасываем чекбоксы
+            self.reset_checkboxes()
+
+    def kocak(self):
+        # Получаем информацию о детали из меток
+        serial_number = self.serial.text()
+        
+        if serial_number == "Отсканируй деталь":
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Сначала необходимо отсканировать деталь")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+            return
+        
+            
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        formatted_text = f"Вы хотите отправить деталь\nс серийным номером\n\n{serial_number}\n\nв брак?"
+        msg_box.setText(formatted_text)
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
+        
+        # Если пользователь подтвердил действие
+        if msg_box.exec() == QMessageBox.Yes:
+            zakurit()
+            log_event(f"Деталь {serial_number} отправлена в брак")
+            # Сбрасываем чекбоксы
+            self.checkBox.setChecked(False)
+
     def detail(self, data=None):
         if data:
             self.name.setText(str(data['name']))
@@ -501,6 +658,7 @@ class Ui_MainWindow(object):
         msg_box.setWindowTitle("Отошел")
         msg_box.setText("Нажми, чтобы продолжить работать")
         msg_box.setStandardButtons(QMessageBox.Ok)
+        self.style_message_box(msg_box)
         msg_box.buttonClicked.connect(self.countine)
         msg_box.exec()
 
@@ -514,41 +672,132 @@ class Ui_MainWindow(object):
         # Вместо создания собственного диалога вызываем функцию из problema_window
         show_problem_dialog(self.centralwidget)
 
-    def kocak(self):
-        # Получаем информацию о детали из меток
-        serial_number = self.serial.text()
-        
-        if serial_number == "Отсканируй деталь":
-            msg_box = QMessageBox()
-            msg_box.setWindowTitle("Предупреждение")
-            msg_box.setText("Сначала необходимо отсканировать деталь")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec()
-            return
-            
-        # Создаем окно подтверждения
-        msg_box = QMessageBox()
-        msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText(f"Вы хотите отправить деталь с серийным номером {serial_number} в брак?")
-        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        msg_box.setDefaultButton(QMessageBox.No)
-        
-        # Если пользователь подтвердил действие
-        if msg_box.exec() == QMessageBox.Yes:
-            zakurit()
-            log_event(f"Деталь {serial_number} отправлена в брак")
-            
     # Добавляем функцию подтверждения для кнопки "Завершить работу"
     def confirm_end_session(self):
         # Создаем окно подтверждения
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText("Вы хотите закончить работу?")
+        msg_box.setText("Вы хотите закончить работу?\nНесохраненные данные будут потеряны!")
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
         
         # Возвращаем результат диалога
         return msg_box.exec() == QMessageBox.Yes
+
+    # Добавляем обработчики состояния чекбоксов
+    def check_box_1_state_changed(self, state):
+        # Первый чекбокс нельзя снять, если отмечены другие
+        if state == Qt.Unchecked and (self.checkBox_2.isChecked() or self.checkBox_3.isChecked()):
+            # Блокируем сигналы, чтобы избежать рекурсивных вызовов
+            self.checkBox.blockSignals(True)
+            self.checkBox.setChecked(True)
+            self.checkBox.blockSignals(False)
+            
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Нельзя снимать галочки не по порядку!\nСначала снимите галочки с пунктов 3 и 2.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+        
+    def check_box_2_state_changed(self, state):
+        # Второй чекбокс можно отметить только если отмечен первый
+        if state == Qt.Checked and not self.checkBox.isChecked():
+            # Блокируем сигналы, чтобы избежать рекурсивных вызовов
+            self.checkBox_2.blockSignals(True)
+            self.checkBox_2.setChecked(False)
+            self.checkBox_2.blockSignals(False)
+            
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Нельзя отмечать пункты не по порядку!\nСначала выполните пункт 1.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+        # Второй чекбокс нельзя снять, если отмечен третий
+        elif state == Qt.Unchecked and self.checkBox_3.isChecked():
+            # Блокируем сигналы, чтобы избежать рекурсивных вызовов
+            self.checkBox_2.blockSignals(True)
+            self.checkBox_2.setChecked(True)
+            self.checkBox_2.blockSignals(False)
+            
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Нельзя снимать галочки не по порядку!\nСначала снимите галочку с пункта 3.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+            
+    def check_box_3_state_changed(self, state):
+        # Третий чекбокс можно отметить только если отмечены первый и второй
+        if state == Qt.Checked and (not self.checkBox.isChecked() or not self.checkBox_2.isChecked()):
+            # Блокируем сигналы, чтобы избежать рекурсивных вызовов
+            self.checkBox_3.blockSignals(True)
+            self.checkBox_3.setChecked(False)
+            self.checkBox_3.blockSignals(False)
+            
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            not_checked = "пункты 1 и 2" if not self.checkBox.isChecked() and not self.checkBox_2.isChecked() else "пункт 1" if not self.checkBox.isChecked() else "пункт 2"
+            msg_box.setText(f"Нельзя отмечать пункты не по порядку!\nСначала выполните {not_checked}.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
+        # Третий чекбокс можно снять в любом случае
+        # так как это последний пункт в последовательности
+
+    def reset_checkboxes(self):
+        """Сбрасывает все чекбоксы в исходное состояние"""
+        # Блокируем сигналы перед изменением состояния
+        self.checkBox.blockSignals(True)
+        self.checkBox_2.blockSignals(True)
+        self.checkBox_3.blockSignals(True)
+        
+        # Сбрасываем все галочки
+        self.checkBox.setChecked(False)
+        self.checkBox_2.setChecked(False)
+        self.checkBox_3.setChecked(False)
+        
+        # Восстанавливаем обработку сигналов
+        self.checkBox.blockSignals(False)
+        self.checkBox_2.blockSignals(False)
+        self.checkBox_3.blockSignals(False)
+
+    def validate_checkboxes(self):
+        """Проверяет правильность порядка проставления галочек"""
+        # Блокируем сигналы, чтобы избежать рекурсивных вызовов при исправлении
+        self.checkBox.blockSignals(True)
+        self.checkBox_2.blockSignals(True)
+        self.checkBox_3.blockSignals(True)
+        
+        need_reset = False
+        error_message = ""
+        
+        # Проверка на нарушение порядка
+        if self.checkBox_2.isChecked() and not self.checkBox.isChecked():
+            need_reset = True
+            error_message = "Обнаружено нарушение последовательности действий!\nПункт 2 отмечен, но пункт 1 пропущен."
+        elif self.checkBox_3.isChecked() and (not self.checkBox.isChecked() or not self.checkBox_2.isChecked()):
+            need_reset = True
+            missing = "пункты 1 и 2" if not self.checkBox.isChecked() and not self.checkBox_2.isChecked() else "пункт 1" if not self.checkBox.isChecked() else "пункт 2"
+            error_message = f"Обнаружено нарушение последовательности действий!\nПункт 3 отмечен, но {missing} пропущен."
+        
+        # Восстанавливаем обработку сигналов
+        self.checkBox.blockSignals(False)
+        self.checkBox_2.blockSignals(False)
+        self.checkBox_3.blockSignals(False)
+        
+        # Если обнаружено нарушение, сбрасываем чекбоксы и показываем сообщение
+        if need_reset:
+            self.reset_checkboxes()
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Ошибка порядка действий")
+            msg_box.setText(error_message)
+            msg_box.setInformativeText("Выполните действия в правильном порядке.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
+            msg_box.exec()
 
 if __name__ == "__main__":
     import sys

@@ -1,9 +1,10 @@
 import sys
 from PySide6.QtWidgets import (
-    QApplication, QMainWindow, QStackedWidget, QLabel, QComboBox, QVBoxLayout, QWidget, QLineEdit, QPushButton, QMessageBox
+    QApplication, QMainWindow, QStackedWidget, QLabel, QComboBox, QVBoxLayout, QWidget, QLineEdit, QPushButton, QMessageBox,
+    QSplashScreen
 )
-from PySide6.QtCore import Qt, QThread, Signal, QObject
-from PySide6.QtGui import QImage, QPixmap, QIcon
+from PySide6.QtCore import Qt, QThread, Signal, QObject, QTimer
+from PySide6.QtGui import QImage, QPixmap, QIcon, QTransform, QPainter
 from menu import Ui_MainWindow as MenuUI
 from Work import Ui_MainWindow as WorkUI
 from Mark import Ui_MainWindow as MarkUI
@@ -236,6 +237,7 @@ class MainApp(QMainWindow):
                     if reply == QMessageBox.Yes:
                         
                         config.data = True
+                        getDetail("")
 
                         # Останавливаем камеру после успешного входа
                         if hasattr(self, 'worker') and self.worker.running:
@@ -428,6 +430,64 @@ class MainApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainApp()
-    window.show()
+    
+    # Создаем загрузочный экран
+    splash_pixmap = QPixmap("loading.png")
+    # Уменьшаем изображение в 4 раза
+    original_size = min(splash_pixmap.width(), splash_pixmap.height()) // 4
+    splash_pixmap = splash_pixmap.scaled(original_size, original_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    
+    # Создаем холст большего размера, чтобы изображение целиком помещалось при вращении
+    # Размер по диагонали = размер стороны * √2 (приблизительно 1.5 для запаса)
+    canvas_size = int(original_size * 1.5)
+    splash_canvas = QPixmap(canvas_size, canvas_size)
+    splash_canvas.fill(Qt.transparent)  # Прозрачный фон
+
+    splash = QSplashScreen(splash_canvas, Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+    
+    # Вращение изображения
+    angle = 0
+    
+    def rotate_splash():
+        global angle
+        angle = (angle + 5) % 360
+        transform = QTransform().rotate(angle)
+        rotated_pixmap = splash_pixmap.transformed(transform, Qt.SmoothTransformation)
+        
+        # Создаем новый прозрачный холст для каждого кадра
+        temp_canvas = QPixmap(canvas_size, canvas_size)
+        temp_canvas.fill(Qt.transparent)
+        
+        # Вычисляем позицию для центрирования повернутого изображения
+        x = (canvas_size - rotated_pixmap.width()) // 2
+        y = (canvas_size - rotated_pixmap.height()) // 2
+        
+        # Рисуем поворачиваемое изображение на холсте по центру
+        painter = QPainter(temp_canvas)
+        painter.drawPixmap(x, y, rotated_pixmap)
+        painter.end()
+        
+        # Устанавливаем изображение
+        splash.setPixmap(temp_canvas)
+        if not hasattr(rotate_splash, 'window_shown') or not rotate_splash.window_shown:
+            splash.show()
+    
+    # Таймер для вращения
+    rotation_timer = QTimer()
+    rotation_timer.timeout.connect(rotate_splash)
+    rotation_timer.start(10)  # Обновление каждые 200 мс
+    
+    # Начальное вращение
+    rotate_splash()
+    
+    # Запуск приложения с небольшой задержкой для отображения загрузочного экрана
+    def show_main_window():
+        window = MainApp()
+        window.show()
+        splash.finish(window)
+        rotation_timer.stop()
+        rotate_splash.window_shown = True
+    
+    QTimer.singleShot(1500, show_main_window)  # 1.5 секунды на отображение сплеша
+    
     sys.exit(app.exec())

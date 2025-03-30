@@ -375,6 +375,73 @@ class Ui_MainWindow(object):
 
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
+
+    # Добавляем функцию для стилизации MessageBox
+    def style_message_box(self, msg_box):
+        """
+        Применяет стилизацию к диалоговому окну с улучшенным дизайном
+        """
+        # Установим минимальную ширину и высоту для диалога
+        msg_box.setMinimumWidth(500)
+        msg_box.setMinimumHeight(250)
+        
+        # Найдем текстовую метку внутри диалога и установим перенос слов
+        for child in msg_box.children():
+            if isinstance(child, QLabel):
+                child.setWordWrap(True)
+                child.setMinimumWidth(450)
+                child.setMinimumHeight(100)
+                child.setTextFormat(Qt.PlainText)  # Использовать обычный текст без HTML
+        
+        msg_box.setStyleSheet("""
+            QMessageBox {
+                background-color: #f8f9fa;
+                border: 2px solid #0056b3;
+                border-radius: 10px;
+                min-width: 500px;
+                min-height: 250px;
+                padding: 20px;
+            }
+            QLabel {
+                color: #212529;
+                font-size: 16px;
+                font-weight: bold;
+                min-width: 450px;
+                margin: 20px;
+                padding: 10px;
+                line-height: 1.6;
+                background-color: #ffffff;
+                border-radius: 8px;
+                border: 1px solid #dee2e6;
+            }
+            QPushButton {
+                background-color: #0056b3;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 10px 25px;
+                font-weight: bold;
+                font-size: 14px;
+                min-width: 120px;
+                margin: 15px;
+            }
+            QPushButton:hover {
+                background-color: #0069d9;
+            }
+            QPushButton:pressed {
+                background-color: #004494;
+            }
+            QMessageBox QLabel#qt_msgbox_informativelabel {
+                font-size: 14px;
+                font-weight: normal;
+                background-color: transparent;
+                border: none;
+                color: #495057;
+                margin-top: 0;
+            }
+        """)
+        return msg_box
+
     def update2(self):
         # Получаем информацию о детали из меток
         serial_number = self.serial.text()
@@ -384,20 +451,59 @@ class Ui_MainWindow(object):
             msg_box.setWindowTitle("Предупреждение")
             msg_box.setText("Сначала необходимо отсканировать деталь")
             msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
             msg_box.exec()
             return
         
-        # Создаем окно подтверждения
+        # Проверяем, все ли тесты пройдены
+        all_tests_passed = (self.checkBox.isChecked() and 
+                            self.checkBox_2.isChecked() and 
+                            self.checkBox_3.isChecked())
+                            
+        if not all_tests_passed:
+            # Если не все тесты пройдены, предлагаем отправить в брак
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            formatted_text = f"Деталь с серийным номером\n\n{serial_number}\n\nне прошла все тесты и будет отправлена в брак."
+            msg_box.setText(formatted_text)
+            msg_box.setInformativeText("Вы уверены, что хотите продолжить?")
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg_box.setDefaultButton(QMessageBox.No)
+            self.style_message_box(msg_box)
+            # Дополнительное выделение серийного номера
+            for child in msg_box.children():
+                if isinstance(child, QLabel) and child.text() == formatted_text:
+                    text_parts = formatted_text.split(serial_number)
+                    if len(text_parts) > 1:
+                        child.setText(formatted_text)  # Применяем форматированный текст
+            
+            if msg_box.exec() == QMessageBox.Yes:
+                # Отправляем в брак
+                zakurit()
+                log_event(f"Деталь {serial_number} не прошла тесты и отправлена в брак")
+                # Сбрасываем чекбоксы
+                self.checkBox.setChecked(False)
+                self.checkBox_2.setChecked(False)
+                self.checkBox_3.setChecked(False)
+            return
+        
+        # Если все тесты пройдены, показываем стандартное подтверждение
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText(f"Вы выполнили все действия над данной деталью?")
+        formatted_text = f"Вы выполнили все действия над деталью\nс серийным номером\n\n{serial_number}?"
+        msg_box.setText(formatted_text)
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
         
         # Если пользователь подтвердил действие
         if msg_box.exec() == QMessageBox.Yes:
             update()
             log_event("Работа над деталью закончена")
+            # Сбрасываем чекбоксы
+            self.checkBox.setChecked(False)
+            self.checkBox_2.setChecked(False)
+            self.checkBox_3.setChecked(False)
 
     def get_image_path(self, image_name):
         """
@@ -422,6 +528,7 @@ class Ui_MainWindow(object):
         msg_box.setWindowTitle("Отошел")
         msg_box.setText("Нажми, чтобы продолжить работать")
         msg_box.setStandardButtons(QMessageBox.Ok)
+        self.style_message_box(msg_box)
         msg_box.buttonClicked.connect(self.countine)
         msg_box.exec()
 
@@ -490,29 +597,37 @@ class Ui_MainWindow(object):
             msg_box.setWindowTitle("Предупреждение")
             msg_box.setText("Сначала необходимо отсканировать деталь")
             msg_box.setStandardButtons(QMessageBox.Ok)
+            self.style_message_box(msg_box)
             msg_box.exec()
             return
         
         # Создаем окно подтверждения
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText(f"Вы хотите отправить деталь с серийным номером {serial_number} в брак?")
+        formatted_text = f"Вы хотите отправить деталь\nс серийным номером\n\n{serial_number}\n\nв брак?"
+        msg_box.setText(formatted_text)
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
         
         # Если пользователь подтвердил действие
         if msg_box.exec() == QMessageBox.Yes:
             zakurit()
             log_event(f"Деталь {serial_number} отправлена в брак")
-            
+            # Сбрасываем чекбоксы, так как деталь отправлена в брак
+            self.checkBox.setChecked(False)
+            self.checkBox_2.setChecked(False)
+            self.checkBox_3.setChecked(False)
+
     # Добавляем функцию подтверждения для кнопки "Завершить работу"
     def confirm_end_session(self):
         # Создаем окно подтверждения
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Подтверждение")
-        msg_box.setText("Вы хотите закончить работу?")
+        msg_box.setText("Вы хотите закончить работу?\nНесохраненные данные будут потеряны!")
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
         
         # Возвращаем результат диалога
         return msg_box.exec() == QMessageBox.Yes
