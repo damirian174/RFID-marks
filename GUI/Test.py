@@ -10,6 +10,7 @@ from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import database
 from datetime import datetime
 from problema_window import show_problem_dialog  # Импорт функции для показа окна проблемы
+from logger import log_event, log_error
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -370,11 +371,33 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
 
         self.pushButton_4.clicked.connect(self.init_problem)
+        self.pushButton_3.clicked.connect(self.kocak)  # Подключаем кнопку "Сообщить о браке" к функции kocak
 
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
     def update2(self):
-        update()
+        # Получаем информацию о детали из меток
+        serial_number = self.serial.text()
+        
+        if serial_number == "Отсканируй деталь":
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Сначала необходимо отсканировать деталь")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec()
+            return
+        
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        msg_box.setText(f"Вы выполнили все действия над данной деталью?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        
+        # Если пользователь подтвердил действие
+        if msg_box.exec() == QMessageBox.Yes:
+            update()
+            log_event("Работа над деталью закончена")
 
     def get_image_path(self, image_name):
         """
@@ -459,7 +482,40 @@ class Ui_MainWindow(object):
         show_problem_dialog(self.centralwidget)
 
     def kocak(self):
-        zakurit()
+        # Получаем информацию о детали из меток
+        serial_number = self.serial.text()
+        
+        if serial_number == "Отсканируй деталь":
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Сначала необходимо отсканировать деталь")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec()
+            return
+        
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        msg_box.setText(f"Вы хотите отправить деталь с серийным номером {serial_number} в брак?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        
+        # Если пользователь подтвердил действие
+        if msg_box.exec() == QMessageBox.Yes:
+            zakurit()
+            log_event(f"Деталь {serial_number} отправлена в брак")
+            
+    # Добавляем функцию подтверждения для кнопки "Завершить работу"
+    def confirm_end_session(self):
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        msg_box.setText("Вы хотите закончить работу?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        
+        # Возвращаем результат диалога
+        return msg_box.exec() == QMessageBox.Yes
 
 
 

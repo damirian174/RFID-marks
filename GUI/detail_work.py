@@ -1,9 +1,10 @@
 from database import database
 from error_test import show_error_dialog
-from config import work, detail
+from config import work, detail, auth, data
 from datetime import datetime, timedelta
 import time
 from logger import *
+import threading
 
 mark_ui_instance = None
 work_ui_instance = None
@@ -89,6 +90,36 @@ def end_work():
     #     response = database(response_data)
 
     
+# Добавляем функцию для завершения сессии пользователя
+def reset_session():
+    """
+    Завершает текущую сессию работы пользователя, сбрасывает состояние
+    """
+    global auth
+    global data
+    global user
+    global time_start
+    
+    # Логируем событие завершения работы
+    log_event("Пользователь завершил работу")
+    
+    # Сбрасываем состояние
+    auth = False
+    data = None
+    user = None
+    time_start = None
+    
+    # Очищаем информацию о детали во всех интерфейсах
+    if mark_ui_instance:
+        mark_ui_instance.detail(False)
+    if work_ui_instance:
+        work_ui_instance.detail(False)
+    if packing_ui_instance:
+        packing_ui_instance.detail(False)
+    if test_ui_instance:
+        test_ui_instance.detail(False)
+    
+    return True
 
 def update(name=None, serial=None):
     global work

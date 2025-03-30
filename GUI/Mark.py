@@ -648,23 +648,40 @@ class Ui_MainWindow(object):
         self.label_2.setText(name)
             
     def kocak(self):
-        self.dialog = QDialog()
-        self.dialog.setGeometry(0, 0, 400, 200)
-        self.dialog.setObjectName("dialog")
-        self.dialog.setWindowTitle("Бракованная деталь")
-        self.kocak_widget = QWidget()
-        self.kocak_widget.setObjectName("kocak_widget")
-        self.kocak_widget.setGeometry(0, 0, 400, 200)
-        self.kocak_widget.setStyleSheet("border-radius: 20px; border-color: red")
-        #self.dialog.setCentralWidget(self.kocak_widget)
+        # Получаем информацию о детали из меток
+        serial_number = self.serial.text()
         
-        self.kocak_label = QLabel(self.kocak_widget)
-        self.kocak_label.setObjectName("kocak_label")
-        self.kocak_label.setText("Датчик успешно забракован!")
-        self.kocak_label.setStyleSheet("Font: 20px; color: red; font-weight: 600")
-        self.kocak_label.setAlignment(Qt.AlignCenter)
-        self.dialog.show()
-        zakurit()
+        if serial_number == "Отсканируй деталь":
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Предупреждение")
+            msg_box.setText("Сначала необходимо отсканировать деталь")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec()
+            return
+            
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        msg_box.setText(f"Вы хотите отправить деталь с серийным номером {serial_number} в брак?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        
+        # Если пользователь подтвердил действие
+        if msg_box.exec() == QMessageBox.Yes:
+            zakurit()
+            log_event(f"Деталь {serial_number} отправлена в брак")
+            
+    # Добавляем функцию подтверждения для кнопки "Завершить работу"
+    def confirm_end_session(self):
+        # Создаем окно подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение")
+        msg_box.setText("Вы хотите закончить работу?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        
+        # Возвращаем результат диалога
+        return msg_box.exec() == QMessageBox.Yes
 
 if __name__ == "__main__":
     import sys

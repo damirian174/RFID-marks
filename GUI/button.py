@@ -344,6 +344,12 @@ class MainApp(QMainWindow):
         self.setup_buttons(self.tests_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
         self.setup_buttons(self.packing_ui, self.mark_page, self.tests_page, self.packing_page, self.login_page)
         self.setup_buttons(self.admin_ui, self.work_page, self.mark_page, self.tests_page, self.packing_page, self.login_page)
+        
+        # Подключаем кнопку "Завершить работу" к новой функции
+        self.mark_ui.pushButton_9.clicked.connect(self.end_session)
+        self.work_ui.pushButton_9.clicked.connect(self.end_session)
+        self.tests_ui.pushButton_9.clicked.connect(self.end_session)
+        self.packing_ui.pushButton_9.clicked.connect(self.end_session)
 
     def setup_buttons(self, ui, mark_page, tests_page, packing_page, login_page, admin_page=None):
         if hasattr(ui, 'pushButton_7'):
@@ -365,6 +371,60 @@ class MainApp(QMainWindow):
             if hasattr(ui, 'pushButton_9'):
                 log_event("Enter to admin_page")
                 ui.pushButton_9.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(admin_page))
+
+    # Функция для завершения сессии
+    def end_session(self):
+        # В зависимости от того, какая кнопка была нажата, вызываем соответствующее окно подтверждения
+        # Сначала определяем, из какого интерфейса вызвана функция
+        sender = self.sender()
+        confirm = False
+        
+        # Используем соответствующие методы подтверждения в зависимости от вызывающего интерфейса
+        if sender == self.work_ui.pushButton_9:
+            # Если из Work.py - используем его метод confirm_end_session
+            confirm = self.work_ui.confirm_end_session()
+        elif sender == self.mark_ui.pushButton_9:
+            # Если из Mark.py - используем его метод confirm_end_session
+            confirm = self.mark_ui.confirm_end_session()
+        elif sender == self.tests_ui.pushButton_9:
+            # Если из Test.py - используем его метод confirm_end_session
+            confirm = self.tests_ui.confirm_end_session()
+        elif sender == self.packing_ui.pushButton_9:
+            # Если из Packing.py - используем его метод confirm_end_session
+            confirm = self.packing_ui.confirm_end_session()
+        else:
+            # Для других источников - стандартное окно подтверждения
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Подтверждение")
+            msg_box.setText("Вы хотите закончить работу?")
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg_box.setDefaultButton(QMessageBox.No)
+            confirm = msg_box.exec() == QMessageBox.Yes
+        
+        # Если пользователь подтвердил - завершаем сессию
+        if confirm:
+            # Вызываем функцию сброса сессии из модуля detail_work
+            from detail_work import reset_session
+            reset_session()
+            
+            # Сбрасываем состояние верификации
+            config.auth = False
+            config.data = None
+            config.user = None
+            self.is_verified = False
+            
+            # Останавливаем таймер, если он запущен
+            if hasattr(self.work_ui, 'timer') and self.work_ui.running:
+                self.work_ui.stop_timer()
+                
+            # Очищаем поле ввода штрихкода
+            self.manual_input.clear()
+            
+            # Переходим на начальный экран
+            self.menu_ui.label.setText("Отсканируйте штрихкод")
+            self.stacked_widget.setCurrentWidget(self.scan_page)
+            
+            log_event("Сессия пользователя завершена")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
