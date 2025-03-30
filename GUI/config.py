@@ -12,3 +12,5 @@ mark = True
 data = None
 
 user = None
+
+problem = None

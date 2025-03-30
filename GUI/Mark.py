@@ -22,6 +22,7 @@ import database
 from datetime import datetime
 from logger import log_event, log_error
 from COM import *
+from problema_window import show_problem_dialog  # Импорт функции для показа окна проблемы
 
 
 class SerialWorker(QThread):
@@ -478,53 +479,8 @@ class Ui_MainWindow(object):
     #         # Не успешно
     #         return
     def init_problem(self):
-        self.dialog = QDialog()
-        self.dialog.setWindowTitle("Сообщить о проблеме")  
-        self.dialog.setFixedSize(300, 200)  
-        global dialog
-        self.layout = QVBoxLayout()
-
-        self.text_edit = QTextEdit()
-        global text_edit
-        self.text_edit.setPlaceholderText("Опишите вашу проблему здесь...")  
-        self.layout.addWidget(self.text_edit)  
-
-        self.send_button = QPushButton("Отправить")
-        global send_button
-        self.layout.addWidget(self.send_button)  
-        self.send_button.clicked.connect(self.send_report)
-
-        self.dialog.setLayout(self.layout)
-        log_event("окно репорта открыто")
-        self.dialog.show()
-
-    # Функция, которая вызывается при нажатии на кнопку "Отправить"
-    def send_report(self):
-        report_text = self.text_edit.toPlainText()
-        
-        
-        if not report_text.strip():
-            QMessageBox.warning(self.dialog, "Ошибка", "Пожалуйста, опишите вашу проблему перед отправкой.")
-            log_error("Отчет о проблеме не отправлен.")
-            return
-           # Исправлено: вызываем now() для получения текущего времени
-        vrema = datetime.datetime.now()  # Теперь vrema — это объект datetime
-        time = vrema.strftime("%Y-%m-%d %H:%M")  # Форматируем вре
-        data = {
-            "type": "report",  
-            "text": report_text,  
-            "time": time,  
-            "name": self.label_2.text()  
-        }
-        if database.database(data):  
-            QMessageBox.information(self.dialog, "Успех", "Отчет успешно отправлен. Ожидайте специалиста.")
-            log_event("Отчет о ошибке успешно отправлен.")
-            self.dialog.close()  
-        else:
-            QMessageBox.critical(self.dialog, "Ошибка", "Не удалось отправить отчет. Пожалуйста, попробуйте снова.")
-            log_error("Отчет о ошибке успешно отправлен.")
-
-
+        # Вместо создания собственного диалога вызываем функцию из problema_window
+        show_problem_dialog(self.centralwidget)
 
     def get_image_path(self, image_name):
         """

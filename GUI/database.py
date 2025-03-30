@@ -5,8 +5,11 @@ from logger import *
 
 
 def database(request_data):
+    log_event(f"Запрос: {request_data}")
     if request_data['type'] == 'report':
         return "OK"
+    elif request_data['type'] == 'user':
+        return {"status": "ok", "surname": "Степанов", "name": "Сергей"}
     try:
         # Создаем соединение с сервером
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
@@ -26,7 +29,6 @@ def database(request_data):
             response = response_data.decode('utf-8')
             try:
                 worker = json.loads(response)
-                log_event(f"Запрос: {request_data}")
                 log_event(f"Ответ: {worker}")
                 return worker  # Возвращаем объект Python (словарь)
             except json.JSONDecodeError:

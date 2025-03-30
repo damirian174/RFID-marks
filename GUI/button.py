@@ -243,6 +243,7 @@ class MainApp(QMainWindow):
                             self.thread.quit()
                             self.thread.wait()
                         # Обновляем имя пользователя в разных страницах
+                        config.user = name
                         self.work_ui.updateName(name=name)
                         self.tests_ui.updateName(name=name)
                         self.packing_ui.updateName(name=name)
