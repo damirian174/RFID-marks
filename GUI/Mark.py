@@ -500,7 +500,7 @@ class Ui_MainWindow(object):
     def find_arduino(self):
         ports = serial.tools.list_ports.comports()
         for port in ports:
-            if "USB Serial Port" in port.description:
+            if "USB Serial"  in port.description :
                 return port.device
             
         return None

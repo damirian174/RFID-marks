@@ -34,6 +34,12 @@ class MainApp(QMainWindow):
         self.correct_password_hash = self.hash_password("Метран")
         self.is_verified = False 
         self.data = None
+        
+        # Добавляем инициализацию переменных для имени
+        self.first_name = ""
+        self.last_name = ""
+        self.full_name = ""
+        
         self.port = self.find_arduino()
         self.serial_manager = SerialManager(self.port, 9600) if self.port else None  # Создаём сразу
         if not self.serial_manager:
@@ -133,7 +139,7 @@ class MainApp(QMainWindow):
     def find_arduino(self):
         ports = serial.tools.list_ports.comports()
         for port in ports:
-            if "USB Serial Port" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+            if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
                 return port.device
             
         return None
@@ -220,16 +226,52 @@ class MainApp(QMainWindow):
         if self.is_verified == False and not config.data:
             # Используем синхронный запрос
             worker = database(data)
+            log_event(f"Ответ сервера: {worker}")
+            
             if worker and worker["status"] == "ok":
-                name = worker["surname"] + " " + worker["name"]
+                # Проверяем, в каком формате приходят данные
+                if "data" in worker:
+                    user_data = worker["data"]
+                    log_event(f"Данные пользователя в поле data: {user_data}")
+                else:
+                    user_data = worker
+                    log_event(f"Данные пользователя в корне ответа: {user_data}")
+                
+                # Проверяем наличие необходимых полей
+                surname = user_data.get("surname", "")
+                name = user_data.get("name", "")
+                
+                if not surname or not name:
+                    log_error(f"Отсутствуют обязательные поля в ответе: {user_data}")
+                    
+                    error_msg = QMessageBox()
+                    error_msg.setWindowTitle('Ошибка')
+                    error_msg.setText('Не удалось получить данные пользователя. Попробуйте еще раз.')
+                    error_msg.setStandardButtons(QMessageBox.Ok)
+                    
+                    # Установка иконки
+                    icon_path = self.get_ico_path("favicon.ico")
+                    error_msg.setWindowIcon(QIcon(icon_path))
+                    
+                    error_msg.exec()
+                    return
+                    
+                full_name = f"{surname} {name}"
                 self.is_verified = True
 
-                reply = QMessageBox.question(self, 'Подтверждение',
-                                            f'Вы {name}?',
-                                            QMessageBox.Yes | QMessageBox.No,
-                                            QMessageBox.No)
+                reply = QMessageBox()
+                reply.setWindowTitle('Подтверждение')
+                reply.setText(f'Вы {full_name}?')
+                reply.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                reply.setDefaultButton(QMessageBox.No)
+                
+                # Установка иконки
+                icon_path = self.get_ico_path("favicon.ico")
+                reply.setWindowIcon(QIcon(icon_path))
+                
+                result = reply.exec()
 
-                if reply == QMessageBox.Yes:
+                if result == QMessageBox.Yes:
                     config.data = True
                     
                     # Останавливаем камеру после успешного входа
@@ -239,16 +281,36 @@ class MainApp(QMainWindow):
                         self.thread.wait()
                     # Обновляем имя пользователя в разных страницах
 
-                    config.user = name
-                    config.Name = name
-                    self.work_ui.updateName(name=name)
-                    self.tests_ui.updateName(name=name)
-                    self.packing_ui.updateName(name=name)
-                    self.mark_ui.updateName(name=name)
+                    data = {"type": "startSession", "name": name, "surname": surname, "work_description": "Без детали"}
+                    log_event(f"Запрос на создание сессии: {data}")
+                    worker = database(data)
+                    log_event(f"Ответ на создание сессии: {worker}")
+                    if worker and worker["status"] == "ok":
+                        log_event(f"Сессия успешно начата: {full_name}")
+                        config.session_on = True
+                    else:
+                        log_error(f"Не удалось начать сессию: {full_name}, ответ: {worker}")
+
+                    log_event(f"Устанавливаем переменную config.user: {full_name}")
+                    config.user = full_name
+                    # Устанавливаем переменную Name в правильном формате
+                    log_event(f"Устанавливаем переменную config.Name: {surname} {name}")
+                    config.Name = f"{surname} {name}"
+                    log_event(f"Установлено значение config.Name: {config.Name}")
+                    
+                    # Инициализируем переменные, необходимые для завершения сессии
+                    self.last_name = surname
+                    self.first_name = name
+                    self.full_name = full_name
+                    
+                    self.work_ui.updateName(name=full_name)
+                    self.tests_ui.updateName(name=full_name)
+                    self.packing_ui.updateName(name=full_name)
+                    self.mark_ui.updateName(name=full_name)
 
                     # Переходим на рабочую страницу
                     self.stacked_widget.setCurrentWidget(self.work_page)
-                    log_event(f"Успешная аутентификация пользователя: {name}")
+                    log_event(f"Успешная аутентификация пользователя: {full_name}")
                     config.auth = True
                     self.is_verified = False
                     self.work_ui.running = True
@@ -258,7 +320,21 @@ class MainApp(QMainWindow):
                     config.data = None
                     config.user = None
                     self.is_verified = False
-                    log_error(f"Не удалось аутентифицировать пользователя: {name}")
+                    log_error(f"Не удалось аутентифицировать пользователя: {self.uid}")
+            elif worker["status"] == "error" and worker["message"] and "У пользователя уже есть активная сессия" in worker["message"]:
+                log_error(f"У пользователя уже есть активная сессия: {self.uid}")
+                
+                message = QMessageBox()
+                message.setWindowTitle('Предупреждение')
+                message.setText(f'У пользователя уже есть активная сессия')
+                message.setStandardButtons(QMessageBox.Ok)
+                
+                # Установка иконки
+                icon_path = self.get_ico_path("favicon.ico")
+                message.setWindowIcon(QIcon(icon_path))
+                
+                message.exec()
+
 
     def get_ico_path(self, image_name):
         if getattr(sys, 'frozen', False):
@@ -280,8 +356,21 @@ class MainApp(QMainWindow):
 
     def closeEvent(self, event):
         log_event("Закрытие приложения button.py")
-        self.serial_listener.stop()
-        self.serial_manager.close() 
+        if config.session_on:
+            try:
+                log_event(f"Завершаем сессию пользователя: {self.first_name} {self.last_name}")
+                data = {"type": "endSession", "name": self.first_name, "surname": self.last_name}
+                worker = database(data)
+                if worker and worker["status"] == "ok":
+                    log_event(f"Сессия успешно завершена: {self.first_name} {self.last_name}")
+                    config.session_on = False
+                else:
+                    log_error(f"Не удалось завершить сессию: {self.first_name} {self.last_name}")
+            except Exception as e:
+                log_error(f"Ошибка при завершении сессии: {e}")
+        if self.serial_listener:
+            self.serial_listener.stop()
+            self.serial_manager.close() 
         event.accept()
 
     def init_login_page(self):
@@ -392,6 +481,11 @@ class MainApp(QMainWindow):
             msg_box.setText("Вы хотите закончить работу?")
             msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             msg_box.setDefaultButton(QMessageBox.No)
+            
+            # Установка иконки
+            icon_path = self.get_ico_path("favicon.ico")
+            msg_box.setWindowIcon(QIcon(icon_path))
+            
             confirm = msg_box.exec() == QMessageBox.Yes
         
         # Если пользователь подтвердил - завершаем сессию
@@ -481,6 +575,15 @@ if __name__ == "__main__":
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Ошибка соединения")
         msg_box.setText("Нет соединения с сервером!\nПроверьте подключение к Wi-Fi или обратитесь к системному администратору.")
+        
+        # Устанавливаем иконку
+        app = QApplication.instance()
+        window = app.activeWindow()
+        if window:
+            ico_path = window.get_ico_path("favicon.ico") if hasattr(window, 'get_ico_path') else "favicon.ico"
+        else:
+            ico_path = "favicon.ico"
+        msg_box.setWindowIcon(QIcon(ico_path))
         
         # Настраиваем стиль
         msg_box.setStyleSheet("""

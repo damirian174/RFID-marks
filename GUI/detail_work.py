@@ -1,13 +1,39 @@
 from database import database
 from error_test import show_error_dialog
-from config import work, detail, auth, data
+import config
 from datetime import datetime, timedelta
 import time
 from logger import *
 import threading
-from PySide6.QtWidgets import QMessageBox, QLabel, QVBoxLayout, QPushButton
+from PySide6.QtWidgets import QMessageBox, QLabel, QVBoxLayout, QPushButton, QDialog
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIcon
+import os
+import sys
+
+# Функция для получения пути к иконке
+def get_icon_path(image_name):
+    if getattr(sys, 'frozen', False):
+        # Если приложение запущено как .exe
+        base_path = sys._MEIPASS
+    else:
+        # Если в режиме разработки
+        base_path = os.path.abspath(".")
+    
+    # Формируем полный путь к изображению
+    image_path = os.path.join(base_path, image_name)
+    return image_path
+
+# Определение функции log_warning, если её нет в logger
+def log_warning(message):
+    """Логирование предупреждений (если в logger.py нет такой функции)"""
+    try:
+        # Пробуем импортировать из logger
+        from logger import log_warning as logger_warning
+        logger_warning(message)
+    except ImportError:
+        # Если нет, используем log_event с префиксом ПРЕДУПРЕЖДЕНИЕ
+        log_event(f"ПРЕДУПРЕЖДЕНИЕ: {message}")
 
 mark_ui_instance = None
 work_ui_instance = None
@@ -42,8 +68,6 @@ def getUI(mark_ui, work_ui, packing_ui, test_ui):
 
 def start_work(ser, response):
     global time_start
-    global work
-    global detail
     global detail_work
 
     # Проверяем, не ведется ли уже работа над деталью
@@ -53,6 +77,11 @@ def start_work(ser, response):
         msg_box.setText("Уже ведется работа над деталью.\nЗавершите текущую работу перед началом новой.")
         msg_box.setFixedSize(550, 300)
         msg_box.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint)
+        
+        # Установка иконки
+        icon_path = get_icon_path("favicon.ico")
+        msg_box.setWindowIcon(QIcon(icon_path))
+        
         msg_box.setStyleSheet("""
             QDialog {
                 background-color: #f8f9fa;
@@ -125,19 +154,81 @@ def start_work(ser, response):
         msg_box.setLayout(layout)
         msg_box.exec()
         return
-        
+    
     detail_work = True
-    work = True
-    detail = ser
+    config.work = True
+    config.detail = ser
     time_start = GetTime()
     global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
+    
+    # Логируем начало работы и текущее значение Name
+    log_event(f"Начало работы над деталью. Текущее значение Name: '{config.Name}'")
+    
+    # Получаем имя и фамилию из переменной Name
+    first_name = "Неизвестно"
+    last_name = "Неизвестно"
+    
+    # Проверяем, установлено ли значение Name в конфиге
+    if not hasattr(config, 'Name'):
+        log_error("Переменная Name отсутствует в модуле config")
+        config.Name = ""
+    
+    # Проверяем и обрабатываем переменную Name
+    if config.Name and isinstance(config.Name, str) and " " in config.Name:
+        name_parts = config.Name.split()
+        if len(name_parts) >= 2:
+            last_name, first_name = name_parts[0], name_parts[1]
+            log_event(f"Используем части имени из Name: фамилия='{last_name}', имя='{first_name}'")
+        else:
+            log_error(f"Некорректный формат имени: '{config.Name}' (имеет пробел, но недостаточно частей)")
+    else:
+        log_error(f"Имя не установлено или некорректно: '{config.Name}'")
+        
+    log_event(f"Будет использоваться: фамилия='{last_name}', имя='{first_name}'")
+    
     if response:
-        if response['stage'] == 'Маркировка':
-            work_ui_instance.detail(response)
-        elif response['stage'] == 'Сборка':
-            test_ui_instance.detail(response)
-        elif response['stage'] == 'Тестирование':
-            packing_ui_instance.detail(response)
+        try:
+            log_event(f"Данные детали: {response}")
+            # Проверяем, есть ли у нас валидные данные пользователя для обновления сессии
+            if first_name != "Неизвестно" and last_name != "Неизвестно":
+                if response['stage'] == 'Маркировка':
+                    data = {"type": "updateSessionDescription", "name": first_name, "surname": last_name, "new_description": f"Сборка {response['serial_number']}"}
+                    log_event(f"Запрос обновления описания сессии: {data}")
+                    log_event(f"Состояние сессии: auth={config.auth}, session_on={config.session_on}")
+                    result = database(data)
+                    log_event(f"Ответ на обновление описания сессии: {result}")
+                    if result and result.get('status') != 'ok':
+                        log_error(f"Ошибка обновления описания сессии: {result}")
+                    work_ui_instance.detail(response)
+                elif response['stage'] == 'Сборка':
+                    data = {"type": "updateSessionDescription", "name": first_name, "surname": last_name, "new_description": f"Тестирование {response['serial_number']}"}
+                    log_event(f"Запрос обновления описания сессии: {data}")
+                    log_event(f"Состояние сессии: auth={config.auth}, session_on={config.session_on}")
+                    result = database(data)
+                    log_event(f"Ответ на обновление описания сессии: {result}")
+                    if result and result.get('status') != 'ok':
+                        log_error(f"Ошибка обновления описания сессии: {result}")
+                    test_ui_instance.detail(response)
+                elif response['stage'] == 'Тестирование':
+                    data = {"type": "updateSessionDescription", "name": first_name, "surname": last_name, "new_description": f"Упаковка {response['serial_number']}"}
+                    log_event(f"Запрос обновления описания сессии: {data}")
+                    log_event(f"Состояние сессии: auth={config.auth}, session_on={config.session_on}")
+                    result = database(data)
+                    log_event(f"Ответ на обновление описания сессии: {result}")
+                    if result and result.get('status') != 'ok':
+                        log_error(f"Ошибка обновления описания сессии: {result}")
+                    packing_ui_instance.detail(response)
+            else:
+                # Если у нас нет валидных данных пользователя, просто переходим к отображению без обновления сессии
+                log_warning("Невозможно обновить описание сессии: нет данных авторизованного пользователя")
+                if response['stage'] == 'Маркировка':
+                    work_ui_instance.detail(response)
+                elif response['stage'] == 'Сборка':
+                    test_ui_instance.detail(response)
+                elif response['stage'] == 'Тестирование':
+                    packing_ui_instance.detail(response)
+        except Exception as e:
+            log_error(f"Ошибка при обновлении описания сессии: {e}")
     # work_ui_instance.running = True  # Это должно теперь работать
     # work_ui_instance.start_timer()
 
@@ -151,17 +242,15 @@ def couintine_work():
 
 
 def end_work():
-    global work
-    global detail
+    global detail_work
     global time_end 
     global data_detail
     global time_stage
     global time_start
-    global detail_work
     detail_work = False
-    data = False
-    work = False
-    detail = None 
+    config.data = False
+    config.work = False
+    config.detail = None 
     time_end = GetTime()
     
     global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
@@ -169,6 +258,31 @@ def end_work():
     work_ui_instance.detail(False)
     packing_ui_instance.detail(False)
     test_ui_instance.detail(False)
+    
+    # Обновляем статус пользователя на "Отдых" после окончания работы
+    try:
+        # Получаем имя и фамилию из переменной Name
+        first_name = "Неизвестно"
+        last_name = "Неизвестно"
+        
+        if config.Name and isinstance(config.Name, str) and " " in config.Name:
+            name_parts = config.Name.split()
+            if len(name_parts) >= 2:
+                last_name, first_name = name_parts[0], name_parts[1]
+                log_event(f"Получены части имени для указания отдыха: фамилия='{last_name}', имя='{first_name}'")
+        
+        if first_name != "Неизвестно" and last_name != "Неизвестно":
+            data = {"type": "updateSessionDescription", "name": first_name, "surname": last_name, "new_description": "Отдых"}
+            log_event(f"Запрос на обновление статуса на 'Отдых': {data}")
+            result = database(data)
+            log_event(f"Результат обновления статуса: {result}")
+            if result and result.get('status') != 'ok':
+                log_error(f"Ошибка обновления статуса на 'Отдых': {result}")
+        else:
+            log_warning("Не удалось обновить статус на 'Отдых': некорректные данные пользователя")
+    except Exception as e:
+        log_error(f"Ошибка при обновлении статуса на 'Отдых': {e}")
+    
     # work_ui_instance.stop_timer()  # Остановка таймера
     # work_ui_instance.label.setText("00:00:00")  # Сброс отображаемого времени
 
@@ -187,18 +301,14 @@ def reset_session():
     """
     Завершает текущую сессию работы пользователя, сбрасывает состояние
     """
-    global auth
-    global data
-    global user
-    global time_start
-    
     # Логируем событие завершения работы
     log_event("Пользователь завершил работу")
     
     # Сбрасываем состояние
-    auth = False
-    data = None
-    user = None
+    config.auth = False
+    config.data = None
+    config.user = None
+    global time_start
     time_start = None
     
     # Очищаем информацию о детали во всех интерфейсах
@@ -214,8 +324,6 @@ def reset_session():
     return True
 
 def update(name=None, serial=None):
-    global work
-    global data_detail
     if name and serial:
         response_data = {'type': 'mark', "name": name, 'serial': serial}
         log_event(f"Маркировка вручную: {response_data}")
@@ -223,40 +331,43 @@ def update(name=None, serial=None):
         log_event(f"Ответ от сервера: {response}")
         return
 
+    global data_detail
     if data_detail:
         x = data_detail["data"]
         if x['stage'] == "Маркировка":
             response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}
             response = database(response_data)
-            if work:
+            if config.work:
                 end_work()
         elif x['stage'] == "Сборка":
             response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number']}
             response = database(response_data)
-            if work:
+            if config.work:
                 end_work()
         elif x['stage'] == "Тестирование":
             response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number']}
             response = database(response_data)
-            if work:
+            if config.work:
                 end_work()
 
 def getDetail(serial_number):
     data = {"type": "details", "serial": serial_number}
     global data_detail
     global mark_ui_instance, work_ui_instance
-    # data2 = {'name': 'МЕТРАН 150','serial_number': serial_number,'defective':'Да','stage':'Маркировка','sector':'аааа'}
-
-    # mark_ui_instance.detail(data2)
+    
+    log_event(f"Запрос данных о детали с серийным номером: {serial_number}")
+    log_event(f"Текущее состояние: Name='{config.Name}', auth={config.auth}, session_on={config.session_on}")
     
     response = database(data)
-    data_detail = response
-    response = response['data']
-    start_work(response["serial_number"], response)
-    # if response:
-    #     # Вызываем метод detail через экземпляр интерфейса
-    #     start_work(serial_number, response)
-
+    log_event(f"Ответ от сервера: {response}")
+    
+    if response and response.get('status') == 'ok' and 'data' in response:
+        data_detail = response
+        response_data = response['data']
+        start_work(response_data["serial_number"], response_data)
+    else:
+        log_error(f"Ошибка получения данных о детали: {response}")
+        show_error_dialog("Ошибка", "Не удалось получить данные о детали.")
 
 def zakurit():
     global data_detail
@@ -267,7 +378,13 @@ def zakurit():
             end_work()
             data_detail = None
         else:
-            show_error_dialog("Нет доступа к серверу.", "hgfd")
+            # Добавляем иконку к диалогу ошибки
+            icon_path = get_icon_path("favicon.ico")
+            error_dialog = QMessageBox()
+            error_dialog.setWindowIcon(QIcon(icon_path))
+            error_dialog.setWindowTitle("Ошибка")
+            error_dialog.setText("Нет доступа к серверу.")
+            error_dialog.exec_()
         
 
             

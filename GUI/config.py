@@ -15,4 +15,7 @@ user = None
 
 problem = None
 
+# Переменная для хранения имени и фамилии пользователя
 Name = ""
+
+session_on = False

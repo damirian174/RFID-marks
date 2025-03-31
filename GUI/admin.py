@@ -217,6 +217,7 @@ class Ui_MainWindow(object):
         QTreeWidgetItem(top_item_4, ["Датчик температуры"])
         QTreeWidgetItem(self.treeWidget, ["Дэшборд"])
         QTreeWidgetItem(self.treeWidget, ["Отчеты"])
+        QTreeWidgetItem(self.treeWidget, ["Активные сессии"])
         QTreeWidgetItem(self.treeWidget, ["Выход"])
 
         self.horizontalLayoutMain.addWidget(self.treeWidget, stretch=1)  # Растягиваем на 1 часть
@@ -290,6 +291,13 @@ class Ui_MainWindow(object):
         self.reports_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Fixed)  # Фиксированный размер для кнопки
         self.reports_table.setColumnWidth(4, 100)  # Ширина колонки с кнопкой
         self.form_layout.addWidget(self.reports_table)
+
+        # Добавляем таблицу для активных сессий
+        self.sessions_table = QTableWidget(0, 3, self.content_area)
+        self.sessions_table.hide()
+        self.sessions_table.setHorizontalHeaderLabels(["Сотрудник", "Время старта", "Описание работы"])
+        self.sessions_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.form_layout.addWidget(self.sessions_table)
 
         self.form_layout.setContentsMargins(0, 0, 0, 0)
         
@@ -447,7 +455,8 @@ class Ui_MainWindow(object):
         self.line_edit_2.hide()
         self.line_edit_3.hide()
         self.submit_button.hide()
-        self.reports_table.hide()  # Добавляем скрытие таблицы репортов
+        self.reports_table.hide()
+        self.sessions_table.hide()  # Скрываем таблицу сессий
         
         # Показать нужный контент в зависимости от выбранного элемента
         if item.text(0) == "Дэшборд":
@@ -494,6 +503,11 @@ class Ui_MainWindow(object):
             self.reports_table.show()
             self.updateReportsTable()
             self.timer.start()
+        elif item.text(0) == "Активные сессии":
+            self.form_title.setText("Активные сессии")
+            self.sessions_table.show()
+            self.updateSessionsTable()
+            self.timer.start()
         else:
             self.form_title.setText("")  # Если ничего не выбрано, скрываем заголовок
 
@@ -507,6 +521,10 @@ class Ui_MainWindow(object):
                 self.updateTable(self.metran_75_table, "МЕТРАН 75")
             if self.metran_55_table.isVisible():
                 self.updateTable(self.metran_55_table, "МЕТРАН 55")
+            if self.reports_table.isVisible():
+                self.updateReportsTable()
+            if self.sessions_table.isVisible():
+                self.updateSessionsTable()
     def show_dashboard(self):
         from Dash import Dashboard
         dashboard = Dashboard()
@@ -683,6 +701,43 @@ class Ui_MainWindow(object):
                 
         except Exception as e:
             log_error(f"Ошибка при удалении отчета: {e}")
+
+    def updateSessionsTable(self):
+        query = {"type": "getSessions"}
+        if not hasattr(self, 'workers'):
+            self.workers = []
+        worker = DatabaseWorker(query)
+        worker.finished.connect(lambda result: self.on_sessions_finished(result))
+        worker.finished.connect(lambda: self.workers.remove(worker))
+        worker.finished.connect(worker.deleteLater)
+        self.workers.append(worker)
+        worker.start()
+
+    @Slot(dict)
+    def on_sessions_finished(self, result):
+        if result and result.get('status') == 'ok':
+            sessions = result['data']
+            if sessions:  # Проверяем, есть ли данные
+                self.sessions_table.setRowCount(len(sessions))
+                for row, session in enumerate(sessions):
+                    # Объединяем имя и фамилию
+                    full_name = f"{session.get('name', '')} {session.get('surname', '')}"
+                    self.sessions_table.setItem(row, 0, QTableWidgetItem(full_name))
+                    self.sessions_table.setItem(row, 1, QTableWidgetItem(session.get('start_time', '')))
+                    self.sessions_table.setItem(row, 2, QTableWidgetItem(session.get('work_description', '')))
+            else:
+                self.sessions_table.setRowCount(1)  # Создаем одну строку для сообщения
+                empty_item = QTableWidgetItem("Список пуст")
+                empty_item.setTextAlignment(Qt.AlignCenter)
+                self.sessions_table.setItem(0, 0, empty_item)
+                self.sessions_table.setSpan(0, 0, 1, 3)  # Объединяем все ячейки в строке
+        else:
+            log_error("Ошибка при получении сессий из базы данных")
+            self.sessions_table.setRowCount(1)  # Создаем одну строку для сообщения
+            error_item = QTableWidgetItem("Список пуст")
+            error_item.setTextAlignment(Qt.AlignCenter)
+            self.sessions_table.setItem(0, 0, error_item)
+            self.sessions_table.setSpan(0, 0, 1, 3)  # Объединяем все ячейки в строке
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
