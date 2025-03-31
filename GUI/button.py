@@ -232,18 +232,15 @@ class MainApp(QMainWindow):
                 if reply == QMessageBox.Yes:
                     config.data = True
                     
-                    # Создаем запрос деталей синхронно
-                    detail_response = database({"type": "details"})
-                    if detail_response:
-                        getDetail("")
-
                     # Останавливаем камеру после успешного входа
                     if hasattr(self, 'worker') and self.worker.running:
                         self.worker.stop()
                         self.thread.quit()
                         self.thread.wait()
                     # Обновляем имя пользователя в разных страницах
+
                     config.user = name
+                    config.Name = name
                     self.work_ui.updateName(name=name)
                     self.tests_ui.updateName(name=name)
                     self.packing_ui.updateName(name=name)

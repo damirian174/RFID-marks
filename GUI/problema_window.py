@@ -110,17 +110,17 @@ def handle_problem_submission(input_dialog, problem_text, error_label):
         # Получаем текущее время
         current_time = datetime.now()
         time_str = current_time.strftime("%Y-%m-%d %H:%M")
+
         
         # Формируем данные для отправки в базу данных
         data = {
             "type": "report",  
             "text": problem_text,  
             "time": time_str,  
-            "name": config.user if config.user else "Неизвестный пользователь"
+            "name": config.Name
         }
-        
         # Отправляем данные синхронно
-        result = database(data)
+        result = database.database(data)
         if result:
             # Устанавливаем флаг проблемы в конфиге
             config.problem = True

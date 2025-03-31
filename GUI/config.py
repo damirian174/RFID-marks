@@ -14,3 +14,5 @@ data = None
 user = None
 
 problem = None
+
+Name = ""

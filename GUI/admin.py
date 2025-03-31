@@ -7,7 +7,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QTableView, QTreeWidget,
-    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem)
+    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialog)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from database import *
 from PySide6.QtCore import QThread, Signal, Slot
@@ -216,6 +216,7 @@ class Ui_MainWindow(object):
         QTreeWidgetItem(child_item_1, ["Метран 55"])
         QTreeWidgetItem(top_item_4, ["Датчик температуры"])
         QTreeWidgetItem(self.treeWidget, ["Дэшборд"])
+        QTreeWidgetItem(self.treeWidget, ["Отчеты"])
         QTreeWidgetItem(self.treeWidget, ["Выход"])
 
         self.horizontalLayoutMain.addWidget(self.treeWidget, stretch=1)  # Растягиваем на 1 часть
@@ -281,6 +282,15 @@ class Ui_MainWindow(object):
         self.metran_55_table.hide()
         self.form_layout.addWidget(self.metran_55_table)
 
+        # Добавляем таблицу для репортов
+        self.reports_table = QTableWidget(0, 5, self.content_area)  # Увеличиваем количество колонок на 1 для кнопки удаления
+        self.reports_table.hide()
+        self.reports_table.setHorizontalHeaderLabels(["ID", "Имя", "Текст", "Время", ""])
+        self.reports_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.reports_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Fixed)  # Фиксированный размер для кнопки
+        self.reports_table.setColumnWidth(4, 100)  # Ширина колонки с кнопкой
+        self.form_layout.addWidget(self.reports_table)
+
         self.form_layout.setContentsMargins(0, 0, 0, 0)
         
         self.treeWidget.itemClicked.connect(self.handle_item_clicked)
@@ -337,18 +347,29 @@ class Ui_MainWindow(object):
     def on_database_finished_generic(self, result, table):
         if result and result.get('status') == 'ok':
             details = result['data']
-            table.setRowCount(len(details))  # устанавливаем нужное число строк
-            for row, detail_data in enumerate(details):
-                table.setItem(row, 0, QTableWidgetItem(str(detail_data.get("id", ""))))
-                table.setItem(row, 1, QTableWidgetItem(detail_data.get("name", "")))
-                table.setItem(row, 2, QTableWidgetItem(detail_data.get("serial_number", "")))
-                table.setItem(row, 3, QTableWidgetItem(str(detail_data.get("defective", ""))))
-                table.setItem(row, 4, QTableWidgetItem(detail_data.get("stage", "")))
-                table.setItem(row, 5, QTableWidgetItem(detail_data.get("sector", "")))
+            if details:  # Проверяем, есть ли данные
+                table.setRowCount(len(details))  # устанавливаем нужное число строк
+                for row, detail_data in enumerate(details):
+                    table.setItem(row, 0, QTableWidgetItem(str(detail_data.get("id", ""))))
+                    table.setItem(row, 1, QTableWidgetItem(detail_data.get("name", "")))
+                    table.setItem(row, 2, QTableWidgetItem(detail_data.get("serial_number", "")))
+                    table.setItem(row, 3, QTableWidgetItem(str(detail_data.get("defective", ""))))
+                    table.setItem(row, 4, QTableWidgetItem(detail_data.get("stage", "")))
+                    table.setItem(row, 5, QTableWidgetItem(detail_data.get("sector", "")))
+            else:
+                table.setRowCount(1)  # Создаем одну строку для сообщения
+                empty_item = QTableWidgetItem("Список пуст")
+                empty_item.setTextAlignment(Qt.AlignCenter)
+                table.setItem(0, 0, empty_item)
+                table.setSpan(0, 0, 1, 6)  # Объединяем все ячейки в строке
         else:
             log_error("Ошибка при получении данных из базы данных")
+            table.setRowCount(1)  # Создаем одну строку для сообщения
+            error_item = QTableWidgetItem("Список пуст")
+            error_item.setTextAlignment(Qt.AlignCenter)
+            table.setItem(0, 0, error_item)
+            table.setSpan(0, 0, 1, 6)  # Объединяем все ячейки в строке
 
-    
     def handle_submit(self):
     # Проверяем, какой элемент был выбран
         if self.form_title.text() == "Добавление пользователя":
@@ -426,6 +447,7 @@ class Ui_MainWindow(object):
         self.line_edit_2.hide()
         self.line_edit_3.hide()
         self.submit_button.hide()
+        self.reports_table.hide()  # Добавляем скрытие таблицы репортов
         
         # Показать нужный контент в зависимости от выбранного элемента
         if item.text(0) == "Дэшборд":
@@ -467,6 +489,11 @@ class Ui_MainWindow(object):
             self.submit_button.show()
         elif item.text(0) == "Выход":
             QApplication.instance().quit()
+        elif item.text(0) == "Отчеты":
+            self.form_title.setText("Отчеты о проблемах")
+            self.reports_table.show()
+            self.updateReportsTable()
+            self.timer.start()
         else:
             self.form_title.setText("")  # Если ничего не выбрано, скрываем заголовок
 
@@ -498,6 +525,164 @@ class Ui_MainWindow(object):
 
         self.dashboard_widget.show()
 
+    def updateReportsTable(self):
+        query = {"type": "getreports"}
+        if not hasattr(self, 'workers'):
+            self.workers = []
+        worker = DatabaseWorker(query)
+        worker.finished.connect(lambda result: self.on_reports_finished(result))
+        worker.finished.connect(lambda: self.workers.remove(worker))
+        worker.finished.connect(worker.deleteLater)
+        self.workers.append(worker)
+        worker.start()
+
+    @Slot(dict)
+    def on_reports_finished(self, result):
+        if result and result.get('status') == 'ok':
+            reports = result['data']
+            if reports:  # Проверяем, есть ли данные
+                # Сортируем отчеты по дате (новые сверху)
+                reports.sort(key=lambda x: x.get("time", ""), reverse=True)
+                
+                self.reports_table.setRowCount(len(reports))
+                for row, report in enumerate(reports):
+                    self.reports_table.setItem(row, 0, QTableWidgetItem(str(report.get("id", ""))))
+                    self.reports_table.setItem(row, 1, QTableWidgetItem(report.get("name", "")))
+                    self.reports_table.setItem(row, 2, QTableWidgetItem(report.get("text", "")))
+                    self.reports_table.setItem(row, 3, QTableWidgetItem(report.get("time", "")))
+                    
+                    # Добавляем кнопку удаления
+                    delete_button = QPushButton("Удалить")
+                    delete_button.setStyleSheet("""
+                        QPushButton {
+                            background-color: #dc3545;
+                            color: white;
+                            border: none;
+                            padding: 5px 10px;
+                            border-radius: 3px;
+                            font-size: 12px;
+                        }
+                        QPushButton:hover {
+                            background-color: #c82333;
+                        }
+                    """)
+                    delete_button.clicked.connect(lambda checked, r=row: self.delete_report(r))
+                    self.reports_table.setCellWidget(row, 4, delete_button)
+            else:
+                self.reports_table.setRowCount(1)  # Создаем одну строку для сообщения
+                empty_item = QTableWidgetItem("Список пуст")
+                empty_item.setTextAlignment(Qt.AlignCenter)
+                self.reports_table.setItem(0, 0, empty_item)
+                self.reports_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+        else:
+            log_error("Ошибка при получении отчетов из базы данных")
+            self.reports_table.setRowCount(1)  # Создаем одну строку для сообщения
+            error_item = QTableWidgetItem("Список пуст")
+            error_item.setTextAlignment(Qt.AlignCenter)
+            self.reports_table.setItem(0, 0, error_item)
+            self.reports_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+
+    def delete_report(self, row):
+        try:
+            report_id = self.reports_table.item(row, 0).text()
+            report_name = self.reports_table.item(row, 1).text()
+            report_text = self.reports_table.item(row, 2).text()
+            
+            # Создаем диалог подтверждения
+            confirm_dialog = QDialog(self.main_window)
+            confirm_dialog.setWindowTitle("Подтверждение удаления")
+            confirm_dialog.setFixedSize(400, 200)
+            confirm_dialog.setStyleSheet("""
+                QDialog {
+                    background-color: #f8f9fa;
+                    border-radius: 10px;
+                    border: 2px solid #dc3545;
+                }
+                QLabel {
+                    color: #212529;
+                    font-size: 14px;
+                    margin: 10px;
+                }
+                QPushButton {
+                    padding: 8px 20px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    min-width: 100px;
+                }
+                QPushButton#confirmButton {
+                    background-color: #dc3545;
+                    color: white;
+                    border: none;
+                }
+                QPushButton#confirmButton:hover {
+                    background-color: #c82333;
+                }
+                QPushButton#cancelButton {
+                    background-color: #6c757d;
+                    color: white;
+                    border: none;
+                }
+                QPushButton#cancelButton:hover {
+                    background-color: #5a6268;
+                }
+            """)
+            
+            layout = QVBoxLayout(confirm_dialog)
+            layout.setContentsMargins(20, 20, 20, 20)
+            layout.setSpacing(15)
+            
+            # Добавляем предупреждающую иконку
+            warning_label = QLabel("⚠️")
+            warning_label.setStyleSheet("font-size: 24px;")
+            warning_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(warning_label)
+            
+            # Добавляем текст подтверждения
+            confirm_text = QLabel(f"Вы действительно хотите удалить отчет от пользователя {report_name}?")
+            confirm_text.setAlignment(Qt.AlignCenter)
+            confirm_text.setWordWrap(True)
+            layout.addWidget(confirm_text)
+            
+            # Добавляем текст отчета
+            report_text_label = QLabel(f"Текст отчета: {report_text}")
+            report_text_label.setAlignment(Qt.AlignCenter)
+            report_text_label.setWordWrap(True)
+            layout.addWidget(report_text_label)
+            
+            # Создаем кнопки
+            button_layout = QHBoxLayout()
+            button_layout.setSpacing(10)
+            
+            confirm_button = QPushButton("Удалить")
+            confirm_button.setObjectName("confirmButton")
+            cancel_button = QPushButton("Отмена")
+            cancel_button.setObjectName("cancelButton")
+            
+            button_layout.addWidget(confirm_button)
+            button_layout.addWidget(cancel_button)
+            layout.addLayout(button_layout)
+            
+            # Подключаем сигналы
+            confirm_button.clicked.connect(confirm_dialog.accept)
+            cancel_button.clicked.connect(confirm_dialog.reject)
+            
+            # Показываем диалог и проверяем результат
+            if confirm_dialog.exec() == QDialog.Accepted:
+                query = {
+                    "type": "deleteReport",
+                    "id": report_id
+                }
+                result = database(query)
+                if result and result.get('status') == 'ok':
+                    log_event(f"Удален отчет с ID: {report_id}")
+                    self.updateReportsTable()  # Обновляем таблицу после удаления
+                else:
+                    log_error(f"Ошибка при удалении отчета с ID: {report_id}")
+            else:
+                log_event("Удаление отчета отменено пользователем")
+                
+        except Exception as e:
+            log_error(f"Ошибка при удалении отчета: {e}")
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))

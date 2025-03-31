@@ -1,0 +1,117 @@
+2025-03-31 08:27:26 - INFO - logger - <module> - Приложение запущено
+2025-03-31 08:27:26 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-03-31 08:27:26 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-03-31 08:27:26 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-03-31 08:27:26 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-03-31 08:27:26 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-03-31 08:27:26 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-03-31 08:27:26 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-03-31 08:27:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:27:29 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-03-31 08:27:29 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-03-31 08:27:29 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-03-31 08:27:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:27:29 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-03-31 08:27:31 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:31 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:31 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-03-31 08:27:31 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:32 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-03-31 08:27:32 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:32 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:33 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:33 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:33 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-03-31 08:27:33 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 55'}
+2025-03-31 08:27:33 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-03-31 08:27:36 - INFO - logger - log_application_exit - Приложение завершено

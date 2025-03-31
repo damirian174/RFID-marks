@@ -1,0 +1,84 @@
+2025-03-31 08:27:38 - INFO - logger - <module> - Приложение запущено
+2025-03-31 08:27:38 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-03-31 08:27:38 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-03-31 08:27:38 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-03-31 08:27:38 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-03-31 08:27:38 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-03-31 08:27:38 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-03-31 08:27:41 - INFO - logger - log_event - Сервер доступен
+2025-03-31 08:27:41 - INFO - logger - log_event - Сервер доступен
+2025-03-31 08:27:41 - INFO - logger - log_event - Главное окно приложения создано
+2025-03-31 08:27:41 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to mark
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Test
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Packing
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Login page AA
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to assembly
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to mark
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Test
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Packing
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Login page AA
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to assembly
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to mark
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Test
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Packing
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Login page AA
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to assembly
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to mark
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Test
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Packing
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Login page AA
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to assembly
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to mark
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Test
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Packing
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to Login page AA
+2025-03-31 08:27:42 - INFO - logger - log_event - Enter to assembly
+2025-03-31 08:27:43 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-03-31 08:27:43 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-03-31 08:27:43 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-03-31 08:27:43 - INFO - logger - log_event - System Arduino init
+2025-03-31 08:27:43 - INFO - logger - log_event - Raw data (bytes): b'READ_ERROR\r\n'
+2025-03-31 08:27:43 - INFO - logger - log_event - Decoded data (str): READ_ERROR
+2025-03-31 08:27:43 - ERROR - logger - log_error - Ошибка: Error with read
+NoneType: None
+2025-03-31 08:27:43 - ERROR - logger - log_error - Ошибка: Error with read
+NoneType: None
+2025-03-31 08:27:45 - INFO - logger - log_event - Raw data (bytes): b'171145940_user..\r\n'
+2025-03-31 08:27:45 - INFO - logger - log_event - Decoded data (str): 171145940_user..
+2025-03-31 08:27:45 - INFO - logger - log_event - Parsed Data: ['171145940', 'user']
+2025-03-31 08:27:45 - INFO - logger - log_event - Send data to handle_serial_data: ['171145940', 'user']
+2025-03-31 08:27:45 - INFO - logger - log_event - Данные перед очисткой: ['171145940', 'user']
+2025-03-31 08:27:45 - INFO - logger - log_event - Очищенные данные: ['171145940', 'user']
+2025-03-31 08:27:45 - INFO - logger - log_event - Пользователь с UID: 171145940
+2025-03-31 08:27:45 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-03-31 08:27:45 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 171145940
+2025-03-31 08:27:45 - INFO - logger - log_event - Decoded data (str): 
+2025-03-31 08:27:45 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '171145940'}
+2025-03-31 08:27:45 - INFO - logger - log_event - Get NULL
+2025-03-31 08:27:45 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Тумба', 'surname': 'Прикроватная'}
+2025-03-31 08:27:47 - INFO - logger - log_event - Успешная аутентификация пользователя: Прикроватная Тумба
+2025-03-31 08:27:56 - INFO - logger - log_event - Запрос: {'type': 'report', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27', 'name': 'Прикроватная Тумба'}
+2025-03-31 08:27:57 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-03-31 08:28:05 - INFO - logger - log_event - Login to the admin panel
+2025-03-31 08:28:07 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-03-31 08:28:07 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 3, 'name': 'Прикроватная Тумба', 'text': 'ДА БЛЯТЬ Я НЕ МОГУ ТАК', 'time': '2025-03-31 08:27'}]}
+2025-03-31 08:28:07 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
