@@ -19,3 +19,5 @@ problem = None
 Name = ""
 
 session_on = False
+
+connect_status = False

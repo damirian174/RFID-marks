@@ -1,8 +1,6 @@
 numpy==2.2.3
-opencv-python==4.11.0.86
 pyserial==3.5
 PySide6==6.8.2.1
 PySide6_Addons==6.8.2.1
 PySide6_Essentials==6.8.2.1
-pyzbar==0.1.9
 shiboken6==6.8.2.1

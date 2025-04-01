@@ -39,7 +39,8 @@ class MainApp(QMainWindow):
         self.first_name = ""
         self.last_name = ""
         self.full_name = ""
-        
+        self.connect_status = False
+
         self.port = self.find_arduino()
         self.serial_manager = SerialManager(self.port, 9600) if self.port else None  # Создаём сразу
         if not self.serial_manager:
@@ -280,16 +281,16 @@ class MainApp(QMainWindow):
                         self.thread.quit()
                         self.thread.wait()
                     # Обновляем имя пользователя в разных страницах
-
-                    data = {"type": "startSession", "name": name, "surname": surname, "work_description": "Без детали"}
-                    log_event(f"Запрос на создание сессии: {data}")
-                    worker = database(data)
-                    log_event(f"Ответ на создание сессии: {worker}")
-                    if worker and worker["status"] == "ok":
-                        log_event(f"Сессия успешно начата: {full_name}")
-                        config.session_on = True
-                    else:
-                        log_error(f"Не удалось начать сессию: {full_name}, ответ: {worker}")
+                    if config.connect_status:
+                        data = {"type": "startSession", "name": name, "surname": surname, "work_description": "Без детали"}
+                        log_event(f"Запрос на создание сессии: {data}")
+                        worker = database(data)
+                        log_event(f"Ответ на создание сессии: {worker}")
+                        if worker and worker["status"] == "ok":
+                            log_event(f"Сессия успешно начата: {full_name}")
+                            config.session_on = True
+                        else:
+                            log_error(f"Не удалось начать сессию: {full_name}, ответ: {worker}")
 
                     log_event(f"Устанавливаем переменную config.user: {full_name}")
                     config.user = full_name
@@ -640,6 +641,7 @@ if __name__ == "__main__":
         else:
             log_event("Пользователь выбрал продолжить без соединения")
             # Показываем главное окно
+            config.connect_status = False
             show_main_window()
     
     # Запуск приложения с небольшой задержкой для отображения загрузочного экрана
@@ -656,6 +658,7 @@ if __name__ == "__main__":
         if test_connection():
             # Сервер доступен, запускаем приложение
             log_event("Сервер доступен")
+            config.connect_status = True
             show_main_window()
         else:
             log_error("Ошибка соединения с сервером")
