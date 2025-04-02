@@ -98,27 +98,13 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
 
-        # Верхняя панель (Header)
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
         self.widget.setFixedHeight(50)  # Фиксированная высота шапки
         self.widget.setStyleSheet(u"""
-            background-color: #2E3239;
-            color: #5F7ADB;
-            font-size: 20px;
-            font-weight: 700;
-        """)
-        self.horizontalLayout = QHBoxLayout(self.widget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setSpacing(0)
-
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setFixedHeight(50)  # Фиксированная высота шапки
-        self.widget.setStyleSheet(u"""
-        color: #5F7ADB;
+        color: #FFFFFF;
         font: 20px;
-        background-color: #2E3239;
+        background-color: #004B8D;
         font-weight: 700;
         """)
 
@@ -130,10 +116,10 @@ class Ui_MainWindow(object):
         # Логотип (фиксированный размер)
         self.widget_7 = QWidget(self.widget)
         self.widget_7.setObjectName(u"widget_7")
-        self.widget_7.setFixedSize(110, 50)  # Фиксированный размер логотипа
+        self.widget_7.setFixedSize(210, 50)  # Фиксированный размер логотипа
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        image_path = self.get_image_path("main.jpg")
+        image_path = self.get_image_path("new_logo.jpg")
         self.label_9.setPixmap(QPixmap(image_path))
         self.horizontalLayout.addWidget(self.widget_7)
 
@@ -144,9 +130,9 @@ class Ui_MainWindow(object):
         self.pushButton_7.setFixedHeight(50)
         self.pushButton_7.setStyleSheet(u"""
         QPushButton {
-                color: #5F7ADB;\n"
+                color: #FFFFFF;\n"
 "font: 20px;\n"
-"background-color: #2E3239;\n"
+"background-color: #004B8D;\n"
 "font-weight: 700;\n"
         }
         """)
@@ -158,9 +144,9 @@ class Ui_MainWindow(object):
         self.pushButton_8.setFixedHeight(50)
         self.pushButton_8.setStyleSheet(u"""
         QPushButton {
-                color: #5F7ADB;\n"
+                color: #FFFFFF;\n"
 "font: 20px;\n"
-"background-color: #2E3239;\n"
+"background-color: #004B8D;\n"
 "font-weight: 700;\n"
         }
         """)
@@ -172,9 +158,9 @@ class Ui_MainWindow(object):
         self.pushButton_2.setFixedHeight(50)
         self.pushButton_2.setStyleSheet(u"""
         QPushButton {
-                color: #5F7ADB;\n"
+                color: #FFFFFF;\n"
 "font: 20px;\n"
-"background-color: #2E3239;\n"
+"background-color: #004B8D;\n"
 "font-weight: 700;\n"
         }
         """)
@@ -186,9 +172,9 @@ class Ui_MainWindow(object):
         self.pushButton_5.setFixedHeight(50)
         self.pushButton_5.setStyleSheet(u"""
         QPushButton {
-                color: #5F7ADB;\n"
+                color: #FFFFFF;\n"
 "font: 20px;\n"
-"background-color: #2E3239;\n"
+"background-color: #004B8D;\n"
 "font-weight: 700;\n"
 }
         """)
@@ -200,9 +186,9 @@ class Ui_MainWindow(object):
         self.pushButton_6.setFixedHeight(50)
         self.pushButton_6.setStyleSheet(u"""
                 QPushButton {
-                color: #5F7ADB;\n"
+                color: #FFFFFF;\n"
 "font: 20px;\n"
-"background-color: #2E3239;\n"
+"background-color: #004B8D;\n"
 "font-weight: 700;\n"
 }
         """)
