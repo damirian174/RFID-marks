@@ -1164,3 +1164,9 @@ NoneType: None
 NoneType: None
 2025-04-02 15:57:11 - ERROR - logger - log_error - Ошибка: Error with read
 NoneType: None
+2025-04-02 16:01:57 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-02 16:01:57 - INFO - logger - log_event - Завершаем сессию пользователя: Тумба Прикроватная
+2025-04-02 16:01:57 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Тумба', 'surname': 'Прикроватная'}
+2025-04-02 16:01:59 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-02 16:01:59 - INFO - logger - log_event - Сессия успешно завершена: Тумба Прикроватная
+2025-04-02 16:01:59 - INFO - logger - log_application_exit - Приложение завершено
