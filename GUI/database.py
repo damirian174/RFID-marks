@@ -43,12 +43,12 @@ def test_connection():
 def database(request_data):
 
     log_event(f"Запрос: {request_data}")
-    if request_data['type'] == 'report':
-        return "OK"
-    elif request_data['type'] == 'user':
-        return {"status": "ok", "surname": "Степанов", "name": "Сергей"}
-    elif request_data['type'] == 'details':
-        return {'status': 'ok', 'data': {'id': 69, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'identified_by': None, 'defect_stage_id': None}}
+    # if request_data['type'] == 'report':
+    #     return "OK"
+    # elif request_data['type'] == 'user':
+    #     return {"status": "ok", "surname": "Степанов", "name": "Сергей"}
+    # elif request_data['type'] == 'details':
+    #     return {'status': 'ok', 'data': {'id': 69, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'identified_by': None, 'defect_stage_id': None}}
     try:
         # Создаем соединение с сервером
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:

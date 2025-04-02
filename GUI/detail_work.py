@@ -301,6 +301,44 @@ def reset_session():
     """
     Завершает текущую сессию работы пользователя, сбрасывает состояние
     """
+    # Отправляем запрос на сервер для закрытия сессии, если пользователь авторизован
+    try:
+        # Получаем имя и фамилию из переменной Name
+        first_name = "Неизвестно"
+        last_name = "Неизвестно"
+        
+        if config.Name and isinstance(config.Name, str) and " " in config.Name:
+            name_parts = config.Name.split()
+            if len(name_parts) >= 2:
+                last_name, first_name = name_parts[0], name_parts[1]
+                log_event(f"Получены части имени для завершения сессии: фамилия='{last_name}', имя='{first_name}'")
+        
+        # Создаем запрос на завершение сессии, аналогично button.py
+        if first_name != "Неизвестно" and last_name != "Неизвестно" and config.session_on:
+            log_event(f"Завершение сессии пользователя: {last_name} {first_name}")
+            
+            # Использовать конкретный запрос на endSession только для текущего пользователя
+            end_session_data = {
+                'type': 'endSession',
+                'name': first_name,
+                'surname': last_name
+            }
+            
+            # Отправляем запрос на сервер
+            from database import database
+            response = database(end_session_data)
+            
+            # Логируем ответ сервера
+            if response and response.get('status') == 'ok':
+                log_event(f"Сессия пользователя {last_name} {first_name} успешно закрыта на сервере")
+                config.session_on = False
+            else:
+                log_error(f"Ошибка при закрытии сессии на сервере: {response}")
+        else:
+            log_warning(f"Сессия не была закрыта. Имя={first_name}, Фамилия={last_name}, session_on={config.session_on}")
+    except Exception as e:
+        log_error(f"Ошибка при отправке запроса на завершение сессии: {e}")
+    
     # Логируем событие завершения работы
     log_event("Пользователь завершил работу")
     
@@ -308,6 +346,7 @@ def reset_session():
     config.auth = False
     config.data = None
     config.user = None
+    config.session_on = False
     global time_start
     time_start = None
     

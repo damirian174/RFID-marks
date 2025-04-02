@@ -122,20 +122,111 @@ class MainApp(QMainWindow):
         self.setup_scan_page()
 
     def setup_scan_page(self):
-        self.menu_ui.label.setText("Отсканируйте штрихкод")
+        self.menu_ui.label.setText("Отсканируйте карточку")
         self.menu_ui.label.setAlignment(Qt.AlignCenter)
 
+        # Получаем размер окна для адаптивных вычислений
+        window_width = self.scan_page.width()
+        window_height = self.scan_page.height()
+        
+        # Вычисляем базовый размер шрифта (2.5% от меньшей стороны окна)
+        base_font_size = min(window_width, window_height) * 0.025
+        input_size = max(14, int(base_font_size * 1.2))  # Размер шрифта для поля ввода
+        button_size = max(14, int(base_font_size * 1.3))  # Размер шрифта для кнопки
+        
+        # Адаптивные размеры элементов
+        input_width = min(max(350, int(window_width * 0.3)), 500)  # 30% ширины окна, мин. 350px, макс. 500px
+        input_height = max(40, int(window_height * 0.06))          # 6% высоты окна, мин. 40px
+        button_width = min(max(200, int(window_width * 0.15)), 300) # 15% ширины окна, мин. 200px, макс. 300px
+        button_height = max(40, int(window_height * 0.06))          # 6% высоты окна, мин. 40px
+        
+        # Расположение элементов (центрирование)
+        input_x = (window_width - input_width) // 2
+        input_y = int(window_height * 0.55)  # Примерно 55% от высоты окна
+        button_x = (window_width - button_width) // 2
+        button_y = input_y + input_height + 20  # 20px под полем ввода
+        
+        # Настройка стилей
+        input_style = f"""
+            QLineEdit {{
+                font-size: {input_size}px;
+                padding: 8px 15px;
+                border-radius: 10px;
+                background-color: white;
+                border: 1px solid #ced4da;
+                color: #333;
+            }}
+            QLineEdit:focus {{
+                border: 2px solid #5F7ADB;
+                background-color: #f8f9fa;
+            }}
+        """
+        
+        button_style = f"""
+            QPushButton {{
+                font-size: {button_size}px;
+                font-weight: bold;
+                padding: 8px 20px;
+                border-radius: 10px;
+                background-color: #5F7ADB;
+                color: white;
+                border: none;
+            }}
+            QPushButton:hover {{
+                background-color: #4A6ED9;
+            }}
+            QPushButton:pressed {{
+                background-color: #3A5EC9;
+            }}
+        """
+        
+        # Создаем и настраиваем поле ввода
         self.manual_input = QLineEdit(self.scan_page)
-        self.manual_input.setPlaceholderText("Введите штрихкод вручную")
-        self.manual_input.setGeometry(450, 400, 400, 40)
+        self.manual_input.setPlaceholderText("Введите номер карточки или ID")
+        self.manual_input.setGeometry(input_x, input_y, input_width, input_height)
+        self.manual_input.setStyleSheet(input_style)
+        self.manual_input.setAlignment(Qt.AlignCenter)
+        self.manual_input.setClearButtonEnabled(True)
         self.manual_input.returnPressed.connect(self.verify)
-
+        
+        # Создаем и настраиваем кнопку
         manual_button = QPushButton("Подтвердить", self.scan_page)
-        manual_button.setGeometry(550, 550, 200, 40)
+        manual_button.setGeometry(button_x, button_y, button_width, button_height)
+        manual_button.setStyleSheet(button_style)
+        manual_button.setCursor(Qt.PointingHandCursor)
         manual_button.clicked.connect(self.manual_entry)
-        icon_path = "favicon.ico"  # Путь к вашей иконке
-
-
+        
+        # Подключаем обработчик изменения размера окна для адаптивности
+        self.scan_page.resizeEvent = self.scan_page_resize_event
+        
+    def scan_page_resize_event(self, event):
+        """Обработчик изменения размера окна для адаптивного обновления элементов"""
+        # Только если у нас есть ссылки на элементы
+        if hasattr(self, 'manual_input') and self.manual_input and hasattr(self, 'scan_page'):
+            window_width = self.scan_page.width()
+            window_height = self.scan_page.height()
+            
+            # Пересчитываем размеры элементов
+            input_width = min(max(350, int(window_width * 0.3)), 500)
+            input_height = max(40, int(window_height * 0.06))
+            button_width = min(max(200, int(window_width * 0.15)), 300)
+            button_height = max(40, int(window_height * 0.06))
+            
+            # Центрируем элементы
+            input_x = (window_width - input_width) // 2
+            input_y = int(window_height * 0.55)
+            button_x = (window_width - button_width) // 2
+            button_y = input_y + input_height + 20
+            
+            # Применяем новые размеры
+            for child in self.scan_page.children():
+                if isinstance(child, QLineEdit) and child.placeholderText() == "Введите номер карточки или ID":
+                    child.setGeometry(input_x, input_y, input_width, input_height)
+                elif isinstance(child, QPushButton) and child.text() == "Подтвердить":
+                    child.setGeometry(button_x, button_y, button_width, button_height)
+        
+        # Вызываем оригинальный метод для завершения обработки события
+        QMainWindow.resizeEvent(self.scan_page, event)
 
     def find_arduino(self):
         ports = serial.tools.list_ports.comports()

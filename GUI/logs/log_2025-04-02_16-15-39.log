@@ -1,0 +1,229 @@
+2025-04-02 14:15:39 - INFO - logger - <module> - Приложение запущено
+2025-04-02 14:15:39 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-02 14:15:39 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-02 14:15:39 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-02 14:15:39 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-02 14:15:39 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-02 14:15:39 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-02 14:15:42 - INFO - logger - log_event - Сервер доступен
+2025-04-02 14:15:42 - INFO - logger - log_event - Сервер доступен
+2025-04-02 14:15:42 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-02 14:15:42 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to mark
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Test
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Packing
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to assembly
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to mark
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Test
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Packing
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to assembly
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to mark
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Test
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Packing
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to assembly
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to mark
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Test
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Packing
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to assembly
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to mark
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Test
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Packing
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 14:15:42 - INFO - logger - log_event - Enter to assembly
+2025-04-02 14:15:43 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-02 14:15:43 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-02 14:15:43 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-02 14:15:43 - INFO - logger - log_event - System Arduino init
+2025-04-02 14:15:59 - INFO - logger - log_event - Raw data (bytes): b'322201154_user..\r\n'
+2025-04-02 14:15:59 - INFO - logger - log_event - Decoded data (str): 322201154_user..
+2025-04-02 14:15:59 - INFO - logger - log_event - Parsed Data: ['322201154', 'user']
+2025-04-02 14:15:59 - INFO - logger - log_event - Send data to handle_serial_data: ['322201154', 'user']
+2025-04-02 14:15:59 - INFO - logger - log_event - Данные перед очисткой: ['322201154', 'user']
+2025-04-02 14:15:59 - INFO - logger - log_event - Очищенные данные: ['322201154', 'user']
+2025-04-02 14:15:59 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-02 14:15:59 - INFO - logger - log_event - Пользователь с UID: 322201154
+2025-04-02 14:15:59 - INFO - logger - log_event - Decoded data (str): 
+2025-04-02 14:15:59 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 322201154
+2025-04-02 14:15:59 - INFO - logger - log_event - Get NULL
+2025-04-02 14:15:59 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '322201154'}
+2025-04-02 14:16:00 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Кровать', 'surname': 'Беспалов'}
+2025-04-02 14:16:00 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Кровать', 'surname': 'Беспалов'}
+2025-04-02 14:16:00 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Кровать', 'surname': 'Беспалов'}
+2025-04-02 14:16:01 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Кровать', 'surname': 'Беспалов', 'work_description': 'Без детали'}
+2025-04-02 14:16:01 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Кровать', 'surname': 'Беспалов', 'work_description': 'Без детали'}
+2025-04-02 14:16:01 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-02 14:16:01 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-02 14:16:01 - INFO - logger - log_event - Сессия успешно начата: Беспалов Кровать
+2025-04-02 14:16:01 - INFO - logger - log_event - Устанавливаем переменную config.user: Беспалов Кровать
+2025-04-02 14:16:01 - INFO - logger - log_event - Устанавливаем переменную config.Name: Беспалов Кровать
+2025-04-02 14:16:01 - INFO - logger - log_event - Установлено значение config.Name: Беспалов Кровать
+2025-04-02 14:16:01 - INFO - logger - log_event - Успешная аутентификация пользователя: Беспалов Кровать
+2025-04-02 14:16:10 - INFO - logger - log_event - Login to the admin panel
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}, {'id': 52, 'user_id': 7, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стол', 'surname': 'Ардашев'}, {'id': 53, 'user_id': 1, 'start_time': '2025-03-31 21:42', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Стул', 'surname': 'Ахмедьзянов'}]}
+2025-04-02 14:16:12 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}, {'id': 52, 'name': 'Стол', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ардашев', 'user_id': 7, 'work_description': 'Без детали'}, {'id': 53, 'name': 'Стул', 'notes': None, 'start_time': '2025-03-31 21:42', 'status': 'active', 'surname': 'Ахмедьзянов', 'user_id': 1, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:12 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-02 14:16:12 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-02 14:16:12 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:15 - INFO - logger - log_event - Отправляем запрос на удаление всех сессий, кроме текущей
+2025-04-02 14:16:15 - INFO - logger - log_event - Запрос: {'type': 'deleteAllSessions', 'keepCurrentSession': True}
+2025-04-02 14:16:16 - INFO - logger - log_event - Ответ: {'status': 'ok', 'count': 2}
+2025-04-02 14:16:16 - INFO - logger - log_event - Успешно удалены неактивные сессии. Удалено: 2 сессий
+2025-04-02 14:16:17 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}]}
+2025-04-02 14:16:17 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}]}
+2025-04-02 14:16:17 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:17 - INFO - logger - log_event - Число полученных сессий: 1
+2025-04-02 14:16:17 - INFO - logger - log_event - Кнопка удаления всех сессий скрыта (только одна сессия)
+2025-04-02 14:16:17 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:27 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}]}
+2025-04-02 14:16:27 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 54, 'user_id': 8, 'start_time': '2025-03-31 21:44', 'work_description': 'Без детали', 'status': 'active', 'notes': None, 'name': 'Кровать', 'surname': 'Беспалов'}]}
+2025-04-02 14:16:27 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 54, 'name': 'Кровать', 'notes': None, 'start_time': '2025-03-31 21:44', 'status': 'active', 'surname': 'Беспалов', 'user_id': 8, 'work_description': 'Без детали'}], 'status': 'ok'}
+2025-04-02 14:16:27 - INFO - logger - log_event - Число полученных сессий: 1
+2025-04-02 14:16:27 - INFO - logger - log_event - Кнопка удаления всех сессий скрыта (только одна сессия)
+2025-04-02 14:16:27 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 14:16:42 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:16:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:17:03 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 55, in database
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+2025-04-02 14:17:03 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:17:03 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:17:12 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 14:17:12 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:17:24 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 55, in database
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+2025-04-02 14:17:24 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:17:33 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 55, in database
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+2025-04-02 14:17:33 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:17:33 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 14:17:33 - INFO - logger - log_event - Получен ответ для таблицы сессий: {}
+2025-04-02 14:17:33 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 14:17:54 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 55, in database
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+2025-04-02 14:17:54 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 14:17:54 - INFO - logger - log_event - Получен ответ для таблицы сессий: {}
+2025-04-02 14:17:54 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 14:18:07 - ERROR - logger - log_error - Ошибка: Error work with COM port: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 45, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\RFID-marks\GUI\venv\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-02 14:25:51 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-02 14:25:51 - INFO - logger - log_event - Завершаем сессию пользователя: Кровать Беспалов
+2025-04-02 14:25:51 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Кровать', 'surname': 'Беспалов'}
+2025-04-02 14:26:12 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 55, in database
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+2025-04-02 14:26:12 - ERROR - logger - log_error - Ошибка: Не удалось завершить сессию: Кровать Беспалов
+NoneType: None
+2025-04-02 14:26:12 - INFO - logger - log_application_exit - Приложение завершено

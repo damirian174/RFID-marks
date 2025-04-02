@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QTimer, QRect)
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtGui import QPixmap, QIcon, QFont
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout, QCheckBox, QTextEdit, QDialog)
 from detail_work import end_work, pause_work, couintine_work, update, zakurit
 import time
@@ -12,6 +12,118 @@ import database
 from datetime import datetime
 from logger import log_event, log_error
 from problema_window import show_problem_dialog  # Импорт функции для показа окна проблемы
+
+
+class AdaptivePacking(QMainWindow):
+    """
+    Расширенное главное окно с поддержкой адаптивных элементов
+    и шрифтов, которые изменяются в зависимости от размера окна.
+    """
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.adjustFontSizes()  # Начальное применение размеров шрифтов
+        
+    def resizeEvent(self, event):
+        """Обрабатываем изменение размера окна"""
+        super().resizeEvent(event)
+        self.adjustFontSizes()
+        
+    def adjustFontSizes(self):
+        """Устанавливаем размеры шрифтов в зависимости от размера окна"""
+        window_width = self.width()
+        window_height = self.height()
+        
+        # Вычисляем базовый размер шрифта (2.5% от меньшей стороны окна)
+        base_font_size = min(window_width, window_height) * 0.025
+        
+        # Устанавливаем размеры для разных типов текста
+        header_size = max(18, int(base_font_size * 1.8))  # Шапка
+        title_size = max(16, int(base_font_size * 1.6))   # Заголовки
+        normal_size = max(14, int(base_font_size * 1.2))  # Обычный текст
+        button_size = max(14, int(base_font_size * 1.1))  # Кнопки
+        checkbox_size = max(15, int(base_font_size * 1.3)) # Чекбоксы
+        
+        # Применяем шрифты к элементам интерфейса
+        # Кнопки шапки
+        header_font = QFont()
+        header_font.setPointSize(header_size)
+        header_font.setBold(True)
+        
+        button_font = QFont()
+        button_font.setPointSize(button_size)
+        button_font.setBold(True)
+        
+        title_font = QFont()
+        title_font.setPointSize(title_size)
+        title_font.setBold(True)
+        
+        normal_font = QFont()
+        normal_font.setPointSize(normal_size)
+        
+        checkbox_font = QFont()
+        checkbox_font.setPointSize(checkbox_size)
+        checkbox_font.setBold(True)
+        
+        # Применяем шрифты к элементам UI
+        # Шапка и кнопки навигации
+        for btn in [self.ui.pushButton_2, self.ui.pushButton_5, self.ui.pushButton_6,
+                   self.ui.pushButton_7, self.ui.pushButton_8]:
+            btn.setFont(header_font)
+            btn.setStyleSheet(f"""
+            QPushButton {{
+                color: #FFFFFF;
+                font-size: {header_size}px;
+                background-color: #004B8D;
+                font-weight: 700;
+            }}
+            QPushButton:hover {{
+                background-color: #4A6ED9;
+            }}
+            """)
+        
+        # Заголовки секций и имя пользователя
+        self.ui.label_2.setFont(title_font)
+        self.ui.label_2.setStyleSheet(f"font-size: {title_size}px; font-weight: 600; color: black;")
+        
+        self.ui.label.setFont(title_font)
+        self.ui.label.setStyleSheet(f"""
+        color: rgb(255, 255, 255);
+        background-color: #2E3239;
+        font-size: {title_size}px;
+        font-weight: 700;
+        border-radius: 15px;
+        """)
+        
+        # Чекбоксы для упаковки
+        for checkbox in [self.ui.checkBox, self.ui.checkBox_2, self.ui.checkBox_3]:
+            if hasattr(self.ui, checkbox.objectName()):
+                checkbox.setFont(checkbox_font)
+                checkbox.setStyleSheet(f"font-size: {checkbox_size}px; font-weight: 600;")
+        
+        # Инфо метки о детали
+        for label in [self.ui.name, self.ui.serial, self.ui.defective, 
+                     self.ui.stage, self.ui.sector]:
+            if hasattr(self.ui, label.objectName()):
+                label.setFont(normal_font)
+                style = label.styleSheet()
+                style = style.replace("font-size: 18px;", f"font-size: {normal_size}px;")
+                label.setStyleSheet(style)
+        
+        # Кнопки действий
+        for btn in [self.ui.pushButton, self.ui.pushButton_3, 
+                    self.ui.pushButton_4, self.ui.pushButton_9, 
+                    self.ui.pushButton_15]:
+            if hasattr(self.ui, btn.objectName()):
+                btn.setFont(button_font)
+                style = btn.styleSheet()
+                style = style.replace("font-size: 18px;", f"font-size: {button_size}px;")
+                btn.setStyleSheet(style)
+        
+        # Логирование изменений
+        log_event(f"Packing: размер окна изменен: {window_width}x{window_height}, шрифты: {header_size}/{title_size}/{normal_size}/{checkbox_size}px")
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -802,8 +914,9 @@ class Ui_MainWindow(object):
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
-    MainWindow = QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    
+    # Используем наш адаптивный класс вместо обычного QMainWindow
+    window = AdaptivePacking()
+    window.show()
+    
     sys.exit(app.exec())

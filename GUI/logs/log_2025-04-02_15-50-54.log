@@ -1,0 +1,16 @@
+2025-04-02 13:50:54 - INFO - logger - <module> - Приложение запущено
+2025-04-02 13:50:54 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-02 13:50:54 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-02 13:50:54 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-02 13:50:54 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-02 13:50:54 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-02 13:50:54 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-02 13:51:00 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: timed out
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 27, in test_connection
+    chunk = client_socket.recv(4096)
+TimeoutError: timed out
+2025-04-02 13:51:00 - ERROR - logger - log_error - Ошибка: Ошибка соединения с сервером
+NoneType: None
+2025-04-02 13:51:01 - INFO - logger - log_event - Пользователь выбрал выход из программы
+2025-04-02 13:51:01 - INFO - logger - log_application_exit - Приложение завершено

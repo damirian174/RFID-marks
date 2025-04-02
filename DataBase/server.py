@@ -211,6 +211,17 @@ async def handle_client(reader, writer, pool):
                         response = {"status": "ok"}
                     else:
                         response = {"status": "error", "message": data}
+                
+                elif json_data.get("type") == "deleteAllSessions":
+                    keep_current = json_data.get("keepCurrentSession", False)
+                    logger.info(f"Запрос на удаление всех сессий, кроме текущей: {keep_current}")
+                    
+                    count, error = await delete_all_sessions(pool, keep_current)
+                    if error:
+                        response = {"status": "error", "message": error}
+                    else:
+                        response = {"status": "ok", "count": count}
+                        logger.info(f"Удалено сессий: {count}")
 
                 # Новая ветка для запроса логов
                 elif json_data.get("type") == "logs":

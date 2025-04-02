@@ -1,0 +1,187 @@
+2025-04-02 13:49:58 - INFO - logger - <module> - Приложение запущено
+2025-04-02 13:49:58 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-02 13:49:58 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-02 13:49:58 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-02 13:49:58 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-02 13:49:58 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-02 13:49:58 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-02 13:50:03 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: timed out
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 27, in test_connection
+    chunk = client_socket.recv(4096)
+TimeoutError: timed out
+2025-04-02 13:50:03 - ERROR - logger - log_error - Ошибка: Ошибка соединения с сервером
+NoneType: None
+2025-04-02 13:50:12 - INFO - logger - log_event - Пользователь выбрал продолжить без соединения
+2025-04-02 13:50:12 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-02 13:50:12 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to mark
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Test
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Packing
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to assembly
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to mark
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Test
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Packing
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to assembly
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to mark
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Test
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Packing
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to assembly
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to mark
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Test
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Packing
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to assembly
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to mark
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Test
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Packing
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to Login page AA
+2025-04-02 13:50:12 - INFO - logger - log_event - Enter to assembly
+2025-04-02 13:50:14 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-02 13:50:14 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-02 13:50:14 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-02 13:50:14 - INFO - logger - log_event - System Arduino init
+2025-04-02 13:50:14 - INFO - logger - log_event - Raw data (bytes): b'171145940_user..\r\n'
+2025-04-02 13:50:14 - INFO - logger - log_event - Decoded data (str): 171145940_user..
+2025-04-02 13:50:14 - INFO - logger - log_event - Parsed Data: ['171145940', 'user']
+2025-04-02 13:50:14 - INFO - logger - log_event - Send data to handle_serial_data: ['171145940', 'user']
+2025-04-02 13:50:14 - INFO - logger - log_event - Данные перед очисткой: ['171145940', 'user']
+2025-04-02 13:50:14 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-02 13:50:14 - INFO - logger - log_event - Очищенные данные: ['171145940', 'user']
+2025-04-02 13:50:14 - INFO - logger - log_event - Decoded data (str): 
+2025-04-02 13:50:14 - INFO - logger - log_event - Пользователь с UID: 171145940
+2025-04-02 13:50:14 - INFO - logger - log_event - Get NULL
+2025-04-02 13:50:14 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 171145940
+2025-04-02 13:50:14 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '171145940'}
+2025-04-02 13:50:14 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Тумба', 'surname': 'Прикроватная'}
+2025-04-02 13:50:14 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Тумба', 'surname': 'Прикроватная'}
+2025-04-02 13:50:14 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Тумба', 'surname': 'Прикроватная'}
+2025-04-02 13:50:15 - INFO - logger - log_event - Устанавливаем переменную config.user: Прикроватная Тумба
+2025-04-02 13:50:15 - INFO - logger - log_event - Устанавливаем переменную config.Name: Прикроватная Тумба
+2025-04-02 13:50:15 - INFO - logger - log_event - Установлено значение config.Name: Прикроватная Тумба
+2025-04-02 13:50:15 - INFO - logger - log_event - Успешная аутентификация пользователя: Прикроватная Тумба
+2025-04-02 13:50:36 - ERROR - logger - log_error - Ошибка: failed login attempt to Admin Panel
+NoneType: None
+2025-04-02 13:50:41 - INFO - logger - log_event - Login to the admin panel
+2025-04-02 13:50:42 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-02 13:50:42 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-04-02 13:50:42 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:42 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:42 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:42 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:42 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:42 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:42 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:42 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:42 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:42 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:42 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Выбран пункт меню Отчеты
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Статус видимости таблицы отчетов после show(): True
+2025-04-02 13:50:49 - INFO - logger - log_event - Выбран пункт меню Отчеты
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Статус видимости таблицы отчетов после show(): True
+2025-04-02 13:50:49 - INFO - logger - log_event - Выбран пункт меню Отчеты
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Статус видимости таблицы отчетов после show(): True
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы отчетов: {'message': 'Отчеты не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Отчеты не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getreports'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы отчетов: {'message': 'Отчеты не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы отчетов: {'message': 'Отчеты не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении отчетов из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:49 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:49 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-02 13:50:49 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-02 13:50:49 - INFO - logger - log_event - Запрос: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:49 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Сессии не найдены'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions'}
+2025-04-02 13:50:49 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'message': 'Сессии не найдены', 'status': 'error'}
+2025-04-02 13:50:49 - ERROR - logger - log_error - Ошибка: Ошибка при получении сессий из базы данных
+NoneType: None
+2025-04-02 13:50:52 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-02 13:50:52 - INFO - logger - log_application_exit - Приложение завершено

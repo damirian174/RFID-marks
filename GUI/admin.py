@@ -7,7 +7,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QTableView, QTreeWidget,
-    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialog)
+    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialog, QMessageBox)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from database import *
 from PySide6.QtCore import QThread, Signal, Slot
@@ -271,12 +271,18 @@ class Ui_MainWindow(object):
         self.form_layout.addWidget(self.metran_55_table)
 
         # Добавляем таблицу для репортов
-        self.reports_table = QTableWidget(0, 5, self.content_area)  # Увеличиваем количество колонок на 1 для кнопки удаления
+        self.reports_table = QTableWidget(0, 5, self.content_area)  # Увеличиваем количество колонок на 1 для кнопки
         self.reports_table.hide()
         self.reports_table.setHorizontalHeaderLabels(["ID", "Имя", "Текст", "Время", ""])
         self.reports_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.reports_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Fixed)  # Фиксированный размер для кнопки
         self.reports_table.setColumnWidth(4, 100)  # Ширина колонки с кнопкой
+        
+        # Устанавливаем таблицу только для чтения
+        self.reports_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.reports_table.setFocusPolicy(Qt.NoFocus)
+        self.reports_table.setSelectionMode(QTableWidget.NoSelection)
+        
         self.form_layout.addWidget(self.reports_table)
 
         # Добавляем таблицу для активных сессий
@@ -284,7 +290,44 @@ class Ui_MainWindow(object):
         self.sessions_table.hide()
         self.sessions_table.setHorizontalHeaderLabels(["Сотрудник", "Время старта", "Описание работы"])
         self.sessions_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.form_layout.addWidget(self.sessions_table)
+        
+        # Устанавливаем таблицу только для чтения
+        self.sessions_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.sessions_table.setFocusPolicy(Qt.NoFocus)
+        self.sessions_table.setSelectionMode(QTableWidget.NoSelection)
+        
+        # Создаем кнопку для удаления всех сессий
+        self.delete_all_sessions_button = QPushButton("Удалить все сессии")
+        self.delete_all_sessions_button.setStyleSheet("""
+            QPushButton {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: bold;
+                min-width: 200px;
+                margin: 10px 0;
+            }
+            QPushButton:hover {
+                background-color: #c82333;
+            }
+            QPushButton:pressed {
+                background-color: #bd2130;
+            }
+        """)
+        self.delete_all_sessions_button.clicked.connect(self.delete_all_sessions)
+        self.delete_all_sessions_button.hide()  # Скрываем кнопку по умолчанию
+        
+        # Создаем контейнер для таблицы и кнопки
+        self.sessions_container = QWidget(self.content_area)
+        self.sessions_container.hide()
+        self.sessions_layout = QVBoxLayout(self.sessions_container)
+        self.sessions_layout.addWidget(self.sessions_table)
+        self.sessions_layout.addWidget(self.delete_all_sessions_button, 0, Qt.AlignRight)
+        
+        self.form_layout.addWidget(self.sessions_container)
 
         self.form_layout.setContentsMargins(0, 0, 0, 0)
         
@@ -443,28 +486,24 @@ class Ui_MainWindow(object):
         self.line_edit_3.hide()
         self.submit_button.hide()
         self.reports_table.hide()
-        self.sessions_table.hide()  # Скрываем таблицу сессий
+        self.sessions_container.hide()  # Скрываем таблицу сессий
         
         # Показать нужный контент в зависимости от выбранного элемента
         if item.text(0) == "Дэшборд":
             self.form_title.setText("Дэшборд")
             self.show_dashboard()
-            self.timer.start()  # Перезапускаем таймер, так как страница с таблицей не выбрана
         elif item.text(0) == "Метран 150":
             self.form_title.setText("Метран 150")
             self.metran_150_table.show()
             self.updateTable(self.metran_150_table, "МЕТРАН 150")
-            self.timer.start()  # Перезапускаем таймер, так как таблица выбрана
         elif item.text(0) == "Метран 75":
             self.form_title.setText("Метран 75")
             self.metran_75_table.show()
             self.updateTable(self.metran_75_table, "МЕТРАН 75")
-            self.timer.start()  # Перезапускаем таймер, так как таблица выбрана
         elif item.text(0) == "Метран 55":
             self.form_title.setText("Метран 55")
             self.metran_55_table.show()
             self.updateTable(self.metran_55_table, "МЕТРАН 55")
-            self.timer.start()  # Перезапускаем таймер, так как таблица выбрана
         elif item.text(0) == "Добавление пользователя":
             self.form_title.setText("Добавление пользователя")
             self.line_edit_1.setPlaceholderText("Фамилия")
@@ -487,18 +526,55 @@ class Ui_MainWindow(object):
             QApplication.instance().quit()
         elif item.text(0) == "Отчеты":
             self.form_title.setText("Отчеты о проблемах")
+            log_event("Выбран пункт меню Отчеты")
+            # Очищаем таблицу перед запросом данных
+            self.reports_table.setRowCount(0)
+            self.reports_table.clearContents()
             self.reports_table.show()
             self.updateReportsTable()
-            self.timer.start()
+            log_event(f"Статус видимости таблицы отчетов после show(): {self.reports_table.isVisible()}")
         elif item.text(0) == "Активные сессии":
             self.form_title.setText("Активные сессии")
+            
+            # Принудительно показываем и таблицу, и контейнер
+            self.sessions_table.clearContents()
+            self.sessions_container.show()
             self.sessions_table.show()
+            
+            # Обновляем стили таблицы
+            self.sessions_table.setStyleSheet("""
+                QTableWidget {
+                    background-color: white;
+                    color: #333;
+                    gridline-color: #d3d3d3;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 14px;
+                }
+                QTableWidget::item {
+                    padding: 5px;
+                    border-bottom: 1px solid #eee;
+                }
+                QHeaderView::section {
+                    background-color: #5F7ADB;
+                    color: white;
+                    padding: 5px;
+                    font-weight: bold;
+                    border: none;
+                }
+            """)
+            
+            # Обновляем данные таблицы
+            self.sessions_table.setRowCount(0)
             self.updateSessionsTable()
-            self.timer.start()
+            
+            # Логируем для проверки
+            log_event("Отображаем страницу активных сессий")
+            log_event(f"Видимость таблицы: {self.sessions_table.isVisible()}, контейнера: {self.sessions_container.isVisible()}")
         else:
             self.form_title.setText("")  # Если ничего не выбрано, скрываем заголовок
 
-        self.timer.start() 
+        self.timer.start()  # Перезапускаем таймер
 
     def check_active_table(self):
         if self.main_window.isActiveWindow():  # Проверка активности окна
@@ -510,7 +586,7 @@ class Ui_MainWindow(object):
                 self.updateTable(self.metran_55_table, "МЕТРАН 55")
             if self.reports_table.isVisible():
                 self.updateReportsTable()
-            if self.sessions_table.isVisible():
+            if self.sessions_container.isVisible():
                 self.updateSessionsTable()
     def show_dashboard(self):
         from Dash import Dashboard
@@ -543,14 +619,18 @@ class Ui_MainWindow(object):
 
     @Slot(dict)
     def on_reports_finished(self, result):
+        log_event(f"Получен ответ для таблицы отчетов: {result}")
         if result and result.get('status') == 'ok':
             reports = result['data']
+            log_event(f"Число полученных отчетов: {len(reports) if reports else 0}")
             if reports:  # Проверяем, есть ли данные
                 # Сортируем отчеты по дате (новые сверху)
                 reports.sort(key=lambda x: x.get("time", ""), reverse=True)
                 
                 self.reports_table.setRowCount(len(reports))
+                log_event(f"Установлено количество строк в таблице: {len(reports)}")
                 for row, report in enumerate(reports):
+                    log_event(f"Обработка отчета {row+1}/{len(reports)}: {report}")
                     self.reports_table.setItem(row, 0, QTableWidgetItem(str(report.get("id", ""))))
                     self.reports_table.setItem(row, 1, QTableWidgetItem(report.get("name", "")))
                     self.reports_table.setItem(row, 2, QTableWidgetItem(report.get("text", "")))
@@ -573,12 +653,27 @@ class Ui_MainWindow(object):
                     """)
                     delete_button.clicked.connect(lambda checked, r=row: self.delete_report(r))
                     self.reports_table.setCellWidget(row, 4, delete_button)
+                log_event(f"Таблица отчетов заполнена {len(reports)} записями")
+                log_event(f"Статус видимости таблицы: {self.reports_table.isVisible()}")
+                
+                # Обновляем таблицу и ее отображение
+                self.reports_table.resizeColumnsToContents()
+                self.reports_table.resizeRowsToContents()
+                self.reports_table.viewport().update()
+                self.content_area.update()
+                
+                # Проверяем, что таблица отображается
+                if not self.reports_table.isVisible():
+                    log_event("Таблица отчетов была скрыта, показываем её снова")
+                    self.reports_table.show()
             else:
                 self.reports_table.setRowCount(1)  # Создаем одну строку для сообщения
                 empty_item = QTableWidgetItem("Список пуст")
                 empty_item.setTextAlignment(Qt.AlignCenter)
                 self.reports_table.setItem(0, 0, empty_item)
                 self.reports_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+                log_event("Таблица отчетов: список пуст")
+                self.reports_table.viewport().update()
         else:
             log_error("Ошибка при получении отчетов из базы данных")
             self.reports_table.setRowCount(1)  # Создаем одну строку для сообщения
@@ -586,6 +681,7 @@ class Ui_MainWindow(object):
             error_item.setTextAlignment(Qt.AlignCenter)
             self.reports_table.setItem(0, 0, error_item)
             self.reports_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+            self.reports_table.viewport().update()
 
     def delete_report(self, row):
         try:
@@ -702,22 +798,72 @@ class Ui_MainWindow(object):
 
     @Slot(dict)
     def on_sessions_finished(self, result):
+        log_event(f"Получен ответ для таблицы сессий: {result}")
         if result and result.get('status') == 'ok':
             sessions = result['data']
+            log_event(f"Число полученных сессий: {len(sessions) if sessions else 0}")
+            
             if sessions:  # Проверяем, есть ли данные
+                # Очищаем таблицу
+                self.sessions_table.clearContents()
                 self.sessions_table.setRowCount(len(sessions))
+                
+                # Принудительно устанавливаем видимость таблицы
+                self.sessions_table.show()
+                
+                # Устанавливаем стили таблицы
+                self.sessions_table.setStyleSheet("""
+                    QTableWidget {
+                        background-color: white;
+                        color: #333;
+                        gridline-color: #d3d3d3;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+                    QTableWidget::item {
+                        padding: 5px;
+                        border-bottom: 1px solid #eee;
+                    }
+                    QHeaderView::section {
+                        background-color: #5F7ADB;
+                        color: white;
+                        padding: 5px;
+                        font-weight: bold;
+                        border: none;
+                    }
+                """)
+                
                 for row, session in enumerate(sessions):
                     # Объединяем имя и фамилию
-                    full_name = f"{session.get('name', '')} {session.get('surname', '')}"
+                    full_name = f"{session.get('surname', '')} {session.get('name', '')}"
                     self.sessions_table.setItem(row, 0, QTableWidgetItem(full_name))
                     self.sessions_table.setItem(row, 1, QTableWidgetItem(session.get('start_time', '')))
                     self.sessions_table.setItem(row, 2, QTableWidgetItem(session.get('work_description', '')))
+                
+                # Показываем кнопку удаления всех сессий, если есть больше одной сессии
+                if len(sessions) > 1:
+                    self.delete_all_sessions_button.show()
+                    log_event("Показана кнопка удаления всех сессий")
+                else:
+                    self.delete_all_sessions_button.hide()
+                    log_event("Кнопка удаления всех сессий скрыта (только одна сессия)")
+                
+                # Обновляем таблицу и ее отображение
+                self.sessions_table.resizeColumnsToContents()
+                self.sessions_table.resizeRowsToContents()
+                self.sessions_table.viewport().update()
+                
+                # Проверяем видимость таблицы и контейнера
+                log_event(f"Видимость таблицы: {self.sessions_table.isVisible()}, контейнера: {self.sessions_container.isVisible()}")
             else:
                 self.sessions_table.setRowCount(1)  # Создаем одну строку для сообщения
                 empty_item = QTableWidgetItem("Список пуст")
                 empty_item.setTextAlignment(Qt.AlignCenter)
                 self.sessions_table.setItem(0, 0, empty_item)
                 self.sessions_table.setSpan(0, 0, 1, 3)  # Объединяем все ячейки в строке
+                self.delete_all_sessions_button.hide()
+                log_event("Таблица сессий: список пуст")
         else:
             log_error("Ошибка при получении сессий из базы данных")
             self.sessions_table.setRowCount(1)  # Создаем одну строку для сообщения
@@ -725,9 +871,143 @@ class Ui_MainWindow(object):
             error_item.setTextAlignment(Qt.AlignCenter)
             self.sessions_table.setItem(0, 0, error_item)
             self.sessions_table.setSpan(0, 0, 1, 3)  # Объединяем все ячейки в строке
+            self.delete_all_sessions_button.hide()
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+
+    def delete_all_sessions(self):
+        """Удаляет все сессии, кроме текущей активной сессии пользователя"""
+        try:
+            # Создаем диалог подтверждения удаления
+            confirm_dialog = QDialog(self.main_window)
+            confirm_dialog.setWindowTitle("Подтверждение удаления")
+            confirm_dialog.setFixedSize(450, 200)
+            
+            # Установка иконки
+            icon_path = self.get_image_path("favicon.ico")
+            confirm_dialog.setWindowIcon(QIcon(icon_path))
+            
+            confirm_dialog.setStyleSheet("""
+                QDialog {
+                    background-color: #f8f9fa;
+                    border-radius: 10px;
+                    border: 2px solid #dc3545;
+                }
+                QLabel {
+                    color: #212529;
+                    font-size: 14px;
+                    margin: 10px;
+                }
+                QPushButton {
+                    padding: 8px 20px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    min-width: 100px;
+                }
+                QPushButton#confirmButton {
+                    background-color: #dc3545;
+                    color: white;
+                    border: none;
+                }
+                QPushButton#confirmButton:hover {
+                    background-color: #c82333;
+                }
+                QPushButton#cancelButton {
+                    background-color: #6c757d;
+                    color: white;
+                    border: none;
+                }
+                QPushButton#cancelButton:hover {
+                    background-color: #5a6268;
+                }
+            """)
+            
+            layout = QVBoxLayout(confirm_dialog)
+            layout.setContentsMargins(20, 20, 20, 20)
+            layout.setSpacing(15)
+            
+            # Добавляем предупреждающую иконку
+            warning_label = QLabel("⚠️")
+            warning_label.setStyleSheet("font-size: 24px;")
+            warning_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(warning_label)
+            
+            # Добавляем текст подтверждения
+            confirm_text = QLabel("Вы действительно хотите удалить все неактивные сессии?\nТекущая активная сессия не будет удалена.")
+            confirm_text.setAlignment(Qt.AlignCenter)
+            confirm_text.setWordWrap(True)
+            layout.addWidget(confirm_text)
+            
+            # Создаем кнопки
+            button_layout = QHBoxLayout()
+            button_layout.setSpacing(10)
+            
+            confirm_button = QPushButton("Удалить")
+            confirm_button.setObjectName("confirmButton")
+            cancel_button = QPushButton("Отмена")
+            cancel_button.setObjectName("cancelButton")
+            
+            button_layout.addWidget(confirm_button)
+            button_layout.addWidget(cancel_button)
+            layout.addLayout(button_layout)
+            
+            # Подключаем сигналы
+            confirm_button.clicked.connect(confirm_dialog.accept)
+            cancel_button.clicked.connect(confirm_dialog.reject)
+            
+            # Показываем диалог и проверяем результат
+            if confirm_dialog.exec() == QDialog.Accepted:
+                # Отправляем запрос на удаление всех сессий, кроме текущей
+                query = {
+                    "type": "deleteAllSessions",
+                    "keepCurrentSession": True
+                }
+                log_event("Отправляем запрос на удаление всех сессий, кроме текущей")
+                result = database(query)
+                
+                if result and result.get('status') == 'ok':
+                    log_event(f"Успешно удалены неактивные сессии. Удалено: {result.get('count', 0)} сессий")
+                    # Показываем сообщение об успешном удалении
+                    self.show_success_message(f"Успешно удалено {result.get('count', 0)} сессий")
+                    # Обновляем таблицу сессий
+                    self.updateSessionsTable()
+                else:
+                    log_error(f"Ошибка при удалении сессий: {result}")
+                    self.show_error_message("Не удалось удалить сессии. Попробуйте позже.")
+            else:
+                log_event("Удаление сессий отменено пользователем")
+        except Exception as e:
+            log_error(f"Ошибка при удалении сессий: {e}")
+            self.show_error_message(f"Произошла ошибка: {str(e)}")
+    
+    def show_success_message(self, message):
+        """Показывает сообщение об успешном выполнении операции"""
+        msg_box = QMessageBox(self.main_window)
+        msg_box.setWindowTitle("Успешно")
+        msg_box.setText(message)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        
+        # Установка иконки
+        icon_path = self.get_image_path("favicon.ico")
+        msg_box.setWindowIcon(QIcon(icon_path))
+        
+        msg_box.exec()
+    
+    def show_error_message(self, message):
+        """Показывает сообщение об ошибке"""
+        msg_box = QMessageBox(self.main_window)
+        msg_box.setWindowTitle("Ошибка")
+        msg_box.setText(message)
+        msg_box.setIcon(QMessageBox.Critical)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        
+        # Установка иконки
+        icon_path = self.get_image_path("favicon.ico")
+        msg_box.setWindowIcon(QIcon(icon_path))
+        
+        msg_box.exec()
 
 if __name__ == "__main__":
     import sys

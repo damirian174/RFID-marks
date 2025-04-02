@@ -377,21 +377,85 @@ async def is_session_active(pool, name, surname):
 
 async def update_session_description(pool, name, surname, new_description):
     """
-    Изменение описания работы в активной сессии пользователя.
+    Обновление описания работы для активной сессии пользователя.
     """
     try:
+        # Получаем ID пользователя
         user_id = await get_user_id_by_name(pool, name, surname)
         if not user_id:
-            return "Пользователь не найден"
-            
+            return f"Пользователь {name} {surname} не найден"
+        
         async with pool.acquire() as conn:
-            query = """
-                UPDATE sessions 
+            # Обновляем описание сессии
+            update_query = """
+                UPDATE sessions
                 SET work_description = $1
                 WHERE user_id = $2 AND status = 'active';
             """
-            await conn.execute(query, new_description, user_id)
+            await conn.execute(update_query, new_description, user_id)
             return "OK"
     except Exception as e:
         print(f"Ошибка при обновлении описания сессии: {e}")
         return str(e)
+
+async def delete_all_sessions(pool, keep_current=False):
+    """
+    Удаление всех сессий. Если keep_current=True, то сохраняется текущая активная сессия.
+    
+    Возвращает:
+        tuple: (количество удаленных сессий, сообщение об ошибке или None в случае успеха)
+    """
+    try:
+        async with pool.acquire() as conn:
+            if keep_current:
+                # Находим текущую активную сессию (последняя по времени начала)
+                current_session_query = """
+                    SELECT id, user_id 
+                    FROM sessions 
+                    WHERE status = 'active' 
+                    ORDER BY start_time DESC 
+                    LIMIT 1;
+                """
+                current_session = await conn.fetchrow(current_session_query)
+                
+                if current_session:
+                    # Удаляем все активные сессии других пользователей, сохраняя все сессии текущего пользователя
+                    delete_query = """
+                        DELETE FROM sessions 
+                        WHERE user_id != $1 AND status = 'active'
+                        RETURNING id;
+                    """
+                    deleted_sessions = await conn.fetch(delete_query, current_session["user_id"])
+                    
+                    # Получаем информацию о пользователе текущей сессии для логирования
+                    user_info = await get_user_name_by_id(pool, current_session["user_id"])
+                    user_str = f"{user_info['surname']} {user_info['name']}" if user_info else f"ID:{current_session['user_id']}"
+                    
+                    print(f"Удалены все сессии, кроме сессий пользователя {user_str}")
+                    return len(deleted_sessions), None
+                else:
+                    # Удаляем все активные сессии, так как нет текущей активной
+                    delete_query = """
+                        DELETE FROM sessions 
+                        WHERE status = 'active'
+                        RETURNING id;
+                    """
+                    deleted_sessions = await conn.fetch(delete_query)
+                    
+                    print(f"Удалены все активные сессии (активной сессии не найдено)")
+                    return len(deleted_sessions), None
+            else:
+                # Удаляем все активные сессии
+                delete_query = """
+                    DELETE FROM sessions 
+                    WHERE status = 'active'
+                    RETURNING id;
+                """
+                deleted_sessions = await conn.fetch(delete_query)
+                
+                print(f"Удалены все активные сессии")
+                return len(deleted_sessions), None
+    except Exception as e:
+        error_msg = f"Ошибка при удалении сессий: {e}"
+        print(error_msg)
+        return 0, error_msg

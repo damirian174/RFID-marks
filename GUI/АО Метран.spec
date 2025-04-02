@@ -5,7 +5,7 @@ a = Analysis(
     ['button.py'],
     pathex=[],
     binaries=[],
-    datas=[('favicon.ico', '.'), ('loading.png', '.'), ('main.jpg', '.')],
+    datas=[('favicon.ico', '.'), ('loading.png', '.'), ('main.jpg', '.'), ('photo.jpg', '.'), ('new_logo.jpg', '.'), ('Метран.jpg', '.')],
     hiddenimports=['PySide6', 'PySide6.QtCharts', 'PySide6.QtCore', 'PySide6.QtGui', 'PySide6.QtWidgets', 'logger', 'config', 'database', 'detail_work', 'error_test', 'COM'],
     hookspath=[],
     hooksconfig={},
