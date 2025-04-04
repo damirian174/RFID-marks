@@ -270,6 +270,34 @@ class Ui_MainWindow(object):
         self.metran_55_table.hide()
         self.form_layout.addWidget(self.metran_55_table)
 
+        # Добавляем таблицу для бракованных деталей
+        self.defective_table = QTableWidget(0, 5, self.content_area)
+        self.defective_table.hide()
+        self.defective_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап"])
+        self.defective_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.defective_table.setStyleSheet("""
+            QTableWidget {
+                background-color: white;
+                color: #333;
+                gridline-color: #d3d3d3;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+            QTableWidget::item {
+                padding: 5px;
+                border-bottom: 1px solid #eee;
+            }
+            QHeaderView::section {
+                background-color: #5F7ADB;
+                color: white;
+                padding: 5px;
+                font-weight: bold;
+                border: none;
+            }
+        """)
+        self.form_layout.addWidget(self.defective_table)
+
         # Добавляем таблицу для репортов
         self.reports_table = QTableWidget(0, 5, self.content_area)  # Увеличиваем количество колонок на 1 для кнопки
         self.reports_table.hide()
@@ -391,9 +419,17 @@ class Ui_MainWindow(object):
                     table.setItem(row, 0, QTableWidgetItem(str(detail_data.get("id", ""))))
                     table.setItem(row, 1, QTableWidgetItem(detail_data.get("name", "")))
                     table.setItem(row, 2, QTableWidgetItem(detail_data.get("serial_number", "")))
-                    table.setItem(row, 3, QTableWidgetItem(str(detail_data.get("defective", ""))))
+                    if detail_data.get("defective", ""):
+                        x = "Брак"
+                    else:
+                        x = "Годен"
+                    table.setItem(row, 3, QTableWidgetItem(x))
                     table.setItem(row, 4, QTableWidgetItem(detail_data.get("stage", "")))
-                    table.setItem(row, 5, QTableWidgetItem(detail_data.get("sector", "")))
+                    if detail_data.get("sector", ""):
+                        y = detail_data.get("sector", "")
+                    else:
+                        y = "Не храним"
+                    table.setItem(row, 5, QTableWidgetItem(y))
             else:
                 table.setRowCount(1)  # Создаем одну строку для сообщения
                 empty_item = QTableWidgetItem("Список пуст")
@@ -487,6 +523,7 @@ class Ui_MainWindow(object):
         self.submit_button.hide()
         self.reports_table.hide()
         self.sessions_container.hide()  # Скрываем таблицу сессий
+        self.defective_table.hide()  # Скрываем таблицу бракованных деталей
         
         # Показать нужный контент в зависимости от выбранного элемента
         if item.text(0) == "Дэшборд":
@@ -504,6 +541,10 @@ class Ui_MainWindow(object):
             self.form_title.setText("Метран 55")
             self.metran_55_table.show()
             self.updateTable(self.metran_55_table, "МЕТРАН 55")
+        elif item.text(0) == "Брак":
+            self.form_title.setText("Бракованные детали")
+            self.defective_table.show()
+            self.updateDefectiveTable()
         elif item.text(0) == "Добавление пользователя":
             self.form_title.setText("Добавление пользователя")
             self.line_edit_1.setPlaceholderText("Фамилия")
@@ -588,6 +629,8 @@ class Ui_MainWindow(object):
                 self.updateReportsTable()
             if self.sessions_container.isVisible():
                 self.updateSessionsTable()
+            if self.defective_table.isVisible():
+                self.updateDefectiveTable()
     def show_dashboard(self):
         from Dash import Dashboard
         dashboard = Dashboard()
@@ -1008,6 +1051,65 @@ class Ui_MainWindow(object):
         msg_box.setWindowIcon(QIcon(icon_path))
         
         msg_box.exec()
+
+    def updateDefectiveTable(self):
+        """Обновляет таблицу с бракованными деталями"""
+        query = {"type": "alldefective"}
+        if not hasattr(self, 'workers'):
+            self.workers = []
+        worker = DatabaseWorker(query)
+        worker.finished.connect(lambda result: self.on_defective_finished(result))
+        worker.finished.connect(lambda: self.workers.remove(worker))
+        worker.finished.connect(worker.deleteLater)
+        self.workers.append(worker)
+        worker.start()
+        log_event("Отправлен запрос на получение бракованных деталей")
+
+    @Slot(dict)
+    def on_defective_finished(self, result):
+        """Обрабатывает результат запроса на получение бракованных деталей"""
+        log_event(f"Получен ответ для таблицы бракованных деталей: {result}")
+        if result and result.get('status') == 'ok':
+            defective_items = result['data']
+            log_event(f"Число полученных бракованных деталей: {len(defective_items) if defective_items else 0}")
+            
+            if defective_items:  # Проверяем, есть ли данные
+                # Очищаем таблицу
+                self.defective_table.clearContents()
+                self.defective_table.setRowCount(len(defective_items))
+                
+                # Заполняем таблицу данными
+                for row, item in enumerate(defective_items):
+                    self.defective_table.setItem(row, 0, QTableWidgetItem(str(item.get("id", ""))))
+                    self.defective_table.setItem(row, 1, QTableWidgetItem(item.get("name", "")))
+                    self.defective_table.setItem(row, 2, QTableWidgetItem(item.get("serial_number", "")))
+                    
+                    # В статусе всегда указываем "Брак"
+                    status_item = QTableWidgetItem("Брак")
+                    status_item.setForeground(QColor(255, 0, 0))  # Красный цвет для статуса "Брак"
+                    self.defective_table.setItem(row, 3, status_item)
+                    
+                    self.defective_table.setItem(row, 4, QTableWidgetItem(item.get("stage", "")))
+                
+                # Обновляем таблицу
+                self.defective_table.resizeColumnsToContents()
+                self.defective_table.resizeRowsToContents()
+                self.defective_table.viewport().update()
+                log_event("Таблица бракованных деталей обновлена")
+            else:
+                self.defective_table.setRowCount(1)
+                empty_item = QTableWidgetItem("Бракованных деталей не найдено")
+                empty_item.setTextAlignment(Qt.AlignCenter)
+                self.defective_table.setItem(0, 0, empty_item)
+                self.defective_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+                log_event("Таблица бракованных деталей: список пуст")
+        else:
+            log_error("Ошибка при получении бракованных деталей из базы данных")
+            self.defective_table.setRowCount(1)
+            error_item = QTableWidgetItem("Ошибка при получении данных")
+            error_item.setTextAlignment(Qt.AlignCenter)
+            self.defective_table.setItem(0, 0, error_item)
+            self.defective_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
 
 if __name__ == "__main__":
     import sys

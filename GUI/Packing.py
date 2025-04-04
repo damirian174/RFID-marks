@@ -440,6 +440,26 @@ class Ui_MainWindow(object):
         self.pushButton_15.clicked.connect(self.away)
         self.verticalLayoutCenter.addWidget(self.pushButton_15)
 
+        # Добавляем новую кнопку для сброса детали
+        self.reset_button = QPushButton(self.widget_3) # widget_3 - центральная панель
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setStyleSheet(u"""
+            QPushButton {
+                background-color: #DC3545;
+                color: white;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 15px;
+                padding: 10px 20px;
+            }
+            QPushButton:hover {
+                background-color: #BD2130;
+            }
+        """)
+        self.reset_button.setText(u"Сбросить деталь")
+        self.reset_button.clicked.connect(self.reset_detail)
+        self.verticalLayoutCenter.addWidget(self.reset_button)
+
         self.horizontalLayoutMain.addWidget(self.widget_3, stretch=10)
 
         
@@ -745,18 +765,23 @@ class Ui_MainWindow(object):
             log_event(f"Деталь {serial_number} отправлена в брак")
             # Сбрасываем чекбоксы
             self.checkBox.setChecked(False)
-
     def detail(self, data=None):
         if data:
             self.name.setText(str(data['name']))
             self.serial.setText(str(data['serial_number']))
-            self.defective.setText(str(data['defective']))
+            if data['defective']:
+                x = "Бракованная"
+            else:
+                x = "Годная"
+            self.defective.setText(x)
             self.stage.setText(str(data['stage']))
-            self.sector.setText(str(data['sector']))
+            if data['sector']:
+                y = str(data['sector'])
+            else:
+                y = "Не хранится"
+            self.sector.setText(y)
             self.change_color(2)
-            log_event("Деталь принята в работу")
         else:
-            log_event("Деталь не принята")
             self.name.setText("Отсканируй деталь")
             self.serial.setText("Отсканируй деталь")
             self.defective.setText("Отсканируй деталь")
@@ -910,6 +935,51 @@ class Ui_MainWindow(object):
             msg_box.setStandardButtons(QMessageBox.Ok)
             self.style_message_box(msg_box)
             msg_box.exec()
+
+    def reset_detail(self):
+        """
+        Сбрасывает информацию о детали в интерфейсе без изменения её состояния на сервере
+        """
+        # Показываем диалог подтверждения
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Подтверждение сброса")
+        msg_box.setText("Вы уверены, что хотите сбросить информацию о детали?\nЭто действие не изменит статус детали на сервере.")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+        self.style_message_box(msg_box)
+        
+        # Устанавливаем иконку
+        icon_path = self.get_image_path("favicon.ico")
+        msg_box.setWindowIcon(QIcon(icon_path))
+        
+        # Если пользователь подтвердил действие
+        if msg_box.exec() == QMessageBox.Yes:
+            # Сбрасываем отображение информации о детали
+            self.detail(False)
+            
+            # Сбрасываем чекбоксы (если они есть в Packing.py)
+            if hasattr(self, 'checkBox'):
+                self.checkBox.setChecked(False)
+            if hasattr(self, 'checkBox_2'):
+                self.checkBox_2.setChecked(False)
+            if hasattr(self, 'checkBox_3'):
+                self.checkBox_3.setChecked(False)
+            
+            # Сбрасываем глобальные переменные в detail_work
+            from detail_work import data_detail
+            import detail_work
+            
+            # Сбрасываем переменные, но не вызываем end_work(), 
+            # так как это изменило бы статус на сервере
+            detail_work.data_detail = None
+            detail_work.detail_work = False
+            
+            # Сброс переменных в config
+            import config
+            config.detail = None
+            config.work = False
+            
+            log_event("Информация о детали сброшена пользователем без изменения статуса на сервере")
 
 if __name__ == "__main__":
     import sys

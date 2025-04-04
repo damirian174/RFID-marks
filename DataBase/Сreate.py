@@ -102,6 +102,15 @@ async def create_and_insert_data():
             );
         """)
 
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS storage_sectors (
+                id SERIAL PRIMARY KEY,
+                sector_name VARCHAR(10) NOT NULL,
+                occupied_slots INTEGER DEFAULT 0,
+                max_capacity INTEGER DEFAULT 5
+            );
+        """)
+
         print("База данных и таблицы успешно созданы.")
     except Exception as e:
         print(f"Ошибка при создании базы данных и таблиц: {e}")

@@ -177,20 +177,57 @@ async def add_sensor(pool, name, serial_number):
 async def update_stage_by_serial(pool, serial_number, new_stage):
     """
     Изменение stage по серийному номеру.
+    Если stage равен "Упаковка", то деталь помещается в доступный сектор хранения.
+    Для бракованных деталей (defective = TRUE) обновление этапа запрещено.
     """
     try:
         async with pool.acquire() as conn:
-            query = """
-                UPDATE details
-                SET stage = $1
-                WHERE serial_number = $2;
-            """
-            await conn.execute(query, new_stage, serial_number)
-            return "OK"
+            # Проверяем, является ли деталь бракованной
+            check_query = "SELECT defective FROM details WHERE serial_number = $1;"
+            is_defective = await conn.fetchval(check_query, serial_number)
+            
+            if is_defective:
+                return "Невозможно изменить этап для бракованной детали"
+            
+            # Проверяем, является ли новый этап "Упаковка"
+            if new_stage == "Упаковка":
+                # Получаем доступный сектор
+                sector = await get_available_storage_sector(pool)
+                
+                if not sector:
+                    # Если нет доступных секторов, возвращаем ошибку
+                    return "Нет доступных секторов для хранения"
+                
+                # Обновляем этап и устанавливаем сектор хранения
+                query = """
+                    UPDATE details
+                    SET stage = $1, sector = $2
+                    WHERE serial_number = $3;
+                """
+                await conn.execute(query, "Хранение", f"Сектор {sector['sector_name']}", serial_number)
+                
+                # Увеличиваем занятость сектора
+                await update_sector_occupation(pool, sector['sector_name'])
+                
+                # Получаем название детали
+                detail_query = "SELECT name FROM details WHERE serial_number = $1;"
+                detail_name = await conn.fetchval(detail_query, serial_number)
+                
+                info = f"Деталь {detail_name} (S/N: {serial_number}) помещена на хранение в сектор {sector['sector_name']}"
+                print(info)
+                return f"OK|{sector['sector_name']}"
+            else:
+                # Обычное обновление этапа
+                query = """
+                    UPDATE details
+                    SET stage = $1
+                    WHERE serial_number = $2;
+                """
+                await conn.execute(query, new_stage, serial_number)
+                return "OK"
     except Exception as e:
         print(f"Ошибка при изменении stage: {e}")
         return e
-
 
 async def get_defective_counts(pool, name):
     """
@@ -459,3 +496,114 @@ async def delete_all_sessions(pool, keep_current=False):
         error_msg = f"Ошибка при удалении сессий: {e}"
         print(error_msg)
         return 0, error_msg
+
+async def initialize_storage_sectors(pool):
+    """
+    Инициализирует секторы хранения, если они еще не существуют.
+    Создает сектора 1А, 1Б, 1В, 2А, 2Б, 2В и т.д. до 10
+    """
+    try:
+        async with pool.acquire() as conn:
+            # Проверяем, есть ли уже секторы в базе
+            exists_query = "SELECT COUNT(*) FROM storage_sectors;"
+            count = await conn.fetchval(exists_query)
+            
+            if count == 0:
+                # Создаем секторы от 1 до 10, с вариантами А, Б, В для каждого
+                for number in range(1, 11):
+                    for letter in ['А', 'Б', 'В']:
+                        sector_name = f"{number}{letter}"
+                        insert_query = """
+                            INSERT INTO storage_sectors (sector_name, occupied_slots, max_capacity)
+                            VALUES ($1, 0, 5);
+                        """
+                        await conn.execute(insert_query, sector_name)
+                
+                print("Секторы хранения успешно инициализированы")
+                return "OK"
+            return "Секторы уже существуют"
+    except Exception as e:
+        error_msg = f"Ошибка при инициализации секторов хранения: {e}"
+        print(error_msg)
+        return error_msg
+
+async def get_available_storage_sector(pool):
+    """
+    Находит первый доступный сектор для хранения деталей.
+    Доступным считается сектор, в котором занято меньше max_capacity слотов.
+    """
+    try:
+        async with pool.acquire() as conn:
+            query = """
+                SELECT sector_name, occupied_slots, max_capacity 
+                FROM storage_sectors 
+                WHERE occupied_slots < max_capacity 
+                ORDER BY id 
+                LIMIT 1;
+            """
+            sector = await conn.fetchrow(query)
+            
+            if sector:
+                return sector
+            return None
+    except Exception as e:
+        print(f"Ошибка при поиске доступного сектора: {e}")
+        return None
+
+async def update_sector_occupation(pool, sector_name):
+    """
+    Увеличивает количество занятых слотов в секторе на 1.
+    """
+    try:
+        async with pool.acquire() as conn:
+            query = """
+                UPDATE storage_sectors
+                SET occupied_slots = occupied_slots + 1
+                WHERE sector_name = $1
+                RETURNING occupied_slots;
+            """
+            new_occupation = await conn.fetchval(query, sector_name)
+            return new_occupation
+    except Exception as e:
+        print(f"Ошибка при обновлении занятости сектора: {e}")
+        return None
+
+async def get_sectors_status(pool):
+    """
+    Получение информации о занятости всех секторов хранения.
+    """
+    try:
+        async with pool.acquire() as conn:
+            query = """
+                SELECT sector_name, occupied_slots, max_capacity 
+                FROM storage_sectors 
+                ORDER BY sector_name;
+            """
+            sectors = await conn.fetch(query)
+            
+            if sectors:
+                return sectors
+            return None
+    except Exception as e:
+        print(f"Ошибка при получении статуса секторов: {e}")
+        return None
+
+async def get_all_defective_details(pool):
+    """
+    Получение всех деталей с отметкой о браке (defective = TRUE).
+    """
+    try:
+        async with pool.acquire() as conn:
+            query = """
+                SELECT * FROM details 
+                WHERE defective = TRUE 
+                ORDER BY id;
+            """
+            defective_details = await conn.fetch(query)
+            
+            if defective_details:
+                return defective_details
+            return None
+    except Exception as e:
+        print(f"Ошибка при получении бракованных деталей: {e}")
+        return None

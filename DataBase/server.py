@@ -147,10 +147,15 @@ async def handle_client(reader, writer, pool):
 
                 elif json_data.get("type") == "updatestage":
                     data = await update_stage_by_serial(pool, json_data['serial'], json_data['stage'])
-                    if data:
-                        response = {"status": "ok"}
+                    if "OK" in data:
+                        # Проверяем, был ли назначен сектор хранения
+                        if "|" in data:
+                            sector = data.split("|")[1]
+                            response = {"status": "ok", "sector": sector}
+                        else:
+                            response = {"status": "ok"}
                     else:
-                        response = {"status": "error", "message": "Users not found"}
+                        response = {"status": "error", "message": data}
 
                 elif json_data.get("type") == "kocak":
                     data = await kocak(pool, json_data['serial'])
@@ -236,6 +241,22 @@ async def handle_client(reader, writer, pool):
                     except Exception as e:
                         logger.error(f"Ошибка при отправке логов: {e}")
                         response = {"status": "error", "message": f"Ошибка при отправке логов: {e}"}
+                
+                elif json_data.get("type") == "getSectorsStatus":
+                    data = await get_sectors_status(pool)
+                    if data:
+                        response = {"status": "ok", "data": serialize_record(data)}
+                    else:
+                        response = {"status": "error", "message": "Информация о секторах не найдена"}
+                elif json_data.get("type") == "test":
+                    response = {"status": "ok"}
+                
+                elif json_data.get("type") == "alldefective":
+                    data = await get_all_defective_details(pool)
+                    if data:
+                        response = {"status": "ok", "data": serialize_record(data)}
+                    else:
+                        response = {"status": "error", "message": "Бракованные детали не найдены"}
 
             except json.JSONDecodeError:
                 response = {"status": "error", "message": "Invalid JSON"}
@@ -256,6 +277,11 @@ async def start_server(host='0.0.0.0', port=12345):
     logger.info("Создание пула соединений...")
     pool = await create_pool()
     logger.info("Пул соединений создан.")
+    
+    # Инициализация секторов хранения
+    logger.info("Инициализация секторов хранения...")
+    storage_init_result = await initialize_storage_sectors(pool)
+    logger.info(f"Результат инициализации секторов: {storage_init_result}")
     
     # Запуск фоновой задачи для ежедневного копирования логов
     asyncio.create_task(daily_log_transfer())
