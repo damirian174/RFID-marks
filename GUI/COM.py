@@ -64,9 +64,14 @@ class SerialListener(QThread):
                             log_error("Error with read")
                             self.data_received.emit("READ_ERROR")
                             continue             
+
                         if x[0] == "WRITE_SUCCESS":
                             log_event("Write secces")
                             self.data_received.emit(["WRITE_SUCCESS", "status"])
+                            continue
+                        elif x[0] == "WRITE_ERROR":
+                            log_error("Error with write")
+                            self.data_received.emit("WRITE_ERROR")
                             continue
                         b = x[0].split("_")  
                         log_event(f"Parsed Data: {b}")

@@ -246,6 +246,16 @@ class MainApp(QMainWindow):
             self.work_ui.change_color(1)
             log_error("Error with read")
             return
+        if isinstance(data, list) and len(data) > 0 and data[0] == "WRITE_ERROR":
+            log_event("Ошибка при записи метки")
+            if hasattr(self.mark_ui, "status_label"):
+                self.mark_ui.status_label.setText("❌ Ошибка при записи метки. Попробуйте еще раз.")
+                self.mark_ui.handle_write_result(True, False)
+            from PySide6.QtCore import QTimer
+            if hasattr(self.mark_ui, "write_dialog") and self.mark_ui.write_dialog:
+                QTimer.singleShot(2000, self.mark_ui.write_dialog.close)
+            return
+
 
         if isinstance(data, list) and len(data) > 0 and data[0] == "WAIT_CARD":
             log_event("Ожидание поднесения карты пользователем")

@@ -27,7 +27,10 @@ if __name__ == "__main__":
     # Тестовый запрос на получение пользователя по UID
     users = [
         {
-            "type": "getreports"
+            "type": "addUser",
+            "name": "Диван",
+            "surname": "Замолдинов",
+            "prof": "Лежатель"
         }
     ]
 

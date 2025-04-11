@@ -66,6 +66,7 @@ async def create_and_insert_data():
                 defective BOOLEAN DEFAULT FALSE,
                 stage VARCHAR(50),
                 sector VARCHAR(100) DEFAULT NULL,
+                time VARCHAR(256) NOT NULL,
                 identified_by INT DEFAULT NULL,
                 defect_stage_id INT DEFAULT NULL,
                 CONSTRAINT fk_users_details FOREIGN KEY (identified_by) REFERENCES users (id) ON DELETE SET NULL,
