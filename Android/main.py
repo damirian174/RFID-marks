@@ -4,6 +4,7 @@ from kivy.core.window import Window
 from kivy.metrics import dp
 from login import LoginScreen
 from button import MainScreen
+from statistics import StatisticsScreen  # Импортируем экран статистики
 
 class RFIDMarksApp(App):
     def build(self):
@@ -38,6 +39,10 @@ class RFIDMarksApp(App):
         # Добавляем главный экран
         self.main_screen = MainScreen(name='main')
         self.sm.add_widget(self.main_screen)
+        
+        # Добавляем экран статистики
+        self.statistics_screen = StatisticsScreen(name='statistics')
+        self.sm.add_widget(self.statistics_screen)
         
         # Устанавливаем начальный экран как экран логина
         self.sm.current = 'login'

@@ -8,6 +8,56 @@ from kivy.metrics import dp
 from kivy.graphics import Color, Rectangle, Line
 from kivy.core.window import Window
 from kivy.app import App
+import socket
+import json
+import time
+import datetime
+
+# Функция для отправки JSON-запросов на сервер
+def send_json_to_server(json_data):
+    try:
+        # Настройки сервера
+        host = '194.48.250.96'  # Локальный сервер для тестирования
+        port = 12345        # Порт сервера
+        
+        # Логирование отправляемого запроса
+        print(f"[DEBUG] Отправка запроса: {json_data}")
+        
+        # Создаем сокет
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            # Устанавливаем таймаут в 5 секунд
+            s.settimeout(5.0)
+            
+            # Подключаемся к серверу
+            s.connect((host, port))
+            
+            # Преобразуем данные в JSON и отправляем
+            json_string = json.dumps(json_data, ensure_ascii=False)
+            s.sendall(json_string.encode('utf-8'))
+            
+            # Получаем ответ
+            data = s.recv(4096)
+            
+            # Преобразуем ответ из JSON
+            response = json.loads(data.decode('utf-8'))
+            print(f"[DEBUG] Получен ответ: {response}")
+            return response
+    except socket.timeout:
+        print("Ошибка: Превышено время ожидания соединения с сервером")
+        return {"status": "error", "message": "Таймаут соединения с сервером"}
+    except socket.error as e:
+        print(f"Ошибка сокета: {e}")
+        return {"status": "error", "message": f"Ошибка соединения: {e}"}
+    except json.JSONDecodeError as e:
+        print(f"Ошибка декодирования JSON: {e}")
+        return {"status": "error", "message": "Ошибка формата данных от сервера"}
+    except Exception as e:
+        print(f"Неизвестная ошибка: {e}")
+        return {"status": "error", "message": f"Неизвестная ошибка: {e}"}
+
+# Функция для получения текущего времени в отформатированном виде
+def get_current_time():
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 class BaseScreen(Screen):
     def __init__(self, **kwargs):
@@ -180,6 +230,7 @@ class BaseScreen(Screen):
             ('Тестирование', 'testing'),
             ('Упаковка', 'packing'),
             ('Общее', 'general'),
+            ('Статистика', 'statistics'),
             ('Профиль', 'profile')
         ]
         
@@ -198,9 +249,16 @@ class BaseScreen(Screen):
                 background_color=(0.1, 0.4, 0.8, 1),
                 color=(1, 1, 1, 1),
                 size_hint_y=None,
-                height=dp(40)  # Базовая высота кнопки
+                height=dp(45),
+                font_size=dp(14)
             )
-            btn.bind(on_release=lambda x, sn=screen_name: setattr(self.manager, 'current', sn))
+            
+            # Сохраняем имя экрана в свойствах кнопки для дальнейшего использования
+            btn.screen_name = screen_name
+            
+            # Устанавливаем обработчик нажатия
+            btn.bind(on_press=self.on_nav_button_press)
+            
             buttons_container.add_widget(btn)
         
         # Добавляем контейнер с кнопками
@@ -226,6 +284,19 @@ class BaseScreen(Screen):
     
     def create_content(self):
         self.content_area.add_widget(Label(text='Основной контент', font_size=dp(24)))
+
+    def on_nav_button_press(self, button):
+        # Получаем имя экрана из свойств кнопки
+        screen_name = button.screen_name
+        
+        # Если это главный экран, обрабатываем навигацию
+        if hasattr(self, 'sm') and isinstance(self, MainScreen):
+            self.on_nav_button_press(screen_name)
+        else:
+            # Если это один из подэкранов, передаем событие главному экрану
+            main_screen = self.manager.parent
+            if hasattr(main_screen, 'on_nav_button_press'):
+                main_screen.on_nav_button_press(screen_name)
 
 # Конкретные экраны
 class MarkingScreen(BaseScreen):
@@ -275,6 +346,16 @@ class MainScreen(Screen):
         self.sm.current = 'marking'
         
         self.add_widget(self.sm)
+    
+    def on_nav_button_press(self, button_name):
+        if button_name == 'statistics':
+            # Переключаемся на экран статистики в главном ScreenManager
+            app = App.get_running_app()
+            app.sm.current = 'statistics'
+        else:
+            # Стандартная обработка для других кнопок
+            if button_name in self.sm.screen_names:
+                self.sm.current = button_name
 
 # Добавляем класс приложения для самостоятельного запуска
 class StandaloneButtonApp(App):
