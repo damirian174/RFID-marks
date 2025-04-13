@@ -37,6 +37,10 @@ atexit.register(log_application_exit)
 def log_error(exception):
     logging.error(f"Ошибка: {exception}", exc_info=True)
 
+# Функция для логирования предупреждений
+def log_warning(warning_message):
+    logging.warning(warning_message)
+
 # Функция для логирования событий
 def log_event(event_message):
     logging.info(event_message)

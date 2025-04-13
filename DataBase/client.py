@@ -21,16 +21,40 @@ def test_server(host, port, request_data):
         print(f"Ошибка при подключении к серверу: {e}")
 
 if __name__ == "__main__":
-    SERVER_HOST = "192.168.0.100"
+    SERVER_HOST = "194.48.250.96"
     SERVER_PORT = 12345
     
     # Тестовый запрос на получение пользователя по UID
     users = [
         {
             "type": "addUser",
-            "name": "Диван",
-            "surname": "Замолдинов",
-            "prof": "Лежатель"
+            "name": "Иван",
+            "surname": "Иванов",
+            "prof": "Инженер"
+        },
+        {
+            "type": "addUser",
+            "name": "Алексей",
+            "surname": "Петров",
+            "prof": "Программист"
+        },
+        {
+            "type": "addUser",
+            "name": "Николай",
+            "surname": "Сидоров",
+            "prof": "Менеджер"
+        },
+        {
+            "type": "addUser",
+            "name": "Сергей",
+            "surname": "Кузнецов",
+            "prof": "Бухгалтер"
+        },
+        {
+            "type": "addUser",
+            "name": "Андрей",
+            "surname": "Михайлов",
+            "prof": "Маркетолог"
         }
     ]
 

@@ -308,14 +308,6 @@ class MainApp(QMainWindow):
             log_event(f"Неизвестный формат данных: {cleaned_data}")
 
 
-
-
-
-    def handle_scanned_barcode(self, barcode):
-        log_event(f"Отсканированный штрихкод: {barcode}")
-        self.uid = barcode
-        self.verify()
-
     def verify(self):
         # Проверяем, прошел ли пользователь верификацию
         if self.is_verified:
@@ -404,11 +396,14 @@ class MainApp(QMainWindow):
                     self.last_name = surname
                     self.first_name = name
                     self.full_name = full_name
+                    config.id = user_data["id"]
                     
                     self.work_ui.updateName(name=full_name)
                     self.tests_ui.updateName(name=full_name)
                     self.packing_ui.updateName(name=full_name)
                     self.mark_ui.updateName(name=full_name)
+                    # update(name="МЕТРАН 150", serial="SN904")
+                    getDetail
 
                     # Переходим на рабочую страницу
                     self.stacked_widget.setCurrentWidget(self.work_page)

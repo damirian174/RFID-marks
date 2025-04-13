@@ -84,12 +84,13 @@ async def handle_client(reader, writer, pool):
                                 "message": "У пользователя уже есть активная сессия",
                                 "name": user_data['name'],
                                 "surname": user_data['surname']
-                            }
+                                                    }
                         else:
                             response = {
                                 "status": "ok",
                                 "name": user_data['name'],
-                                "surname": user_data['surname']
+                                "surname": user_data['surname'],
+                                "id": user_data['id']
                             }
                     else:
                         response = {"status": "error", "message": "User not found"}
@@ -139,23 +140,46 @@ async def handle_client(reader, writer, pool):
                         response = {"status": "error", "message": "Failed to retrieve statistics"}
 
                 elif json_data.get("type") == "mark":
-                    data = await add_sensor(pool, json_data["name"], json_data["serial"])
+                    data = await add_sensor(pool, json_data["name"], json_data["serial"], json_data["time"], json_data["id"])
                     if data:
                         response = {"status": "ok"}
                     else:
                         response = {"status": "error", "message": "Failed to mark"}
 
                 elif json_data.get("type") == "updatestage":
-                    data = await update_stage_by_serial(pool, json_data['serial'], json_data['stage'])
-                    if "OK" in data:
-                        # Проверяем, был ли назначен сектор хранения
-                        if "|" in data:
-                            sector = data.split("|")[1]
-                            response = {"status": "ok", "sector": sector}
-                        else:
-                            response = {"status": "ok"}
+                    # Обязательные поля
+                    serial = json_data.get('serial')
+                    stage = json_data.get('stage')
+                    
+                    # Опциональные поля с проверкой типов
+                    start = json_data.get('start')
+                    end = json_data.get('end')
+                    responsible_user = json_data.get('id')
+                    
+                    if not serial or not stage:
+                        response = {"status": "error", "message": "Отсутствуют обязательные параметры serial или stage"}
                     else:
-                        response = {"status": "error", "message": data}
+                        try:
+                            data = await update_stage_by_serial(
+                                pool, 
+                                serial, 
+                                stage, 
+                                start, 
+                                end, 
+                                responsible_user
+                            )
+                            if "OK" in data:
+                                # Проверяем, был ли назначен сектор хранения
+                                if "|" in data:
+                                    sector = data.split("|")[1]
+                                    response = {"status": "ok", "sector": sector}
+                                else:
+                                    response = {"status": "ok"}
+                            else:
+                                response = {"status": "error", "message": data}
+                        except Exception as e:
+                            logger.error(f"Ошибка при обновлении этапа: {e}")
+                            response = {"status": "error", "message": str(e)}
 
                 elif json_data.get("type") == "kocak":
                     data = await kocak(pool, json_data['serial'])
@@ -257,6 +281,47 @@ async def handle_client(reader, writer, pool):
                         response = {"status": "ok", "data": serialize_record(data)}
                     else:
                         response = {"status": "error", "message": "Бракованные детали не найдены"}
+                
+                elif json_data.get("type") == "userById" and "id" in json_data:
+                    user_id = json_data["id"]
+                    user_data = await get_user_by_id(pool, user_id)
+                    if user_data:
+                        response = {"status": "ok", "data": serialize_record(user_data)}
+                    else:
+                        response = {"status": "error", "message": f"Пользователь с ID {user_id} не найден"}
+                
+                elif json_data.get("type") == "production_stats":
+                    # Получение статистики производства по конкретной модели датчика
+                    device_name = json_data.get("device_name")  # Может быть None для получения статистики по всем датчикам
+                    months = json_data.get("months", 4)  # По умолчанию за 4 месяца
+                    
+                    stats = await get_detailed_production_stats(pool, device_name, months)
+                    if stats:
+                        response = {"status": "ok", "data": stats}
+                    else:
+                        response = {"status": "error", "message": "Не удалось получить статистику производства"}
+                
+                elif json_data.get("type") == "monthly_stats":
+                    # Получение только статистики по месяцам
+                    device_name = json_data.get("device_name")
+                    months = json_data.get("months", 4)
+                    
+                    stats = await get_monthly_production_stats(pool, device_name, months)
+                    if stats:
+                        response = {"status": "ok", "data": serialize_record(stats)}
+                    else:
+                        response = {"status": "error", "message": "Не удалось получить статистику по месяцам"}
+                
+                elif json_data.get("type") == "defects_by_stage":
+                    # Получение только статистики брака по этапам
+                    device_name = json_data.get("device_name")
+                    months = json_data.get("months", 4)
+                    
+                    stats = await get_defects_by_stage(pool, device_name, months)
+                    if stats:
+                        response = {"status": "ok", "data": serialize_record(stats)}
+                    else:
+                        response = {"status": "error", "message": "Не удалось получить статистику брака по этапам"}
 
             except json.JSONDecodeError:
                 response = {"status": "error", "message": "Invalid JSON"}

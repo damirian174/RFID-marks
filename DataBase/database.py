@@ -2,6 +2,18 @@ import asyncpg
 import random
 import datetime
 import time
+import json
+
+def serialize_record(record):
+    """Рекурсивно преобразует asyncpg.Record или вложенные структуры в словарь."""
+    if isinstance(record, asyncpg.Record):
+        return dict(record)
+    elif isinstance(record, list):
+        return [serialize_record(item) for item in record]
+    elif isinstance(record, dict):
+        return {key: serialize_record(value) for key, value in record.items()}
+    else:
+        return record
 
 async def generate_unique_uid(pool):
     """
@@ -70,12 +82,14 @@ async def get_user_by_uid(pool, uid):
                 return {
                     "name": user["name"],
                     "surname": user["surname"],
+                    "id": user["id"],
                     "has_active_session": True
                 }
             
             return {
                 "name": user["name"],
                 "surname": user["surname"],
+                "id": user["id"],
                 "has_active_session": False
             }
     except Exception as e:
@@ -158,36 +172,93 @@ async def allusers(pool, detail):
         print(f"Ошибка при выполнении запроса: {e}") 
         return None
 
-async def add_sensor(pool, name, serial_number):
+async def add_sensor(pool, name, serial_number, time, id):
     """
     Добавление датчика с указанием названия и серийного номера.
     """
     try:
         async with pool.acquire() as conn:
+            # Создаем структуру данных для поля time
+            time_data = {
+                "mark": {
+                    "time": time,
+                    "user": id
+                }
+            }
+            
+            # Журналируем входящие параметры
+            print(f"add_sensor: params = {name}, {serial_number}, {time}, {id}")
+            print(f"time_data = {time_data}")
+            
+            # Преобразуем словарь в JSON-строку
+            time_json = json.dumps(time_data)
+            
             query = """
-                INSERT INTO details (name, serial_number, stage)
-                VALUES ($1, $2, $3);
+                INSERT INTO details (name, serial_number, stage, time)
+                VALUES ($1, $2, $3, $4::jsonb);
             """
-            await conn.execute(query, name, serial_number, "Маркировка")
+            await conn.execute(query, name, serial_number, "Маркировка", time_json)
             return "OK"
     except Exception as e:
         print(f"Ошибка при добавлении датчика: {e}")
         return e
 
-async def update_stage_by_serial(pool, serial_number, new_stage):
+async def update_stage_by_serial(pool, serial_number, new_stage, start=None, end=None, responsible_user=None):
     """
     Изменение stage по серийному номеру.
     Если stage равен "Упаковка", то деталь помещается в доступный сектор хранения.
     Для бракованных деталей (defective = TRUE) обновление этапа запрещено.
+    
+    Добавляет/обновляет поле time с информацией о времени начала, окончания этапа
+    и ответственном пользователе.
     """
     try:
+        # Журналируем входящие параметры
+        print(f"update_stage_by_serial: params = {serial_number}, {new_stage}, {start}, {end}, {responsible_user}")
+        
         async with pool.acquire() as conn:
             # Проверяем, является ли деталь бракованной
-            check_query = "SELECT defective FROM details WHERE serial_number = $1;"
-            is_defective = await conn.fetchval(check_query, serial_number)
+            check_query = "SELECT defective, time FROM details WHERE serial_number = $1;"
+            row = await conn.fetchrow(check_query, serial_number)
+            
+            if not row:
+                return "Деталь не найдена"
+                
+            is_defective = row['defective']
+            # Преобразуем time из JSONB в словарь
+            current_time_data = {}
+            
+            if row['time']:
+                # Обрабатываем случаи, когда данные могут быть в разных форматах
+                if isinstance(row['time'], dict):
+                    current_time_data = row['time']
+                elif isinstance(row['time'], str):
+                    try:
+                        current_time_data = json.loads(row['time'])
+                    except json.JSONDecodeError:
+                        current_time_data = {}
             
             if is_defective:
                 return "Невозможно изменить этап для бракованной детали"
+            
+            # Формируем данные для поля time
+            stage_key = new_stage.lower()
+            
+            # Обновляем или создаем запись для текущего этапа
+            if stage_key not in current_time_data:
+                current_time_data[stage_key] = {}
+                
+            stage_data = current_time_data[stage_key]
+            
+            if start:
+                stage_data['start'] = start
+            if end:
+                stage_data['end'] = end
+            if responsible_user is not None:
+                stage_data['user'] = responsible_user
+            
+            # Преобразуем словарь в JSON-строку
+            time_json = json.dumps(current_time_data)
             
             # Проверяем, является ли новый этап "Упаковка"
             if new_stage == "Упаковка":
@@ -201,10 +272,11 @@ async def update_stage_by_serial(pool, serial_number, new_stage):
                 # Обновляем этап и устанавливаем сектор хранения
                 query = """
                     UPDATE details
-                    SET stage = $1, sector = $2
-                    WHERE serial_number = $3;
+                    SET stage = $1, sector = $2, time = $3::jsonb
+                    WHERE serial_number = $4;
                 """
-                await conn.execute(query, "Хранение", f"Сектор {sector['sector_name']}", serial_number)
+                await conn.execute(query, "Хранение", f"Сектор {sector['sector_name']}", 
+                                  time_json, serial_number)
                 
                 # Увеличиваем занятость сектора
                 await update_sector_occupation(pool, sector['sector_name'])
@@ -220,14 +292,14 @@ async def update_stage_by_serial(pool, serial_number, new_stage):
                 # Обычное обновление этапа
                 query = """
                     UPDATE details
-                    SET stage = $1
-                    WHERE serial_number = $2;
+                    SET stage = $1, time = $2::jsonb
+                    WHERE serial_number = $3;
                 """
-                await conn.execute(query, new_stage, serial_number)
+                await conn.execute(query, new_stage, time_json, serial_number)
                 return "OK"
     except Exception as e:
         print(f"Ошибка при изменении stage: {e}")
-        return e
+        return str(e)
 
 async def get_defective_counts(pool, name):
     """
@@ -606,4 +678,150 @@ async def get_all_defective_details(pool):
             return None
     except Exception as e:
         print(f"Ошибка при получении бракованных деталей: {e}")
+        return None
+
+async def get_user_by_id(pool, user_id):
+    """
+    Получение данных пользователя по ID.
+    """
+    try:
+        async with pool.acquire() as conn:
+            query = "SELECT id, name, surname, profession FROM users WHERE id = $1;"
+            user = await conn.fetchrow(query, user_id)
+            if user:
+                return user  # Вернет Record, который будет сериализован в словарь
+            return None
+    except Exception as e:
+        print(f"Ошибка при получении данных пользователя: {e}")
+        return None
+
+# ====== Новые функции для статистики ======
+
+async def get_monthly_production_stats(pool, device_name=None, months=4):
+    """
+    Получение статистики производства датчиков по месяцам за указанный период.
+    
+    Args:
+        pool: Пул соединений с базой данных
+        device_name: Название модели датчика (МЕТРАН 150, МЕТРАН 75, МЕТРАН 55 или None для всех)
+        months: Количество месяцев для анализа
+        
+    Returns:
+        Статистика по месяцам: общее количество, количество брака
+    """
+    try:
+        async with pool.acquire() as conn:
+            # Запрос для получения статистики по месяцам
+            query = """
+                WITH part_dates AS (
+                    SELECT 
+                        d.id,
+                        d.name,
+                        d.defective,
+                        CASE 
+                            WHEN d.time ? 'mark' AND (d.time->'mark'->>'time') IS NOT NULL THEN 
+                                TO_DATE((d.time->'mark'->>'time')::text, 'YYYY-MM-DD HH24:MI:SS')
+                            ELSE NULL
+                        END AS creation_date
+                    FROM details d
+                    WHERE 
+                        ($1::text IS NULL OR d.name = $1)
+                        AND d.time IS NOT NULL
+                )
+                SELECT 
+                    TO_CHAR(date_trunc('month', creation_date), 'YYYY-MM') AS month,
+                    COUNT(*) AS total_count,
+                    SUM(CASE WHEN defective THEN 1 ELSE 0 END) AS defective_count
+                FROM part_dates
+                WHERE 
+                    creation_date IS NOT NULL 
+                    AND creation_date >= NOW() - INTERVAL '1 month' * $2
+                GROUP BY date_trunc('month', creation_date)
+                ORDER BY date_trunc('month', creation_date) DESC;
+            """
+            
+            result = await conn.fetch(query, device_name, months)
+            return result if result else []
+    except Exception as e:
+        print(f"Ошибка при получении статистики по месяцам: {e}")
+        return []
+
+async def get_defects_by_stage(pool, device_name=None, months=4):
+    """
+    Получение статистики брака по этапам за указанный период.
+    
+    Args:
+        pool: Пул соединений с базой данных
+        device_name: Название модели датчика (МЕТРАН 150, МЕТРАН 75, МЕТРАН 55 или None для всех)
+        months: Количество месяцев для анализа
+        
+    Returns:
+        Статистика брака по этапам производства
+    """
+    try:
+        async with pool.acquire() as conn:
+            # Запрос для получения статистики брака по этапам
+            query = """
+                WITH part_dates AS (
+                    SELECT 
+                        d.id,
+                        d.name,
+                        d.defective,
+                        d.defect_stage_id,
+                        d.stage,
+                        CASE 
+                            WHEN d.time ? 'mark' AND (d.time->'mark'->>'time') IS NOT NULL THEN 
+                                TO_DATE((d.time->'mark'->>'time')::text, 'YYYY-MM-DD HH24:MI:SS')
+                            ELSE NULL
+                        END AS creation_date
+                    FROM details d
+                    WHERE 
+                        ($1::text IS NULL OR d.name = $1)
+                        AND d.time IS NOT NULL
+                )
+                SELECT 
+                    COALESCE(defect_stage_id, stage) AS stage,
+                    COUNT(*) AS defective_count
+                FROM part_dates
+                WHERE 
+                    creation_date IS NOT NULL 
+                    AND creation_date >= NOW() - INTERVAL '1 month' * $2
+                    AND defective = TRUE
+                GROUP BY COALESCE(defect_stage_id, stage)
+                ORDER BY defective_count DESC;
+            """
+            
+            result = await conn.fetch(query, device_name, months)
+            return result if result else []
+    except Exception as e:
+        print(f"Ошибка при получении статистики брака по этапам: {e}")
+        return []
+
+async def get_detailed_production_stats(pool, device_name=None, months=4):
+    """
+    Получение детальной статистики производства датчиков.
+    
+    Args:
+        pool: Пул соединений с базой данных
+        device_name: Название модели датчика (МЕТРАН 150, МЕТРАН 75, МЕТРАН 55 или None для всех)
+        months: Количество месяцев для анализа
+        
+    Returns:
+        Детальная статистика, включающая общую статистику по месяцам и статистику брака по этапам
+    """
+    try:
+        # Получаем статистику по месяцам
+        monthly_stats = await get_monthly_production_stats(pool, device_name, months)
+        
+        # Получаем статистику брака по этапам
+        stage_stats = await get_defects_by_stage(pool, device_name, months)
+        
+        return {
+            "device_name": device_name if device_name else "Все датчики",
+            "period_months": months,
+            "monthly_stats": serialize_record(monthly_stats),
+            "defects_by_stage": serialize_record(stage_stats)
+        }
+    except Exception as e:
+        print(f"Ошибка при получении детальной статистики: {e}")
         return None

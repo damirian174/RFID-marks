@@ -1,0 +1,126 @@
+2025-04-13 13:53:57 - INFO - logger - <module> - Приложение запущено
+2025-04-13 13:53:57 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-13 13:53:57 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-13 13:53:57 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-13 13:53:57 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-13 13:53:57 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-13 13:53:57 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-13 13:54:00 - INFO - logger - log_event - Сервер доступен
+2025-04-13 13:54:00 - INFO - logger - log_event - Сервер доступен
+2025-04-13 13:54:00 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-13 13:54:00 - ERROR - logger - log_error - Ошибка: Не найден подходящий COM-порт
+NoneType: None
+2025-04-13 13:54:00 - ERROR - logger - log_error - Ошибка: SerialManager не передан! COM-порт не будет работать.
+NoneType: None
+2025-04-13 13:54:00 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:54:00 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:54:04 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 771143825
+2025-04-13 13:54:04 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '771143825', 'id': None}
+2025-04-13 13:54:04 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Диван', 'surname': 'Замолдинов', 'id': 1}
+2025-04-13 13:54:04 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Диван', 'surname': 'Замолдинов', 'id': 1}
+2025-04-13 13:54:04 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Диван', 'surname': 'Замолдинов', 'id': 1}
+2025-04-13 13:54:05 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Диван', 'surname': 'Замолдинов', 'work_description': 'Без детали'}
+2025-04-13 13:54:05 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Диван', 'surname': 'Замолдинов', 'work_description': 'Без детали', 'id': None}
+2025-04-13 13:54:05 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:54:05 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-13 13:54:05 - INFO - logger - log_event - Сессия успешно начата: Замолдинов Диван
+2025-04-13 13:54:05 - INFO - logger - log_event - Устанавливаем переменную config.user: Замолдинов Диван
+2025-04-13 13:54:05 - INFO - logger - log_event - Устанавливаем переменную config.Name: Замолдинов Диван
+2025-04-13 13:54:05 - INFO - logger - log_event - Установлено значение config.Name: Замолдинов Диван
+2025-04-13 13:54:05 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN904
+2025-04-13 13:54:05 - INFO - logger - log_event - Текущее состояние: Name='Замолдинов Диван', auth=False, session_on=True
+2025-04-13 13:54:05 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN904', 'id': 1}
+2025-04-13 13:54:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:54:06 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:54:06 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Замолдинов Диван'
+2025-04-13 13:54:06 - INFO - logger - log_event - Используем части имени из Name: фамилия='Замолдинов', имя='Диван'
+2025-04-13 13:54:06 - INFO - logger - log_event - Будет использоваться: фамилия='Замолдинов', имя='Диван'
+2025-04-13 13:54:06 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-13 13:54:06 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Диван', 'surname': 'Замолдинов', 'new_description': 'Тестирование SN904'}
+2025-04-13 13:54:06 - INFO - logger - log_event - Состояние сессии: auth=False, session_on=True
+2025-04-13 13:54:06 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Диван', 'surname': 'Замолдинов', 'new_description': 'Тестирование SN904', 'id': 1}
+2025-04-13 13:54:06 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:54:06 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-13 13:54:06 - INFO - logger - log_event - Успешная аутентификация пользователя: Замолдинов Диван
+2025-04-13 13:54:12 - INFO - logger - log_event - Login to the admin panel
+2025-04-13 13:54:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:19 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:20 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:54:20 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 1}
+2025-04-13 13:54:20 - INFO - logger - log_event - Запрос детальной информации о детали SN904
+2025-04-13 13:54:20 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN904', 'id': 1}
+2025-04-13 13:54:20 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:54:20 - INFO - logger - log_event - Получен ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:54:20 - INFO - logger - log_event - Данные для отображения: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-13 13:54:20 - INFO - logger - log_event - Преобразованная информация о времени: {'mark': {'time': '2025-04-13 13:02:28', 'user': 1}, 'сборка': {'end': '2025-04-13 13:15:22', 'user': 1, 'start': '2025-04-13 13:15:18'}}
+2025-04-13 13:54:20 - INFO - logger - log_event - Начинаем заполнение данных в диалоге. part_info: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-13 13:54:20 - INFO - logger - log_event - ID детали: 1
+2025-04-13 13:54:20 - INFO - logger - log_event - Название детали: МЕТРАН 150
+2025-04-13 13:54:20 - INFO - logger - log_event - Статус (defective): False
+2025-04-13 13:54:20 - INFO - logger - log_event - Текст статуса: Годен
+2025-04-13 13:54:20 - INFO - logger - log_event - Текущий этап: Сборка
+2025-04-13 13:54:20 - INFO - logger - log_event - Сектор хранения: None
+2025-04-13 13:54:20 - INFO - logger - log_event - Примечание: 
+2025-04-13 13:54:20 - INFO - logger - log_event - Нет записей RFID для отображения
+2025-04-13 13:54:20 - INFO - logger - log_event - Обрабатываем данные времени: {'mark': {'time': '2025-04-13 13:02:28', 'user': 1}, 'сборка': {'end': '2025-04-13 13:15:22', 'user': 1, 'start': '2025-04-13 13:15:18'}}
+2025-04-13 13:54:20 - INFO - logger - log_event - Обработка информации о времени: {'mark': {'time': '2025-04-13 13:02:28', 'user': 1}, 'сборка': {'end': '2025-04-13 13:15:22', 'user': 1, 'start': '2025-04-13 13:15:18'}}
+2025-04-13 13:54:20 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 1 для этапа mark
+2025-04-13 13:54:20 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 1}
+2025-04-13 13:54:21 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Получен результат запроса для пользователя 1: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Обработка результата для этапа mark: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Метка пользователя обновлена для этапа mark: Замолдинов Диван
+2025-04-13 13:54:21 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 1 для этапа сборка
+2025-04-13 13:54:21 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 1}
+2025-04-13 13:54:21 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Получен результат запроса для пользователя 1: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Обработка результата для этапа сборка: {'status': 'ok', 'data': {'id': 1, 'name': 'Диван', 'surname': 'Замолдинов', 'profession': 'Лежатель'}}
+2025-04-13 13:54:21 - INFO - logger - log_event - Метка пользователя обновлена для этапа сборка: Замолдинов Диван
+2025-04-13 13:54:21 - INFO - logger - log_event - Завершено заполнение данных в диалоге
+2025-04-13 13:54:32 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-13 13:54:32 - INFO - logger - log_event - Завершаем сессию пользователя: Диван Замолдинов
+2025-04-13 13:54:32 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Диван', 'surname': 'Замолдинов', 'id': 1}
+2025-04-13 13:54:32 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:54:32 - INFO - logger - log_event - Сессия успешно завершена: Диван Замолдинов
+2025-04-13 13:54:32 - INFO - logger - log_application_exit - Приложение завершено

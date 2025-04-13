@@ -1,4 +1,4 @@
-serverip='192.168.0.100'
+serverip='194.48.250.96'
 port = 12345
 
 auth = False
@@ -21,3 +21,5 @@ Name = ""
 session_on = False
 
 connect_status = False
+
+id = None

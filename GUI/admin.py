@@ -7,13 +7,24 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QTableView, QTreeWidget,
-    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialog, QMessageBox)
+    QTreeWidgetItem, QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialog, QMessageBox, QFrame, QTabWidget, QGroupBox, QFormLayout, QDialogButtonBox, QScrollArea)
 from PySide6.QtCharts import QChart, QChartView, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis
 from database import *
 from PySide6.QtCore import QThread, Signal, Slot
 import time
 import os, sys
-from logger import log_event, log_error
+from logger import log_event, log_error, log_warning
+
+def get_status_text(status):
+    """Преобразует код статуса в текстовое представление."""
+    if status == 1 or status == "1":
+        return "Годен"
+    elif status == 0 or status == "0":
+        return "Брак"
+    elif status is None:
+        return "Нет данных"
+    else:
+        return str(status)
 
 class DatabaseWorker(QThread):
     # Сигнал для передачи данных в основной поток
@@ -258,15 +269,27 @@ class Ui_MainWindow(object):
         self.submit_button.hide()
         
 
-        self.metran_150_table = QTableWidget(0, 6, self.content_area)
+        self.metran_150_table = QTableWidget(0, 7, self.content_area)  # Увеличиваю до 7 колонок для кнопки
+        self.metran_150_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап", "Место", "Действия"])
+        self.metran_150_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.metran_150_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
+        self.metran_150_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
         self.metran_150_table.hide()
         self.form_layout.addWidget(self.metran_150_table)
 
 
-        self.metran_75_table = QTableWidget(0, 6, self.content_area)
+        self.metran_75_table = QTableWidget(0, 7, self.content_area)  # Увеличиваю до 7 колонок для кнопки
+        self.metran_75_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап", "Место", "Действия"])
+        self.metran_75_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.metran_75_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
+        self.metran_75_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
         self.form_layout.addWidget(self.metran_75_table)
 
-        self.metran_55_table = QTableWidget(0, 6, self.content_area)
+        self.metran_55_table = QTableWidget(0, 7, self.content_area)  # Увеличиваю до 7 колонок для кнопки
+        self.metran_55_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап", "Место", "Действия"])
+        self.metran_55_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.metran_55_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
+        self.metran_55_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
         self.metran_55_table.hide()
         self.form_layout.addWidget(self.metran_55_table)
 
@@ -430,19 +453,79 @@ class Ui_MainWindow(object):
                     else:
                         y = "Не храним"
                     table.setItem(row, 5, QTableWidgetItem(y))
+                    
+                    # Добавляем кнопку "Подробности"
+                    serial_number = detail_data.get("serial_number", "")
+                    if serial_number:
+                        details_button = QPushButton("Подробности")
+                        details_button.setStyleSheet("""
+                            QPushButton {
+                                background-color: #5F7ADB;
+                                color: white;
+                                border: none;
+                                padding: 5px 10px;
+                                border-radius: 3px;
+                                font-size: 12px;
+                            }
+                            QPushButton:hover {
+                                background-color: #4965c8;
+                            }
+                        """)
+                        # Используем lambda для передачи serial_number в обработчик
+                        details_button.clicked.connect(lambda checked, sn=serial_number: self.display_detail_info(sn))
+                        table.setCellWidget(row, 6, details_button)
             else:
                 table.setRowCount(1)  # Создаем одну строку для сообщения
                 empty_item = QTableWidgetItem("Список пуст")
                 empty_item.setTextAlignment(Qt.AlignCenter)
                 table.setItem(0, 0, empty_item)
-                table.setSpan(0, 0, 1, 6)  # Объединяем все ячейки в строке
+                table.setSpan(0, 0, 1, 7)  # Объединяем все ячейки в строке
         else:
             log_error("Ошибка при получении данных из базы данных")
             table.setRowCount(1)  # Создаем одну строку для сообщения
             error_item = QTableWidgetItem("Список пуст")
             error_item.setTextAlignment(Qt.AlignCenter)
             table.setItem(0, 0, error_item)
-            table.setSpan(0, 0, 1, 6)  # Объединяем все ячейки в строке
+            table.setSpan(0, 0, 1, 7)  # Объединяем все ячейки в строке
+
+    def display_detail_info(self, detail_id):
+        """Отображает детальную информацию о детали в диалоговом окне."""
+        try:
+            log_event(f"Запрос детальной информации о детали {detail_id}")
+            
+            # Запрашиваем полную информацию о детали
+            query = {"type": "details", "serial": detail_id}
+            result = database(query)
+            
+            log_event(f"Получен ответ от сервера: {result}")
+            
+            if not result or 'status' not in result or result['status'] != "ok":
+                log_warning(f"Не удалось получить информацию о детали {detail_id}: {result}")
+                self.show_error_message("Ошибка", f"Не удалось получить информацию о детали {detail_id}")
+                return
+            
+            part_info = result.get('data', {})
+            log_event(f"Данные для отображения: {part_info}")
+            
+            rfid_tag = "Нет метки"  # По умолчанию
+            rfid_writes = []  # По умолчанию пустой список
+            time_info = {}  # По умолчанию пустой словарь
+            
+            # Проверяем, есть ли поле time и преобразуем его из JSON строки в словарь
+            if 'time' in part_info and part_info['time']:
+                try:
+                    import json
+                    time_info = json.loads(part_info['time'])
+                    log_event(f"Преобразованная информация о времени: {time_info}")
+                except Exception as json_error:
+                    log_error(f"Ошибка при преобразовании JSON поля time: {json_error}")
+            
+            dialog = DetailInfoDialog(part_info, rfid_tag, rfid_writes, time_info, self.main_window)
+            dialog.exec_()
+            
+        except Exception as e:
+            log_error(f"Ошибка при отображении информации о детали {detail_id}: {e}")
+            self.show_error_message("Ошибка", f"Произошла ошибка: {e}")
 
     def handle_submit(self):
     # Проверяем, какой элемент был выбран
@@ -1038,19 +1121,10 @@ class Ui_MainWindow(object):
         
         msg_box.exec()
     
-    def show_error_message(self, message):
-        """Показывает сообщение об ошибке"""
-        msg_box = QMessageBox(self.main_window)
-        msg_box.setWindowTitle("Ошибка")
-        msg_box.setText(message)
-        msg_box.setIcon(QMessageBox.Critical)
-        msg_box.setStandardButtons(QMessageBox.Ok)
-        
-        # Установка иконки
-        icon_path = self.get_image_path("favicon.ico")
-        msg_box.setWindowIcon(QIcon(icon_path))
-        
-        msg_box.exec()
+    def show_error_message(self, title, message):
+        """Показывает сообщение об ошибке."""
+        from error_test import show_error_dialog
+        show_error_dialog(title, message)
 
     def updateDefectiveTable(self):
         """Обновляет таблицу с бракованными деталями"""
@@ -1110,6 +1184,660 @@ class Ui_MainWindow(object):
             error_item.setTextAlignment(Qt.AlignCenter)
             self.defective_table.setItem(0, 0, error_item)
             self.defective_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+
+class DetailInfoDialog(QDialog):
+    """Диалоговое окно для отображения детальной информации о детали."""
+    
+    def __init__(self, part_info, rfid_tag, rfid_writes, time_info, parent=None):
+        super().__init__(parent)
+        
+        self.part_info = part_info
+        self.rfid_tag = rfid_tag
+        self.rfid_writes = rfid_writes
+        self.time_info = time_info
+        self.worker_threads = []  # Инициализируем список потоков
+        
+        self.setup_ui()
+        self.populate_data()
+        self.setup_connections()
+        
+    def setup_ui(self):
+        """Настраивает пользовательский интерфейс диалога."""
+        self.setWindowTitle("Детальная информация о детали")
+        self.setMinimumSize(800, 600)
+        self.setStyleSheet("""
+            QDialog {
+                background-color: #f8f9fa;
+                border: 2px solid #5F7ADB;
+                border-radius: 10px;
+            }
+            QGroupBox {
+                background-color: white;
+                border: 1px solid #d1d9e6;
+                border-radius: 8px;
+                margin-top: 15px;
+                font-weight: bold;
+                padding: 10px;
+                color: #2E3239;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                subcontrol-position: top center;
+                padding: 5px 10px;
+                background-color: #5F7ADB;
+                color: white;
+                border-radius: 4px;
+            }
+            QLabel {
+                color: #333;
+                padding: 5px;
+                font-size: 13px;
+            }
+            QTableWidget {
+                background-color: white;
+                border: 1px solid #d1d9e6;
+                gridline-color: #e9ecef;
+                border-radius: 5px;
+            }
+            QTableWidget::item {
+                padding: 5px;
+                border-bottom: 1px solid #f1f3f5;
+            }
+            QTableWidget::item:selected {
+                background-color: #e7f5ff;
+                color: #1971c2;
+            }
+            QHeaderView::section {
+                background-color: #5F7ADB;
+                color: white;
+                padding: 8px;
+                font-weight: bold;
+                border: none;
+                border-right: 1px solid #4965c8;
+            }
+            QTabWidget::pane {
+                border: 1px solid #d1d9e6;
+                background-color: white;
+                border-radius: 8px;
+            }
+            QTabWidget {
+                background-color: transparent;
+            }
+            QTabBar::tab {
+                background-color: #e9ecef;
+                padding: 10px 20px;
+                margin-right: 2px;
+                margin-bottom: -1px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                border: 1px solid #d1d9e6;
+                border-bottom: none;
+                color: #495057;
+                font-weight: bold;
+            }
+            QTabBar::tab:selected {
+                background-color: white;
+                border-bottom: 2px solid #5F7ADB;
+                color: #5F7ADB;
+            }
+            QTabBar::tab:hover:!selected {
+                background-color: #dee2e6;
+            }
+            QTextEdit {
+                background-color: #f8f9fa;
+                border: 1px solid #d1d9e6;
+                border-radius: 4px;
+                padding: 5px;
+            }
+            QScrollBar:vertical {
+                border: none;
+                background: #f1f3f5;
+                width: 10px;
+                margin: 0px;
+            }
+            QScrollBar::handle:vertical {
+                background: #adb5bd;
+                min-height: 20px;
+                border-radius: 5px;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                border: none;
+                background: none;
+            }
+        """)
+        
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(15, 15, 15, 15)
+        main_layout.setSpacing(10)
+        
+        # Верхняя панель с заголовком
+        header_widget = QWidget()
+        header_layout = QHBoxLayout(header_widget)
+        header_layout.setContentsMargins(0, 0, 0, 0)
+        
+        header_label = QLabel("Информация о детали")
+        header_label.setStyleSheet("""
+            font-size: 18px;
+            font-weight: bold;
+            color: #2E3239;
+            padding: 10px;
+            background-color: #e7f5ff;
+            border-radius: 5px;
+        """)
+        header_label.setAlignment(Qt.AlignCenter)
+        header_layout.addWidget(header_label)
+        
+        main_layout.addWidget(header_widget)
+        
+        # Создаем вкладки
+        self.tab_widget = QTabWidget()
+        self.tab_widget.setDocumentMode(True)
+        
+        # Вкладка основной информации
+        self.info_tab = QWidget()
+        info_layout = QVBoxLayout(self.info_tab)
+        info_layout.setContentsMargins(10, 10, 10, 10)
+        info_layout.setSpacing(15)
+        
+        # Основная информация о детали
+        self.info_group = QGroupBox("Основная информация")
+        info_form_layout = QFormLayout(self.info_group)
+        info_form_layout.setLabelAlignment(Qt.AlignRight)
+        info_form_layout.setFormAlignment(Qt.AlignLeft)
+        info_form_layout.setSpacing(12)
+        info_form_layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        
+        self.part_id_label = QLabel("Загрузка...")
+        self.part_name_label = QLabel("Загрузка...")
+        self.rfid_tag_label = QLabel("Загрузка...")
+        self.status_label = QLabel("Загрузка...")
+        self.current_stage_label = QLabel("Загрузка...")
+        self.storage_sector_label = QLabel("Загрузка...")
+        self.note_text = QTextEdit()
+        self.note_text.setReadOnly(True)
+        self.note_text.setMinimumHeight(100)
+        
+        # Стили для меток
+        self.part_id_label.setStyleSheet("font-weight: bold; color: #5F7ADB; font-size: 14px;")
+        self.status_label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        
+        info_form_layout.addRow("<b>ID детали:</b>", self.part_id_label)
+        info_form_layout.addRow("<b>Название:</b>", self.part_name_label)
+        info_form_layout.addRow("<b>Статус:</b>", self.status_label)
+        info_form_layout.addRow("<b>Текущий этап:</b>", self.current_stage_label)
+        info_form_layout.addRow("<b>Место хранения:</b>", self.storage_sector_label)
+        info_form_layout.addRow("<b>Примечание:</b>", self.note_text)
+        
+        info_layout.addWidget(self.info_group)
+        
+        # Вкладка информации о времени
+        self.time_tab = QWidget()
+        self.time_layout = QVBoxLayout(self.time_tab)
+        self.time_layout.setContentsMargins(10, 10, 10, 10)
+        self.time_layout.setSpacing(15)
+        
+        # Заголовок для вкладки времени
+        time_header = QLabel("История прохождения этапов")
+        time_header.setStyleSheet("""
+            font-size: 14px;
+            font-weight: bold;
+            color: #2E3239;
+            padding: 5px;
+            border-bottom: 2px solid #5F7ADB;
+        """)
+        time_header.setAlignment(Qt.AlignCenter)
+        self.time_layout.addWidget(time_header)
+        
+        # Добавляем вкладки в виджет вкладок
+        self.tab_widget.addTab(self.info_tab, "Основная информация")
+        self.tab_widget.addTab(self.time_tab, "История этапов")
+        
+        main_layout.addWidget(self.tab_widget)
+        
+        # Кнопки внизу диалога
+        button_box = QDialogButtonBox(QDialogButtonBox.Close)
+        button_box.setStyleSheet("""
+            QPushButton {
+                background-color: #5F7ADB;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 13px;
+                min-width: 100px;
+            }
+            QPushButton:hover {
+                background-color: #4965c8;
+            }
+            QPushButton:pressed {
+                background-color: #3b51a3;
+            }
+        """)
+        button_box.rejected.connect(self.reject)
+        main_layout.addWidget(button_box)
+        
+        # Обновляем геометрию
+        self.updateGeometry()
+
+    def populate_data(self):
+        """Заполняет интерфейс данными о детали."""
+        log_event(f"Начинаем заполнение данных в диалоге. part_info: {self.part_info}")
+        # Заполняем основную информацию
+        part_id = self.part_info.get('id', 'Нет данных')
+        log_event(f"ID детали: {part_id}")
+        self.part_id_label.setText(str(part_id))
+        
+        part_name = self.part_info.get('name', 'Нет данных')
+        log_event(f"Название детали: {part_name}")
+        self.part_name_label.setText(part_name)
+        
+        self.rfid_tag_label.setText(str(self.rfid_tag))
+        
+        # Проверка статуса и установка значения
+        status = self.part_info.get('defective', None)
+        log_event(f"Статус (defective): {status}")
+        
+        if status is None:
+            status_text = "Нет данных"
+        elif status == 1 or status == "1" or status is True:
+            status_text = "Брак"
+        else:
+            status_text = "Годен"
+        log_event(f"Текст статуса: {status_text}")
+        self.status_label.setText(status_text)
+        
+        current_stage = self.part_info.get('stage', 'Нет данных')
+        log_event(f"Текущий этап: {current_stage}")
+        self.current_stage_label.setText(current_stage)
+        
+        storage_sector = self.part_info.get('sector', None)
+        log_event(f"Сектор хранения: {storage_sector}")
+        if storage_sector is None or storage_sector == "":
+            self.storage_sector_label.setText("Не хранится")
+        else:
+            self.storage_sector_label.setText(str(storage_sector))
+        
+        note = self.part_info.get('note', '')
+        log_event(f"Примечание: {note}")
+        self.note_text.setText(note if note else "Нет примечаний")
+        
+        # Заполняем информацию о времени прохождения этапов
+        log_event(f"Обрабатываем данные времени: {self.time_info}")
+        self.process_time_info(self.time_info)
+        log_event("Завершено заполнение данных в диалоге")
+
+    def process_time_info(self, time_data):
+        """Обрабатывает информацию о времени для этапов и отображает на интерфейсе"""
+        try:
+            log_event(f"Обработка информации о времени: {time_data}")
+            
+            # Очистка существующих виджетов в макете времени
+            self.clear_layout(self.time_layout)
+            
+            # Заголовок
+            header_label = QLabel("История прохождения этапов")
+            header_label.setStyleSheet("""
+                font-size: 16px;
+                font-weight: bold;
+                color: #2E3239;
+                padding: 8px;
+                border-bottom: 2px solid #5F7ADB;
+            """)
+            header_label.setAlignment(Qt.AlignCenter)
+            self.time_layout.addWidget(header_label)
+            
+            # Проверяем, есть ли поле time в информации о детали
+            mark_time = self.part_info.get('time')
+            if mark_time and not time_data:
+                log_event(f"Найдено поле time в информации о детали: {mark_time}")
+                # Создаем структуру для этапа mark с временем из поля time
+                time_data = {
+                    "mark": {
+                        "time": mark_time
+                    }
+                }
+            
+            if not time_data or not isinstance(time_data, dict):
+                warning_widget = QWidget()
+                warning_layout = QVBoxLayout(warning_widget)
+                warning_icon = QLabel("ℹ️")
+                warning_icon.setAlignment(Qt.AlignCenter)
+                warning_icon.setStyleSheet("font-size: 24px; margin: 10px;")
+                warning_text = QLabel("Нет данных о времени по этапам")
+                warning_text.setAlignment(Qt.AlignCenter)
+                warning_text.setStyleSheet("color: #6c757d; font-style: italic; font-size: 14px;")
+                warning_layout.addWidget(warning_icon)
+                warning_layout.addWidget(warning_text)
+                warning_widget.setStyleSheet("""
+                    background-color: #f8f9fa;
+                    border: 1px dashed #ced4da;
+                    border-radius: 8px;
+                    margin: 20px;
+                """)
+                self.time_layout.addWidget(warning_widget)
+                return
+            
+            # Создаем прокручиваемую область для этапов
+            scroll_area = QScrollArea()
+            scroll_area.setWidgetResizable(True)
+            scroll_area.setStyleSheet("""
+                QScrollArea {
+                    border: none;
+                    background-color: transparent;
+                }
+            """)
+            
+            scroll_content = QWidget()
+            scroll_layout = QVBoxLayout(scroll_content)
+            scroll_layout.setContentsMargins(5, 5, 5, 5)
+            scroll_layout.setSpacing(15)
+            
+            # Сортируем этапы по дате начала (если она есть)
+            stages = []
+            for stage_name, stage_info in time_data.items():
+                if stage_name != 'sector' and isinstance(stage_info, dict):
+                    # Для обычных этапов используем start, для этапа mark используем time
+                    if stage_name == "mark" and "time" in stage_info:
+                        stage_start = stage_info.get('time')
+                    else:
+                        stage_start = stage_info.get('start')
+                    stages.append((stage_name, stage_info, stage_start))
+            
+            # Сортировка по времени начала
+            sorted_stages = sorted(stages, key=lambda x: x[2] if x[2] else "")
+            
+            # Для каждого этапа создаем красивый виджет
+            for index, (stage_name, stage_info, _) in enumerate(sorted_stages):
+                stage_widget = QGroupBox()
+                
+                # Чередующиеся цвета для виджетов этапов
+                if index % 2 == 0:
+                    stage_widget.setStyleSheet("""
+                        QGroupBox {
+                            background-color: #f0f7ff;
+                            border: 1px solid #bdd7f9;
+                            border-radius: 8px;
+                            padding: 10px;
+                            margin: 5px;
+                        }
+                    """)
+                else:
+                    stage_widget.setStyleSheet("""
+                        QGroupBox {
+                            background-color: #fff9f0;
+                            border: 1px solid #f9e5bd;
+                            border-radius: 8px;
+                            padding: 10px;
+                            margin: 5px;
+                        }
+                    """)
+                
+                stage_layout = QVBoxLayout(stage_widget)
+                
+                # Заголовок этапа
+                stage_header = QLabel(f"Этап: {stage_name}")
+                stage_header.setStyleSheet("""
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #2E3239;
+                    padding: 5px;
+                    border-bottom: 1px solid #dee2e6;
+                """)
+                stage_layout.addWidget(stage_header)
+                
+                # Времена начала и окончания или просто время для mark
+                time_table = QWidget()
+                time_table_layout = QFormLayout(time_table)
+                time_table_layout.setLabelAlignment(Qt.AlignRight)
+                time_table_layout.setFormAlignment(Qt.AlignLeft)
+                time_table_layout.setSpacing(5)
+                time_table_layout.setContentsMargins(5, 5, 5, 5)
+                
+                # Обработка особого случая для этапа mark
+                if stage_name == "mark" and "time" in stage_info:
+                    mark_time_value = stage_info.get('time')
+                    if mark_time_value:
+                        time_label = QLabel(self.format_time(mark_time_value))
+                        time_label.setStyleSheet("color: #0d6efd; font-weight: bold;")
+                        time_table_layout.addRow("<b>Время маркировки:</b>", time_label)
+                    else:
+                        no_time_label = QLabel("Время маркировки не зафиксировано")
+                        no_time_label.setStyleSheet("color: #6c757d; font-style: italic;")
+                        time_table_layout.addRow("", no_time_label)
+                else:
+                    # Стандартная обработка для обычных этапов
+                    start_time = stage_info.get('start')
+                    end_time = stage_info.get('end')
+                    
+                    if start_time:
+                        start_label = QLabel(self.format_time(start_time))
+                        start_label.setStyleSheet("color: #0d6efd; font-weight: bold;")
+                        time_table_layout.addRow("<b>Начало:</b>", start_label)
+                    
+                    if end_time:
+                        end_label = QLabel(self.format_time(end_time))
+                        end_label.setStyleSheet("color: #198754; font-weight: bold;")
+                        time_table_layout.addRow("<b>Окончание:</b>", end_label)
+                    
+                    if not start_time and not end_time:
+                        no_time_label = QLabel("Время выполнения не зафиксировано")
+                        no_time_label.setStyleSheet("color: #6c757d; font-style: italic;")
+                        time_table_layout.addRow("", no_time_label)
+                
+                stage_layout.addWidget(time_table)
+                
+                # Информация о пользователе
+                user_id = stage_info.get('user')
+                if user_id:
+                    user_frame = QFrame()
+                    user_frame.setStyleSheet("""
+                        QFrame {
+                            background-color: rgba(255, 255, 255, 0.7);
+                            border-radius: 5px;
+                            padding: 5px;
+                        }
+                    """)
+                    user_layout = QHBoxLayout(user_frame)
+                    user_layout.setContentsMargins(5, 5, 5, 5)
+                    
+                    user_icon = QLabel("👤")
+                    user_layout.addWidget(user_icon)
+                    
+                    user_label = QLabel(f"Исполнитель: загрузка... (ID: {user_id})")
+                    user_label.setStyleSheet("color: #495057;")
+                    user_layout.addWidget(user_label)
+                    
+                    stage_layout.addWidget(user_frame)
+                    
+                    # Получаем информацию о пользователе
+                    self.get_user_name_and_update(user_id, stage_name, user_label)
+                else:
+                    user_frame = QFrame()
+                    user_frame.setStyleSheet("""
+                        QFrame {
+                            background-color: rgba(255, 255, 255, 0.7);
+                            border-radius: 5px;
+                            padding: 5px;
+                        }
+                    """)
+                    user_layout = QHBoxLayout(user_frame)
+                    user_layout.setContentsMargins(5, 5, 5, 5)
+                    
+                    user_icon = QLabel("❓")
+                    user_layout.addWidget(user_icon)
+                    
+                    user_label = QLabel("Исполнитель не указан")
+                    user_label.setStyleSheet("color: #6c757d; font-style: italic;")
+                    user_layout.addWidget(user_label)
+                    
+                    stage_layout.addWidget(user_frame)
+                
+                scroll_layout.addWidget(stage_widget)
+            
+            # Добавляем растягивающийся элемент в конец
+            spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+            scroll_layout.addItem(spacer)
+            
+            scroll_area.setWidget(scroll_content)
+            self.time_layout.addWidget(scroll_area)
+            
+        except Exception as e:
+            log_error(f"Ошибка при обработке информации о времени: {e}")
+            error_widget = QWidget()
+            error_layout = QVBoxLayout(error_widget)
+            
+            error_icon = QLabel("⚠️")
+            error_icon.setAlignment(Qt.AlignCenter)
+            error_icon.setStyleSheet("font-size: 24px; margin: 10px;")
+            
+            error_text = QLabel(f"Ошибка обработки данных: {e}")
+            error_text.setAlignment(Qt.AlignCenter)
+            error_text.setStyleSheet("color: #dc3545; font-size: 14px;")
+            error_text.setWordWrap(True)
+            
+            error_layout.addWidget(error_icon)
+            error_layout.addWidget(error_text)
+            
+            error_widget.setStyleSheet("""
+                background-color: #fff5f5;
+                border: 1px solid #ffcccc;
+                border-radius: 8px;
+                margin: 20px;
+            """)
+            
+            self.time_layout.addWidget(error_widget)
+
+    def get_user_name_and_update(self, user_id, stage, user_label):
+        """Получает имя пользователя по ID и обновляет интерфейс."""
+        try:
+            log_event(f"Запрашиваем информацию о пользователе с ID: {user_id} для этапа {stage}")
+            
+            # Отправляем запрос на получение данных о пользователе
+            query = {"type": "userById", "id": user_id}
+            
+            # Сохраняем ID пользователя, которого запрашиваем
+            user_label.setProperty("requested_user_id", user_id)
+            
+            # Создаем отдельный поток для запроса информации о пользователе
+            worker = DatabaseWorker(query)
+            worker.finished.connect(lambda result, label=user_label, stage_name=stage, uid=user_id: 
+                                    self.update_user_label(result, label, stage_name, uid))
+            worker.finished.connect(lambda: self.clean_up_thread(worker))
+            worker.finished.connect(worker.deleteLater)
+            
+            # Добавляем поток в список для отслеживания
+            self.worker_threads.append(worker)
+            worker.start()
+            
+        except Exception as e:
+            log_error(f"Общая ошибка при получении данных о пользователе: {e}")
+            user_label.setText(f"Исполнитель: ошибка ({str(e)[:30]}...)" if len(str(e)) > 30 else f"Исполнитель: ошибка ({e})")
+
+    def update_user_label(self, result, label, stage_name, requested_user_id):
+        """Обновляет метку с именем пользователя после получения данных."""
+        try:
+            log_event(f"Обработка результата для этапа {stage_name}, запрошенный ID: {requested_user_id}, результат: {result}")
+            
+            # Получаем ID пользователя, для которого был сделан запрос
+            label_user_id = label.property("requested_user_id")
+            
+            # Проверяем, совпадает ли ID в ответе с ID для этой метки
+            if str(label_user_id) != str(requested_user_id):
+                log_warning(f"ID пользователя в метке ({label_user_id}) не совпадает с запрошенным ID ({requested_user_id}). Пропускаем обновление.")
+                return
+            
+            if result and result.get('status') == 'ok' and 'data' in result:
+                user_data = result.get('data', [])
+                
+                # Проверяем, что user_data это список или словарь и не пустой
+                if user_data:
+                    # Обрабатываем случай, когда API возвращает список
+                    if isinstance(user_data, list) and len(user_data) > 0:
+                        user_data = user_data[0]  # Берем первый элемент списка
+                    
+                    # Теперь user_data должен быть словарем
+                    if isinstance(user_data, dict):
+                        user_id_from_data = user_data.get('id')
+                        
+                        name = user_data.get('name', 'Неизвестно')
+                        surname = user_data.get('surname', 'Неизвестно')
+                        prof = user_data.get('prof', 'Неизвестно')
+                        full_name = f"{surname} {name}"
+                        
+                        # Определяем цвет метки в зависимости от ID пользователя
+                        color_styles = {
+                            "1": "color: #0d6efd; font-weight: bold;",  # Синий
+                            "2": "color: #198754; font-weight: bold;",  # Зеленый
+                            "3": "color: #dc3545; font-weight: bold;",  # Красный
+                            "4": "color: #fd7e14; font-weight: bold;",  # Оранжевый
+                            "5": "color: #6f42c1; font-weight: bold;",  # Фиолетовый
+                        }
+                        
+                        id_str = str(user_id_from_data)
+                        style = color_styles.get(id_str, "color: #495057; font-weight: bold;")
+                        label.setStyleSheet(style)
+                        
+                        # Явно добавляем ID пользователя в текст
+                        label.setText(f"Исполнитель [{id_str}]: {full_name} ({prof})")
+                        log_event(f"Метка пользователя обновлена для этапа {stage_name}: {full_name}, ID: {user_id_from_data}")
+                    else:
+                        label.setText(f"Исполнитель: некорректный формат данных")
+                        log_error(f"Некорректный формат данных пользователя: {type(user_data)}")
+                else:
+                    label.setText(f"Исполнитель: данные не найдены для ID {requested_user_id}")
+                    log_error(f"Пустые данные о пользователе для этапа {stage_name}, ID: {requested_user_id}")
+            else:
+                error_msg = result.get('message') if result and 'message' in result else 'Данные не найдены'
+                label.setText(f"Исполнитель: {error_msg} (ID: {requested_user_id})")
+                log_error(f"Не удалось получить данные о пользователе для этапа {stage_name}, ID: {requested_user_id}: {error_msg}")
+        except Exception as e:
+            log_error(f"Ошибка при обновлении метки пользователя для этапа {stage_name}, ID: {requested_user_id}: {e}")
+            label.setText(f"Исполнитель: ошибка ({str(e)[:30]}...)")
+
+    def closeEvent(self, event):
+        """Перехватываем событие закрытия окна для корректного завершения потоков."""
+        # Пытаемся остановить все потоки
+        for thread in self.worker_threads:
+            if thread.isRunning():
+                thread.quit()
+                thread.wait(500)  # Ждем до 500 мс
+        
+        event.accept()
+
+    def clean_up_thread(self, thread):
+        """Удаляет поток из списка активных потоков."""
+        if thread in self.worker_threads:
+            self.worker_threads.remove(thread)
+
+    def setup_connections(self):
+        """Устанавливает сигнал-слот соединения для виджетов."""
+        # Здесь будут подключения сигналов к слотам, если они понадобятся
+        pass
+
+    def format_time(self, time_str):
+        """Форматирует временную метку в читаемый вид."""
+        try:
+            # Проверяем, является ли строка уже отформатированной
+            if isinstance(time_str, str) and len(time_str) >= 19:
+                # Предполагаем формат: "YYYY-MM-DD HH:MM:SS"
+                return time_str
+            else:
+                return str(time_str)
+        except Exception as e:
+            log_error(f"Ошибка при форматировании времени: {e}")
+            return str(time_str)
+
+    def clear_layout(self, layout):
+        """Очищает все виджеты из макета."""
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    # Если элемент является подмакетом
+                    self.clear_layout(item.layout())
 
 if __name__ == "__main__":
     import sys

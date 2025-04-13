@@ -1,0 +1,167 @@
+2025-04-13 13:25:03 - INFO - logger - <module> - Приложение запущено
+2025-04-13 13:25:03 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-13 13:25:03 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-13 13:25:03 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-13 13:25:03 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-13 13:25:03 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-13 13:25:03 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-13 13:25:06 - INFO - logger - log_event - Сервер доступен
+2025-04-13 13:25:06 - INFO - logger - log_event - Сервер доступен
+2025-04-13 13:25:06 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-13 13:25:06 - ERROR - logger - log_error - Ошибка: Не найден подходящий COM-порт
+NoneType: None
+2025-04-13 13:25:06 - ERROR - logger - log_error - Ошибка: SerialManager не передан! COM-порт не будет работать.
+NoneType: None
+2025-04-13 13:25:06 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to mark
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Test
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Packing
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to Login page AA
+2025-04-13 13:25:06 - INFO - logger - log_event - Enter to assembly
+2025-04-13 13:25:11 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 216012857
+2025-04-13 13:25:11 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '216012857', 'id': None}
+2025-04-13 13:25:11 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Алексей', 'surname': 'Петров', 'id': 3}
+2025-04-13 13:25:11 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Алексей', 'surname': 'Петров', 'id': 3}
+2025-04-13 13:25:11 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Алексей', 'surname': 'Петров', 'id': 3}
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Алексей', 'surname': 'Петров', 'work_description': 'Без детали'}
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Алексей', 'surname': 'Петров', 'work_description': 'Без детали', 'id': None}
+2025-04-13 13:25:12 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:25:12 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-13 13:25:12 - INFO - logger - log_event - Сессия успешно начата: Петров Алексей
+2025-04-13 13:25:12 - INFO - logger - log_event - Устанавливаем переменную config.user: Петров Алексей
+2025-04-13 13:25:12 - INFO - logger - log_event - Устанавливаем переменную config.Name: Петров Алексей
+2025-04-13 13:25:12 - INFO - logger - log_event - Установлено значение config.Name: Петров Алексей
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN904
+2025-04-13 13:25:12 - INFO - logger - log_event - Текущее состояние: Name='Петров Алексей', auth=False, session_on=True
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN904', 'id': 3}
+2025-04-13 13:25:12 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:25:12 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:25:12 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Петров Алексей'
+2025-04-13 13:25:12 - INFO - logger - log_event - Используем части имени из Name: фамилия='Петров', имя='Алексей'
+2025-04-13 13:25:12 - INFO - logger - log_event - Будет использоваться: фамилия='Петров', имя='Алексей'
+2025-04-13 13:25:12 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Алексей', 'surname': 'Петров', 'new_description': 'Тестирование SN904'}
+2025-04-13 13:25:12 - INFO - logger - log_event - Состояние сессии: auth=False, session_on=True
+2025-04-13 13:25:12 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Алексей', 'surname': 'Петров', 'new_description': 'Тестирование SN904', 'id': 3}
+2025-04-13 13:25:13 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:25:13 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-13 13:25:13 - INFO - logger - log_event - Успешная аутентификация пользователя: Петров Алексей
+2025-04-13 13:25:18 - INFO - logger - log_event - Login to the admin panel
+2025-04-13 13:25:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:19 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Отображаем страницу активных сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:19 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 14, 'name': 'Алексей', 'notes': None, 'start_time': '2025-04-13 08:25', 'status': 'active', 'surname': 'Петров', 'user_id': 3, 'work_description': 'Тестирование SN904'}, {'id': 12, 'name': 'Диван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Замолдинов', 'user_id': 1, 'work_description': 'Тестирование SN904'}, {'id': 13, 'name': 'Иван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Иванов', 'user_id': 2, 'work_description': 'Тестирование SN904'}], 'status': 'ok'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-13 13:25:19 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:19 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 14, 'name': 'Алексей', 'notes': None, 'start_time': '2025-04-13 08:25', 'status': 'active', 'surname': 'Петров', 'user_id': 3, 'work_description': 'Тестирование SN904'}, {'id': 12, 'name': 'Диван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Замолдинов', 'user_id': 1, 'work_description': 'Тестирование SN904'}, {'id': 13, 'name': 'Иван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Иванов', 'user_id': 2, 'work_description': 'Тестирование SN904'}], 'status': 'ok'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-13 13:25:19 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:19 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}, {'id': 12, 'user_id': 1, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Диван', 'surname': 'Замолдинов'}, {'id': 13, 'user_id': 2, 'start_time': '2025-04-13 08:23', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Иван', 'surname': 'Иванов'}]}
+2025-04-13 13:25:19 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:19 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 14, 'name': 'Алексей', 'notes': None, 'start_time': '2025-04-13 08:25', 'status': 'active', 'surname': 'Петров', 'user_id': 3, 'work_description': 'Тестирование SN904'}, {'id': 12, 'name': 'Диван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Замолдинов', 'user_id': 1, 'work_description': 'Тестирование SN904'}, {'id': 13, 'name': 'Иван', 'notes': None, 'start_time': '2025-04-13 08:23', 'status': 'active', 'surname': 'Иванов', 'user_id': 2, 'work_description': 'Тестирование SN904'}], 'status': 'ok'}
+2025-04-13 13:25:19 - INFO - logger - log_event - Число полученных сессий: 3
+2025-04-13 13:25:19 - INFO - logger - log_event - Показана кнопка удаления всех сессий
+2025-04-13 13:25:19 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:24 - INFO - logger - log_event - Отправляем запрос на удаление всех сессий, кроме текущей
+2025-04-13 13:25:24 - INFO - logger - log_event - Запрос: {'type': 'deleteAllSessions', 'keepCurrentSession': True, 'id': 3}
+2025-04-13 13:25:24 - INFO - logger - log_event - Ответ: {'status': 'ok', 'count': 2}
+2025-04-13 13:25:24 - INFO - logger - log_event - Успешно удалены неактивные сессии. Удалено: 2 сессий
+2025-04-13 13:25:26 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'getSessions'}
+2025-04-13 13:25:26 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:26 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}]}
+2025-04-13 13:25:26 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:26 - INFO - logger - log_event - Запрос: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:26 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 14, 'user_id': 3, 'start_time': '2025-04-13 08:25', 'work_description': 'Тестирование SN904', 'status': 'active', 'notes': None, 'name': 'Алексей', 'surname': 'Петров'}]}
+2025-04-13 13:25:26 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'getSessions', 'id': 3}
+2025-04-13 13:25:26 - INFO - logger - log_event - Получен ответ для таблицы сессий: {'data': [{'id': 14, 'name': 'Алексей', 'notes': None, 'start_time': '2025-04-13 08:25', 'status': 'active', 'surname': 'Петров', 'user_id': 3, 'work_description': 'Тестирование SN904'}], 'status': 'ok'}
+2025-04-13 13:25:26 - INFO - logger - log_event - Число полученных сессий: 1
+2025-04-13 13:25:26 - INFO - logger - log_event - Кнопка удаления всех сессий скрыта (только одна сессия)
+2025-04-13 13:25:26 - INFO - logger - log_event - Видимость таблицы: True, контейнера: True
+2025-04-13 13:25:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:25:29 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:25:29 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:29 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-13 13:25:29 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:29 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:30 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:30 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-13 13:25:30 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Открытие информации о детали: SN904
+2025-04-13 13:25:30 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN904', 'id': 3}
+2025-04-13 13:25:30 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-13 13:02:28", "user": 1}, "сборка": {"end": "2025-04-13 13:15:22", "user": 1, "start": "2025-04-13 13:15:18"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-13 13:25:30 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 1}
+2025-04-13 13:25:30 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'Алексей', 'surname': 'Петров', 'profession': 'Программист'}}
+2025-04-13 13:25:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 1}
+2025-04-13 13:25:31 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'Алексей', 'surname': 'Петров', 'profession': 'Программист'}}
+2025-04-13 13:25:31 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'Алексей', 'surname': 'Петров', 'profession': 'Программист'}}
+2025-04-13 13:25:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:31 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'Алексей', 'surname': 'Петров', 'profession': 'Программист'}}
+2025-04-13 13:25:31 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 3}
+2025-04-13 13:25:52 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-13 13:25:52 - INFO - logger - log_event - Завершаем сессию пользователя: Алексей Петров
+2025-04-13 13:25:52 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Алексей', 'surname': 'Петров', 'id': 3}
+2025-04-13 13:25:52 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-13 13:25:52 - INFO - logger - log_event - Сессия успешно завершена: Алексей Петров
+2025-04-13 13:25:52 - INFO - logger - log_application_exit - Приложение завершено

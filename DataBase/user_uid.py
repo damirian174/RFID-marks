@@ -16,7 +16,7 @@ async def insert_test_data(serial_number):
             user='dytt',
             password='dyttadmin',
             database='main',
-            host='192.168.0.100',  # IP Raspberry Pi
+            host='localhost',  # IP Raspberry Pi
             port=5432
         )
 

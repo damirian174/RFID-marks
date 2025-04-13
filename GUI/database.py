@@ -2,6 +2,7 @@ import socket
 import json
 from config import serverip, port
 from logger import *
+import config
 
 def test_connection():
     """
@@ -41,13 +42,14 @@ def test_connection():
 
 
 def database(request_data):
+    if not request_data.get('id'):
+        request_data['id'] = config.id
 
+    
     log_event(f"Запрос: {request_data}")
-    # if request_data['type'] == 'report':
-    #     return "OK"
     # elif request_data['type'] == 'user':
     #     return {"status": "ok", "surname": "Степанов", "name": "Сергей"}
-    # elif request_data['type'] == 'details':
+    # if request_data['type'] == 'details':
     #     return {'status': 'ok', 'data': {'id': 69, 'name': 'МЕТРАН 150', 'serial_number': 'SN904', 'defective': False, 'stage': 'Сборка', 'sector': None, 'identified_by': None, 'defect_stage_id': None}}
     try:
         # Создаем соединение с сервером

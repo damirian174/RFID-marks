@@ -11,6 +11,7 @@ from PySide6.QtGui import QFont, QIcon
 import os
 import sys
 
+
 # Функция для получения пути к иконке
 def get_icon_path(image_name):
     if getattr(sys, 'frozen', False):
@@ -158,7 +159,10 @@ def start_work(ser, response):
     detail_work = True
     config.work = True
     config.detail = ser
-    time_start = GetTime()
+    
+    utc_time = datetime.utcnow()
+    utc_plus_5 = utc_time + timedelta(hours=5)
+    time_start = utc_plus_5.strftime('%Y-%m-%d %H:%M:%S')
     global mark_ui_instance, work_ui_instance, packing_ui_instance, test_ui_instance
     
     # Логируем начало работы и текущее значение Name
@@ -347,8 +351,10 @@ def reset_session():
     config.data = None
     config.user = None
     config.session_on = False
+
     global time_start
     time_start = None
+
     
     # Очищаем информацию о детали во всех интерфейсах
     if mark_ui_instance:
@@ -363,28 +369,34 @@ def reset_session():
     return True
 
 def update(name=None, serial=None):
+    global time_start
+    utc_time = datetime.utcnow()
+    utc_plus_5 = utc_time + timedelta(hours=5)
+    time_end = utc_plus_5.strftime('%Y-%m-%d %H:%M:%S')
     if name and serial:
-        response_data = {'type': 'mark', "name": name, 'serial': serial}
+        response_data = {'type': 'mark', "name": name, 'serial': serial, 'time': time_end}
+        # МЕТРАН 150 SN904
         log_event(f"Маркировка вручную: {response_data}")
         response = database(response_data)
         log_event(f"Ответ от сервера: {response}")
         return
 
     global data_detail
+
     if data_detail:
         x = data_detail["data"]
         if x['stage'] == "Маркировка":
-            response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number']}
+            response_data = {'type': 'updatestage', 'stage': 'Сборка', 'serial': x['serial_number'], 'start': time_start, 'end': time_end}
             response = database(response_data)
             if config.work:
                 end_work()
         elif x['stage'] == "Сборка":
-            response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number']}
+            response_data = {'type': 'updatestage', 'stage': 'Тестирование', 'serial': x['serial_number'], 'start': time_start, 'end': time_end}
             response = database(response_data)
             if config.work:
                 end_work()
         elif x['stage'] == "Тестирование":
-            response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number']}
+            response_data = {'type': 'updatestage', 'stage': 'Упаковка', 'serial': x['serial_number'], 'start': time_start, 'end': time_end}
             response = database(response_data)
             if config.work:
                 end_work()
