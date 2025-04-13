@@ -1,94 +1,165 @@
-# Основные модули Kivy
 from kivy.app import App
-from kivy.core.window import Window
-from kivy.lang import Builder
-from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.graphics import Color, Rectangle
+from kivy.uix.button import Button
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.properties import ObjectProperty, NumericProperty
+from kivy.lang import Builder
+from kivy.metrics import dp
+from kivy.core.window import Window
+from kivy.utils import platform
 
-# KV язык для базового интерфейса
-kv = '''
-<BarChartWidget>:
-    canvas:
+Builder.load_string('''
+<AdaptiveButton@Button>:
+    font_size: root.height * 0.3
+    padding: (dp(10), (dp(10)))
+
+<NavigationPanel>:
+    orientation: 'vertical'
+    size_hint_x: None
+    width: root.panel_width
+    spacing: dp(10)
+    padding: dp(10)
+    canvas.before:
         Color:
-            rgba: 0.8, 0.9, 1, 1  # Светло-голубой фон
+            rgba: 0, 0.294, 0.553, 1  # HEX #004B8D
         Rectangle:
             pos: self.pos
             size: self.size
+    
+    AdaptiveButton:
+        text: 'Маркировка'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('marking')
+    
+    AdaptiveButton:
+        text: 'Сборка'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('assembly')
+    
+    AdaptiveButton:
+        text: 'Тестирование'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('testing')
+    
+    AdaptiveButton:
+        text: 'Упаковка'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('packing')
+    
+    AdaptiveButton:
+        text: 'Общее'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('general')
+    
+    AdaptiveButton:
+        text: 'Профиль'
+        background_normal: ''
+        background_color: 0, 0.4, 0.7, 1
+        color: 1, 1, 1, 1
+        on_release: app.root.navigate('profile')
+    
+    Widget:
+        size_hint_y: 1
+    
+    AdaptiveButton:
+        text: 'Выход'
+        size_hint_y: None
+        height: dp(50)
+        background_normal: ''
+        background_color: 0.8, 0.2, 0.2, 1
+        color: 1, 1, 1, 1
 
-<BarChartApp>:
-    orientation: 'vertical'
-    Label:
-        text: 'Адаптивный столбчатый график'
-        size_hint_y: 0.1
-        color: [0.2, 0.2, 0.2, 1]  # Тёмно-серый текст для контраста
-        bold: True
-    BarChartWidget:
-        id: bar_chart
-'''
+<BaseScreen>:
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 0
+        
+        NavigationPanel:
+            panel_width: root.panel_width
+        
+        BoxLayout:
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+''')
 
-# Данные для графика
-data = {'A': 50, 'B': 70, 'C': 30, 'D': 90, 'E': 60}
+class NavigationPanel(BoxLayout):
+    pass
 
-# Пастельные цвета для каждого столбца (RGB в диапазоне 0-1)
-pastel_colors = [
-    (0.9, 0.7, 0.7, 1),  # Нежно-розовый
-    (0.7, 0.9, 0.7, 1),  # Нежно-зелёный
-    (0.7, 0.7, 0.9, 1),  # Нежно-синий
-    (0.9, 0.8, 0.7, 1),  # Нежно-персиковый
-    (0.8, 0.7, 0.9, 1)   # Нежно-фиолетовый
-]
+class BaseScreen(Screen):
+    panel_width = NumericProperty(dp(200))  # Начальная ширина панели
+    
+    def on_size(self, *args):
+        # Адаптируем ширину панели в зависимости от ориентации и размера экрана
+        if Window.width < Window.height:  # Портретная ориентация
+            self.panel_width = min(dp(200), Window.width * 0.4)
+        else:  # Альбомная ориентация
+            self.panel_width = min(dp(250), Window.width * 0.25)
 
-class BarChartWidget(Widget):
+class MarkingScreen(BaseScreen):
+    pass
+
+class AssemblyScreen(BaseScreen):
+    pass
+
+class TestingScreen(BaseScreen):
+    pass
+
+class PackingScreen(BaseScreen):
+    pass
+
+class GeneralScreen(BaseScreen):
+    pass
+
+class ProfileScreen(BaseScreen):
+    pass
+
+class MainAppLayout(BoxLayout):
+    screen_manager = ObjectProperty(None)
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bind(size=self.update_bars, pos=self.update_bars)
-        self.draw_bars()
-
-    def draw_bars(self):
-        self.canvas.clear()  # Очищаем канвас перед перерисовкой
-        with self.canvas:
-            # Фон задан в KV (светло-голубой)
-            Color(0.8, 0.9, 1, 1)
-            Rectangle(pos=self.pos, size=self.size)
-
-            # Рисуем столбцы
-            bar_width = self.width / (len(data) + 1)  # Адаптивная ширина столбцов
-            max_height = max(data.values())  # Максимальная высота для масштабирования
-            padding = bar_width * 0.2  # Отступ между столбцами
-
-            for i, (label, value) in enumerate(data.items()):
-                # Устанавливаем пастельный цвет для каждого столбца
-                Color(*pastel_colors[i % len(pastel_colors)])  # Циклическое использование цветов
-                bar_height = (value / max_height) * self.height * 0.8  # Масштабируем высоту
-                bar_x = self.x + padding + i * bar_width
-                bar_y = self.y
-                Rectangle(pos=(bar_x, bar_y), size=(bar_width - padding, bar_height))
-
-                # Подписи под столбцами
-                lbl = Label(text=label,
-                            pos=(bar_x + (bar_width - padding) / 2 - 10, bar_y - 30),
-                            size=(20, 20), font_size=16, color=(0.2, 0.2, 0.2, 1))  # Тёмный текст
-                self.add_widget(lbl)
-
-                # Значения над столбцами
-                val_lbl = Label(text=str(value),
-                                pos=(bar_x + (bar_width - padding) / 2 - 10, bar_y + bar_height + 5),
-                                size=(20, 20), font_size=14, color=(0.2, 0.2, 0.2, 1))
-                self.add_widget(val_lbl)
-
-    def update_bars(self, *args):
-        self.draw_bars()  # Перерисовываем при изменении размера
-
-class BarChartApp(BoxLayout):
-    pass
+        self.orientation = 'vertical'
+        self.screen_manager = ScreenManager()
+        self.screen_manager.add_widget(MarkingScreen(name='marking'))
+        self.screen_manager.add_widget(AssemblyScreen(name='assembly'))
+        self.screen_manager.add_widget(TestingScreen(name='testing'))
+        self.screen_manager.add_widget(PackingScreen(name='packing'))
+        self.screen_manager.add_widget(GeneralScreen(name='general'))
+        self.screen_manager.add_widget(ProfileScreen(name='profile'))
+        self.add_widget(self.screen_manager)
+    
+    def navigate(self, screen_name):
+        self.screen_manager.current = screen_name
 
 class MyApp(App):
     def build(self):
-        Builder.load_string(kv)
-        return BarChartApp()
+        # Настройки для разных платформ
+        if platform == 'android' or platform == 'ios':
+            from kivy.config import Config
+            Config.set('kivy', 'exit_on_escape', '0')
+            
+        Window.bind(on_resize=self.on_window_resize)
+        return MainAppLayout()
+    
+    def on_window_resize(self, window, width, height):
+        # Обновляем размеры при изменении окна
+        for screen in self.root.screen_manager.screens:
+            screen.on_size()
 
 if __name__ == '__main__':
-    Window.size = (800, 600)  # Начальный размер окна
     MyApp().run()
