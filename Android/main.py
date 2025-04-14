@@ -1,12 +1,13 @@
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.metrics import dp
+
 from login import LoginScreen
 from button import MainScreen
-from statistics import StatisticsScreen  # Импортируем экран статистики
+from statistics import StatisticsScreen
 
-class RFIDMarksApp(App):
+class MetranApp(App):
     def build(self):
         # Устанавливаем полноэкранный режим
         Window.maximize()
@@ -53,4 +54,4 @@ class RFIDMarksApp(App):
         self.sm.current = 'main'
 
 if __name__ == '__main__':
-    RFIDMarksApp().run()
+    MetranApp().run()

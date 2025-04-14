@@ -12,10 +12,10 @@ import random
 
 class BarChart(BoxLayout):
     """
-    Класс для отображения столбчатых диаграмм в премиум-стиле
+    Bar chart widget for Kivy applications
     """
     x_labels = ListProperty([])
-    y_axis_label = StringProperty("")
+    y_axis_label = StringProperty('')
     bar_spacing = NumericProperty(0.2)
     background_color = ColorProperty(get_color_from_hex('#F5F5F5'))
     
@@ -84,8 +84,8 @@ class BarChart(BoxLayout):
     
     def add_dataset(self, data_dict):
         """
-        Добавляет набор данных для отображения с анимацией
-        data_dict: словарь, где ключ - название серии данных, значение - список значений
+        Add a dataset to the chart
+        data_dict: Dictionary with keys as series names and values as lists of numeric values
         """
         self.chart_data = data_dict
         self._update_x_labels()
