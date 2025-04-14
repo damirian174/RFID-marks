@@ -30,35 +30,44 @@ def send_json_to_server(json_data):
         
         # Создаем сокет
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            # Устанавливаем таймаут в 5 секунд
-            s.settimeout(5.0)
+            # Устанавливаем таймаут в 10 секунд
+            s.settimeout(10.0)
             
-            # Подключаемся к серверу
-            s.connect((host, port))
-            
-            # Преобразуем данные в JSON и отправляем
-            json_string = json.dumps(json_data, ensure_ascii=False)
-            s.sendall(json_string.encode('utf-8'))
-            
-            # Получаем ответ
-            data = s.recv(4096)
-            
-            # Преобразуем ответ из JSON
-            response = json.loads(data.decode('utf-8'))
-            print(f"[DEBUG] Получен ответ: {response}")
-            return response
-    except socket.timeout:
-        print("Ошибка: Превышено время ожидания соединения с сервером")
-        return {"status": "error", "message": "Таймаут соединения с сервером"}
-    except socket.error as e:
-        print(f"Ошибка сокета: {e}")
-        return {"status": "error", "message": f"Ошибка соединения: {e}"}
-    except json.JSONDecodeError as e:
-        print(f"Ошибка декодирования JSON: {e}")
-        return {"status": "error", "message": "Ошибка формата данных от сервера"}
+            try:
+                # Подключаемся к серверу
+                s.connect((host, port))
+                
+                # Преобразуем данные в JSON и отправляем
+                json_string = json.dumps(json_data, ensure_ascii=False)
+                s.sendall(json_string.encode('utf-8'))
+                
+                # Получаем ответ
+                data = s.recv(4096)
+                
+                # Преобразуем ответ из JSON
+                response = json.loads(data.decode('utf-8'))
+                print(f"[DEBUG] Получен ответ: {response}")
+                return response
+            except socket.timeout:
+                print("Ошибка: Превышено время ожидания соединения с сервером")
+                return {"status": "error", "message": "Таймаут соединения с сервером"}
+            except socket.error as e:
+                print(f"Ошибка сокета: {e}")
+                return {"status": "error", "message": f"Ошибка соединения: {e}"}
+            except json.JSONDecodeError as e:
+                print(f"Ошибка декодирования JSON: {e}")
+                return {"status": "error", "message": "Ошибка формата данных от сервера"}
+            except Exception as e:
+                print(f"Неизвестная ошибка: {e}")
+                return {"status": "error", "message": f"Неизвестная ошибка: {e}"}
+            finally:
+                try:
+                    s.close()
+                except:
+                    pass
     except Exception as e:
-        print(f"Неизвестная ошибка: {e}")
-        return {"status": "error", "message": f"Неизвестная ошибка: {e}"}
+        print(f"Критическая ошибка: {e}")
+        return {"status": "error", "message": f"Критическая ошибка: {e}"}
 
 # Функция для получения текущего времени в отформатированном виде
 def get_current_time():

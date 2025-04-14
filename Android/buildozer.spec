@@ -1,46 +1,76 @@
 [app]
 
-# (str) Title of your application
-title = Metran Control
+# Название приложения
+title = Minimal App
 
-# (str) Package name
-package.name = metran
+# Имя пакета
+package.name = minimalapp
 
-# (str) Package domain (needed for android/ios packaging)
-package.domain = com.metran
+# Домен пакета
+package.domain = com.example
 
-# (str) Source code where the main.py live
+# Путь к исходному коду (теперь указываем минимальное приложение)
 source.dir = .
 
-# (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+# Имя главного файла приложения
+source.include_exts = py
+source.include_patterns = minimal_app.py
+source.exclude_dirs = tests, bin, venv, __pycache__
 
-# (list) List of inclusions using pattern matching
-#source.include_patterns = assets/*,images/*.png
+# Главный файл приложения
+source.main.filename = minimal_app.py
 
-# (list) Source files to exclude (let empty to not exclude anything)
-#source.exclude_exts = spec
+# Версия приложения
+version = 0.1
 
-# (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin, venv
+# Требования (только необходимый минимум)
+requirements = python3,kivy
 
-# (list) List of exclusions using pattern matching
-# Do not prefix with './'
-#source.exclude_patterns = license,images/*/*.jpg
+# Ориентация экрана
+orientation = portrait
+
+# Полноэкранный режим
+fullscreen = 0
+
+# Цвет фона загрузочного экрана
+android.presplash_color = #FFFFFF
+
+# Разрешения для Android (минимальные)
+android.permissions = INTERNET
+
+# Минимальная версия Android API
+android.minapi = 21
+
+# Целевая версия Android API
+android.api = 33
+
+# Настройки отладки
+android.debug = True
+
+# Принять лицензию SDK автоматически
+android.accept_sdk_license = True
+
+# Настройки сборки
+[buildozer]
+
+# Уровень логирования (0 = только ошибки, 1 = информация, 2 = отладка)
+log_level = 2
+
+# Предупреждение при запуске от root
+warn_on_root = 1
+
+# Путь к директории сборки
+build_dir = ./.buildozer
+
+# Путь к выходным файлам
+bin_dir = ./bin
 
 # (str) Application versioning (method 1)
-version = 1.0
-
-# (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pillow
-
-# (str) Custom source folders for requirements
-# Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
@@ -51,7 +81,7 @@ requirements = python3,kivy,pillow
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
-orientation = landscape
+#orientation = landscape
 
 # (list) List of service to declare
 #services = NAME:ENTRYPOINT_TO_PY,NAME2:ENTRYPOINT2_TO_PY
@@ -72,71 +102,6 @@ osx.kivy_version = 2.1.0
 #
 # Android specific
 #
-
-# (bool) Indicate if the application should be fullscreen or not
-fullscreen = 1
-
-# (string) Presplash background color (for android toolchain)
-# Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
-# red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
-# darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
-# olive, purple, silver, teal.
-android.presplash_color = #0050a0
-
-# (string) Presplash animation using Lottie format.
-# see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
-# for general documentation.
-# Lottie files can be created using various tools, like Adobe After Effect or Synfig.
-#android.presplash_lottie = "path/to/lottie/file.json"
-
-# (list) Permissions
-android.permissions = INTERNET, CAMERA, BLUETOOTH, NFC, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
-
-# (int) Target Android API, should be as high as possible.
-android.api = 33
-
-# (int) Minimum API your APK / AAB will support.
-android.minapi = 21
-
-# (int) Android SDK version to use
-#android.sdk = 20
-
-# (bool) If True, then automatically accept SDK license
-android.accept_sdk_license = True
-
-# (str) Android entry point, default is ok for Kivy-based app
-#android.entrypoint = org.kivy.android.PythonActivity
-
-# (str) Android app theme, default is ok for Kivy-based app
-android.apptheme = "@android:style/Theme.NoTitleBar.Fullscreen"
-
-# (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
-# contains an 'androidx' package, or any package from Kotlin source.
-# android.enable_androidx requires android.api >= 28
-android.enable_androidx = True
-
-# (list) Gradle dependencies to add
-android.gradle_dependencies = androidx.appcompat:appcompat:1.5.1
-
-# (bool) Copy library instead of making a libpymodules.so
-android.copy_libs = 1
-
-# (bool) Use --private data storage (True) or --dir public storage (False)
-android.private_storage = True
-
-# (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path =
-
-# (str) Android SDK directory (if empty, it will be automatically downloaded.)
-#android.sdk_path =
-
-# (str) ANT directory (if empty, it will be automatically downloaded.)
-#android.ant_path =
-
-# (bool) If True, then skip trying to update the Android sdk
-# This can be useful to avoid excess Internet downloads or save time
-# when an update is due and you just want to test/build your package
-# android.skip_update = False
 
 # (bool) If True, then automatically accept SDK license
 # agreements. This is intended for automation only. If set to False,
@@ -271,9 +236,6 @@ android.private_storage = True
 # this is not the same as app version and should only be edited if you know what you're doing
 # android.numeric_version = 1
 
-# (bool) enables Android auto backup feature (Android API >=23)
-android.allow_backup = True
-
 # (str) XML file for custom backup rules (see official auto backup documentation)
 # android.backup_rules =
 
@@ -379,40 +341,6 @@ ios.codesign.allowed = false
 # (str) URL pointing to a large icon (512x512px) to be used by iTunes
 # This option should be defined along with `app_url` and `display_image_url` options.
 #ios.manifest.full_size_image_url =
-
-
-[buildozer]
-
-# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
-log_level = 2
-
-# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
-warn_on_root = 1
-
-# (str) Path to build artifact storage, absolute or relative to spec file
-# build_dir = ./.buildozer
-
-# (str) Path to build output (i.e. .apk, .aab, .ipa) storage
-# bin_dir = ./bin
-
-#    -----------------------------------------------------------------------------
-#    List as sections
-#
-#    You can define all the "list" as [section:key].
-#    Each line will be considered as a option to the list.
-#    Let's take [app] / source.exclude_patterns.
-#    Instead of doing:
-#
-#[app]
-#source.exclude_patterns = license,data/audio/*.wav,data/images/original/*
-#
-#    This can be translated into:
-#
-#[app:source.exclude_patterns]
-#license
-#data/audio/*.wav
-#data/images/original/*
-#
 
 
 #    -----------------------------------------------------------------------------

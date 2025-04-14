@@ -1761,7 +1761,7 @@ class DetailInfoDialog(QDialog):
                         
                         name = user_data.get('name', 'Неизвестно')
                         surname = user_data.get('surname', 'Неизвестно')
-                        prof = user_data.get('prof', 'Неизвестно')
+                        prof = user_data.get('profession', 'Неизвестно')
                         full_name = f"{surname} {name}"
                         
                         # Определяем цвет метки в зависимости от ID пользователя
