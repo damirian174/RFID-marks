@@ -8,6 +8,11 @@ from kivy.metrics import dp
 from kivy.graphics import Color, Rectangle, Line
 from kivy.core.window import Window
 from kivy.app import App
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.spinner import Spinner
+from krygli import PieChart
+from ctolb import BarChart
+from tochka import LineChart
 import socket
 import json
 import time
@@ -302,22 +307,659 @@ class BaseScreen(Screen):
 class MarkingScreen(BaseScreen):
     def create_content(self):
         self.content_area.clear_widgets()
-        self.content_area.add_widget(Label(text='Экран маркировки', font_size=dp(24)))
+        
+        # Создаем основной контейнер с прокруткой
+        scroll_view = ScrollView(
+            size_hint=(1, 1),
+            bar_width=dp(10),
+            bar_color=(0.2, 0.4, 0.8, 0.8),
+            bar_inactive_color=(0.2, 0.4, 0.8, 0.3),
+            scroll_type=['bars', 'content']
+        )
+        
+        # Основной контейнер для контента
+        main_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            spacing=dp(20),
+            padding=dp(20)
+        )
+        main_layout.bind(minimum_height=main_layout.setter('height'))
+        
+        # Определяем тип устройства и размеры
+        is_phone = min(Window.width, Window.height) < dp(600)
+        is_tablet = dp(600) <= min(Window.width, Window.height) < dp(1024)
+        
+        # Адаптивные размеры для разных устройств
+        if is_phone:
+            chart_height = dp(250)
+            top_panel_height = dp(40)
+            button_height = dp(40)
+            font_size = dp(14)
+        elif is_tablet:
+            chart_height = dp(300)
+            top_panel_height = dp(50)
+            button_height = dp(45)
+            font_size = dp(16)
+        else:  # Desktop
+            chart_height = dp(350)
+            top_panel_height = dp(60)
+            button_height = dp(50)
+            font_size = dp(18)
+        
+        # Верхняя панель с выпадающим списком
+        top_panel = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=top_panel_height,
+            spacing=dp(10)
+        )
+        
+        # Выпадающий список работников
+        self.worker_dropdown = Spinner(
+            text='Выберите работника',
+            values=['Работник 1', 'Работник 2', 'Работник 3'],
+            size_hint=(None, 1),
+            width=dp(200),
+            font_size=font_size
+        )
+        self.worker_dropdown.bind(text=self.on_worker_selected)
+        
+        top_panel.add_widget(self.worker_dropdown)
+        top_panel.add_widget(Widget())  # Растягивающийся виджет
+        
+        main_layout.add_widget(top_panel)
+        
+        # Контейнер для графиков
+        charts_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            spacing=dp(20)
+        )
+        charts_container.bind(minimum_height=charts_container.setter('height'))
+        
+        # Первая круговая диаграмма
+        pie_data1 = {
+            "Сборка": 45,
+            "Пайка": 30,
+            "Тестирование": 15,
+            "Калибровка": 10
+        }
+        pie_chart1 = PieChart(
+            title="Распределение брака по этапам производства",
+            data=pie_data1,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(pie_chart1)
+        
+        # Столбчатая диаграмма
+        bar_data = {
+            'МЕТРАН 150': 60,
+            'МЕТРАН 75': 110,
+            'МЕТРАН 55': 150,
+            'Датчик давления': 230
+        }
+        bar_chart = BarChart(
+            title="Статистика по датчикам",
+            data=bar_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(bar_chart)
+        
+        # Точечная диаграмма
+        line_data = {
+            'Метран 150': [(1, 15), (2, 25), (3, 45), (4, 60)],
+            'Метран 75': [(1, 10), (2, 30), (3, 50), (4, 80)],
+            'Метран 55': [(1, 12), (2, 28), (3, 48), (4, 70)]
+        }
+        line_chart = LineChart(
+            title="Динамика производства за последние 4 месяца",
+            data=line_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(line_chart)
+        
+        main_layout.add_widget(charts_container)
+        
+        # Добавляем отступ перед кнопками
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        # Контейнер для кнопок экспорта
+        export_buttons = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=button_height,
+            spacing=dp(20),
+            padding=[dp(20), 0, dp(20), 0]
+        )
+        
+        # Кнопка экспорта в Excel
+        excel_btn = Button(
+            text='Экспорт в Excel',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.6, 0.2, 1),
+            font_size=font_size
+        )
+        
+        # Кнопка отправки на почту
+        email_btn = Button(
+            text='Отправить на почту',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size
+        )
+        
+        export_buttons.add_widget(excel_btn)
+        export_buttons.add_widget(email_btn)
+        
+        main_layout.add_widget(export_buttons)
+        
+        # Добавляем отступ внизу
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        scroll_view.add_widget(main_layout)
+        self.content_area.add_widget(scroll_view)
+    
+    def on_worker_selected(self, spinner, text):
+        # Здесь будет логика обновления графиков при выборе работника
+        pass
 
 class AssemblyScreen(BaseScreen):
     def create_content(self):
         self.content_area.clear_widgets()
-        self.content_area.add_widget(Label(text='Экран сборки', font_size=dp(24)))
+        
+        # Создаем основной контейнер с прокруткой
+        scroll_view = ScrollView(
+            size_hint=(1, 1),
+            bar_width=dp(10),
+            bar_color=(0.2, 0.4, 0.8, 0.8),
+            bar_inactive_color=(0.2, 0.4, 0.8, 0.3),
+            scroll_type=['bars', 'content']
+        )
+        
+        # Основной контейнер для контента
+        main_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            spacing=dp(20),
+            padding=dp(20)
+        )
+        main_layout.bind(minimum_height=main_layout.setter('height'))
+        
+        # Определяем тип устройства и размеры
+        is_phone = min(Window.width, Window.height) < dp(600)
+        is_tablet = dp(600) <= min(Window.width, Window.height) < dp(1024)
+        
+        # Адаптивные размеры для разных устройств
+        if is_phone:
+            chart_height = dp(250)
+            top_panel_height = dp(40)
+            button_height = dp(40)
+            font_size = dp(14)
+        elif is_tablet:
+            chart_height = dp(300)
+            top_panel_height = dp(50)
+            button_height = dp(45)
+            font_size = dp(16)
+        else:  # Desktop
+            chart_height = dp(350)
+            top_panel_height = dp(60)
+            button_height = dp(50)
+            font_size = dp(18)
+        
+        # Верхняя панель с выпадающим списком
+        top_panel = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=top_panel_height,
+            spacing=dp(10)
+        )
+        
+        # Выпадающий список работников
+        self.worker_dropdown = Spinner(
+            text='Выберите работника',
+            values=['Работник 1', 'Работник 2', 'Работник 3'],
+            size_hint=(None, 1),
+            width=dp(200),
+            font_size=font_size
+        )
+        self.worker_dropdown.bind(text=self.on_worker_selected)
+        
+        top_panel.add_widget(self.worker_dropdown)
+        top_panel.add_widget(Widget())  # Растягивающийся виджет
+        
+        main_layout.add_widget(top_panel)
+        
+        # Контейнер для графиков
+        charts_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            spacing=dp(20)
+        )
+        charts_container.bind(minimum_height=charts_container.setter('height'))
+        
+        # Круговая диаграмма
+        pie_data = {
+            "Успешные": 75,
+            "Брак": 15,
+            "На доработке": 10
+        }
+        pie_chart = PieChart(
+            title="Статистика сборки",
+            data=pie_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(pie_chart)
+        
+        # Столбчатая диаграмма
+        bar_data = {
+            'МЕТРАН 150': 60,
+            'МЕТРАН 75': 110,
+            'МЕТРАН 55': 150,
+            'Датчик давления': 230
+        }
+        bar_chart = BarChart(
+            title="Статистика по датчикам",
+            data=bar_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(bar_chart)
+        
+        # Точечная диаграмма
+        line_data = {
+            'Метран 150': [(1, 15), (2, 25), (3, 45), (4, 60)],
+            'Метран 75': [(1, 10), (2, 30), (3, 50), (4, 80)],
+            'Метран 55': [(1, 12), (2, 28), (3, 48), (4, 70)]
+        }
+        line_chart = LineChart(
+            title="Динамика сборки за последние 4 месяца",
+            data=line_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(line_chart)
+        
+        main_layout.add_widget(charts_container)
+        
+        # Добавляем отступ перед кнопками
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        # Контейнер для кнопок экспорта
+        export_buttons = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=button_height,
+            spacing=dp(20),
+            padding=[dp(20), 0, dp(20), 0]
+        )
+        
+        # Кнопка экспорта в Excel
+        excel_btn = Button(
+            text='Экспорт в Excel',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.6, 0.2, 1),
+            font_size=font_size
+        )
+        
+        # Кнопка отправки на почту
+        email_btn = Button(
+            text='Отправить на почту',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size
+        )
+        
+        export_buttons.add_widget(excel_btn)
+        export_buttons.add_widget(email_btn)
+        
+        main_layout.add_widget(export_buttons)
+        
+        # Добавляем отступ внизу
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        scroll_view.add_widget(main_layout)
+        self.content_area.add_widget(scroll_view)
+    
+    def on_worker_selected(self, spinner, text):
+        # Здесь будет логика обновления графиков при выборе работника
+        pass
 
 class TestingScreen(BaseScreen):
     def create_content(self):
         self.content_area.clear_widgets()
-        self.content_area.add_widget(Label(text='Экран тестирования', font_size=dp(24)))
+        
+        # Создаем основной контейнер с прокруткой
+        scroll_view = ScrollView(
+            size_hint=(1, 1),
+            bar_width=dp(10),
+            bar_color=(0.2, 0.4, 0.8, 0.8),
+            bar_inactive_color=(0.2, 0.4, 0.8, 0.3),
+            scroll_type=['bars', 'content']
+        )
+        
+        # Основной контейнер для контента
+        main_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            spacing=dp(20),
+            padding=dp(20)
+        )
+        main_layout.bind(minimum_height=main_layout.setter('height'))
+        
+        # Определяем тип устройства и размеры
+        is_phone = min(Window.width, Window.height) < dp(600)
+        is_tablet = dp(600) <= min(Window.width, Window.height) < dp(1024)
+        
+        # Адаптивные размеры для разных устройств
+        if is_phone:
+            chart_height = dp(250)
+            top_panel_height = dp(40)
+            button_height = dp(40)
+            font_size = dp(14)
+        elif is_tablet:
+            chart_height = dp(300)
+            top_panel_height = dp(50)
+            button_height = dp(45)
+            font_size = dp(16)
+        else:  # Desktop
+            chart_height = dp(350)
+            top_panel_height = dp(60)
+            button_height = dp(50)
+            font_size = dp(18)
+        
+        # Верхняя панель с выпадающим списком
+        top_panel = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=top_panel_height,
+            spacing=dp(10)
+        )
+        
+        # Выпадающий список работников
+        self.worker_dropdown = Spinner(
+            text='Выберите работника',
+            values=['Работник 1', 'Работник 2', 'Работник 3'],
+            size_hint=(None, 1),
+            width=dp(200),
+            font_size=font_size
+        )
+        self.worker_dropdown.bind(text=self.on_worker_selected)
+        
+        top_panel.add_widget(self.worker_dropdown)
+        top_panel.add_widget(Widget())  # Растягивающийся виджет
+        
+        main_layout.add_widget(top_panel)
+        
+        # Контейнер для графиков
+        charts_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            spacing=dp(20)
+        )
+        charts_container.bind(minimum_height=charts_container.setter('height'))
+        
+        # Круговая диаграмма
+        pie_data = {
+            "Успешные": 85,
+            "Брак": 10,
+            "На доработке": 5
+        }
+        pie_chart = PieChart(
+            title="Статистика тестирования",
+            data=pie_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(pie_chart)
+        
+        # Столбчатая диаграмма
+        bar_data = {
+            'МЕТРАН 150': 45,
+            'МЕТРАН 75': 90,
+            'МЕТРАН 55': 120,
+            'Датчик давления': 180
+        }
+        bar_chart = BarChart(
+            title="Статистика по датчикам",
+            data=bar_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(bar_chart)
+        
+        # Точечная диаграмма
+        line_data = {
+            'Метран 150': [(1, 20), (2, 35), (3, 40), (4, 45)],
+            'Метран 75': [(1, 25), (2, 40), (3, 45), (4, 90)],
+            'Метран 55': [(1, 30), (2, 45), (3, 50), (4, 120)]
+        }
+        line_chart = LineChart(
+            title="Динамика тестирования за последние 4 месяца",
+            data=line_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(line_chart)
+        
+        main_layout.add_widget(charts_container)
+        
+        # Добавляем отступ перед кнопками
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        # Контейнер для кнопок экспорта
+        export_buttons = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=button_height,
+            spacing=dp(20),
+            padding=[dp(20), 0, dp(20), 0]
+        )
+        
+        # Кнопка экспорта в Excel
+        excel_btn = Button(
+            text='Экспорт в Excel',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.6, 0.2, 1),
+            font_size=font_size
+        )
+        
+        # Кнопка отправки на почту
+        email_btn = Button(
+            text='Отправить на почту',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size
+        )
+        
+        export_buttons.add_widget(excel_btn)
+        export_buttons.add_widget(email_btn)
+        
+        main_layout.add_widget(export_buttons)
+        
+        # Добавляем отступ внизу
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        scroll_view.add_widget(main_layout)
+        self.content_area.add_widget(scroll_view)
+    
+    def on_worker_selected(self, spinner, text):
+        # Здесь будет логика обновления графиков при выборе работника
+        pass
 
 class PackingScreen(BaseScreen):
     def create_content(self):
         self.content_area.clear_widgets()
-        self.content_area.add_widget(Label(text='Экран упаковки', font_size=dp(24)))
+        
+        # Создаем основной контейнер с прокруткой
+        scroll_view = ScrollView(
+            size_hint=(1, 1),
+            bar_width=dp(10),
+            bar_color=(0.2, 0.4, 0.8, 0.8),
+            bar_inactive_color=(0.2, 0.4, 0.8, 0.3),
+            scroll_type=['bars', 'content']
+        )
+        
+        # Основной контейнер для контента
+        main_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            spacing=dp(20),
+            padding=dp(20)
+        )
+        main_layout.bind(minimum_height=main_layout.setter('height'))
+        
+        # Определяем тип устройства и размеры
+        is_phone = min(Window.width, Window.height) < dp(600)
+        is_tablet = dp(600) <= min(Window.width, Window.height) < dp(1024)
+        
+        # Адаптивные размеры для разных устройств
+        if is_phone:
+            chart_height = dp(250)
+            top_panel_height = dp(40)
+            button_height = dp(40)
+            font_size = dp(14)
+        elif is_tablet:
+            chart_height = dp(300)
+            top_panel_height = dp(50)
+            button_height = dp(45)
+            font_size = dp(16)
+        else:  # Desktop
+            chart_height = dp(350)
+            top_panel_height = dp(60)
+            button_height = dp(50)
+            font_size = dp(18)
+        
+        # Верхняя панель с выпадающим списком
+        top_panel = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=top_panel_height,
+            spacing=dp(10)
+        )
+        
+        # Выпадающий список работников
+        self.worker_dropdown = Spinner(
+            text='Выберите работника',
+            values=['Работник 1', 'Работник 2', 'Работник 3'],
+            size_hint=(None, 1),
+            width=dp(200),
+            font_size=font_size
+        )
+        self.worker_dropdown.bind(text=self.on_worker_selected)
+        
+        top_panel.add_widget(self.worker_dropdown)
+        top_panel.add_widget(Widget())  # Растягивающийся виджет
+        
+        main_layout.add_widget(top_panel)
+        
+        # Контейнер для графиков
+        charts_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            spacing=dp(20)
+        )
+        charts_container.bind(minimum_height=charts_container.setter('height'))
+        
+        # Круговая диаграмма
+        pie_data = {
+            "Успешные": 90,
+            "Брак": 5,
+            "На доработке": 5
+        }
+        pie_chart = PieChart(
+            title="Статистика упаковки",
+            data=pie_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(pie_chart)
+        
+        # Столбчатая диаграмма
+        bar_data = {
+            'МЕТРАН 150': 40,
+            'МЕТРАН 75': 80,
+            'МЕТРАН 55': 100,
+            'Датчик давления': 150
+        }
+        bar_chart = BarChart(
+            title="Статистика по датчикам",
+            data=bar_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(bar_chart)
+        
+        # Точечная диаграмма
+        line_data = {
+            'Метран 150': [(1, 25), (2, 30), (3, 35), (4, 40)],
+            'Метран 75': [(1, 30), (2, 40), (3, 50), (4, 80)],
+            'Метран 55': [(1, 35), (2, 45), (3, 60), (4, 100)]
+        }
+        line_chart = LineChart(
+            title="Динамика упаковки за последние 4 месяца",
+            data=line_data,
+            size_hint=(1, None),
+            height=chart_height
+        )
+        charts_container.add_widget(line_chart)
+        
+        main_layout.add_widget(charts_container)
+        
+        # Добавляем отступ перед кнопками
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        # Контейнер для кнопок экспорта
+        export_buttons = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=button_height,
+            spacing=dp(20),
+            padding=[dp(20), 0, dp(20), 0]
+        )
+        
+        # Кнопка экспорта в Excel
+        excel_btn = Button(
+            text='Экспорт в Excel',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.6, 0.2, 1),
+            font_size=font_size
+        )
+        
+        # Кнопка отправки на почту
+        email_btn = Button(
+            text='Отправить на почту',
+            size_hint=(0.5, 1),
+            background_normal='',
+            background_color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size
+        )
+        
+        export_buttons.add_widget(excel_btn)
+        export_buttons.add_widget(email_btn)
+        
+        main_layout.add_widget(export_buttons)
+        
+        # Добавляем отступ внизу
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        scroll_view.add_widget(main_layout)
+        self.content_area.add_widget(scroll_view)
+    
+    def on_worker_selected(self, spinner, text):
+        # Здесь будет логика обновления графиков при выборе работника
+        pass
 
 class GeneralScreen(BaseScreen):
     def create_content(self):

@@ -12,27 +12,41 @@ class BarChart(BoxLayout):
     title = StringProperty("")
     data = DictProperty({})
     colors = ListProperty([
-        '#4B0082',  # Индиго (темно-синий)
-        '#00BFFF',  # Голубой
-        '#32CD32',  # Зеленый
-        '#FFA500',  # Оранжевый
+        '#3498DB',  # Синий
+        '#E74C3C',  # Красный
+        '#2ECC71',  # Зеленый
+        '#F39C12',  # Оранжевый
+        '#9B59B6',  # Фиолетовый
+        '#1ABC9C',  # Бирюзовый
+        '#E67E22',  # Морковный
+        '#34495E',  # Мокрый асфальт
     ])
     
     def __init__(self, **kwargs):
         super(BarChart, self).__init__(**kwargs)
         self.orientation = 'vertical'
-        self.padding = dp(30)  # Увеличиваем отступы для сетки
-        self.spacing = dp(10)
+        self.padding = dp(10)
+        self.spacing = dp(5)
         self.bind(size=self.update_chart)
         self.bind(data=self.update_chart)
         
-        # Белый фон
+        # Устанавливаем белый фон
         with self.canvas.before:
             Color(*get_color_from_hex('#FFFFFF'))
             self.bg = Rectangle(pos=self.pos, size=self.size)
-        self.bind(pos=self.update_rect, size=self.update_rect)
+        self.bind(pos=self.update_bg, size=self.update_bg)
+        
+        # Добавляем заголовок
+        self.title_label = Label(
+            text=self.title,
+            size_hint=(1, 0.1),
+            color=(0.2, 0.2, 0.2, 1),
+            font_size=dp(16),
+            bold=True
+        )
+        self.add_widget(self.title_label)
     
-    def update_rect(self, *args):
+    def update_bg(self, *args):
         self.bg.pos = self.pos
         self.bg.size = self.size
     
@@ -40,10 +54,13 @@ class BarChart(BoxLayout):
         self.clear_widgets()
         self.canvas.after.clear()
         
+        # Добавляем заголовок заново после clear_widgets
+        self.add_widget(self.title_label)
+        
         chart = BarChartWidget(
             data=self.data,
             colors=self.colors,
-            size_hint=(1, 1)
+            size_hint=(1, 0.9)
         )
         self.add_widget(chart)
 
@@ -56,179 +73,140 @@ class BarChartWidget(Widget):
         self.bind(size=self.draw_chart)
         self.bind(pos=self.draw_chart)
         self.bind(data=self.draw_chart)
-        
-        # Минимальная высота для подписей
-        self.min_label_height = dp(60)
     
     def draw_chart(self, *args):
         self.canvas.after.clear()
         
         if not self.data:
             return
-            
-        # Адаптивные размеры в зависимости от размера виджета
+        
+        # Адаптивные размеры
         min_size = min(self.width, self.height)
-        base_padding = min_size * 0.1  # 10% от минимального размера
-        padding = max(dp(20), min(dp(40), base_padding))  # Ограничиваем минимальный и максимальный отступ
+        base_padding = min_size * 0.15  # 15% от минимального размера
+        padding = max(dp(20), min(dp(40), base_padding))
         
         # Адаптивный размер шрифта
-        base_font_size = min_size * 0.03  # 3% от минимального размера
-        font_size = max(dp(8), min(dp(12), base_font_size))  # Ограничиваем минимальный и максимальный размер шрифта
+        base_font_size = min_size * 0.03
+        font_size = max(dp(10), min(dp(14), base_font_size))
         
-        # Резервируем место для подписей внизу
-        bottom_label_height = max(self.min_label_height, self.height * 0.15)  # Минимум 60dp или 15% высоты
-        
-        # Размеры области графика с учетом места для подписей
+        # Размеры области графика
         chart_width = self.width - padding * 2
-        chart_height = self.height - padding * 2 - bottom_label_height
+        chart_height = self.height - padding * 2
         start_x = self.x + padding
-        start_y = self.y + padding + bottom_label_height  # Поднимаем график выше для места подписей
+        start_y = self.y + padding
         
-        # Находим максимальное значение для масштабирования
-        max_value = max(self.data.values())
+        # Находим максимальное значение
+        max_value = max(self.data.values()) if self.data else 0
+        if max_value == 0:
+            return
         
-        # Определяем оптимальный шаг сетки
-        target_lines = 8
-        magnitude = 10 ** math.floor(math.log10(max_value))
-        grid_step_options = [magnitude/2, magnitude/4, magnitude/5, magnitude]
+        # Вычисляем шаг сетки
+        grid_step = self._calculate_grid_step(max_value)
         
-        best_step = grid_step_options[0]
-        best_diff = float('inf')
-        for step in grid_step_options:
-            num_lines = math.ceil(max_value / step)
-            if 5 <= num_lines <= 10:
-                diff = abs(num_lines - target_lines)
-                if diff < best_diff:
-                    best_diff = diff
-                    best_step = step
-        
-        grid_step = best_step
-        max_grid_value = math.ceil(max_value / grid_step) * grid_step
-        
+        # Рисуем сетку
         with self.canvas.after:
-            # Рисуем сетку
-            Color(*get_color_from_hex('#DDDDDD'))
-            num_lines = int(max_grid_value / grid_step)
+            Color(*get_color_from_hex('#EEEEEE'))
             
-            # Рисуем горизонтальные линии и подписи значений
-            for i in range(num_lines + 1):
-                y = start_y + (i * chart_height / num_lines)
-                # Горизонтальные линии сетки
-                Line(points=[start_x, y, start_x + chart_width, y], width=1, dash_length=5, dash_offset=3)
+            # Горизонтальные линии сетки
+            num_grid_lines = int(max_value / grid_step) + 1
+            for i in range(num_grid_lines):
+                y = start_y + (i * grid_step * chart_height / max_value)
+                Line(points=[start_x, y, start_x + chart_width, y],
+                     width=1, dash_length=5, dash_offset=3)
                 
-                # Подписи значений на оси Y
-                value = int(i * max_grid_value / num_lines)
-                # Форматируем значение для лучшей читаемости
-                if value >= 1000000:
-                    value_str = f"{value/1000000:.1f}M"
-                elif value >= 1000:
-                    value_str = f"{value/1000:.0f}K"
-                else:
-                    value_str = str(value)
-                
-                # Адаптивное позиционирование подписей оси Y
-                y_label_width = len(value_str) * font_size * 0.7  # Примерная ширина текста
+                # Подписи значений
+                value = i * grid_step
                 label = Label(
-                    text=value_str,
-                    pos=(start_x - y_label_width - dp(5), y - font_size/2),
-                    size=(y_label_width, font_size * 2),
+                    text=self._format_value(value),
+                    pos=(start_x - dp(35), y - dp(10)),
+                    size=(dp(30), dp(20)),
                     color=(0.3, 0.3, 0.3, 1),
-                    font_size=font_size
+                    font_size=font_size,
+                    halign='right'
                 )
                 label.texture_update()
-            
-            # Рисуем столбцы
-            num_bars = len(self.data)
-            min_bar_width = dp(20)  # Минимальная ширина столбца
-            available_width = chart_width - (num_bars - 1) * dp(5)  # Доступная ширина с учетом минимальных отступов
-            
-            if available_width / num_bars < min_bar_width:
-                # Если столбцы получаются слишком узкими, уменьшаем отступы
-                bar_width = min_bar_width
-                bar_spacing = max(dp(2), (chart_width - num_bars * min_bar_width) / (num_bars + 1))
-            else:
-                # Иначе используем пропорциональные отступы
-                bar_spacing = chart_width * 0.1 / num_bars
-                bar_width = (chart_width - (num_bars + 1) * bar_spacing) / num_bars
-            
-            # Рисуем оси
+        
+        # Рисуем оси
+        with self.canvas.after:
             Color(*get_color_from_hex('#333333'))
             Line(points=[start_x, start_y, start_x, start_y + chart_height], width=1)
-            Line(points=[start_x, start_y, start_x + chart_width + dp(10), start_y], width=1)
+            Line(points=[start_x, start_y, start_x + chart_width, start_y], width=1)
+        
+        # Рисуем столбцы
+        num_bars = len(self.data)
+        bar_width = chart_width / (num_bars * 2)  # Ширина столбца
+        bar_spacing = bar_width  # Расстояние между столбцами
+        
+        for idx, (label, value) in enumerate(self.data.items()):
+            # Вычисляем позицию и размеры столбца
+            bar_x = start_x + (idx * (bar_width + bar_spacing)) + bar_width/2
+            bar_height = (value / max_value) * chart_height
             
-            for i, (key, value) in enumerate(self.data.items()):
-                # Позиция и размеры столбца
-                x = start_x + bar_spacing + i * (bar_width + bar_spacing)
-                height = (value / max_grid_value) * chart_height
-                y = start_y
-                
-                # Рисуем столбец
-                Color(*get_color_from_hex(self.colors[i % len(self.colors)]))
-                Rectangle(pos=(x, y), size=(bar_width, height))
-                
-                # Подпись значения над столбцом
-                value_label = Label(
-                    text=str(value),
-                    pos=(x - dp(5), y + height + dp(2)),
-                    size=(bar_width + dp(10), font_size * 2),
-                    color=(0.2, 0.2, 0.2, 1),
-                    font_size=font_size,
-                    bold=True,
-                    halign='center'
-                )
-                value_label.texture_update()
-                
-                # Улучшенная обработка подписей категорий
-                words = key.split()
-                max_chars_per_line = int(bar_width / (font_size * 0.6))  # Примерное количество символов, которое поместится в строку
-                
-                if len(words) > 1:
-                    # Формируем строки с учетом доступной ширины
-                    lines = []
-                    current_line = []
-                    current_length = 0
-                    
-                    for word in words:
-                        if current_length + len(word) + 1 <= max_chars_per_line:
-                            current_line.append(word)
-                            current_length += len(word) + 1
-                        else:
-                            if current_line:
-                                lines.append(' '.join(current_line))
-                            current_line = [word]
-                            current_length = len(word)
-                    
-                    if current_line:
-                        lines.append(' '.join(current_line))
-                    
-                    text = '\n'.join(lines)
-                else:
-                    text = key
-                
-                # Создаем фон для подписи категории
-                label_height = (text.count('\n') + 1) * font_size * 1.5
-                label_height = max(label_height, font_size * 2)  # Минимальная высота
-                
-                # Рисуем светлый фон под текстом для лучшей читаемости
-                Color(*get_color_from_hex('#FFFFFF'), 0.9)
-                RoundedRectangle(
-                    pos=(x - dp(5), y - label_height - dp(8)),
-                    size=(bar_width + dp(10), label_height + dp(6)),
-                    radius=[dp(3)]
+            # Выбираем цвет
+            color = self.colors[idx % len(self.colors)]
+            
+            # Рисуем столбец
+            with self.canvas.after:
+                # Основной цвет
+                Color(*get_color_from_hex(color))
+                Rectangle(
+                    pos=(bar_x - bar_width/2, start_y),
+                    size=(bar_width, bar_height)
                 )
                 
-                # Рисуем подпись категории
-                category_label = Label(
-                    text=text,
-                    pos=(x - dp(5), y - label_height - dp(5)),
-                    size=(bar_width + dp(10), label_height),
-                    color=(0.2, 0.2, 0.2, 1),
-                    font_size=font_size,
-                    halign='center',
-                    valign='middle',
-                    bold=True
+                # Градиент
+                Color(*get_color_from_hex(color), 0.7)
+                Rectangle(
+                    pos=(bar_x - bar_width/2, start_y + bar_height/2),
+                    size=(bar_width, bar_height/2)
                 )
-                category_label.texture_update()
+            
+            # Подпись значения
+            value_label = Label(
+                text=self._format_value(value),
+                pos=(bar_x - dp(20), start_y + bar_height + dp(5)),
+                size=(dp(40), dp(20)),
+                color=get_color_from_hex(color),
+                font_size=font_size,
+                bold=True,
+                halign='center'
+            )
+            value_label.texture_update()
+            
+            # Подпись категории
+            category_label = Label(
+                text=label,
+                pos=(bar_x - dp(40), start_y - dp(25)),
+                size=(dp(80), dp(20)),
+                color=(0.3, 0.3, 0.3, 1),
+                font_size=font_size,
+                halign='center'
+            )
+            category_label.texture_update()
+    
+    def _calculate_grid_step(self, max_value):
+        """Вычисляет оптимальный шаг сетки"""
+        if max_value <= 0:
+            return 1
+        
+        # Находим порядок величины
+        magnitude = 10 ** int(math.log10(max_value))
+        step = magnitude / 2
+        
+        # Если шаг слишком мал, увеличиваем его
+        while max_value / step > 10:
+            step *= 2
+        
+        return step
+    
+    def _format_value(self, value):
+        """Форматирует значение для отображения"""
+        if value >= 1000000:
+            return f"{value/1000000:.1f}M"
+        elif value >= 1000:
+            return f"{value/1000:.1f}K"
+        else:
+            return str(int(value))
 
 # Тестовый код
 if __name__ == '__main__':

@@ -108,7 +108,7 @@ class LineChartWidget(Widget):
         
         # Защита от деления на ноль, если x_range слишком мал
         x_range = max_x - min_x
-        if x_range < 0.1:  # Защита от случая, когда все точки на одной вертикали
+        if x_range < 0.1:
             max_x += 0.5
             min_x -= 0.5
             x_range = 1.0
@@ -126,9 +126,12 @@ class LineChartWidget(Widget):
             
             # Вертикальные линии сетки и подписи месяцев
             num_x_lines = min(int(max_x - min_x) + 1, 12)
-            # Проверка чтобы избежать деления на ноль
             if num_x_lines <= 1:
-                num_x_lines = 2  # Минимум две линии
+                num_x_lines = 2
+            
+            # Создаем список для хранения меток месяцев
+            month_labels = []
+            
             for i in range(num_x_lines):
                 x = min_x + i * (max_x - min_x) / (num_x_lines - 1)
                 scaled_x = scale_x(x)
@@ -136,20 +139,25 @@ class LineChartWidget(Widget):
                      width=1, dash_length=5, dash_offset=3)
                 
                 # Подписи месяцев
-                month_idx = (int(x) - 1) % 12  # Преобразуем индекс в номер месяца (0-11)
+                month_idx = (int(x) - 1) % 12
                 month_text = self.months[month_idx]
                 
+                # Создаем метку месяца
                 label = Label(
                     text=month_text,
                     pos=(scaled_x - dp(30), start_y - dp(25)),
                     size=(dp(60), dp(20)),
                     color=(0.3, 0.3, 0.3, 1),
-                    font_size=font_size
+                    font_size=font_size,
+                    halign='center'
                 )
                 label.texture_update()
+                month_labels.append((label, scaled_x))
             
             # Горизонтальные линии сетки
             num_y_lines = 8
+            y_labels = []
+            
             for i in range(num_y_lines):
                 y = min_y + i * (max_y - min_y) / (num_y_lines - 1)
                 scaled_y = scale_y(y)
@@ -162,9 +170,11 @@ class LineChartWidget(Widget):
                     pos=(start_x - dp(35), scaled_y - dp(10)),
                     size=(dp(30), dp(20)),
                     color=(0.3, 0.3, 0.3, 1),
-                    font_size=font_size
+                    font_size=font_size,
+                    halign='right'
                 )
                 label.texture_update()
+                y_labels.append((label, scaled_y))
             
             # Рисуем оси
             Color(*get_color_from_hex('#333333'))
@@ -173,6 +183,9 @@ class LineChartWidget(Widget):
             
             # Рисуем линии и точки для каждой серии данных
             point_radius = max(dp(3), min(dp(6), min_size * 0.01))
+            
+            # Создаем список для хранения меток значений
+            value_labels = []
             
             for idx, (series_name, points) in enumerate(self.data.items()):
                 color = self.colors[idx % len(self.colors)]
@@ -184,7 +197,7 @@ class LineChartWidget(Widget):
                     line_points.extend([scale_x(x), scale_y(y)])
                 Line(points=line_points, width=dp(1.5))
                 
-                # Рисуем точки
+                # Рисуем точки и добавляем метки значений
                 for x, y in points:
                     scaled_x = scale_x(x)
                     scaled_y = scale_y(y)
@@ -206,9 +219,53 @@ class LineChartWidget(Widget):
                         size=(dp(30), dp(20)),
                         color=get_color_from_hex(color),
                         font_size=font_size,
-                        bold=True
+                        bold=True,
+                        halign='center'
                     )
                     label.texture_update()
+                    value_labels.append((label, scaled_x, scaled_y))
+            
+            # Оптимизация позиционирования меток значений
+            for i in range(len(value_labels)):
+                label, x, y = value_labels[i]
+                
+                # Проверяем пересечения с другими метками
+                for j in range(i + 1, len(value_labels)):
+                    other_label, other_x, other_y = value_labels[j]
+                    
+                    # Если метки пересекаются по вертикали
+                    if abs(y - other_y) < dp(20):
+                        # Сдвигаем текущую метку вверх
+                        label.pos = (x - dp(15), y + dp(20))
+                        # Сдвигаем другую метку вниз
+                        other_label.pos = (other_x - dp(15), other_y - dp(20))
+            
+            # Рисуем легенду
+            legend_padding = dp(10)
+            legend_item_height = dp(20)
+            legend_start_x = start_x + chart_width - dp(150)
+            legend_start_y = start_y + chart_height + dp(10)
+            
+            for idx, (series_name, _) in enumerate(self.data.items()):
+                color = self.colors[idx % len(self.colors)]
+                
+                # Цветной квадрат
+                Color(*get_color_from_hex(color))
+                Rectangle(
+                    pos=(legend_start_x, legend_start_y - idx * legend_item_height),
+                    size=(dp(15), dp(15))
+                )
+                
+                # Текст легенды
+                legend_label = Label(
+                    text=series_name,
+                    pos=(legend_start_x + dp(20), legend_start_y - idx * legend_item_height - dp(12)),
+                    size=(dp(120), dp(20)),
+                    color=(0.3, 0.3, 0.3, 1),
+                    font_size=font_size,
+                    halign='left'
+                )
+                legend_label.texture_update()
 
 # Тестовый код
 if __name__ == '__main__':

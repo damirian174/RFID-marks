@@ -20,10 +20,8 @@ class PieChart(BoxLayout):
         '#F39C12',  # Оранжевый
         '#9B59B6',  # Фиолетовый
         '#1ABC9C',  # Бирюзовый
-        '#34495E',  # Темно-синий
-        '#D35400',  # Темно-оранжевый
-        '#27AE60',  # Темно-зеленый
-        '#7F8C8D',  # Серый
+        '#E67E22',  # Морковный
+        '#34495E',  # Мокрый асфальт
     ])
     show_legend = BooleanProperty(True)
     show_values = BooleanProperty(True)
@@ -32,278 +30,176 @@ class PieChart(BoxLayout):
     def __init__(self, **kwargs):
         super(PieChart, self).__init__(**kwargs)
         self.orientation = 'vertical'
-        self.padding = dp(20)
-        self.spacing = dp(15)
-        self.bind(data=self.update_chart, size=self.update_chart)
+        self.padding = dp(10)
+        self.spacing = dp(5)
+        self.bind(size=self.update_chart)
+        self.bind(data=self.update_chart)
         
         # Устанавливаем белый фон
         with self.canvas.before:
             Color(*get_color_from_hex('#FFFFFF'))
             self.bg = Rectangle(pos=self.pos, size=self.size)
         self.bind(pos=self.update_bg, size=self.update_bg)
+        
+        # Добавляем заголовок
+        self.title_label = Label(
+            text=self.title,
+            size_hint=(1, 0.1),
+            color=(0.2, 0.2, 0.2, 1),
+            font_size=dp(16),
+            bold=True
+        )
+        self.add_widget(self.title_label)
     
     def update_bg(self, *args):
         self.bg.pos = self.pos
         self.bg.size = self.size
-        
+    
     def update_chart(self, *args):
-        """Обновление диаграммы при изменении данных или размера"""
         self.clear_widgets()
+        self.canvas.after.clear()
         
-        # Создаем контейнер для графика и легенды
-        content = BoxLayout(orientation='horizontal', size_hint=(1, 1), spacing=dp(20))
+        # Добавляем заголовок заново после clear_widgets
+        self.add_widget(self.title_label)
         
-        # Создаем карточку для диаграммы
-        chart_card = BoxLayout(
-            orientation='vertical',
-            size_hint=(0.7, 1),
-            padding=dp(20),
-            spacing=dp(10)
-        )
-        
-        # Добавляем заголовок, если он задан
-        if self.title:
-            title_label = Label(
-                text=self.title,
-                color=get_color_from_hex('#333333'),
-                font_size=dp(18),
-                bold=True,
-                size_hint=(1, None),
-                height=dp(30)
-            )
-            chart_card.add_widget(title_label)
-        
-        # Создаем виджет с круговой диаграммой
-        pie_widget = PieWidget(
+        chart = PieChartWidget(
             data=self.data,
             colors=self.colors,
-            show_values=self.show_values,
-            show_percentages=self.show_percentages
+            size_hint=(1, 0.9)
         )
-        chart_card.add_widget(pie_widget)
-        content.add_widget(chart_card)
-        
-        # Добавляем легенду, если нужно
-        if self.show_legend:
-            legend_card = BoxLayout(
-                orientation='vertical',
-                size_hint=(0.3, 1),
-                padding=dp(20),
-                spacing=dp(10)
-            )
-            
-            # Заголовок легенды
-            legend_title = Label(
-                text="Легенда",
-                color=get_color_from_hex('#333333'),
-                font_size=dp(16),
-                bold=True,
-                size_hint=(1, None),
-                height=dp(30)
-            )
-            legend_card.add_widget(legend_title)
-            
-            # Контейнер для элементов легенды
-            legend_items = BoxLayout(
-                orientation='vertical',
-                spacing=dp(10)
-            )
-            
-            # Добавляем элементы легенды
-            total_value = sum(self.data.values()) if self.data else 0
-            
-            for idx, (key, value) in enumerate(self.data.items()):
-                # Выбираем цвет для сегмента
-                color_idx = idx % len(self.colors)
-                color = self.colors[color_idx]
-                
-                # Создаем строку легенды
-                legend_item = BoxLayout(
-                    orientation='horizontal',
-                    size_hint=(1, None),
-                    height=dp(30),
-                    spacing=dp(10)
-                )
-                
-                # Цветной индикатор
-                color_box = ColorBox(
-                    color=color,
-                    size_hint=(None, None),
-                    size=(dp(20), dp(20))
-                )
-                
-                # Текст с названием и значением
-                percentage = (value / total_value * 100) if total_value > 0 else 0
-                label_text = f"{key}"
-                if self.show_values:
-                    label_text += f": {value}"
-                if self.show_percentages:
-                    label_text += f" ({percentage:.1f}%)"
-                
-                text_label = Label(
-                    text=label_text,
-                    color=get_color_from_hex('#333333'),
-                    font_size=dp(14),
-                    halign='left',
-                    valign='middle',
-                    size_hint=(1, 1),
-                    text_size=(None, dp(30))
-                )
-                
-                legend_item.add_widget(color_box)
-                legend_item.add_widget(text_label)
-                legend_items.add_widget(legend_item)
-            
-            legend_card.add_widget(legend_items)
-            content.add_widget(legend_card)
-        
-        self.add_widget(content)
+        self.add_widget(chart)
 
-class PieWidget(Widget):
-    """Виджет для рисования круговой диаграммы"""
+class PieChartWidget(Widget):
     data = DictProperty({})
     colors = ListProperty([])
-    show_values = BooleanProperty(True)
-    show_percentages = BooleanProperty(True)
     
     def __init__(self, **kwargs):
-        super(PieWidget, self).__init__(**kwargs)
-        self.bind(data=self.draw_pie, size=self.draw_pie, pos=self.draw_pie)
-        
-        # Устанавливаем белый фон
-        with self.canvas.before:
-            Color(*get_color_from_hex('#FFFFFF'))
-            self.bg = Rectangle(pos=self.pos, size=self.size)
-        self.bind(pos=self.update_bg, size=self.update_bg)
+        super(PieChartWidget, self).__init__(**kwargs)
+        self.bind(size=self.draw_chart)
+        self.bind(pos=self.draw_chart)
+        self.bind(data=self.draw_chart)
     
-    def update_bg(self, *args):
-        self.bg.pos = self.pos
-        self.bg.size = self.size
-    
-    def draw_pie(self, *args):
-        """Отрисовка круговой диаграммы"""
-        self.canvas.clear()
+    def draw_chart(self, *args):
+        self.canvas.after.clear()
         
         if not self.data:
             return
-            
-        # Адаптивные размеры в зависимости от размера виджета
+        
+        # Адаптивные размеры
         min_size = min(self.width, self.height)
-        padding = min_size * 0.15  # 15% от минимального размера для отступов
-        
-        # Определяем центр и радиус круга
-        # Учитываем отступы для подписей
-        available_size = min_size - (padding * 2)
-        radius = available_size * 0.35  # 35% от доступного размера
-        
-        # Центрируем диаграмму
-        cx = self.x + self.width / 2
-        cy = self.y + self.height / 2
+        center_x = self.center_x
+        center_y = self.center_y
+        radius = min_size * 0.4  # 40% от минимального размера
         
         # Адаптивный размер шрифта
-        base_font_size = min_size * 0.03  # 3% от минимального размера
-        font_size = max(dp(8), min(dp(14), base_font_size))  # Ограничиваем размер шрифта
+        base_font_size = min_size * 0.03
+        font_size = max(dp(10), min(dp(14), base_font_size))
         
-        # Рассчитываем сумму всех значений
+        # Вычисляем общую сумму
         total = sum(self.data.values())
+        if total == 0:
+            return
         
-        # Начальный угол (в радианах)
-        start_angle = -math.pi / 2  # Начинаем с верхней точки
-        
-        with self.canvas:
-            # Рисуем фоновый круг
-            Color(*get_color_from_hex('#FFFFFF'))
-            Ellipse(pos=(cx - radius, cy - radius), size=(radius * 2, radius * 2))
+        # Рисуем сектора
+        start_angle = 0
+        for idx, (label, value) in enumerate(self.data.items()):
+            # Вычисляем угол сектора
+            angle = (value / total) * 360
             
-            # Рисуем сегменты
-            for idx, (key, value) in enumerate(self.data.items()):
-                if value == 0:
-                    continue
-                    
-                # Вычисляем углы для сегмента
-                angle = 2 * math.pi * value / total if total > 0 else 0
-                end_angle = start_angle + angle
-                
-                # Выбираем цвет для сегмента
-                color_idx = idx % len(self.colors)
-                Color(*get_color_from_hex(self.colors[color_idx]))
-                
-                # Рисуем сегмент
-                Ellipse(
-                    pos=(cx - radius, cy - radius),
-                    size=(radius * 2, radius * 2),
-                    angle_start=math.degrees(start_angle),
-                    angle_end=math.degrees(end_angle)
+            # Выбираем цвет
+            color = self.colors[idx % len(self.colors)]
+            
+            # Рисуем сектор
+            with self.canvas.after:
+                Color(*get_color_from_hex(color))
+                Line(
+                    circle=(center_x, center_y, radius, start_angle, start_angle + angle),
+                    width=dp(2)
                 )
                 
-                # Рисуем разделительные линии
-                Color(*get_color_from_hex('#FFFFFF'), 0.5)
-                Line(points=[cx, cy, cx + radius * math.cos(start_angle), cy + radius * math.sin(start_angle)], width=1)
-                Line(points=[cx, cy, cx + radius * math.cos(end_angle), cy + radius * math.sin(end_angle)], width=1)
+                # Рисуем внутренний сектор с отступом
+                inner_radius = radius * 0.7
+                Color(*get_color_from_hex(color))
+                Line(
+                    circle=(center_x, center_y, inner_radius, start_angle, start_angle + angle),
+                    width=dp(2)
+                )
                 
-                # Вычисляем угол для метки
-                label_angle = start_angle + angle / 2
+                # Соединяем внешний и внутренний сектора
+                start_rad = math.radians(start_angle)
+                end_rad = math.radians(start_angle + angle)
                 
-                # Значение внутри сегмента
-                if self.show_values and radius > dp(50):  # Показываем только если есть место
-                    inner_label_distance = radius * 0.6
-                    inner_label_x = cx + inner_label_distance * math.cos(label_angle)
-                    inner_label_y = cy + inner_label_distance * math.sin(label_angle)
-                    
-                    value_label = Label(
-                        text=str(value),
-                        color=get_color_from_hex('#FFFFFF'),
-                        font_size=font_size,
-                        bold=True,
-                        center=(inner_label_x, inner_label_y),
-                        size=(dp(40), dp(20))
-                    )
-                    value_label.texture_update()
+                # Внешние точки
+                x1 = center_x + radius * math.cos(start_rad)
+                y1 = center_y + radius * math.sin(start_rad)
+                x2 = center_x + radius * math.cos(end_rad)
+                y2 = center_y + radius * math.sin(end_rad)
                 
-                # Процент снаружи
-                if self.show_percentages:
-                    percentage = value / total * 100 if total > 0 else 0
-                    
-                    # Адаптивное расстояние для внешней метки
-                    outer_label_distance = radius * 1.3
-                    outer_label_x = cx + outer_label_distance * math.cos(label_angle)
-                    outer_label_y = cy + outer_label_distance * math.sin(label_angle)
-                    
-                    # Размер фона зависит от размера текста
-                    percent_text = f"{percentage:.1f}%"
-                    bg_width = max(len(percent_text) * font_size * 0.7, dp(40))
-                    percent_bg_size = (bg_width, font_size * 2)
-                    percent_bg_x = outer_label_x - percent_bg_size[0]/2
-                    percent_bg_y = outer_label_y - percent_bg_size[1]/2
-                    
-                    # Фон для процента
-                    Color(*get_color_from_hex(self.colors[color_idx]), 0.2)
-                    RoundedRectangle(
-                        pos=(percent_bg_x, percent_bg_y),
-                        size=percent_bg_size,
-                        radius=[dp(3)]
-                    )
-                    
-                    # Метка процента
-                    percentage_label = Label(
-                        text=percent_text,
-                        color=get_color_from_hex('#333333'),
-                        font_size=font_size,
-                        bold=True,
-                        center=(outer_label_x, outer_label_y),
-                        size=percent_bg_size
-                    )
-                    percentage_label.texture_update()
-                    
-                    # Соединительная линия
-                    segment_edge_x = cx + radius * math.cos(label_angle)
-                    segment_edge_y = cy + radius * math.sin(label_angle)
-                    
-                    Color(*get_color_from_hex('#AAAAAA'), 0.5)
-                    Line(points=[segment_edge_x, segment_edge_y, outer_label_x, outer_label_y], 
-                         width=1, dash_length=3, dash_offset=3)
+                # Внутренние точки
+                x3 = center_x + inner_radius * math.cos(start_rad)
+                y3 = center_y + inner_radius * math.sin(start_rad)
+                x4 = center_x + inner_radius * math.cos(end_rad)
+                y4 = center_y + inner_radius * math.sin(end_rad)
                 
-                start_angle = end_angle
+                # Рисуем соединительные линии
+                Line(points=[x1, y1, x3, y3], width=dp(2))
+                Line(points=[x2, y2, x4, y4], width=dp(2))
+            
+            # Вычисляем позицию для метки
+            mid_angle = start_angle + angle / 2
+            mid_rad = math.radians(mid_angle)
+            
+            # Позиция метки
+            label_radius = radius * 1.2
+            label_x = center_x + label_radius * math.cos(mid_rad)
+            label_y = center_y + label_radius * math.sin(mid_rad)
+            
+            # Вычисляем процент
+            percentage = (value / total) * 100
+            
+            # Создаем метку
+            label_text = f"{label}\n{percentage:.1f}%"
+            label = Label(
+                text=label_text,
+                pos=(label_x - dp(40), label_y - dp(20)),
+                size=(dp(80), dp(40)),
+                color=get_color_from_hex(color),
+                font_size=font_size,
+                halign='center',
+                valign='middle',
+                bold=True
+            )
+            label.texture_update()
+            
+            start_angle += angle
+        
+        # Рисуем легенду
+        legend_padding = dp(10)
+        legend_item_height = dp(25)
+        legend_start_x = center_x - dp(100)
+        legend_start_y = center_y - radius - dp(50)
+        
+        for idx, (label, value) in enumerate(self.data.items()):
+            color = self.colors[idx % len(self.colors)]
+            
+            # Цветной квадрат
+            with self.canvas.after:
+                Color(*get_color_from_hex(color))
+                Rectangle(
+                    pos=(legend_start_x, legend_start_y - idx * legend_item_height),
+                    size=(dp(15), dp(15))
+                )
+            
+            # Текст легенды
+            legend_label = Label(
+                text=f"{label}: {value}",
+                pos=(legend_start_x + dp(20), legend_start_y - idx * legend_item_height - dp(12)),
+                size=(dp(180), dp(20)),
+                color=(0.3, 0.3, 0.3, 1),
+                font_size=font_size,
+                halign='left'
+            )
+            legend_label.texture_update()
 
 class ColorBox(Widget):
     """Виджет для отображения цветного квадрата в легенде"""
