@@ -1,0 +1,17 @@
+2025-04-15 08:13:45 - INFO - logger - <module> - Приложение запущено
+2025-04-15 08:13:45 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-15 08:13:45 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-15 08:13:45 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-15 08:13:45 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-15 08:13:45 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-15 08:13:45 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-15 08:13:50 - ERROR - logger - log_error - Ошибка: Ошибка при подключении к серверу: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\database.py", line 19, in test_connection
+    client_socket.connect((serverip, port))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionRefusedError: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+2025-04-15 08:13:50 - ERROR - logger - log_error - Ошибка: Ошибка соединения с сервером
+NoneType: None
+2025-04-15 08:14:03 - INFO - logger - log_event - Пользователь выбрал выход из программы
+2025-04-15 08:14:03 - INFO - logger - log_application_exit - Приложение завершено

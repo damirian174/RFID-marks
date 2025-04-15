@@ -1,0 +1,512 @@
+2025-04-15 07:00:28 - INFO - logger - <module> - Приложение запущено
+2025-04-15 07:00:28 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-15 07:00:28 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-15 07:00:28 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-15 07:00:28 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-15 07:00:28 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-15 07:00:28 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-15 07:00:31 - INFO - logger - log_event - Сервер доступен
+2025-04-15 07:00:31 - INFO - logger - log_event - Сервер доступен
+2025-04-15 07:00:31 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-15 07:00:31 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:00:31 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:00:33 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 07:00:33 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 07:00:33 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 07:00:33 - INFO - logger - log_event - System Arduino init
+2025-04-15 07:00:49 - INFO - logger - log_event - Raw data (bytes): b'079319992_user..\r\n'
+2025-04-15 07:00:49 - INFO - logger - log_event - Decoded data (str): 079319992_user..
+2025-04-15 07:00:49 - INFO - logger - log_event - Parsed Data: ['079319992', 'user']
+2025-04-15 07:00:49 - INFO - logger - log_event - Send data to handle_serial_data: ['079319992', 'user']
+2025-04-15 07:00:49 - INFO - logger - log_event - Данные перед очисткой: ['079319992', 'user']
+2025-04-15 07:00:49 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:00:49 - INFO - logger - log_event - Очищенные данные: ['079319992', 'user']
+2025-04-15 07:00:49 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:00:49 - INFO - logger - log_event - Пользователь с UID: 079319992
+2025-04-15 07:00:49 - INFO - logger - log_event - Get NULL
+2025-04-15 07:00:49 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 079319992
+2025-04-15 07:00:49 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '079319992', 'id': None}
+2025-04-15 07:00:50 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:00:50 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:00:50 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:00:52 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'work_description': 'Без детали'}
+2025-04-15 07:00:52 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'work_description': 'Без детали', 'id': None}
+2025-04-15 07:00:52 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:00:52 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-15 07:00:52 - INFO - logger - log_event - Сессия успешно начата: Лебедев Кирилл
+2025-04-15 07:00:52 - INFO - logger - log_event - Устанавливаем переменную config.user: Лебедев Кирилл
+2025-04-15 07:00:52 - INFO - logger - log_event - Устанавливаем переменную config.Name: Лебедев Кирилл
+2025-04-15 07:00:52 - INFO - logger - log_event - Установлено значение config.Name: Лебедев Кирилл
+2025-04-15 07:00:52 - INFO - logger - log_event - Успешная аутентификация пользователя: Лебедев Кирилл
+2025-04-15 07:01:16 - INFO - logger - log_event - окно подтверждения открыто
+2025-04-15 07:01:17 - INFO - logger - log_event - Данные маркировки подтверждены
+2025-04-15 07:01:17 - INFO - logger - log_event - Send to write wSN001_detail..............
+2025-04-15 07:01:17 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x9f\xd0\xbe\xd0\xb4\xd0\xbd\xd0\xb5\xd1\x81\xd0\xb8\xd1\x82\xd0\xb5 \xd0\xba\xd0\xb0\xd1\x80\xd1\x82\xd1\x83 \xd0\xb4\xd0\xbb\xd1\x8f \xd0\xb7\xd0\xb0\xd0\xbf\xd0\xb8\xd1\x81\xd0\xb8 \xd0\xb4\xd0\xb0\xd0\xbd\xd0\xbd\xd1\x8b\xd1\x85...SN001_detail....\r\n'
+2025-04-15 07:01:17 - INFO - logger - log_event - Decoded data (str): Поднесите карту для записи данных...SN001_detail....
+2025-04-15 07:01:17 - INFO - logger - log_event - Ожидание поднесения карты
+2025-04-15 07:01:17 - INFO - logger - log_event - Ожидание поднесения карты пользователем
+2025-04-15 07:01:20 - INFO - logger - log_event - Raw data (bytes): b'WRITE_SUCCESS\r\n'
+2025-04-15 07:01:20 - INFO - logger - log_event - Decoded data (str): WRITE_SUCCESS
+2025-04-15 07:01:20 - INFO - logger - log_event - Write secces
+2025-04-15 07:01:20 - INFO - logger - log_event - Метка успешно записана
+2025-04-15 07:01:20 - INFO - logger - log_event - Маркировка вручную: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN001', 'time': '2025-04-15 09:01:20'}
+2025-04-15 07:01:20 - INFO - logger - log_event - Запрос: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN001', 'time': '2025-04-15 09:01:20', 'id': 4}
+2025-04-15 07:01:20 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:20 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok'}
+2025-04-15 07:01:23 - INFO - logger - log_event - Raw data (bytes): b'SN001_detail....\r\n'
+2025-04-15 07:01:23 - INFO - logger - log_event - Decoded data (str): SN001_detail....
+2025-04-15 07:01:23 - INFO - logger - log_event - Parsed Data: ['SN001', 'detail']
+2025-04-15 07:01:23 - INFO - logger - log_event - Send data to handle_serial_data: ['SN001', 'detail']
+2025-04-15 07:01:23 - INFO - logger - log_event - Данные перед очисткой: ['SN001', 'detail']
+2025-04-15 07:01:23 - INFO - logger - log_event - Очищенные данные: ['SN001', 'detail']
+2025-04-15 07:01:23 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:01:23 - INFO - logger - log_event - Получены данные из порта: SN001
+2025-04-15 07:01:23 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:01:23 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN001
+2025-04-15 07:01:23 - INFO - logger - log_event - Get NULL
+2025-04-15 07:01:23 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:01:23 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN001', 'id': 4}
+2025-04-15 07:01:23 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:23 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:23 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:01:23 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:23 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:23 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:01:23 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN001'}
+2025-04-15 07:01:23 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:01:23 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN001', 'id': 4}
+2025-04-15 07:01:24 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:24 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:01:28 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:01:28 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Сборка', 'serial': 'SN001', 'start': '2025-04-15 09:01:23', 'end': '2025-04-15 09:01:28', 'id': 4}
+2025-04-15 07:01:28 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:28 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:28 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:01:28 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:01:28 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:28 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:01:32 - INFO - logger - log_event - Raw data (bytes): b'READ_ERROR\r\n'
+2025-04-15 07:01:32 - INFO - logger - log_event - Decoded data (str): READ_ERROR
+2025-04-15 07:01:32 - ERROR - logger - log_error - Ошибка: Error with read
+NoneType: None
+2025-04-15 07:01:32 - ERROR - logger - log_error - Ошибка: Error with read
+NoneType: None
+2025-04-15 07:01:37 - INFO - logger - log_event - Raw data (bytes): b'SN001_detail....\r\n'
+2025-04-15 07:01:37 - INFO - logger - log_event - Decoded data (str): SN001_detail....
+2025-04-15 07:01:37 - INFO - logger - log_event - Parsed Data: ['SN001', 'detail']
+2025-04-15 07:01:37 - INFO - logger - log_event - Send data to handle_serial_data: ['SN001', 'detail']
+2025-04-15 07:01:37 - INFO - logger - log_event - Данные перед очисткой: ['SN001', 'detail']
+2025-04-15 07:01:37 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:01:37 - INFO - logger - log_event - Очищенные данные: ['SN001', 'detail']
+2025-04-15 07:01:37 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:01:37 - INFO - logger - log_event - Получены данные из порта: SN001
+2025-04-15 07:01:37 - INFO - logger - log_event - Get NULL
+2025-04-15 07:01:37 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN001
+2025-04-15 07:01:37 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:01:37 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN001', 'id': 4}
+2025-04-15 07:01:37 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:37 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:37 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:01:37 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:37 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:37 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:01:37 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN001'}
+2025-04-15 07:01:37 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:01:37 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN001', 'id': 4}
+2025-04-15 07:01:37 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:37 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:01:41 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Тестирование', 'serial': 'SN001', 'start': '2025-04-15 09:01:37', 'end': '2025-04-15 09:01:41', 'id': 4}
+2025-04-15 07:01:41 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:41 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:41 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:01:41 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:01:41 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:41 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:01:41 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:01:46 - INFO - logger - log_event - Raw data (bytes): b'SN001_detail....\r\n'
+2025-04-15 07:01:46 - INFO - logger - log_event - Decoded data (str): SN001_detail....
+2025-04-15 07:01:46 - INFO - logger - log_event - Parsed Data: ['SN001', 'detail']
+2025-04-15 07:01:46 - INFO - logger - log_event - Send data to handle_serial_data: ['SN001', 'detail']
+2025-04-15 07:01:46 - INFO - logger - log_event - Данные перед очисткой: ['SN001', 'detail']
+2025-04-15 07:01:46 - INFO - logger - log_event - Очищенные данные: ['SN001', 'detail']
+2025-04-15 07:01:46 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:01:46 - INFO - logger - log_event - Получены данные из порта: SN001
+2025-04-15 07:01:46 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:01:46 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN001
+2025-04-15 07:01:46 - INFO - logger - log_event - Get NULL
+2025-04-15 07:01:46 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:01:46 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN001', 'id': 4}
+2025-04-15 07:01:46 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:46 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:01:46 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:01:46 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:46 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:46 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:01:46 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Упаковка SN001'}
+2025-04-15 07:01:46 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:01:46 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Упаковка SN001', 'id': 4}
+2025-04-15 07:01:46 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:46 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:01:48 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:01:48 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Упаковка', 'serial': 'SN001', 'start': '2025-04-15 09:01:46', 'end': '2025-04-15 09:01:48', 'id': 4}
+2025-04-15 07:01:49 - INFO - logger - log_event - Ответ: {'status': 'ok', 'sector': '1А'}
+2025-04-15 07:01:49 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:01:49 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:01:49 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:01:49 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:01:49 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:02:58 - INFO - logger - log_event - Login to the admin panel
+2025-04-15 07:03:01 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-15 07:03:01 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:01 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:01 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:01 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:01 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:01 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:01 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-04-15 07:03:03 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-15 07:03:03 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-15 07:03:05 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 150'}
+2025-04-15 07:03:05 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:05 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': [{'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}]}
+2025-04-15 07:03:05 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 150', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос детальной информации о детали SN001
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN001', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Получен ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Данные для отображения: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:03:06 - INFO - logger - log_event - Преобразованная информация о времени: {'mark': {'time': '2025-04-15 09:01:20', 'user': 4}, 'сборка': {'end': '2025-04-15 09:01:28', 'user': 4, 'start': '2025-04-15 09:01:23'}, 'упаковка': {'end': '2025-04-15 09:01:48', 'user': 4, 'start': '2025-04-15 09:01:46'}, 'тестирование': {'end': '2025-04-15 09:01:41', 'user': 4, 'start': '2025-04-15 09:01:37'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Начинаем заполнение данных в диалоге. part_info: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:03:06 - INFO - logger - log_event - ID детали: 1
+2025-04-15 07:03:06 - INFO - logger - log_event - Название детали: МЕТРАН 150
+2025-04-15 07:03:06 - INFO - logger - log_event - Статус (defective): False
+2025-04-15 07:03:06 - INFO - logger - log_event - Текст статуса: Годен
+2025-04-15 07:03:06 - INFO - logger - log_event - Текущий этап: Хранение
+2025-04-15 07:03:06 - INFO - logger - log_event - Сектор хранения: Сектор 1А
+2025-04-15 07:03:06 - INFO - logger - log_event - Примечание: 
+2025-04-15 07:03:06 - INFO - logger - log_event - Обрабатываем данные времени: {'mark': {'time': '2025-04-15 09:01:20', 'user': 4}, 'сборка': {'end': '2025-04-15 09:01:28', 'user': 4, 'start': '2025-04-15 09:01:23'}, 'упаковка': {'end': '2025-04-15 09:01:48', 'user': 4, 'start': '2025-04-15 09:01:46'}, 'тестирование': {'end': '2025-04-15 09:01:41', 'user': 4, 'start': '2025-04-15 09:01:37'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Обработка информации о времени: {'mark': {'time': '2025-04-15 09:01:20', 'user': 4}, 'сборка': {'end': '2025-04-15 09:01:28', 'user': 4, 'start': '2025-04-15 09:01:23'}, 'упаковка': {'end': '2025-04-15 09:01:48', 'user': 4, 'start': '2025-04-15 09:01:46'}, 'тестирование': {'end': '2025-04-15 09:01:41', 'user': 4, 'start': '2025-04-15 09:01:37'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 4 для этапа mark
+2025-04-15 07:03:06 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 4 для этапа сборка
+2025-04-15 07:03:06 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 4 для этапа тестирование
+2025-04-15 07:03:06 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрашиваем информацию о пользователе с ID: 4 для этапа упаковка
+2025-04-15 07:03:06 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:06 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:06 - INFO - logger - log_event - Запрос: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:10 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 4, 'name': 'Кирилл', 'surname': 'Лебедев', 'profession': 'Бухгалтер'}}
+2025-04-15 07:03:10 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'userById', 'id': 4}
+2025-04-15 07:03:10 - INFO - logger - log_event - Завершено заполнение данных в диалоге
+2025-04-15 07:03:10 - INFO - logger - log_event - Обработка результата для этапа mark, запрошенный ID: 4, результат: {'data': {'id': 4, 'name': 'Кирилл', 'profession': 'Бухгалтер', 'surname': 'Лебедев'}, 'status': 'ok'}
+2025-04-15 07:03:10 - INFO - logger - log_event - Метка пользователя обновлена для этапа mark: Лебедев Кирилл, ID: 4
+2025-04-15 07:03:10 - INFO - logger - log_event - Обработка результата для этапа сборка, запрошенный ID: 4, результат: {'data': {'id': 4, 'name': 'Кирилл', 'profession': 'Бухгалтер', 'surname': 'Лебедев'}, 'status': 'ok'}
+2025-04-15 07:03:10 - INFO - logger - log_event - Метка пользователя обновлена для этапа сборка: Лебедев Кирилл, ID: 4
+2025-04-15 07:03:10 - INFO - logger - log_event - Обработка результата для этапа тестирование, запрошенный ID: 4, результат: {'data': {'id': 4, 'name': 'Кирилл', 'profession': 'Бухгалтер', 'surname': 'Лебедев'}, 'status': 'ok'}
+2025-04-15 07:03:10 - INFO - logger - log_event - Метка пользователя обновлена для этапа тестирование: Лебедев Кирилл, ID: 4
+2025-04-15 07:03:10 - INFO - logger - log_event - Обработка результата для этапа упаковка, запрошенный ID: 4, результат: {'data': {'id': 4, 'name': 'Кирилл', 'profession': 'Бухгалтер', 'surname': 'Лебедев'}, 'status': 'ok'}
+2025-04-15 07:03:10 - INFO - logger - log_event - Метка пользователя обновлена для этапа упаковка: Лебедев Кирилл, ID: 4
+2025-04-15 07:03:48 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Создан поток DatabaseWorker с запросом: {'type': 'allDetails', 'detail': 'МЕТРАН 75'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-04-15 07:03:48 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-04-15 07:03:48 - INFO - logger - log_event - Запрос: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - INFO - logger - log_event - Ответ: {'status': 'error', 'message': 'Details not found'}
+2025-04-15 07:03:48 - INFO - logger - log_event - Выполнен запрос к БД: {'type': 'allDetails', 'detail': 'МЕТРАН 75', 'id': 4}
+2025-04-15 07:03:48 - ERROR - logger - log_error - Ошибка: Ошибка при получении данных из базы данных
+NoneType: None
+2025-04-15 07:03:54 - INFO - logger - log_event - Raw data (bytes): b'SN001_detail....\r\n'
+2025-04-15 07:03:54 - INFO - logger - log_event - Decoded data (str): SN001_detail....
+2025-04-15 07:03:54 - INFO - logger - log_event - Parsed Data: ['SN001', 'detail']
+2025-04-15 07:03:54 - INFO - logger - log_event - Send data to handle_serial_data: ['SN001', 'detail']
+2025-04-15 07:03:54 - INFO - logger - log_event - Данные перед очисткой: ['SN001', 'detail']
+2025-04-15 07:03:54 - INFO - logger - log_event - Очищенные данные: ['SN001', 'detail']
+2025-04-15 07:03:54 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:03:54 - INFO - logger - log_event - Получены данные из порта: SN001
+2025-04-15 07:03:54 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:03:54 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN001
+2025-04-15 07:03:54 - INFO - logger - log_event - Get NULL
+2025-04-15 07:03:54 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:03:54 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN001', 'id': 4}
+2025-04-15 07:03:56 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:03:56 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:03:56 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:03:56 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:03:56 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:03:56 - INFO - logger - log_event - Данные детали: {'id': 1, 'name': 'МЕТРАН 150', 'serial_number': 'SN001', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:01:20", "user": 4}, "сборка": {"end": "2025-04-15 09:01:28", "user": 4, "start": "2025-04-15 09:01:23"}, "упаковка": {"end": "2025-04-15 09:01:48", "user": 4, "start": "2025-04-15 09:01:46"}, "тестирование": {"end": "2025-04-15 09:01:41", "user": 4, "start": "2025-04-15 09:01:37"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:03:58 - INFO - logger - log_event - Информация о детали сброшена пользователем без изменения статуса на сервере
+2025-04-15 07:04:11 - INFO - logger - log_event - окно подтверждения открыто
+2025-04-15 07:04:12 - INFO - logger - log_event - Данные маркировки подтверждены
+2025-04-15 07:04:12 - INFO - logger - log_event - Send to write wSN002_detail..............
+2025-04-15 07:04:12 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x9f\xd0\xbe\xd0\xb4\xd0\xbd\xd0\xb5\xd1\x81\xd0\xb8\xd1\x82\xd0\xb5 \xd0\xba\xd0\xb0\xd1\x80\xd1\x82\xd1\x83 \xd0\xb4\xd0\xbb\xd1\x8f \xd0\xb7\xd0\xb0\xd0\xbf\xd0\xb8\xd1\x81\xd0\xb8 \xd0\xb4\xd0\xb0\xd0\xbd\xd0\xbd\xd1\x8b\xd1\x85...SN002_detail....\r\n'
+2025-04-15 07:04:12 - INFO - logger - log_event - Decoded data (str): Поднесите карту для записи данных...SN002_detail....
+2025-04-15 07:04:12 - INFO - logger - log_event - Ожидание поднесения карты
+2025-04-15 07:04:12 - INFO - logger - log_event - Ожидание поднесения карты пользователем
+2025-04-15 07:04:13 - INFO - logger - log_event - Raw data (bytes): b'WRITE_SUCCESS\r\n'
+2025-04-15 07:04:13 - INFO - logger - log_event - Decoded data (str): WRITE_SUCCESS
+2025-04-15 07:04:13 - INFO - logger - log_event - Write secces
+2025-04-15 07:04:13 - INFO - logger - log_event - Метка успешно записана
+2025-04-15 07:04:13 - INFO - logger - log_event - Маркировка вручную: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN002', 'time': '2025-04-15 09:04:13'}
+2025-04-15 07:04:13 - INFO - logger - log_event - Запрос: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN002', 'time': '2025-04-15 09:04:13', 'id': 4}
+2025-04-15 07:04:17 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:17 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok'}
+2025-04-15 07:04:23 - INFO - logger - log_event - Raw data (bytes): b'SN002_detail....\r\n'
+2025-04-15 07:04:23 - INFO - logger - log_event - Decoded data (str): SN002_detail....
+2025-04-15 07:04:23 - INFO - logger - log_event - Parsed Data: ['SN002', 'detail']
+2025-04-15 07:04:23 - INFO - logger - log_event - Send data to handle_serial_data: ['SN002', 'detail']
+2025-04-15 07:04:23 - INFO - logger - log_event - Данные перед очисткой: ['SN002', 'detail']
+2025-04-15 07:04:23 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:04:23 - INFO - logger - log_event - Очищенные данные: ['SN002', 'detail']
+2025-04-15 07:04:23 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:04:23 - INFO - logger - log_event - Получены данные из порта: SN002
+2025-04-15 07:04:23 - INFO - logger - log_event - Get NULL
+2025-04-15 07:04:23 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN002
+2025-04-15 07:04:23 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:04:23 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN002', 'id': 4}
+2025-04-15 07:04:23 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:23 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:23 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:04:23 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:23 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:23 - INFO - logger - log_event - Данные детали: {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:04:23 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN002'}
+2025-04-15 07:04:23 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:04:23 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN002', 'id': 4}
+2025-04-15 07:04:24 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:24 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:04:27 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:04:27 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Сборка', 'serial': 'SN002', 'start': '2025-04-15 09:04:23', 'end': '2025-04-15 09:04:27', 'id': 4}
+2025-04-15 07:04:27 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:27 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:27 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:04:27 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:04:27 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:27 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:04:33 - INFO - logger - log_event - Raw data (bytes): b'SN002_detail....\r\n'
+2025-04-15 07:04:33 - INFO - logger - log_event - Decoded data (str): SN002_detail....
+2025-04-15 07:04:33 - INFO - logger - log_event - Parsed Data: ['SN002', 'detail']
+2025-04-15 07:04:33 - INFO - logger - log_event - Send data to handle_serial_data: ['SN002', 'detail']
+2025-04-15 07:04:33 - INFO - logger - log_event - Данные перед очисткой: ['SN002', 'detail']
+2025-04-15 07:04:33 - INFO - logger - log_event - Очищенные данные: ['SN002', 'detail']
+2025-04-15 07:04:33 - INFO - logger - log_event - Получены данные из порта: SN002
+2025-04-15 07:04:33 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:04:33 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN002
+2025-04-15 07:04:33 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:04:33 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:04:33 - INFO - logger - log_event - Get NULL
+2025-04-15 07:04:33 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN002', 'id': 4}
+2025-04-15 07:04:33 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}, "сборка": {"end": "2025-04-15 09:04:27", "user": 4, "start": "2025-04-15 09:04:23"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:33 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}, "сборка": {"end": "2025-04-15 09:04:27", "user": 4, "start": "2025-04-15 09:04:23"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:33 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:04:33 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:33 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:33 - INFO - logger - log_event - Данные детали: {'id': 2, 'name': 'МЕТРАН 150', 'serial_number': 'SN002', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:13", "user": 4}, "сборка": {"end": "2025-04-15 09:04:27", "user": 4, "start": "2025-04-15 09:04:23"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:04:33 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN002'}
+2025-04-15 07:04:33 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:04:33 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN002', 'id': 4}
+2025-04-15 07:04:33 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:33 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:04:37 - INFO - logger - log_event - Запрос: {'type': 'kocak', 'serial': 'SN002', 'id': 4}
+2025-04-15 07:04:37 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:37 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:37 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:04:37 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:04:37 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:37 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:04:37 - INFO - logger - log_event - Деталь SN002 не прошла тесты и отправлена в брак
+2025-04-15 07:04:44 - INFO - logger - log_event - окно подтверждения открыто
+2025-04-15 07:04:45 - INFO - logger - log_event - Данные маркировки подтверждены
+2025-04-15 07:04:45 - INFO - logger - log_event - Send to write wSN003_detail..............
+2025-04-15 07:04:45 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x9f\xd0\xbe\xd0\xb4\xd0\xbd\xd0\xb5\xd1\x81\xd0\xb8\xd1\x82\xd0\xb5 \xd0\xba\xd0\xb0\xd1\x80\xd1\x82\xd1\x83 \xd0\xb4\xd0\xbb\xd1\x8f \xd0\xb7\xd0\xb0\xd0\xbf\xd0\xb8\xd1\x81\xd0\xb8 \xd0\xb4\xd0\xb0\xd0\xbd\xd0\xbd\xd1\x8b\xd1\x85...SN003_detail....\r\n'
+2025-04-15 07:04:45 - INFO - logger - log_event - Decoded data (str): Поднесите карту для записи данных...SN003_detail....
+2025-04-15 07:04:45 - INFO - logger - log_event - Ожидание поднесения карты
+2025-04-15 07:04:45 - INFO - logger - log_event - Ожидание поднесения карты пользователем
+2025-04-15 07:04:47 - INFO - logger - log_event - Raw data (bytes): b'WRITE_SUCCESS\r\n'
+2025-04-15 07:04:47 - INFO - logger - log_event - Decoded data (str): WRITE_SUCCESS
+2025-04-15 07:04:47 - INFO - logger - log_event - Write secces
+2025-04-15 07:04:47 - INFO - logger - log_event - Метка успешно записана
+2025-04-15 07:04:47 - INFO - logger - log_event - Маркировка вручную: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN003', 'time': '2025-04-15 09:04:47'}
+2025-04-15 07:04:47 - INFO - logger - log_event - Запрос: {'type': 'mark', 'name': 'МЕТРАН 150', 'serial': 'SN003', 'time': '2025-04-15 09:04:47', 'id': 4}
+2025-04-15 07:04:52 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:52 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok'}
+2025-04-15 07:04:56 - INFO - logger - log_event - Raw data (bytes): b'SN003_detail....\r\n'
+2025-04-15 07:04:56 - INFO - logger - log_event - Decoded data (str): SN003_detail....
+2025-04-15 07:04:56 - INFO - logger - log_event - Parsed Data: ['SN003', 'detail']
+2025-04-15 07:04:56 - INFO - logger - log_event - Send data to handle_serial_data: ['SN003', 'detail']
+2025-04-15 07:04:56 - INFO - logger - log_event - Данные перед очисткой: ['SN003', 'detail']
+2025-04-15 07:04:56 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:04:56 - INFO - logger - log_event - Очищенные данные: ['SN003', 'detail']
+2025-04-15 07:04:56 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:04:56 - INFO - logger - log_event - Получены данные из порта: SN003
+2025-04-15 07:04:56 - INFO - logger - log_event - Get NULL
+2025-04-15 07:04:56 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN003
+2025-04-15 07:04:56 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:04:56 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN003', 'id': 4}
+2025-04-15 07:04:56 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:56 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:04:56 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:04:56 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:56 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:04:56 - INFO - logger - log_event - Данные детали: {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Маркировка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:04:56 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN003'}
+2025-04-15 07:04:56 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:04:56 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Сборка SN003', 'id': 4}
+2025-04-15 07:04:58 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:04:58 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:04:59 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:04:59 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Сборка', 'serial': 'SN003', 'start': '2025-04-15 09:04:56', 'end': '2025-04-15 09:04:59', 'id': 4}
+2025-04-15 07:05:23 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:23 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:23 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:05:23 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:05:25 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:25 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:05:36 - INFO - logger - log_event - Raw data (bytes): b'SN003_detail....\r\n'
+2025-04-15 07:05:36 - INFO - logger - log_event - Decoded data (str): SN003_detail....
+2025-04-15 07:05:36 - INFO - logger - log_event - Parsed Data: ['SN003', 'detail']
+2025-04-15 07:05:36 - INFO - logger - log_event - Send data to handle_serial_data: ['SN003', 'detail']
+2025-04-15 07:05:36 - INFO - logger - log_event - Данные перед очисткой: ['SN003', 'detail']
+2025-04-15 07:05:36 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:05:36 - INFO - logger - log_event - Очищенные данные: ['SN003', 'detail']
+2025-04-15 07:05:36 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:05:36 - INFO - logger - log_event - Получены данные из порта: SN003
+2025-04-15 07:05:36 - INFO - logger - log_event - Get NULL
+2025-04-15 07:05:36 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN003
+2025-04-15 07:05:36 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:05:36 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN003', 'id': 4}
+2025-04-15 07:05:36 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:05:36 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:05:36 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:05:36 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:36 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:36 - INFO - logger - log_event - Данные детали: {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Сборка', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:05:36 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN003'}
+2025-04-15 07:05:36 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:05:36 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Тестирование SN003', 'id': 4}
+2025-04-15 07:05:37 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:37 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:05:41 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Тестирование', 'serial': 'SN003', 'start': '2025-04-15 09:05:36', 'end': '2025-04-15 09:05:41', 'id': 4}
+2025-04-15 07:05:41 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:41 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:41 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:05:41 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:05:42 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:42 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:05:42 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:05:47 - INFO - logger - log_event - Raw data (bytes): b'SN003_detail....\r\n'
+2025-04-15 07:05:47 - INFO - logger - log_event - Decoded data (str): SN003_detail....
+2025-04-15 07:05:47 - INFO - logger - log_event - Parsed Data: ['SN003', 'detail']
+2025-04-15 07:05:47 - INFO - logger - log_event - Send data to handle_serial_data: ['SN003', 'detail']
+2025-04-15 07:05:47 - INFO - logger - log_event - Данные перед очисткой: ['SN003', 'detail']
+2025-04-15 07:05:47 - INFO - logger - log_event - Очищенные данные: ['SN003', 'detail']
+2025-04-15 07:05:47 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:05:47 - INFO - logger - log_event - Получены данные из порта: SN003
+2025-04-15 07:05:47 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:05:47 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN003
+2025-04-15 07:05:47 - INFO - logger - log_event - Get NULL
+2025-04-15 07:05:47 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:05:47 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN003', 'id': 4}
+2025-04-15 07:05:47 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:05:47 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:05:47 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:05:47 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:47 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:05:47 - INFO - logger - log_event - Данные детали: {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:05:47 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Упаковка SN003'}
+2025-04-15 07:05:47 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-15 07:05:47 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Упаковка SN003', 'id': 4}
+2025-04-15 07:05:53 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:05:53 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-15 07:06:05 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-15 07:06:05 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Упаковка', 'serial': 'SN003', 'start': '2025-04-15 09:05:47', 'end': '2025-04-15 09:06:05', 'id': 4}
+2025-04-15 07:06:06 - INFO - logger - log_event - Ответ: {'status': 'ok', 'sector': '1А'}
+2025-04-15 07:06:06 - INFO - logger - log_event - Получены части имени для указания отдыха: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:06:06 - INFO - logger - log_event - Запрос на обновление статуса на 'Отдых': {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых'}
+2025-04-15 07:06:06 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Кирилл', 'surname': 'Лебедев', 'new_description': 'Отдых', 'id': 4}
+2025-04-15 07:06:06 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:06:06 - INFO - logger - log_event - Результат обновления статуса: {'status': 'ok'}
+2025-04-15 07:07:27 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-15 07:07:27 - INFO - logger - log_event - Завершаем сессию пользователя: Кирилл Лебедев
+2025-04-15 07:07:27 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:07:28 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:07:28 - INFO - logger - log_event - Сессия успешно завершена: Кирилл Лебедев
+2025-04-15 07:07:28 - INFO - logger - log_application_exit - Приложение завершено

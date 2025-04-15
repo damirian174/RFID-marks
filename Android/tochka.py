@@ -4,7 +4,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle, Line, Ellipse
 from kivy.utils import get_color_from_hex
 from kivy.metrics import dp
-from kivy.properties import ListProperty, DictProperty, StringProperty, NumericProperty
+from kivy.properties import ListProperty, DictProperty, StringProperty, NumericProperty, ObjectProperty
 import math
 
 class LineChart(BoxLayout):
@@ -17,6 +17,7 @@ class LineChart(BoxLayout):
         '#2ECC71',  # Зеленый
         '#F39C12',  # Оранжевый
     ])
+    digits_font_name = StringProperty("RobotoMono-Regular.ttf")  # Шрифт для цифр
     
     def __init__(self, **kwargs):
         super(LineChart, self).__init__(**kwargs)
@@ -54,6 +55,7 @@ class LineChart(BoxLayout):
         chart = LineChartWidget(
             data=self.data,
             colors=self.colors,
+            digits_font_name=self.digits_font_name,
             size_hint=(1, 0.9)
         )
         self.add_widget(chart)
@@ -63,6 +65,7 @@ class LineChartWidget(Widget):
     colors = ListProperty([])
     months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
               'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+    digits_font_name = StringProperty("RobotoMono-Regular.ttf")
     
     def __init__(self, **kwargs):
         super(LineChartWidget, self).__init__(**kwargs)
@@ -82,8 +85,8 @@ class LineChartWidget(Widget):
         padding = max(dp(20), min(dp(40), base_padding))
         
         # Адаптивный размер шрифта
-        base_font_size = min_size * 0.03
-        font_size = max(dp(8), min(dp(12), base_font_size))
+        base_font_size = min_size * 0.02
+        font_size = max(dp(6), min(dp(10), base_font_size))
         
         # Размеры области графика
         chart_width = self.width - padding * 2
@@ -164,14 +167,20 @@ class LineChartWidget(Widget):
                 Line(points=[start_x, scaled_y, start_x + chart_width, scaled_y],
                      width=1, dash_length=5, dash_offset=3)
                 
-                # Подписи по Y
+                # Подписи по Y с цифровым шрифтом
+                value_text = str(int(y))
+                
+                # Создаем метку с контрастным текстом без фона
                 label = Label(
-                    text=str(int(y)),
-                    pos=(start_x - dp(35), scaled_y - dp(10)),
-                    size=(dp(30), dp(20)),
-                    color=(0.3, 0.3, 0.3, 1),
+                    text=value_text,
+                    pos=(start_x - dp(25), scaled_y - dp(8)),
+                    size=(dp(25), dp(16)),
+                    color=(0.1, 0.1, 0.1, 1),  # Темный текст для контраста с белым фоном
                     font_size=font_size,
-                    halign='right'
+                    halign='right',
+                    bold=True,  # Жирный текст для лучшей читаемости
+                    outline_width=1,  # Тонкая обводка для улучшения читаемости
+                    outline_color=(1, 1, 1, 0.8)  # Светлая полупрозрачная обводка
                 )
                 label.texture_update()
                 y_labels.append((label, scaled_y))
@@ -212,15 +221,23 @@ class LineChartWidget(Widget):
                     Ellipse(pos=(scaled_x - point_radius, scaled_y - point_radius),
                            size=(point_radius * 2, point_radius * 2))
                     
-                    # Подпись значения
+                    # Подпись значения с цифровым шрифтом
+                    value_text = str(int(y))
+                    
+                    # Значительно увеличиваем размер шрифта
+                    value_font_size = font_size * 1.5
+                    
+                    # Создаем метку без фона и с хорошим контрастом
                     label = Label(
-                        text=str(int(y)),
-                        pos=(scaled_x - dp(15), scaled_y + point_radius + dp(2)),
-                        size=(dp(30), dp(20)),
-                        color=get_color_from_hex(color),
-                        font_size=font_size,
-                        bold=True,
-                        halign='center'
+                        text=value_text,
+                        pos=(scaled_x - dp(12), scaled_y + point_radius + dp(3)),
+                        size=(dp(24), dp(16)),
+                        color=get_color_from_hex(color),  # Используем цвет точки для контраста
+                        font_size=value_font_size,
+                        halign='center',
+                        bold=True,  # Жирный текст для лучшей читаемости
+                        outline_width=1,  # Тонкая обводка для улучшения читаемости
+                        outline_color=(1, 1, 1, 0.8)  # Светлая полупрозрачная обводка
                     )
                     label.texture_update()
                     value_labels.append((label, scaled_x, scaled_y))

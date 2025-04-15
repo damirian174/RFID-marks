@@ -222,6 +222,16 @@ def start_work(ser, response):
                     if result and result.get('status') != 'ok':
                         log_error(f"Ошибка обновления описания сессии: {result}")
                     packing_ui_instance.detail(response)
+                else:
+                    work_ui_instance.detail(response)
+                    test_ui_instance.detail(response)
+                    packing_ui_instance.detail(response)
+                    mark_ui_instance.detail(response)
+                    data = {"type": "updateSessionDescription", "name": first_name, "surname": last_name, "new_description": f"смотрит информацию о {response['serial_number']}"}
+                    result = database(data)
+                    log_event(f"Ответ на обновление описания сессии: {result}")
+                    if result and result.get('status') != 'ok':
+                        log_error(f"Ошибка обновления описания сессии: {result}")
             else:
                 # Если у нас нет валидных данных пользователя, просто переходим к отображению без обновления сессии
                 log_warning("Невозможно обновить описание сессии: нет данных авторизованного пользователя")
@@ -231,6 +241,12 @@ def start_work(ser, response):
                     test_ui_instance.detail(response)
                 elif response['stage'] == 'Тестирование':
                     packing_ui_instance.detail(response)
+                else:
+                    work_ui_instance.detail(response)
+                    test_ui_instance.detail(response)
+                    packing_ui_instance.detail(response)
+                    mark_ui_instance.detail(response)
+
         except Exception as e:
             log_error(f"Ошибка при обновлении описания сессии: {e}")
     # work_ui_instance.running = True  # Это должно теперь работать

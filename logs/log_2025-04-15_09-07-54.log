@@ -1,0 +1,89 @@
+2025-04-15 07:07:54 - INFO - logger - <module> - Приложение запущено
+2025-04-15 07:07:54 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-15 07:07:54 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-15 07:07:54 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-15 07:07:54 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-15 07:07:54 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-15 07:07:54 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-15 07:07:57 - INFO - logger - log_event - Сервер доступен
+2025-04-15 07:07:57 - INFO - logger - log_event - Сервер доступен
+2025-04-15 07:07:57 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-15 07:07:57 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to mark
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Test
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Packing
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 07:07:57 - INFO - logger - log_event - Enter to assembly
+2025-04-15 07:07:59 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 07:07:59 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 07:07:59 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 07:07:59 - INFO - logger - log_event - System Arduino init
+2025-04-15 07:07:59 - INFO - logger - log_event - Raw data (bytes): b'079319992_user..\r\n'
+2025-04-15 07:07:59 - INFO - logger - log_event - Decoded data (str): 079319992_user..
+2025-04-15 07:07:59 - INFO - logger - log_event - Parsed Data: ['079319992', 'user']
+2025-04-15 07:07:59 - INFO - logger - log_event - Send data to handle_serial_data: ['079319992', 'user']
+2025-04-15 07:07:59 - INFO - logger - log_event - Данные перед очисткой: ['079319992', 'user']
+2025-04-15 07:07:59 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:07:59 - INFO - logger - log_event - Очищенные данные: ['079319992', 'user']
+2025-04-15 07:07:59 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:07:59 - INFO - logger - log_event - Пользователь с UID: 079319992
+2025-04-15 07:07:59 - INFO - logger - log_event - Get NULL
+2025-04-15 07:07:59 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 079319992
+2025-04-15 07:07:59 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '079319992', 'id': None}
+2025-04-15 07:07:59 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:07:59 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:07:59 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:08:01 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'work_description': 'Без детали'}
+2025-04-15 07:08:01 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'work_description': 'Без детали', 'id': None}
+2025-04-15 07:08:01 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:08:01 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-15 07:08:01 - INFO - logger - log_event - Сессия успешно начата: Лебедев Кирилл
+2025-04-15 07:08:01 - INFO - logger - log_event - Устанавливаем переменную config.user: Лебедев Кирилл
+2025-04-15 07:08:01 - INFO - logger - log_event - Устанавливаем переменную config.Name: Лебедев Кирилл
+2025-04-15 07:08:01 - INFO - logger - log_event - Установлено значение config.Name: Лебедев Кирилл
+2025-04-15 07:08:01 - INFO - logger - log_event - Успешная аутентификация пользователя: Лебедев Кирилл
+2025-04-15 07:08:04 - INFO - logger - log_event - Raw data (bytes): b'SN003_detail....\r\n'
+2025-04-15 07:08:04 - INFO - logger - log_event - Decoded data (str): SN003_detail....
+2025-04-15 07:08:04 - INFO - logger - log_event - Parsed Data: ['SN003', 'detail']
+2025-04-15 07:08:04 - INFO - logger - log_event - Send data to handle_serial_data: ['SN003', 'detail']
+2025-04-15 07:08:04 - INFO - logger - log_event - Данные перед очисткой: ['SN003', 'detail']
+2025-04-15 07:08:04 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 07:08:04 - INFO - logger - log_event - Очищенные данные: ['SN003', 'detail']
+2025-04-15 07:08:04 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 07:08:04 - INFO - logger - log_event - Получены данные из порта: SN003
+2025-04-15 07:08:04 - INFO - logger - log_event - Get NULL
+2025-04-15 07:08:04 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN003
+2025-04-15 07:08:04 - INFO - logger - log_event - Текущее состояние: Name='Лебедев Кирилл', auth=True, session_on=True
+2025-04-15 07:08:04 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN003', 'id': 4}
+2025-04-15 07:08:04 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "упаковка": {"end": "2025-04-15 09:06:05", "user": 4, "start": "2025-04-15 09:05:47"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:08:04 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "упаковка": {"end": "2025-04-15 09:06:05", "user": 4, "start": "2025-04-15 09:05:47"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-15 07:08:04 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Лебедев Кирилл'
+2025-04-15 07:08:04 - INFO - logger - log_event - Используем части имени из Name: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:08:04 - INFO - logger - log_event - Будет использоваться: фамилия='Лебедев', имя='Кирилл'
+2025-04-15 07:08:04 - INFO - logger - log_event - Данные детали: {'id': 3, 'name': 'МЕТРАН 150', 'serial_number': 'SN003', 'defective': False, 'stage': 'Хранение', 'sector': 'Сектор 1А', 'time': '{"mark": {"time": "2025-04-15 09:04:47", "user": 4}, "сборка": {"end": "2025-04-15 09:04:59", "user": 4, "start": "2025-04-15 09:04:56"}, "упаковка": {"end": "2025-04-15 09:06:05", "user": 4, "start": "2025-04-15 09:05:47"}, "тестирование": {"end": "2025-04-15 09:05:41", "user": 4, "start": "2025-04-15 09:05:36"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-15 07:08:20 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-15 07:08:20 - INFO - logger - log_event - Завершаем сессию пользователя: Кирилл Лебедев
+2025-04-15 07:08:20 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Кирилл', 'surname': 'Лебедев', 'id': 4}
+2025-04-15 07:08:21 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 07:08:21 - INFO - logger - log_event - Сессия успешно завершена: Кирилл Лебедев
+2025-04-15 07:08:22 - INFO - logger - log_application_exit - Приложение завершено

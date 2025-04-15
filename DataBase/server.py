@@ -83,7 +83,8 @@ async def handle_client(reader, writer, pool):
                                 "status": "error",
                                 "message": "У пользователя уже есть активная сессия",
                                 "name": user_data['name'],
-                                "surname": user_data['surname']
+                                "surname": user_data['surname'],
+                                "id": user_data['id']
                                                     }
                         else:
                             response = {

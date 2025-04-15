@@ -1,4 +1,4 @@
-serverip='194.48.250.96'
+serverip='192.168.0.100'
 port = 12345
 
 auth = False

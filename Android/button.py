@@ -10,6 +10,11 @@ from kivy.core.window import Window
 from kivy.app import App
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.spinner import Spinner
+from kivy.uix.popup import Popup
+from kivy.uix.filechooser import FileChooserIconView
+from kivy.uix.image import Image
+from kivy.uix.textinput import TextInput
+from kivy.core.text import LabelBase  # Для регистрации шрифтов
 from krygli import PieChart
 from ctolb import BarChart
 from tochka import LineChart
@@ -17,6 +22,9 @@ import socket
 import json
 import time
 import datetime
+import os
+import shutil
+from PIL import Image as PILImage
 
 # Функция для отправки JSON-запросов на сервер
 def send_json_to_server(json_data):
@@ -976,9 +984,636 @@ class GeneralScreen(BaseScreen):
         self.content_area.add_widget(Label(text='Общий экран', font_size=dp(24)))
 
 class ProfileScreen(BaseScreen):
+    def __init__(self, **kwargs):
+        # Инициализируем атрибуты до вызова super().__init__
+        # Путь к папке с кэшем для хранения фотографий пользователя
+        self.cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cache')
+        # Создаем директорию, если не существует
+        if not os.path.exists(self.cache_dir):
+            os.makedirs(self.cache_dir)
+        
+        # Путь к аватару пользователя
+        self.avatar_path = os.path.join(self.cache_dir, 'user_avatar.jpg')
+        # Флаг наличия изображения
+        self.has_avatar = os.path.exists(self.avatar_path)
+        
+        # Теперь вызываем инициализацию базового класса
+        super().__init__(**kwargs)
+        
     def create_content(self):
         self.content_area.clear_widgets()
-        self.content_area.add_widget(Label(text='Экран профиля', font_size=dp(24)))
+        
+        # Создаем основной контейнер с прокруткой
+        scroll_view = ScrollView(
+            size_hint=(1, 1),
+            bar_width=dp(10),
+            bar_color=(0.2, 0.4, 0.8, 0.8),
+            bar_inactive_color=(0.2, 0.4, 0.8, 0.3),
+            scroll_type=['bars', 'content']
+        )
+        
+        # Основной контейнер для контента
+        main_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            spacing=dp(20),
+            padding=dp(20)
+        )
+        main_layout.bind(minimum_height=main_layout.setter('height'))
+        
+        # Определяем тип устройства и размеры
+        is_phone = min(Window.width, Window.height) < dp(600)
+        is_tablet = dp(600) <= min(Window.width, Window.height) < dp(1024)
+        
+        # Адаптивные размеры для разных устройств
+        if is_phone:
+            profile_section_height = dp(150)
+            stats_section_height = dp(200)
+            button_height = dp(40)
+            font_size = dp(14)
+            title_font_size = dp(18)
+            info_font_size = dp(12)
+        elif is_tablet:
+            profile_section_height = dp(200)
+            stats_section_height = dp(250)
+            button_height = dp(45)
+            font_size = dp(16)
+            title_font_size = dp(22)
+            info_font_size = dp(14)
+        else:  # Desktop
+            profile_section_height = dp(250)
+            stats_section_height = dp(300)
+            button_height = dp(50)
+            font_size = dp(18)
+            title_font_size = dp(26)
+            info_font_size = dp(16)
+        
+        # ====================== СЕКЦИЯ ПРОФИЛЯ ======================
+        profile_section = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=profile_section_height,
+            spacing=dp(20)
+        )
+        
+        # Панель с аватаром (изображение или заглушка)
+        avatar_panel = BoxLayout(
+            orientation='vertical',
+            size_hint=(None, 1),
+            width=profile_section_height * 0.8,
+            padding=dp(5)
+        )
+        
+        with avatar_panel.canvas.before:
+            Color(0.2, 0.4, 0.8, 1)  # Синий цвет для фона аватара
+            self.avatar_rect = Rectangle(pos=avatar_panel.pos, size=avatar_panel.size)
+        
+        avatar_panel.bind(pos=self.update_rect, size=self.update_rect)
+        
+        # Создаем контейнер для изображения и кнопки
+        avatar_container = BoxLayout(
+            orientation='vertical',
+            spacing=dp(5)
+        )
+        
+        # Проверяем, был ли инициализирован атрибут has_avatar
+        if not hasattr(self, 'has_avatar'):
+            # Если нет, инициализируем его
+            self.cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cache')
+            if not os.path.exists(self.cache_dir):
+                os.makedirs(self.cache_dir)
+            self.avatar_path = os.path.join(self.cache_dir, 'user_avatar.jpg')
+            self.has_avatar = os.path.exists(self.avatar_path)
+        
+        # Если есть сохраненный аватар, показываем его
+        if self.has_avatar:
+            self.avatar_image = Image(
+                source=self.avatar_path,
+                size_hint=(1, 0.8)
+            )
+        else:
+            # Иначе показываем заглушку
+            self.avatar_image = Label(
+                text='Фото',
+                color=(1, 1, 1, 1),
+                font_size=font_size,
+                size_hint=(1, 0.8)
+            )
+        
+        # Кнопка для загрузки фото
+        upload_photo_btn = Button(
+            text='Загрузить фото',
+            size_hint=(1, 0.2),
+            font_size=dp(10),
+            background_normal='',
+            background_color=(0.3, 0.6, 0.9, 1)
+        )
+        upload_photo_btn.bind(on_release=self.show_filechooser)
+        
+        avatar_container.add_widget(self.avatar_image)
+        avatar_container.add_widget(upload_photo_btn)
+        avatar_panel.add_widget(avatar_container)
+        
+        # Информация о пользователе
+        user_info_panel = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, 1),
+            spacing=dp(5),
+            padding=dp(10)
+        )
+        
+        with user_info_panel.canvas.before:
+            Color(0.95, 0.95, 0.95, 1)  # Светло-серый фон
+            Rectangle(pos=user_info_panel.pos, size=user_info_panel.size)
+        
+        user_info_panel.bind(pos=self.update_rect, size=self.update_rect)
+        
+        # Имя пользователя
+        name_label = Label(
+            text='Петрова Елена Сергеевна',
+            color=(0, 0, 0, 1),
+            font_size=title_font_size,
+            bold=True,
+            size_hint=(1, None),
+            height=dp(40),
+            halign='left'
+        )
+        name_label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        # Должность
+        position_label = Label(
+            text='Глава отдела кадров',
+            color=(0.3, 0.3, 0.3, 1),
+            font_size=font_size,
+            size_hint=(1, None),
+            height=dp(30),
+            halign='left'
+        )
+        position_label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        # Контактная информация
+        contact_info = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            height=dp(80),
+            spacing=dp(5)
+        )
+        
+        email_label = Label(
+            text='Email: petrova.hr@metran.ru',
+            color=(0.3, 0.3, 0.3, 1),
+            font_size=info_font_size,
+            size_hint=(1, None),
+            height=dp(20),
+            halign='left'
+        )
+        email_label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        phone_label = Label(
+            text='Телефон: +7 (351) 799-51-51',
+            color=(0.3, 0.3, 0.3, 1),
+            font_size=info_font_size,
+            size_hint=(1, None),
+            height=dp(20),
+            halign='left'
+        )
+        phone_label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        department_label = Label(
+            text='Отдел: Управление персоналом',
+            color=(0.3, 0.3, 0.3, 1),
+            font_size=info_font_size,
+            size_hint=(1, None),
+            height=dp(20),
+            halign='left'
+        )
+        department_label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        # Добавляем все виджеты в контактную информацию
+        contact_info.add_widget(email_label)
+        contact_info.add_widget(phone_label)
+        contact_info.add_widget(department_label)
+        
+        # Добавляем все виджеты на панель информации
+        user_info_panel.add_widget(name_label)
+        user_info_panel.add_widget(position_label)
+        user_info_panel.add_widget(contact_info)
+        user_info_panel.add_widget(Widget())  # Растягивающийся виджет для заполнения пространства
+        
+        # Добавляем панели на секцию профиля
+        profile_section.add_widget(avatar_panel)
+        profile_section.add_widget(user_info_panel)
+        
+        # Добавляем секцию профиля в основной макет
+        main_layout.add_widget(profile_section)
+        
+        # ====================== СЕКЦИЯ СТАТИСТИКИ HR ======================
+        # Заголовок секции
+        stats_title = Label(
+            text='Статистика отдела кадров',
+            color=(0, 0, 0, 1),
+            font_size=title_font_size,
+            size_hint=(1, None),
+            height=dp(40),
+            halign='left'
+        )
+        stats_title.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        main_layout.add_widget(stats_title)
+        
+        # Контейнер для статистики
+        stats_container = BoxLayout(
+            orientation='horizontal',
+            size_hint=(1, None),
+            height=stats_section_height,
+            spacing=dp(20)
+        )
+        
+        # Левая панель статистики
+        left_stats = BoxLayout(
+            orientation='vertical',
+            size_hint=(0.5, 1),
+            spacing=dp(10)
+        )
+        
+        with left_stats.canvas.before:
+            Color(0.95, 0.95, 0.95, 1)  # Светло-серый фон
+            Rectangle(pos=left_stats.pos, size=left_stats.size)
+        
+        left_stats.bind(pos=self.update_rect, size=self.update_rect)
+        
+        # Заголовок левой панели
+        left_stats_title = Label(
+            text='Показатели персонала',
+            color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size,
+            bold=True,
+            size_hint=(1, None),
+            height=dp(30)
+        )
+        
+        # Статистика для левой панели
+        stats_items_left = [
+            ('Всего сотрудников:', '245'),
+            ('Новых сотрудников (30 дн):', '12'),
+            ('Текучесть кадров:', '5%'),
+            ('Средний стаж:', '4.3 года')
+        ]
+        
+        left_stats.add_widget(left_stats_title)
+        
+        for label_text, value_text in stats_items_left:
+            item_layout = BoxLayout(
+                orientation='horizontal',
+                size_hint=(1, None),
+                height=dp(30)
+            )
+            
+            label = Label(
+                text=label_text,
+                color=(0.3, 0.3, 0.3, 1),
+                font_size=info_font_size,
+                size_hint=(0.7, 1),
+                halign='left'
+            )
+            label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+            
+            value = Label(
+                text=value_text,
+                color=(0, 0, 0, 1),
+                font_size=info_font_size,
+                bold=True,
+                size_hint=(0.3, 1),
+                halign='right'
+            )
+            value.bind(size=lambda s, w: setattr(s, 'text_size', w))
+            
+            item_layout.add_widget(label)
+            item_layout.add_widget(value)
+            left_stats.add_widget(item_layout)
+        
+        # Правая панель статистики
+        right_stats = BoxLayout(
+            orientation='vertical',
+            size_hint=(0.5, 1),
+            spacing=dp(10)
+        )
+        
+        with right_stats.canvas.before:
+            Color(0.95, 0.95, 0.95, 1)  # Светло-серый фон
+            Rectangle(pos=right_stats.pos, size=right_stats.size)
+        
+        right_stats.bind(pos=self.update_rect, size=self.update_rect)
+        
+        # Заголовок правой панели
+        right_stats_title = Label(
+            text='Эффективность HR',
+            color=(0.2, 0.4, 0.8, 1),
+            font_size=font_size,
+            bold=True,
+            size_hint=(1, None),
+            height=dp(30)
+        )
+        
+        # Статистика для правой панели
+        stats_items_right = [
+            ('Закрытые вакансии (мес):', '18'),
+            ('Время закрытия вакансии:', '14 дн'),
+            ('Удовлетворенность:', '92%'),
+            ('Выполнение KPI:', '97%')
+        ]
+        
+        right_stats.add_widget(right_stats_title)
+        
+        for label_text, value_text in stats_items_right:
+            item_layout = BoxLayout(
+                orientation='horizontal',
+                size_hint=(1, None),
+                height=dp(30)
+            )
+            
+            label = Label(
+                text=label_text,
+                color=(0.3, 0.3, 0.3, 1),
+                font_size=info_font_size,
+                size_hint=(0.7, 1),
+                halign='left'
+            )
+            label.bind(size=lambda s, w: setattr(s, 'text_size', w))
+            
+            value = Label(
+                text=value_text,
+                color=(0, 0, 0, 1),
+                font_size=info_font_size,
+                bold=True,
+                size_hint=(0.3, 1),
+                halign='right'
+            )
+            value.bind(size=lambda s, w: setattr(s, 'text_size', w))
+            
+            item_layout.add_widget(label)
+            item_layout.add_widget(value)
+            right_stats.add_widget(item_layout)
+        
+        # Добавляем панели статистики в контейнер
+        stats_container.add_widget(left_stats)
+        stats_container.add_widget(right_stats)
+        
+        # Добавляем контейнер статистики в основной макет
+        main_layout.add_widget(stats_container)
+        
+        # ====================== СЕКЦИЯ МЕНЮ HR ======================
+        # Заголовок секции
+        menu_title = Label(
+            text='Управление персоналом',
+            color=(0, 0, 0, 1),
+            font_size=title_font_size,
+            size_hint=(1, None),
+            height=dp(40),
+            halign='left'
+        )
+        menu_title.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        main_layout.add_widget(menu_title)
+        
+        # Контейнер для кнопок меню
+        menu_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            height=dp(230),
+            spacing=dp(10)
+        )
+        
+        # Список пунктов меню
+        menu_items = [
+            ('Управление сотрудниками', (0.2, 0.5, 0.2, 1)),
+            ('Обработка заявок', (0.2, 0.4, 0.8, 1)),
+            ('Отчеты и аналитика', (0.6, 0.3, 0.1, 1)),
+            ('Управление обучением', (0.5, 0.2, 0.7, 1))
+        ]
+        
+        for text, bg_color in menu_items:
+            btn = Button(
+                text=text,
+                background_normal='',
+                background_color=bg_color,
+                color=(1, 1, 1, 1),
+                size_hint=(1, None),
+                height=button_height,
+                font_size=font_size
+            )
+            menu_container.add_widget(btn)
+        
+        main_layout.add_widget(menu_container)
+        
+        # ====================== СЕКЦИЯ НАСТРОЕК ПРОФИЛЯ ======================
+        # Заголовок секции
+        settings_title = Label(
+            text='Настройки профиля',
+            color=(0, 0, 0, 1),
+            font_size=title_font_size,
+            size_hint=(1, None),
+            height=dp(40),
+            halign='left'
+        )
+        settings_title.bind(size=lambda s, w: setattr(s, 'text_size', w))
+        
+        main_layout.add_widget(settings_title)
+        
+        # Контейнер для кнопок настроек
+        settings_container = BoxLayout(
+            orientation='vertical',
+            size_hint=(1, None),
+            height=dp(170),
+            spacing=dp(10)
+        )
+        
+        # Список настроек
+        settings = [
+            ('Изменить личные данные', (0.2, 0.4, 0.8, 1)),
+            ('Настройки уведомлений', (0.2, 0.4, 0.8, 1)),
+            ('Настройки приватности', (0.2, 0.4, 0.8, 1))
+        ]
+        
+        for text, bg_color in settings:
+            btn = Button(
+                text=text,
+                background_normal='',
+                background_color=bg_color,
+                color=(1, 1, 1, 1),
+                size_hint=(1, None),
+                height=button_height,
+                font_size=font_size
+            )
+            settings_container.add_widget(btn)
+        
+        main_layout.add_widget(settings_container)
+        
+        # Добавляем отступ перед кнопками
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        # Добавляем кнопку выхода из профиля
+        logout_btn = Button(
+            text='Выйти из аккаунта',
+            background_normal='',
+            background_color=(0.8, 0.2, 0.2, 1),  # Красный цвет для кнопки выхода
+            color=(1, 1, 1, 1),
+            size_hint=(1, None),
+            height=button_height,
+            font_size=font_size
+        )
+        
+        main_layout.add_widget(logout_btn)
+        
+        # Добавляем отступ внизу
+        main_layout.add_widget(Widget(size_hint_y=None, height=dp(20)))
+        
+        scroll_view.add_widget(main_layout)
+        self.content_area.add_widget(scroll_view)
+    
+    def show_filechooser(self, instance):
+        # Создаем всплывающее окно с выбором файла
+        content = BoxLayout(orientation='vertical', spacing=dp(5))
+        
+        # Заголовок
+        title_label = Label(
+            text='Выберите изображение',
+            size_hint_y=None,
+            height=dp(30)
+        )
+        
+        # Выбор файла
+        file_chooser = FileChooserIconView(
+            filters=['*.png', '*.jpg', '*.jpeg'],
+            path=os.path.expanduser('~')  # Начинаем с домашней директории
+        )
+        
+        # Кнопки управления
+        buttons = BoxLayout(
+            size_hint_y=None,
+            height=dp(40),
+            spacing=dp(5)
+        )
+        
+        # Кнопка отмены
+        cancel_btn = Button(text='Отмена')
+        cancel_btn.bind(on_release=lambda x: popup.dismiss())
+        
+        # Кнопка выбора
+        select_btn = Button(text='Выбрать')
+        select_btn.bind(on_release=lambda x: self.select_image(file_chooser.selection, popup))
+        
+        # Добавляем кнопки в контейнер
+        buttons.add_widget(cancel_btn)
+        buttons.add_widget(select_btn)
+        
+        # Собираем все в контейнер
+        content.add_widget(title_label)
+        content.add_widget(file_chooser)
+        content.add_widget(buttons)
+        
+        # Создаем и показываем всплывающее окно
+        popup = Popup(
+            title='Выбор изображения',
+            content=content,
+            size_hint=(0.9, 0.9)
+        )
+        popup.open()
+    
+    def select_image(self, selection, popup):
+        if selection:
+            try:
+                # Получаем путь к выбранному файлу
+                selected_file = selection[0]
+                
+                # Копируем и масштабируем изображение
+                self.process_and_save_image(selected_file)
+                
+                # Обновляем виджет с изображением
+                if isinstance(self.avatar_image, Label):
+                    # Если это метка (заглушка), удаляем её и создаем Image
+                    container = self.avatar_image.parent
+                    container.remove_widget(self.avatar_image)
+                    self.avatar_image = Image(
+                        source=self.avatar_path,
+                        size_hint=(1, 0.8)
+                    )
+                    container.add_widget(self.avatar_image, index=1)
+                else:
+                    # Если изображение уже существует, обновляем источник
+                    self.avatar_image.source = self.avatar_path
+                    # Перезагружаем изображение, чтобы отобразить изменения
+                    self.avatar_image.reload()
+                
+                # Устанавливаем флаг наличия аватара
+                self.has_avatar = True
+                
+                # Закрываем всплывающее окно
+                popup.dismiss()
+                
+                # Показываем уведомление об успешной загрузке
+                self.show_notification('Изображение успешно загружено')
+            except Exception as e:
+                # Показываем уведомление об ошибке
+                self.show_notification(f'Ошибка загрузки изображения: {str(e)}')
+    
+    def process_and_save_image(self, file_path):
+        # Открываем изображение с использованием PIL
+        img = PILImage.open(file_path)
+        
+        # Определяем максимальный размер для аватара
+        max_size = (300, 300)
+        
+        # Масштабируем изображение с сохранением пропорций
+        img.thumbnail(max_size, PILImage.LANCZOS)
+        
+        # Сохраняем изображение
+        img.save(self.avatar_path, 'JPEG', quality=85)
+    
+    def show_notification(self, message):
+        # Создаем простое всплывающее уведомление
+        content = BoxLayout(orientation='vertical', padding=dp(10))
+        
+        # Текст уведомления
+        msg_label = Label(
+            text=message,
+            size_hint_y=None,
+            height=dp(40)
+        )
+        
+        # Кнопка закрытия
+        close_btn = Button(
+            text='OK',
+            size_hint_y=None,
+            height=dp(40)
+        )
+        
+        # Добавляем элементы в контейнер
+        content.add_widget(msg_label)
+        content.add_widget(close_btn)
+        
+        # Создаем всплывающее окно
+        popup = Popup(
+            title='Уведомление',
+            content=content,
+            size_hint=(0.7, None),
+            height=dp(150)
+        )
+        
+        # Привязываем функцию закрытия к кнопке
+        close_btn.bind(on_release=popup.dismiss)
+        
+        # Показываем уведомление
+        popup.open()
+        
+    def update_rect(self, instance, value):
+        # Обновляем фоновый прямоугольник при изменении размеров
+        if hasattr(instance, 'bg_rect'):
+            instance.bg_rect.pos = instance.pos
+            instance.bg_rect.size = instance.size
+        elif hasattr(self, 'avatar_rect'):
+            self.avatar_rect.pos = instance.pos
+            self.avatar_rect.size = instance.size
 
 class MainScreen(Screen):
     def __init__(self, **kwargs):
@@ -1011,6 +1646,20 @@ class MainScreen(Screen):
 # Добавляем класс приложения для самостоятельного запуска
 class StandaloneButtonApp(App):
     def build(self):
+        # Регистрируем шрифт для цифр
+        fonts_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts')
+        
+        # Создаем директорию для шрифтов, если она не существует
+        if not os.path.exists(fonts_path):
+            os.makedirs(fonts_path)
+            
+        # Комментируем регистрацию шрифта, будем использовать стандартный Roboto
+        # try:
+        #     LabelBase.register(name='RobotoMono-Regular', 
+        #                      fn_regular=os.path.join(fonts_path, 'RobotoMono-Regular.ttf'))
+        # except Exception as e:
+        #     print(f"Ошибка при регистрации шрифта: {e}")
+        
         # Получаем размеры экрана
         screen_width = Window.width
         screen_height = Window.height

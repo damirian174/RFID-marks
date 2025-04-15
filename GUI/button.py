@@ -424,13 +424,61 @@ class MainApp(QMainWindow):
                 message = QMessageBox()
                 message.setWindowTitle('Предупреждение')
                 message.setText(f'У пользователя уже есть активная сессия')
-                message.setStandardButtons(QMessageBox.Ok)
+                message.setIcon(QMessageBox.Warning)
+                
+                # Используем addButton вместо setButtonText для избежания предупреждений
+                cancel_button = message.addButton("Отмена", QMessageBox.RejectRole)
+                yes_button = message.addButton("Войти всё равно", QMessageBox.AcceptRole)
+                message.setDefaultButton(cancel_button)
                 
                 # Установка иконки
                 icon_path = self.get_ico_path("favicon.ico")
                 message.setWindowIcon(QIcon(icon_path))
                 
                 message.exec()
+                
+                if message.clickedButton() == yes_button:
+                    # Получаем данные о пользователе без создания новой сессии
+                    data_user = {"type": "user", "uid": self.uid}
+                    user_data_response = database(data_user)
+                    
+                    if user_data_response:
+                        user_data = user_data_response.get("data", user_data_response)
+                        surname = user_data.get("surname", "")
+                        name = user_data.get("name", "")
+                        
+                        if surname and name:
+                            full_name = f"{surname} {name}"
+                            config.data = True
+                            
+                            # Устанавливаем необходимые переменные без отправки startSession
+                            config.user = full_name
+                            config.Name = f"{surname} {name}"
+                            self.last_name = surname
+                            self.first_name = name
+                            self.full_name = full_name
+                            config.id = user_data["id"]
+                            config.session_on = True  # Считаем сессию активной
+                            
+                            # Обновляем имя пользователя в разных страницах
+                            self.work_ui.updateName(name=full_name)
+                            self.tests_ui.updateName(name=full_name)
+                            self.packing_ui.updateName(name=full_name)
+                            self.mark_ui.updateName(name=full_name)
+                            
+                            # Переходим на рабочую страницу
+                            self.stacked_widget.setCurrentWidget(self.work_page)
+                            log_event(f"Пользователь {full_name} вошел с существующей сессией")
+                            config.auth = True
+                            self.is_verified = False
+                            self.work_ui.running = True
+                            self.work_ui.start_timer()
+                        else:
+                            log_error(f"Не удалось получить данные пользователя: {user_data}")
+                            QMessageBox.warning(self, "Ошибка", "Не удалось получить данные пользователя")
+                    else:
+                        log_error(f"Ошибка получения данных пользователя: {user_data_response}")
+                        QMessageBox.warning(self, "Ошибка", "Ошибка получения данных пользователя")
 
 
     def get_ico_path(self, image_name):

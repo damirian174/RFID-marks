@@ -2,6 +2,8 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.metrics import dp
+from kivy.core.text import LabelBase  # Для регистрации шрифтов
+import os
 
 from login import LoginScreen
 from button import MainScreen
@@ -9,6 +11,20 @@ from statistics import StatisticsScreen
 
 class MetranApp(App):
     def build(self):
+        # Регистрируем шрифт для цифр
+        fonts_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts')
+        
+        # Создаем директорию для шрифтов, если она не существует
+        if not os.path.exists(fonts_path):
+            os.makedirs(fonts_path)
+            
+        # Комментируем регистрацию шрифта, будем использовать стандартный Roboto
+        # try:
+        #     LabelBase.register(name='RobotoMono-Regular', 
+        #                      fn_regular=os.path.join(fonts_path, 'RobotoMono-Regular.ttf'))
+        # except Exception as e:
+        #     print(f"Ошибка при регистрации шрифта: {e}")
+        
         # Устанавливаем полноэкранный режим
         Window.maximize()
         
