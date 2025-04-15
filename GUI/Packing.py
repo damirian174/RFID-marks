@@ -12,6 +12,8 @@ import database
 from datetime import datetime
 from logger import log_event, log_error
 from problema_window import show_problem_dialog  # Импорт функции для показа окна проблемы
+import serial.tools.list_ports
+from COM import SerialManager, SerialListener
 
 
 class AdaptivePacking(QMainWindow):
@@ -141,6 +143,10 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
+        
+        # Добавляем аттрибут для хранения ссылки на serial_manager
+        self.serial_manager = None
+
         # Верхняя панель (Header)
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
@@ -551,8 +557,33 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
         self.pushButton.clicked.connect(self.update2)
+        self.pushButton_4.clicked.connect(self.init_problem)
+        self.pushButton_3.clicked.connect(self.kocak)
+
+        # Добавляем кнопку переподключения к МЭТР
+        self.reconnect_btn = QPushButton("Переподключить МЭТР")
+        self.reconnect_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #004B8D;
+                color: white;
+                font-size: 14px;
+                padding: 8px 15px;
+                border-radius: 5px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            QPushButton:hover {
+                background-color: #4A6ED9;
+            }
+        """)
+        self.reconnect_btn.clicked.connect(self.reconnect_metr)
+        
+        # Добавляем в конец основной разметки
+        self.verticalLayout.addWidget(self.reconnect_btn)
+        
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
+
     def get_image_path(self, image_name):
         """
         Получение правильного пути к изображению в зависимости от того,
@@ -766,27 +797,22 @@ class Ui_MainWindow(object):
             # Сбрасываем чекбоксы
             self.checkBox.setChecked(False)
     def detail(self, data=None):
-        if data:
-            self.name.setText(str(data['name']))
-            self.serial.setText(str(data['serial_number']))
-            if data['defective']:
-                x = "Бракованная"
-            else:
-                x = "Годная"
-            self.defective.setText(x)
-            self.stage.setText(str(data['stage']))
-            if data['sector']:
-                y = str(data['sector'])
-            else:
-                y = "Не хранится"
-            self.sector.setText(y)
-            self.change_color(2)
-        else:
-            self.name.setText("Отсканируй деталь")
-            self.serial.setText("Отсканируй деталь")
-            self.defective.setText("Отсканируй деталь")
-            self.stage.setText("Отсканируй деталь")
-            self.sector.setText("Отсканируй деталь")
+        # Заполняем поля данными
+        self.name.setText("")
+        self.serial.setText("")
+        self.defective.setText("")
+        self.stage.setText("")
+        self.sector.setText("")
+        
+        # Очищаем все поля перед обновлением
+        name, serial, defective, stage, sector = getDetail(data) if data else ("", "", "", "", "")
+        self.name.setText(name)
+        self.serial.setText(serial)
+        self.defective.setText(defective)
+        self.stage.setText(stage)
+        self.sector.setText(sector)
+        
+        # Удаляем создание кнопки, так как она теперь создается в setupUi
 
     def away(self):
         self.centralwidget.setEnabled(False)
@@ -937,49 +963,69 @@ class Ui_MainWindow(object):
             msg_box.exec()
 
     def reset_detail(self):
-        """
-        Сбрасывает информацию о детали в интерфейсе без изменения её состояния на сервере
-        """
-        # Показываем диалог подтверждения
-        msg_box = QMessageBox()
-        msg_box.setWindowTitle("Подтверждение сброса")
-        msg_box.setText("Вы уверены, что хотите сбросить информацию о детали?\nЭто действие не изменит статус детали на сервере.")
-        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        msg_box.setDefaultButton(QMessageBox.No)
-        self.style_message_box(msg_box)
+        self.name.setText("")
+        self.serial.setText("")
+        self.defective.setText("")
+        self.stage.setText("")
+        self.sector.setText("")
+        log_event("Информация о детали сброшена пользователем без изменения статуса на сервере")
         
-        # Устанавливаем иконку
-        icon_path = self.get_image_path("favicon.ico")
-        msg_box.setWindowIcon(QIcon(icon_path))
-        
-        # Если пользователь подтвердил действие
-        if msg_box.exec() == QMessageBox.Yes:
-            # Сбрасываем отображение информации о детали
-            self.detail(False)
+    # Функция для переподключения к МЭТР
+    def reconnect_metr(self):
+        try:
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Переподключение к МЭТР")
+            message_box.setText("Выполняется переподключение к МЭТР...")
+            message_box.setStandardButtons(QMessageBox.NoButton)
+            message_box.setIcon(QMessageBox.Information)
+            self.style_message_box(message_box)
             
-            # Сбрасываем чекбоксы (если они есть в Packing.py)
-            if hasattr(self, 'checkBox'):
-                self.checkBox.setChecked(False)
-            if hasattr(self, 'checkBox_2'):
-                self.checkBox_2.setChecked(False)
-            if hasattr(self, 'checkBox_3'):
-                self.checkBox_3.setChecked(False)
+            # Показываем сообщение без блокировки
+            message_box.show()
+            QApplication.processEvents()
             
-            # Сбрасываем глобальные переменные в detail_work
-            from detail_work import data_detail
-            import detail_work
+            # Находим МЭТР
+            ports = serial.tools.list_ports.comports()
+            metr_port = None
+            for port in ports:
+                if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+                    metr_port = port.device
+                    break
             
-            # Сбрасываем переменные, но не вызываем end_work(), 
-            # так как это изменило бы статус на сервере
-            detail_work.data_detail = None
-            detail_work.detail_work = False
+            if metr_port:
+                # Если у нас уже есть serial_manager, закрываем его
+                if hasattr(self, 'serial_manager') and self.serial_manager:
+                    try:
+                        # Закрываем старое соединение
+                        self.serial_manager.close()
+                    except Exception as e:
+                        log_error(f"Ошибка при закрытии порта: {e}")
+                
+                # Создаем новый serial_manager
+                self.serial_manager = SerialManager(metr_port, 9600)
+                
+                # Создаем новый слушатель если нужно
+                if hasattr(self, 'serial_listener') and self.serial_listener:
+                    self.serial_listener.stop()
+                
+                # Обновляем результат
+                message_box.setText(f"МЭТР успешно подключен через порт {metr_port}")
+                message_box.setIcon(QMessageBox.Information)
+                message_box.setStandardButtons(QMessageBox.Ok)
+                log_event(f"МЭТР подключен через порт {metr_port}")
+            else:
+                # Обновляем результат при неудаче
+                message_box.setText("МЭТР не найден. Проверьте подключение")
+                message_box.setIcon(QMessageBox.Warning)
+                message_box.setStandardButtons(QMessageBox.Ok)
+                log_error("МЭТР не найден при попытке переподключения")
             
-            # Сброс переменных в config
-            import config
-            config.detail = None
-            config.work = False
+            # Обновляем сообщение
+            message_box.exec_()
             
-            log_event("Информация о детали сброшена пользователем без изменения статуса на сервере")
+        except Exception as e:
+            log_error(f"Ошибка при переподключении к МЭТР: {e}")
+            QMessageBox.critical(self.centralwidget, "Ошибка", f"Ошибка при переподключении: {e}")
 
 if __name__ == "__main__":
     import sys

@@ -1,0 +1,217 @@
+2025-04-15 11:58:58 - INFO - logger - <module> - Приложение запущено
+2025-04-15 11:58:58 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-15 11:58:58 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-15 11:58:58 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-15 11:58:58 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-15 11:58:58 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-15 11:58:58 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-15 11:59:00 - INFO - logger - log_event - Сервер доступен
+2025-04-15 11:59:00 - INFO - logger - log_event - Сервер доступен
+2025-04-15 11:59:00 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-15 11:59:00 - INFO - logger - log_event - SerialManager: Успешно открыт порт COM8
+2025-04-15 11:59:00 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:59:00 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:59:00 - INFO - logger - log_event - Запущен мониторинг подключения к Arduino
+2025-04-15 11:59:02 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 11:59:02 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 11:59:02 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 11:59:02 - INFO - logger - log_event - System Arduino init
+2025-04-15 11:59:02 - INFO - logger - log_event - Raw data (bytes): b'999951623_user..\r\n'
+2025-04-15 11:59:02 - INFO - logger - log_event - Decoded data (str): 999951623_user..
+2025-04-15 11:59:02 - INFO - logger - log_event - Parsed Data: ['999951623', 'user']
+2025-04-15 11:59:02 - INFO - logger - log_event - Send data to handle_serial_data: ['999951623', 'user']
+2025-04-15 11:59:02 - INFO - logger - log_event - Данные перед очисткой: ['999951623', 'user']
+2025-04-15 11:59:02 - INFO - logger - log_event - Очищенные данные: ['999951623', 'user']
+2025-04-15 11:59:02 - INFO - logger - log_event - Пользователь с UID: 999951623
+2025-04-15 11:59:02 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 999951623
+2025-04-15 11:59:02 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '999951623', 'id': None}
+2025-04-15 11:59:02 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:59:02 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:59:02 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:59:02 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 11:59:02 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 11:59:02 - INFO - logger - log_event - Get NULL
+2025-04-15 11:59:04 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Артём', 'surname': 'Соколов', 'work_description': 'Без детали'}
+2025-04-15 11:59:04 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Артём', 'surname': 'Соколов', 'work_description': 'Без детали', 'id': None}
+2025-04-15 11:59:05 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 11:59:05 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-15 11:59:05 - INFO - logger - log_event - Сессия успешно начата: Соколов Артём
+2025-04-15 11:59:05 - INFO - logger - log_event - Устанавливаем переменную config.user: Соколов Артём
+2025-04-15 11:59:05 - INFO - logger - log_event - Устанавливаем переменную config.Name: Соколов Артём
+2025-04-15 11:59:05 - INFO - logger - log_event - Установлено значение config.Name: Соколов Артём
+2025-04-15 11:59:05 - INFO - logger - log_event - Успешная аутентификация пользователя: Соколов Артём
+2025-04-15 11:59:09 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:11 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:13 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:15 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:17 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:17 - ERROR - logger - log_error - Ошибка: SerialListener: Превышено максимальное количество попыток переподключения
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:17 - ERROR - logger - log_error - Ошибка: Получен сигнал о потере соединения с Arduino
+NoneType: None
+2025-04-15 11:59:19 - INFO - logger - log_event - Остановлен текущий слушатель COM-порта
+2025-04-15 11:59:19 - INFO - logger - log_event - SerialManager: Порт COM8 закрыт
+2025-04-15 11:59:19 - INFO - logger - log_event - Закрыто текущее соединение с COM-портом
+2025-04-15 11:59:19 - INFO - logger - log_event - SerialManager: Успешно открыт порт COM8
+2025-04-15 11:59:19 - INFO - logger - log_event - Создан новый SerialManager с портом COM8
+2025-04-15 11:59:19 - INFO - logger - log_event - Запущен новый слушатель COM-порта
+2025-04-15 11:59:19 - INFO - logger - log_event - Обновлена ссылка на SerialManager в Ui_MainWindow
+2025-04-15 11:59:19 - INFO - logger - log_event - Обновлена ссылка на SerialManager в Ui_MainWindow
+2025-04-15 11:59:19 - INFO - logger - log_event - Глобальное переподключение к Arduino выполнено успешно
+2025-04-15 11:59:21 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 11:59:21 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 11:59:21 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 11:59:21 - INFO - logger - log_event - System Arduino init
+2025-04-15 11:59:24 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:26 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:28 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:30 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:32 - ERROR - logger - log_error - Ошибка: SerialListener: Ошибка COM-порта: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:32 - ERROR - logger - log_error - Ошибка: SerialListener: Превышено максимальное количество попыток переподключения
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 89, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:59:32 - ERROR - logger - log_error - Ошибка: Получен сигнал о потере соединения с Arduino
+NoneType: None
+2025-04-15 11:59:34 - INFO - logger - log_event - Остановлен текущий слушатель COM-порта
+2025-04-15 11:59:34 - INFO - logger - log_event - SerialManager: Порт COM8 закрыт
+2025-04-15 11:59:34 - INFO - logger - log_event - Закрыто текущее соединение с COM-портом
+2025-04-15 11:59:34 - ERROR - logger - log_error - Ошибка: Arduino не найден при попытке глобального переподключения
+NoneType: None
+2025-04-15 11:59:40 - ERROR - logger - log_error - Ошибка: Обнаружен закрытый COM-порт, попытка переподключения
+NoneType: None
+2025-04-15 11:59:41 - INFO - logger - log_event - Остановлен текущий слушатель COM-порта
+2025-04-15 11:59:41 - INFO - logger - log_event - Закрыто текущее соединение с COM-портом
+2025-04-15 11:59:41 - ERROR - logger - log_error - Ошибка: Arduino не найден при попытке глобального переподключения
+NoneType: None
+2025-04-15 11:59:50 - ERROR - logger - log_error - Ошибка: Обнаружен закрытый COM-порт, попытка переподключения
+NoneType: None
+2025-04-15 11:59:51 - INFO - logger - log_event - Остановлен текущий слушатель COM-порта
+2025-04-15 11:59:51 - INFO - logger - log_event - Закрыто текущее соединение с COM-портом
+2025-04-15 11:59:51 - ERROR - logger - log_error - Ошибка: Arduino не найден при попытке глобального переподключения
+NoneType: None
+2025-04-15 12:00:20 - ERROR - logger - log_error - Ошибка: Обнаружен закрытый COM-порт, попытка переподключения
+NoneType: None
+2025-04-15 12:00:21 - INFO - logger - log_event - Остановлен текущий слушатель COM-порта
+2025-04-15 12:00:21 - INFO - logger - log_event - Закрыто текущее соединение с COM-портом
+2025-04-15 12:00:21 - INFO - logger - log_event - SerialManager: Успешно открыт порт COM8
+2025-04-15 12:00:21 - INFO - logger - log_event - Создан новый SerialManager с портом COM8
+2025-04-15 12:00:21 - INFO - logger - log_event - Запущен новый слушатель COM-порта
+2025-04-15 12:00:21 - INFO - logger - log_event - Обновлена ссылка на SerialManager в Ui_MainWindow
+2025-04-15 12:00:21 - INFO - logger - log_event - Обновлена ссылка на SerialManager в Ui_MainWindow
+2025-04-15 12:00:21 - INFO - logger - log_event - Глобальное переподключение к Arduino выполнено успешно
+2025-04-15 12:00:22 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 12:00:22 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 12:00:22 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 12:00:22 - INFO - logger - log_event - System Arduino init
+2025-04-15 12:00:24 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-15 12:00:24 - INFO - logger - log_event - Завершаем сессию пользователя: Артём Соколов
+2025-04-15 12:00:24 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 12:00:27 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 12:00:27 - INFO - logger - log_event - Сессия успешно завершена: Артём Соколов
+2025-04-15 12:00:27 - INFO - logger - log_event - SerialManager: Порт COM8 закрыт
+2025-04-15 12:00:27 - INFO - logger - log_application_exit - Приложение завершено

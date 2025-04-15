@@ -11,6 +11,8 @@ from datetime import datetime
 import database
 from problema_window import show_problem_dialog  # Импорт функции для показа окна проблемы
 from logger import log_event
+import serial.tools.list_ports
+from COM import SerialManager, SerialListener
 
 
 class AdaptiveWork(QMainWindow):
@@ -191,9 +193,9 @@ class Ui_MainWindow(object):
 "background-color: #004B8D;\n"
 "font-weight: 700;\n"
         }
-        QPushButton:hover {
+        QPushButton:hover {{
                 background-color: #4A6ED9;
-        }
+        }}
         """)
         self.horizontalLayout.addWidget(self.pushButton_7)
 
@@ -208,9 +210,9 @@ class Ui_MainWindow(object):
 "background-color: #004B8D;\n"
 "font-weight: 700;\n"
         }
-        QPushButton:hover {
+        QPushButton:hover {{
                 background-color: #4A6ED9;
-        }
+        }}
         """)
         self.horizontalLayout.addWidget(self.pushButton_8)
 
@@ -226,9 +228,9 @@ class Ui_MainWindow(object):
 "font-weight: 700;\n"
 
         }
-        QPushButton:hover {
+        QPushButton:hover {{
                 background-color: #4A6ED9;
-        }
+        }}
         """)
         self.horizontalLayout.addWidget(self.pushButton_2)
 
@@ -243,9 +245,9 @@ class Ui_MainWindow(object):
 "background-color: #004B8D;\n"
 "font-weight: 700;\n"
 }
-        QPushButton:hover {
+        QPushButton:hover {{
                 background-color: #4A6ED9;
-        }
+        }}
         """)
         self.horizontalLayout.addWidget(self.pushButton_5)
 
@@ -260,9 +262,9 @@ class Ui_MainWindow(object):
 "background-color: #004B8D;\n"
 "font-weight: 700;\n"
 }
-        QPushButton:hover {
+        QPushButton:hover {{
                 background-color: #4A6ED9;
-        }
+        }}
         """)
         self.horizontalLayout.addWidget(self.pushButton_6)
         # Добавляем шапку в основной макет
@@ -523,7 +525,28 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
         self.pushButton.clicked.connect(self.update2)
-        # Подключение слотов
+
+        # Добавляем кнопку переподключения к МЭТР
+        self.reconnect_btn = QPushButton("Переподключить МЭТР")
+        self.reconnect_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #004B8D;
+                color: white;
+                font-size: 14px;
+                padding: 8px 15px;
+                border-radius: 5px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            QPushButton:hover {
+                background-color: #4A6ED9;
+            }
+        """)
+        self.reconnect_btn.clicked.connect(self.reconnect_metr)
+        
+        # Добавляем в конец основной разметки
+        self.verticalLayout.addWidget(self.reconnect_btn)
+        
         QMetaObject.connectSlotsByName(MainWindow)
 
         # Таймер
@@ -663,27 +686,21 @@ class Ui_MainWindow(object):
 
 
     def detail(self, data=None):
-        if data:
-            self.name.setText(str(data['name']))
-            self.serial.setText(str(data['serial_number']))
-            if data['defective']:
-                x = "Бракованная"
-            else:
-                x = "Годная"
-            self.defective.setText(x)
-            self.stage.setText(str(data['stage']))
-            if data['sector']:
-                y = str(data['sector'])
-            else:
-                y = "Не хранится"
-            self.sector.setText(y)
-            self.change_color(2)
-        else:
-            self.name.setText("Отсканируй деталь")
-            self.serial.setText("Отсканируй деталь")
-            self.defective.setText("Отсканируй деталь")
-            self.stage.setText("Отсканируй деталь")
-            self.sector.setText("Отсканируй деталь")
+        # Заполняем поля данными
+        self.name.setText("")
+        self.serial.setText("")
+        self.defective.setText("")
+        self.stage.setText("")
+        self.sector.setText("")
+        
+        # Очищаем все поля перед обновлением
+        name, serial, defective, stage, sector = getDetail(data) if data else ("", "", "", "", "")
+        self.name.setText(name)
+        self.serial.setText(serial)
+        self.defective.setText(defective)
+        self.stage.setText(stage)
+        self.sector.setText(sector)
+        self.change_color(2)
 
     def away(self):
         self.centralwidget.setEnabled(False)
@@ -826,6 +843,36 @@ class Ui_MainWindow(object):
             config.work = False
             
             log_event("Информация о детали сброшена пользователем без изменения статуса на сервере")
+
+    def reconnect_metr(self):
+        """Функция переподключения к МЭТР"""
+        try:
+            # Пытаемся закрыть существующее соединение
+            if hasattr(self, 'serial_manager') and self.serial_manager:
+                self.serial_manager.close()
+            
+            # Находим МЭТР
+            ports = serial.tools.list_ports.comports()
+            metr_port = None
+            for port in ports:
+                if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+                    metr_port = port.device
+                    break
+            
+            if metr_port:
+                try:
+                    self.serial_manager = SerialManager(metr_port, 9600)
+                    QMessageBox.information(None, "Подключение", f"МЭТР успешно подключен через порт {metr_port}")
+                    return True
+                except Exception as e:
+                    QMessageBox.critical(None, "Ошибка", f"Ошибка при подключении к МЭТР: {e}")
+            else:
+                QMessageBox.warning(None, "Предупреждение", "МЭТР не найден. Проверьте подключение")
+            
+            return False
+        except Exception as e:
+            QMessageBox.critical(None, "Ошибка", f"Ошибка при переподключении к МЭТР: {e}")
+            return False
 
 
 if __name__ == "__main__":

@@ -13,7 +13,8 @@ from Test import Ui_MainWindow as TestsUI
 from Packing import Ui_MainWindow as PackingUI
 from admin import Ui_MainWindow as AdminUI
 import config
-from detail_work import *
+from detail_work import getDetail, start_work, end_work, pause_work, couintine_work, reset_session, update, getUI
+from database import database
 from COM import SerialManager, SerialListener  # Импорт нового менеджера
 from error_test import show_error_dialog
 import serial
@@ -41,7 +42,7 @@ class MainApp(QMainWindow):
         self.full_name = ""
         self.connect_status = False
 
-        self.port = self.find_arduino()
+        self.port = self.find_metr()
         self.serial_manager = SerialManager(self.port, 9600) if self.port else None  # Создаём сразу
         if not self.serial_manager:
             log_error("Не найден подходящий COM-порт")
@@ -52,7 +53,11 @@ class MainApp(QMainWindow):
         if self.serial_manager:
             self.serial_listener = SerialListener(self.serial_manager)
             self.serial_listener.data_received.connect(self.handle_serial_data)
+            self.serial_listener.connection_lost.connect(self.handle_connection_lost)
             self.serial_listener.start()
+            
+        # Запускаем мониторинг подключения
+        self.setup_connection_monitor()
 
     def hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -228,7 +233,7 @@ class MainApp(QMainWindow):
         # Вызываем оригинальный метод для завершения обработки события
         QMainWindow.resizeEvent(self.scan_page, event)
 
-    def find_arduino(self):
+    def find_metr(self):
         ports = serial.tools.list_ports.comports()
         for port in ports:
             if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
@@ -598,6 +603,156 @@ class MainApp(QMainWindow):
             if hasattr(ui, 'pushButton_9'):
                 log_event("Enter to admin_page")
                 ui.pushButton_9.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(admin_page))
+                
+        # Связываем функции переподключения МЭТР если они есть
+        if hasattr(ui, 'reconnect_metr'):
+            # Заменяем локальные функции переподключения на нашу глобальную
+            ui.reconnect_metr = self.reconnect_metr_global
+            
+    # Глобальная функция для переподключения МЭТР, которая обновит все интерфейсы
+    def reconnect_metr_global(self):
+        try:
+            # Создаем информационное окно
+            message_box = QMessageBox()
+            message_box.setWindowTitle("Переподключение к МЭТР")
+            message_box.setText("Выполняется переподключение к МЭТР...")
+            message_box.setStandardButtons(QMessageBox.NoButton)
+            message_box.setIcon(QMessageBox.Information)
+            
+            # Стилизуем окно, используя функцию из текущего интерфейса
+            current_widget = self.stacked_widget.currentWidget()
+            if hasattr(current_widget, 'ui') and hasattr(current_widget.ui, 'style_message_box'):
+                current_widget.ui.style_message_box(message_box)
+            
+            # Показываем сообщение без блокировки
+            message_box.show()
+            QApplication.processEvents()
+            
+            # Даже если serial_manager существует, всегда закрываем старое соединение
+            if hasattr(self, 'serial_listener') and self.serial_listener:
+                try:
+                    self.serial_listener.stop()
+                    log_event("Остановлен текущий слушатель COM-порта")
+                except Exception as e:
+                    log_error(f"Ошибка при остановке слушателя: {e}")
+                    
+            # Закрываем текущее соединение с разрывом привязки
+            if hasattr(self, 'serial_manager') and self.serial_manager:
+                try:
+                    self.serial_manager.close()
+                    log_event("Закрыто текущее соединение с COM-портом")
+                except Exception as e:
+                    log_error(f"Ошибка при закрытии COM-порта: {e}")
+                
+            # Полностью сбрасываем singleton-экземпляр SerialManager
+            SerialManager._instance = None
+            
+            # Находим МЭТР
+            ports = serial.tools.list_ports.comports()
+            metr_port = None
+            for port in ports:
+                if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+                    metr_port = port.device
+                    break
+            
+            if metr_port:
+                # Создаем новый SerialManager с повышенным таймаутом
+                try:
+                    self.serial_manager = SerialManager(metr_port, 9600)
+                    log_event(f"Создан новый SerialManager с портом {metr_port}")
+                    
+                    # Создаем и запускаем новый слушатель
+                    self.serial_listener = SerialListener(self.serial_manager)
+                    self.serial_listener.data_received.connect(self.handle_serial_data)
+                    self.serial_listener.connection_lost.connect(self.handle_connection_lost)
+                    self.serial_listener.start()
+                    log_event("Запущен новый слушатель COM-порта")
+                    
+                    # Обновляем ссылки на serial_manager в каждом интерфейсе
+                    for page_ui in [self.mark_ui, self.work_ui, self.tests_ui, self.packing_ui]:
+                        if hasattr(page_ui, 'serial_manager'):
+                            page_ui.serial_manager = self.serial_manager
+                            log_event(f"Обновлена ссылка на SerialManager в {page_ui.__class__.__name__}")
+                    
+                    # Обновляем сообщение о успехе
+                    message_box.setText(f"МЭТР успешно подключен через порт {metr_port}")
+                    message_box.setIcon(QMessageBox.Information)
+                    message_box.setStandardButtons(QMessageBox.Ok)
+                    log_event("Глобальное переподключение к МЭТР выполнено успешно")
+                    self.connect_status = True
+                except serial.SerialException as e:
+                    # Особый случай - порт найден, но занят или недоступен
+                    message_box.setText(f"Ошибка доступа к порту {metr_port}: {str(e)}\nПопробуйте отключить и снова подключить устройство.")
+                    message_box.setIcon(QMessageBox.Warning)
+                    message_box.setStandardButtons(QMessageBox.Ok)
+                    log_error(f"Ошибка доступа к порту {metr_port}: {e}")
+                    self.connect_status = False
+            else:
+                # Обновляем результат при неудаче поиска порта
+                message_box.setText("МЭТР не найден. Проверьте подключение")
+                message_box.setIcon(QMessageBox.Warning)
+                message_box.setStandardButtons(QMessageBox.Ok)
+                log_error("МЭТР не найден при попытке глобального переподключения")
+                self.connect_status = False
+            
+            # Показываем диалог с результатом
+            message_box.exec_()
+            
+        except Exception as e:
+            log_error(f"Ошибка при глобальном переподключении к МЭТР: {e}")
+            QMessageBox.critical(self, "Ошибка", f"Ошибка при переподключении: {e}")
+
+    # Добавляем функцию для автоматического мониторинга состояния подключения
+    def setup_connection_monitor(self):
+        """Настраивает таймер для мониторинга подключения к МЭТР"""
+        self.connection_timer = QTimer(self)
+        self.connection_timer.timeout.connect(self.check_connection)
+        self.connection_timer.start(10000)  # Проверка каждые 10 секунд
+        log_event("Запущен мониторинг подключения к МЭТР")
+    
+    def check_connection(self):
+        """Проверяет состояние подключения к МЭТР и пытается восстановить его при необходимости"""
+        if not hasattr(self, 'serial_manager') or not self.serial_manager:
+            return
+            
+        try:
+            # Простая проверка - попытка получить текущий порт
+            port = self.serial_manager.port
+            # Проверяем, открыт ли порт
+            if hasattr(self.serial_manager, 'serial') and self.serial_manager.serial:
+                if not self.serial_manager.serial.is_open:
+                    log_error("Обнаружен закрытый COM-порт, попытка переподключения")
+                    self.reconnect_metr_global()
+            else:
+                log_error("Отсутствует объект порта, попытка переподключения")
+                self.reconnect_metr_global()
+        except Exception as e:
+            log_error(f"Ошибка при проверке соединения: {e}")
+            # Автоматическое переподключение при проблемах с устройством
+            self.reconnect_metr_global()
+
+    def handle_connection_lost(self):
+        """Обработчик сигнала о потере соединения от SerialListener"""
+        log_error("Получен сигнал о потере соединения с МЭТР")
+        
+        # Показываем уведомление пользователю без блокировки интерфейса
+        message_box = QMessageBox()
+        message_box.setWindowTitle("Потеря соединения")
+        message_box.setText("Потеряно соединение с МЭТР.\nНачинается автоматическое переподключение...")
+        message_box.setStandardButtons(QMessageBox.NoButton)
+        message_box.setIcon(QMessageBox.Warning)
+        
+        # Стилизуем окно, используя функцию из текущего интерфейса
+        current_widget = self.stacked_widget.currentWidget()
+        if hasattr(current_widget, 'ui') and hasattr(current_widget.ui, 'style_message_box'):
+            current_widget.ui.style_message_box(message_box)
+        
+        # Показываем сообщение без блокировки
+        message_box.show()
+        QApplication.processEvents()
+        
+        # Пытаемся переподключиться через 2 секунды
+        QTimer.singleShot(2000, lambda: (message_box.close(), self.reconnect_metr_global()))
 
     # Функция для завершения сессии
     def end_session(self):

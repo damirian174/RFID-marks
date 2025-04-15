@@ -1,0 +1,78 @@
+2025-04-15 11:55:07 - INFO - logger - <module> - Приложение запущено
+2025-04-15 11:55:07 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-15 11:55:07 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-15 11:55:07 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-15 11:55:07 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-15 11:55:07 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-15 11:55:07 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-15 11:55:10 - INFO - logger - log_event - Сервер доступен
+2025-04-15 11:55:10 - INFO - logger - log_event - Сервер доступен
+2025-04-15 11:55:10 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-15 11:55:10 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to mark
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Test
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Packing
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to Login page AA
+2025-04-15 11:55:10 - INFO - logger - log_event - Enter to assembly
+2025-04-15 11:55:12 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-15 11:55:12 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-15 11:55:12 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-15 11:55:12 - INFO - logger - log_event - System Arduino init
+2025-04-15 11:55:20 - INFO - logger - log_event - Raw data (bytes): b'999951623_user..\r\n'
+2025-04-15 11:55:20 - INFO - logger - log_event - Decoded data (str): 999951623_user..
+2025-04-15 11:55:20 - INFO - logger - log_event - Parsed Data: ['999951623', 'user']
+2025-04-15 11:55:20 - INFO - logger - log_event - Send data to handle_serial_data: ['999951623', 'user']
+2025-04-15 11:55:20 - INFO - logger - log_event - Данные перед очисткой: ['999951623', 'user']
+2025-04-15 11:55:20 - INFO - logger - log_event - Очищенные данные: ['999951623', 'user']
+2025-04-15 11:55:20 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-15 11:55:20 - INFO - logger - log_event - Пользователь с UID: 999951623
+2025-04-15 11:55:20 - INFO - logger - log_event - Decoded data (str): 
+2025-04-15 11:55:20 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 999951623
+2025-04-15 11:55:20 - INFO - logger - log_event - Get NULL
+2025-04-15 11:55:20 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '999951623', 'id': None}
+2025-04-15 11:55:20 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:55:20 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:55:20 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:55:21 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Артём', 'surname': 'Соколов', 'work_description': 'Без детали'}
+2025-04-15 11:55:21 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Артём', 'surname': 'Соколов', 'work_description': 'Без детали', 'id': None}
+2025-04-15 11:55:22 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 11:55:22 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-15 11:55:22 - INFO - logger - log_event - Сессия успешно начата: Соколов Артём
+2025-04-15 11:55:22 - INFO - logger - log_event - Устанавливаем переменную config.user: Соколов Артём
+2025-04-15 11:55:22 - INFO - logger - log_event - Устанавливаем переменную config.Name: Соколов Артём
+2025-04-15 11:55:22 - INFO - logger - log_event - Установлено значение config.Name: Соколов Артём
+2025-04-15 11:55:22 - INFO - logger - log_event - Успешная аутентификация пользователя: Соколов Артём
+2025-04-15 11:55:28 - ERROR - logger - log_error - Ошибка: Error work with COM port: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\RFID-marks\GUI\COM.py", line 45, in run
+    if self.ser.in_waiting > 0:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python313\Lib\site-packages\serial\serialwin32.py", line 259, in in_waiting
+    raise SerialException("ClearCommError failed ({!r})".format(ctypes.WinError()))
+serial.serialutil.SerialException: ClearCommError failed (PermissionError(13, 'Отказано в доступе.', None, 5))
+2025-04-15 11:55:44 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-15 11:55:44 - INFO - logger - log_event - Завершаем сессию пользователя: Артём Соколов
+2025-04-15 11:55:44 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Артём', 'surname': 'Соколов', 'id': 1}
+2025-04-15 11:55:45 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-15 11:55:45 - INFO - logger - log_event - Сессия успешно завершена: Артём Соколов
+2025-04-15 11:55:45 - INFO - logger - log_application_exit - Приложение завершено

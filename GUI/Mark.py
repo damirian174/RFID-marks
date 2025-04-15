@@ -63,8 +63,8 @@ class SerialWorker(QThread):
                         log_event("Успешная запись на метку")
                         return
                     elif "WRITE_ERROR" in line:
-                        self.finished.emit(False, "Ошибка Arduino")
-                        log_error("Ошибка Arduino")
+                        self.finished.emit(False, "Ошибка МЭТР")
+                        log_error("Ошибка МЭТР")
                         return
                 time.sleep(0.1)
 
@@ -543,19 +543,32 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayoutMain)
         # self.pushButton_9.clicked.connect(button.MainApp.setup_scan_page)
         self.pushButton_4.clicked.connect(self.init_problem)
+        self.pushButton_3.clicked.connect(self.kocak)
+
+        # Добавляем кнопку переподключения к МЭТР
+        self.reconnect_btn = QPushButton("Переподключить МЭТР")
+        self.reconnect_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #004B8D;
+                color: white;
+                font-size: 14px;
+                padding: 8px 15px;
+                border-radius: 5px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            QPushButton:hover {
+                background-color: #4A6ED9;
+            }
+        """)
+        self.reconnect_btn.clicked.connect(self.reconnect_metr)
+        
+        # Добавляем в конец основной разметки
+        self.verticalLayout.addWidget(self.reconnect_btn)
+        
         # Подключение слотов
         QMetaObject.connectSlotsByName(MainWindow)
-    # def init_problem(self):
-        
-    #     report_text = self.label.text()
-    #     data = {"type": "report", "text": report_text, "time": datetime.datetime(), "name": self.label_2.text()}
-    #     x = database(data)
-    #     if x: 
-    #         # Успешно отправлено, ждите специалиста
-    #         return
-    #     else: 
-    #         # Не успешно
-    #         return
+
     def init_problem(self):
         # Вместо создания собственного диалога вызываем функцию из problema_window
         show_problem_dialog(self.centralwidget)
@@ -575,12 +588,11 @@ class Ui_MainWindow(object):
         # Формируем полный путь к изображению
         image_path = os.path.join(base_path, image_name)
         return image_path
-    def find_arduino(self):
+    def find_metr(self):
         ports = serial.tools.list_ports.comports()
         for port in ports:
-            if "USB Serial"  in port.description :
+            if "USB Serial Port" in port.description:
                 return port.device
-            
         return None
         
     def open_confirmation_window(self):
@@ -710,22 +722,22 @@ class Ui_MainWindow(object):
         couintine_work()
 
     def detail(self, data=None):
-        if not hasattr(self, 'name'):
-            return  # or some other handling mechanism
+        # Заполняем поля данными
+        self.name.setText("")
+        self.serial.setText("")
+        self.defective.setText("")
+        self.stage.setText("")
+        self.sector.setText("")
         
-        # Proceed with the normal logic
-        if data:
-            self.name.setText(str(data['name']))
-            self.serial.setText(str(data['serial_number']))
-            self.defective.setText(str(data['defective']))
-            self.stage.setText(str(data['stage']))
-            self.sector.setText(str(data['sector']))
-        else:
-            self.name.setText("Отсканируй деталь")
-            self.serial.setText("Отсканируй деталь")
-            self.defective.setText("Отсканируй деталь")
-            self.stage.setText("Отсканируй деталь")
-            self.sector.setText("Отсканируй деталь")
+        # Очищаем все поля перед обновлением
+        name, serial, defective, stage, sector = getDetail(data) if data else ("", "", "", "", "")
+        self.name.setText(name)
+        self.serial.setText(serial)
+        self.defective.setText(defective)
+        self.stage.setText(stage)
+        self.sector.setText(sector)
+        
+        # Удаляем создание кнопки, так как она теперь создается в setupUi
 
     def write(self, text):
         self.write_dialog = QDialog()
@@ -745,7 +757,7 @@ class Ui_MainWindow(object):
         self.write_dialog.setLayout(layout)
         self.write_dialog.setWindowModality(Qt.ApplicationModal)
         
-        # Используем `serial_manager`, а не `find_arduino()`
+        # Используем `serial_manager`, а не `find_metr()`
         self.serial_thread = SerialWorker(text, self.serial_manager)
         self.serial_thread.finished.connect(self.handle_write_result)
         self.serial_thread.status_update.connect(self.update_status)
@@ -785,7 +797,7 @@ class Ui_MainWindow(object):
                 if isinstance(widget, QPushButton):
                         widget.deleteLater()
         self.status_label.setText("Идет запись на метку...")
-        self.serial_thread = SerialWorker(text, self.find_arduino())
+        self.serial_thread = SerialWorker(text, self.find_metr())
         self.serial_thread.finished.connect(self.handle_write_result)
         self.serial_thread.start()
             
@@ -859,19 +871,50 @@ class Ui_MainWindow(object):
         # Возвращаем результат диалога
         return msg_box.exec() == QMessageBox.Yes
 
+    # Функция для переподключения к МЭТР
+    def reconnect_metr(self):
+        """Функция переподключения к МЭТР"""
+        try:
+            # Пытаемся закрыть существующее соединение
+            if hasattr(self, 'serial_manager') and self.serial_manager:
+                self.serial_manager.close()
+            
+            # Находим МЭТР
+            ports = serial.tools.list_ports.comports()
+            metr_port = None
+            for port in ports:
+                if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+                    metr_port = port.device
+                    break
+            
+            if metr_port:
+                try:
+                    self.serial_manager = SerialManager(metr_port, 9600)
+                    QMessageBox.information(None, "Подключение", f"МЭТР успешно подключен через порт {metr_port}")
+                    return True
+                except Exception as e:
+                    QMessageBox.critical(None, "Ошибка", f"Ошибка при подключении к МЭТР: {e}")
+            else:
+                QMessageBox.warning(None, "Предупреждение", "МЭТР не найден. Проверьте подключение")
+            
+            return False
+        except Exception as e:
+            QMessageBox.critical(None, "Ошибка", f"Ошибка при переподключении к МЭТР: {e}")
+            return False
+
 if __name__ == "__main__":
     import sys
 
     app = QApplication(sys.argv)
 
-    def find_arduino():
+    def find_metr():
         ports = serial.tools.list_ports.comports()
         for port in ports:
             if "USB Serial Port" in port.description:
                 return port.device
         return None
 
-    port = find_arduino()
+    port = find_metr()
     if not port:
         log_error("Не найден COM-порт")
         sys.exit(1)
