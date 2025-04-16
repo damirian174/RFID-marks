@@ -1,0 +1,115 @@
+2025-04-16 12:09:36 - INFO - logger - <module> - Приложение запущено
+2025-04-16 12:09:36 - INFO - logger - <module> - Добавляем логирование в остальные файлы проекта...
+2025-04-16 12:09:36 - INFO - logger - <module> - Логирование в database.py: все запросы к серверу регистрируются.
+2025-04-16 12:09:36 - INFO - logger - <module> - Логирование в COM.py: события работы с COM-портами фиксируются.
+2025-04-16 12:09:36 - INFO - logger - <module> - Логирование в detail_work.py: операции с деталями регистрируются.
+2025-04-16 12:09:36 - INFO - logger - <module> - Логирование в Error.py и ErrorTest.py: ошибки записываются.
+2025-04-16 12:09:36 - INFO - logger - <module> - Логирование в этапах Mark.py, Packing.py, Test.py, Work.py.
+2025-04-16 12:09:38 - INFO - logger - log_event - Сервер доступен
+2025-04-16 12:09:38 - INFO - logger - log_event - Сервер доступен
+2025-04-16 12:09:38 - INFO - logger - log_event - Главное окно приложения создано
+2025-04-16 12:09:38 - INFO - logger - log_event - SerialManager: Успешно открыт порт COM8
+2025-04-16 12:09:39 - INFO - logger - log_event - Создан интерфейс админ-панели
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to mark
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Test
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Packing
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Login page AA
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to assembly
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to mark
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Test
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Packing
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Login page AA
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to assembly
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to mark
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Test
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Packing
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Login page AA
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to assembly
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to mark
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Test
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Packing
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Login page AA
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to assembly
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to mark
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Test
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Packing
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to Login page AA
+2025-04-16 12:09:39 - INFO - logger - log_event - Enter to assembly
+2025-04-16 12:09:39 - INFO - logger - log_event - Запущен мониторинг подключения к МЭТР
+2025-04-16 12:09:40 - INFO - logger - log_event - Raw data (bytes): b'\xd0\x90\xd0\xb3\xd1\x83\xd0\xb0\xd0\xb3\xd1\x83\r\n'
+2025-04-16 12:09:40 - INFO - logger - log_event - Decoded data (str): Агуагу
+2025-04-16 12:09:40 - INFO - logger - log_event - Parsed Data: ['Агуагу']
+2025-04-16 12:09:40 - INFO - logger - log_event - System МЭТР init
+2025-04-16 12:09:41 - INFO - logger - log_event - Raw data (bytes): b'356949877_user..\r\n'
+2025-04-16 12:09:41 - INFO - logger - log_event - Decoded data (str): 356949877_user..
+2025-04-16 12:09:41 - INFO - logger - log_event - Parsed Data: ['356949877', 'user']
+2025-04-16 12:09:41 - INFO - logger - log_event - Send data to handle_serial_data: ['356949877', 'user']
+2025-04-16 12:09:41 - INFO - logger - log_event - Данные перед очисткой: ['356949877', 'user']
+2025-04-16 12:09:41 - INFO - logger - log_event - Очищенные данные: ['356949877', 'user']
+2025-04-16 12:09:41 - INFO - logger - log_event - Пользователь с UID: 356949877
+2025-04-16 12:09:41 - INFO - logger - log_event - Попытка аутентификации пользователя с UID: 356949877
+2025-04-16 12:09:41 - INFO - logger - log_event - Запрос: {'type': 'user', 'uid': '356949877', 'id': None}
+2025-04-16 12:09:41 - INFO - logger - log_event - Ответ: {'status': 'ok', 'name': 'Дмитрий', 'surname': 'Волков', 'id': 2}
+2025-04-16 12:09:41 - INFO - logger - log_event - Ответ сервера: {'status': 'ok', 'name': 'Дмитрий', 'surname': 'Волков', 'id': 2}
+2025-04-16 12:09:41 - INFO - logger - log_event - Данные пользователя в корне ответа: {'status': 'ok', 'name': 'Дмитрий', 'surname': 'Волков', 'id': 2}
+2025-04-16 12:09:41 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-16 12:09:41 - INFO - logger - log_event - Decoded data (str): 
+2025-04-16 12:09:41 - INFO - logger - log_event - Get NULL
+2025-04-16 12:09:43 - INFO - logger - log_event - Запрос на создание сессии: {'type': 'startSession', 'name': 'Дмитрий', 'surname': 'Волков', 'work_description': 'Без детали'}
+2025-04-16 12:09:43 - INFO - logger - log_event - Запрос: {'type': 'startSession', 'name': 'Дмитрий', 'surname': 'Волков', 'work_description': 'Без детали', 'id': None}
+2025-04-16 12:09:44 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-16 12:09:44 - INFO - logger - log_event - Ответ на создание сессии: {'status': 'ok'}
+2025-04-16 12:09:44 - INFO - logger - log_event - Сессия успешно начата: Волков Дмитрий
+2025-04-16 12:09:44 - INFO - logger - log_event - Устанавливаем переменную config.user: Волков Дмитрий
+2025-04-16 12:09:44 - INFO - logger - log_event - Устанавливаем переменную config.Name: Волков Дмитрий
+2025-04-16 12:09:44 - INFO - logger - log_event - Установлено значение config.Name: Волков Дмитрий
+2025-04-16 12:09:44 - INFO - logger - log_event - Успешная аутентификация пользователя: Волков Дмитрий
+2025-04-16 12:09:46 - INFO - logger - log_event - Raw data (bytes): b'SN012_detail....\r\n'
+2025-04-16 12:09:46 - INFO - logger - log_event - Decoded data (str): SN012_detail....
+2025-04-16 12:09:46 - INFO - logger - log_event - Parsed Data: ['SN012', 'detail']
+2025-04-16 12:09:46 - INFO - logger - log_event - Send data to handle_serial_data: ['SN012', 'detail']
+2025-04-16 12:09:46 - INFO - logger - log_event - Данные перед очисткой: ['SN012', 'detail']
+2025-04-16 12:09:46 - INFO - logger - log_event - Очищенные данные: ['SN012', 'detail']
+2025-04-16 12:09:46 - INFO - logger - log_event - Получены данные из порта: SN012
+2025-04-16 12:09:46 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN012
+2025-04-16 12:09:46 - INFO - logger - log_event - Текущее состояние: Name='Волков Дмитрий', auth=True, session_on=True
+2025-04-16 12:09:46 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN012', 'id': 2}
+2025-04-16 12:09:46 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 11, 'name': 'МЕТРАН 150', 'serial_number': 'SN012', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-16 13:20:06", "user": 2}, "сборка": {"end": "2025-04-16 13:20:16", "user": 2, "start": "2025-04-16 13:20:14"}, "тестирование": {"end": "2025-04-16 14:05:52", "user": 2, "start": "2025-04-16 14:05:43"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-16 12:09:46 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 11, 'name': 'МЕТРАН 150', 'serial_number': 'SN012', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-16 13:20:06", "user": 2}, "сборка": {"end": "2025-04-16 13:20:16", "user": 2, "start": "2025-04-16 13:20:14"}, "тестирование": {"end": "2025-04-16 14:05:52", "user": 2, "start": "2025-04-16 14:05:43"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-16 12:09:46 - INFO - logger - log_event - Начало работы над деталью. Текущее значение Name: 'Волков Дмитрий'
+2025-04-16 12:09:46 - INFO - logger - log_event - Используем части имени из Name: фамилия='Волков', имя='Дмитрий'
+2025-04-16 12:09:46 - INFO - logger - log_event - Будет использоваться: фамилия='Волков', имя='Дмитрий'
+2025-04-16 12:09:46 - INFO - logger - log_event - Данные детали: {'id': 11, 'name': 'МЕТРАН 150', 'serial_number': 'SN012', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-16 13:20:06", "user": 2}, "сборка": {"end": "2025-04-16 13:20:16", "user": 2, "start": "2025-04-16 13:20:14"}, "тестирование": {"end": "2025-04-16 14:05:52", "user": 2, "start": "2025-04-16 14:05:43"}}', 'identified_by': None, 'defect_stage_id': None}
+2025-04-16 12:09:46 - INFO - logger - log_event - Запрос обновления описания сессии: {'type': 'updateSessionDescription', 'name': 'Дмитрий', 'surname': 'Волков', 'new_description': 'Упаковка SN012'}
+2025-04-16 12:09:46 - INFO - logger - log_event - Состояние сессии: auth=True, session_on=True
+2025-04-16 12:09:46 - INFO - logger - log_event - Запрос: {'type': 'updateSessionDescription', 'name': 'Дмитрий', 'surname': 'Волков', 'new_description': 'Упаковка SN012', 'id': 2}
+2025-04-16 12:09:46 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-16 12:09:46 - INFO - logger - log_event - Ответ на обновление описания сессии: {'status': 'ok'}
+2025-04-16 12:09:46 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-16 12:09:46 - INFO - logger - log_event - Decoded data (str): 
+2025-04-16 12:09:46 - INFO - logger - log_event - Get NULL
+2025-04-16 12:09:47 - INFO - logger - log_event - Raw data (bytes): b'SN012_detail....\r\n'
+2025-04-16 12:09:47 - INFO - logger - log_event - Decoded data (str): SN012_detail....
+2025-04-16 12:09:47 - INFO - logger - log_event - Parsed Data: ['SN012', 'detail']
+2025-04-16 12:09:47 - INFO - logger - log_event - Send data to handle_serial_data: ['SN012', 'detail']
+2025-04-16 12:09:47 - INFO - logger - log_event - Данные перед очисткой: ['SN012', 'detail']
+2025-04-16 12:09:47 - INFO - logger - log_event - Очищенные данные: ['SN012', 'detail']
+2025-04-16 12:09:47 - INFO - logger - log_event - Получены данные из порта: SN012
+2025-04-16 12:09:47 - INFO - logger - log_event - Запрос данных о детали с серийным номером: SN012
+2025-04-16 12:09:47 - INFO - logger - log_event - Текущее состояние: Name='Волков Дмитрий', auth=True, session_on=True
+2025-04-16 12:09:47 - INFO - logger - log_event - Запрос: {'type': 'details', 'serial': 'SN012', 'id': 2}
+2025-04-16 12:09:47 - INFO - logger - log_event - Ответ: {'status': 'ok', 'data': {'id': 11, 'name': 'МЕТРАН 150', 'serial_number': 'SN012', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-16 13:20:06", "user": 2}, "сборка": {"end": "2025-04-16 13:20:16", "user": 2, "start": "2025-04-16 13:20:14"}, "тестирование": {"end": "2025-04-16 14:05:52", "user": 2, "start": "2025-04-16 14:05:43"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-16 12:09:47 - INFO - logger - log_event - Ответ от сервера: {'status': 'ok', 'data': {'id': 11, 'name': 'МЕТРАН 150', 'serial_number': 'SN012', 'defective': False, 'stage': 'Тестирование', 'sector': None, 'time': '{"mark": {"time": "2025-04-16 13:20:06", "user": 2}, "сборка": {"end": "2025-04-16 13:20:16", "user": 2, "start": "2025-04-16 13:20:14"}, "тестирование": {"end": "2025-04-16 14:05:52", "user": 2, "start": "2025-04-16 14:05:43"}}', 'identified_by': None, 'defect_stage_id': None}}
+2025-04-16 12:09:48 - INFO - logger - log_event - Raw data (bytes): b'\r\n'
+2025-04-16 12:09:48 - INFO - logger - log_event - Decoded data (str): 
+2025-04-16 12:09:48 - INFO - logger - log_event - Get NULL
+2025-04-16 12:09:55 - INFO - logger - log_event - Работа над деталью закончена
+2025-04-16 12:09:55 - INFO - logger - log_event - Запрос: {'type': 'updatestage', 'stage': 'Упаковка', 'serial': 'SN012', 'start': '2025-04-16 14:09:46', 'end': '2025-04-16 14:09:55', 'id': 2}
+2025-04-16 12:09:55 - INFO - logger - log_event - Ответ: {'status': 'ok', 'sector': '1Б'}
+2025-04-16 12:11:27 - INFO - logger - log_event - Закрытие приложения button.py
+2025-04-16 12:11:27 - INFO - logger - log_event - Завершаем сессию пользователя: Дмитрий Волков
+2025-04-16 12:11:27 - INFO - logger - log_event - Запрос: {'type': 'endSession', 'name': 'Дмитрий', 'surname': 'Волков', 'id': 2}
+2025-04-16 12:11:28 - INFO - logger - log_event - Ответ: {'status': 'ok'}
+2025-04-16 12:11:28 - INFO - logger - log_event - Сессия успешно завершена: Дмитрий Волков
+2025-04-16 12:11:28 - INFO - logger - log_event - SerialManager: Порт COM8 закрыт
+2025-04-16 12:11:29 - INFO - logger - log_application_exit - Приложение завершено

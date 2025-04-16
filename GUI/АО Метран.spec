@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['button.py'],
+    ['init.py'],
     pathex=[],
     binaries=[],
-    datas=[('favicon.ico', '.'), ('loading.png', '.'), ('main.jpg', '.'), ('new_logo.jpg', '.'), ('photo.jpg', '.')],
+    datas=[('favicon.ico', '.'), ('loading.png', '.'), ('main.jpg', '.'), ('new_logo.jpg', '.'), ('photo.jpg', '.'), ('Метран.jpg', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

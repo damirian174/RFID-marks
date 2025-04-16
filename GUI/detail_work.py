@@ -256,10 +256,24 @@ def pause_work():
     work_ui_instance.pause_timer()
 
 def couintine_work():
-    work_ui_instance.resume_timer()
-
-
-
+    # Проверяем, существует ли UI экземпляр
+    if work_ui_instance is None:
+        log_error("UI экземпляр не инициализирован")
+        return
+        
+    # Проверяем наличие необходимых атрибутов и методов
+    if not hasattr(work_ui_instance, 'resume_timer'):
+        log_error("Метод resume_timer не найден")
+        return
+        
+    try:
+        work_ui_instance.resume_timer()
+    except Exception as e:
+        log_error(f"Ошибка при возобновлении работы: {e}")
+        # Если возникла ошибка, пробуем сбросить таймер и запустить его заново
+        if hasattr(work_ui_instance, 'start_timer'):
+            work_ui_instance.running = True
+            work_ui_instance.start_timer()
 
 def end_work():
     global detail_work
@@ -418,11 +432,20 @@ def update(name=None, serial=None):
                 end_work()
 
 def getDetail(serial_number):
-    data = {"type": "details", "serial": serial_number}
+    # Проверяем тип переданного параметра
+    if isinstance(serial_number, dict) and 'serial_number' in serial_number:
+        # Если это словарь с данными о детали, извлекаем серийный номер
+        actual_serial = serial_number['serial_number']
+        log_event(f"Получен объект вместо серийного номера, извлекаем номер: {actual_serial}")
+    else:
+        # Если это строка или другой тип, используем как есть
+        actual_serial = serial_number
+
+    data = {"type": "details", "serial": actual_serial}
     global data_detail
     global mark_ui_instance, work_ui_instance
     
-    log_event(f"Запрос данных о детали с серийным номером: {serial_number}")
+    log_event(f"Запрос данных о детали с серийным номером: {actual_serial}")
     log_event(f"Текущее состояние: Name='{config.Name}', auth={config.auth}, session_on={config.session_on}")
     
     response = database(data)

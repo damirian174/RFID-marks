@@ -551,6 +551,7 @@ class Ui_MainWindow(object):
 
         # Таймер
         self.start_time = time.time()
+        self.elapsed_pause_time = 0  # Инициализируем атрибут elapsed_pause_time
         self.timer = QTimer(MainWindow)
         self.timer.timeout.connect(self.update_time)
         self.running = True
@@ -693,14 +694,39 @@ class Ui_MainWindow(object):
         self.stage.setText("")
         self.sector.setText("")
         
-        # Очищаем все поля перед обновлением
-        name, serial, defective, stage, sector = getDetail(data) if data else ("", "", "", "", "")
-        self.name.setText(name)
-        self.serial.setText(serial)
-        self.defective.setText(defective)
-        self.stage.setText(stage)
-        self.sector.setText(sector)
-        self.change_color(2)
+        # Обработка данных без вызова getDetail
+        if data:
+            # Проверяем, пришел ли к нам объект data или False
+            if data is not False:
+                # Извлекаем данные напрямую из объекта
+                name = data.get('name', '')
+                serial = data.get('serial_number', '')
+                defective = "Да" if data.get('defective', False) else "Нет"
+                stage = data.get('stage', '')
+                sector = data.get('sector', '')
+                
+                self.name.setText(str(name))
+                self.serial.setText(str(serial))
+                self.defective.setText(str(defective))
+                self.stage.setText(str(stage))
+                self.sector.setText(str(sector))
+                self.change_color(2)
+        else:
+            # Если data = None или False, устанавливаем стандартный текст
+            self.name.setText("Отсканируй деталь")
+            self.serial.setText("Отсканируй деталь")
+            self.defective.setText("Отсканируй деталь")
+            self.stage.setText("Отсканируй деталь")
+            self.sector.setText("Отсканируй деталь")
+            
+            # Напрямую устанавливаем стандартный синий цвет вместо вызова revert_color
+            default_color = "#5F7ADB"
+            style = f"background-color: {default_color}; color: white; font-size: 18px; font-weight: bold; border-radius: 15px; padding: 10px;"
+            self.name.setStyleSheet(style)
+            self.serial.setStyleSheet(style)
+            self.defective.setStyleSheet(style)
+            self.stage.setStyleSheet(style)
+            self.sector.setStyleSheet(style)
 
     def away(self):
         self.centralwidget.setEnabled(False)
