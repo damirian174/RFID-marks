@@ -16,8 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QSizePolicy,
-    QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem)
+    QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QPushButton, QMessageBox)
 from logger import log_event, log_error
+import serial.tools.list_ports
+from COM import SerialManager
 
 
 class AdaptiveMainWindow(QMainWindow):
@@ -124,6 +126,26 @@ class Ui_MainWindow(object):
         # Добавляем spacer сверху
         self.content_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
         
+        # Добавляем кнопку для переподключения МЭТР (перемещена в самый верх)
+        self.reconnect_btn = QPushButton(u"Переподключить МЭТР")
+        self.reconnect_btn.setObjectName(u"reconnect_btn")
+        self.reconnect_btn.setStyleSheet(u"""
+            QPushButton {
+                background-color: #2E3239;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 15px;
+                padding: 10px 20px;
+                margin-bottom: 20px;
+            }
+            QPushButton:hover {
+                background-color: #4A6ED9;
+            }
+        """)
+        self.reconnect_btn.clicked.connect(self.reconnect_metr)
+        self.content_layout.addWidget(self.reconnect_btn, alignment=Qt.AlignCenter)
+        
         # Добавляем заголовок
         self.label = QLabel(u"Отсканируйте вашу карточку!")
         self.label.setObjectName(u"label")
@@ -160,6 +182,54 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"АО Метран - Вход", None))
+        
+    def reconnect_metr(self):
+        """Функция для переподключения к МЭТР"""
+        try:
+            # Информационное сообщение о процессе подключения
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle("Переподключение")
+            msg_box.setText("Выполняется поиск МЭТР...")
+            msg_box.setStandardButtons(QMessageBox.NoButton)
+            msg_box.setIcon(QMessageBox.Information)
+            msg_box.show()
+            QApplication.processEvents()  # Обрабатываем события, чтобы окно отобразилось
+            
+            # Поиск COM-порта для МЭТР
+            ports = serial.tools.list_ports.comports()
+            metr_port = None
+            for port in ports:
+                if "USB Serial" in port.description or "Устройство с последовательным интерфейсом" in port.description:
+                    metr_port = port.device
+                    break
+            
+            # Закрываем информационное окно
+            msg_box.close()
+            
+            if metr_port:
+                try:
+                    # Сбрасываем синглтон-экземпляр SerialManager перед созданием нового
+                    SerialManager._instance = None
+                    
+                    # Создаем новый экземпляр SerialManager
+                    serial_manager = SerialManager(metr_port, 9600)
+                    
+                    # Показываем сообщение об успехе
+                    QMessageBox.information(None, "Подключение", f"МЭТР успешно подключен через порт {metr_port}")
+                    log_event(f"МЭТР успешно подключен через порт {metr_port}")
+                    return True
+                except Exception as e:
+                    QMessageBox.critical(None, "Ошибка", f"Ошибка при подключении к МЭТР: {e}")
+                    log_error(f"Ошибка при подключении к МЭТР: {e}")
+            else:
+                QMessageBox.warning(None, "Предупреждение", "МЭТР не найден. Проверьте подключение")
+                log_error("МЭТР не найден")
+            
+            return False
+        except Exception as e:
+            QMessageBox.critical(None, "Ошибка", f"Ошибка при переподключении к МЭТР: {e}")
+            log_error(f"Ошибка при переподключении к МЭТР: {e}")
+            return False
 
 if __name__ == "__main__":
     import sys

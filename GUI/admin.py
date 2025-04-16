@@ -216,6 +216,7 @@ class Ui_MainWindow(object):
         QTreeWidgetItem(self.treeWidget, ["Дэшборд"])
         QTreeWidgetItem(self.treeWidget, ["Отчеты"])
         QTreeWidgetItem(self.treeWidget, ["Активные сессии"])
+        QTreeWidgetItem(self.treeWidget, ["Сотрудники"])
         QTreeWidgetItem(self.treeWidget, ["Выход"])
 
         self.horizontalLayoutMain.addWidget(self.treeWidget, stretch=1)  # Растягиваем на 1 часть
@@ -269,11 +270,16 @@ class Ui_MainWindow(object):
         self.submit_button.hide()
         
 
+        # Metran 150 таблица
         self.metran_150_table = QTableWidget(0, 7, self.content_area)  # Увеличиваю до 7 колонок для кнопки
         self.metran_150_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап", "Место", "Действия"])
         self.metran_150_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.metran_150_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
         self.metran_150_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
+        # Устанавливаем таблицу только для чтения
+        self.metran_150_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.metran_150_table.setFocusPolicy(Qt.ClickFocus)  # Оставляем возможность кликать для кнопок
+        self.metran_150_table.setSelectionBehavior(QTableWidget.SelectRows)  # Выделение только строк
         self.metran_150_table.hide()
         self.form_layout.addWidget(self.metran_150_table)
 
@@ -283,6 +289,10 @@ class Ui_MainWindow(object):
         self.metran_75_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.metran_75_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
         self.metran_75_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
+        # Устанавливаем таблицу только для чтения
+        self.metran_75_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.metran_75_table.setFocusPolicy(Qt.ClickFocus)  # Оставляем возможность кликать для кнопок
+        self.metran_75_table.setSelectionBehavior(QTableWidget.SelectRows)  # Выделение только строк
         self.form_layout.addWidget(self.metran_75_table)
 
         self.metran_55_table = QTableWidget(0, 7, self.content_area)  # Увеличиваю до 7 колонок для кнопки
@@ -290,6 +300,10 @@ class Ui_MainWindow(object):
         self.metran_55_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.metran_55_table.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)  # Фиксированная ширина для кнопки
         self.metran_55_table.setColumnWidth(6, 120)  # Ширина колонки с кнопкой
+        # Устанавливаем таблицу только для чтения
+        self.metran_55_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.metran_55_table.setFocusPolicy(Qt.ClickFocus)  # Оставляем возможность кликать для кнопок
+        self.metran_55_table.setSelectionBehavior(QTableWidget.SelectRows)  # Выделение только строк
         self.metran_55_table.hide()
         self.form_layout.addWidget(self.metran_55_table)
 
@@ -298,6 +312,10 @@ class Ui_MainWindow(object):
         self.defective_table.hide()
         self.defective_table.setHorizontalHeaderLabels(["ID", "Название", "Серийный номер", "Статус", "Этап"])
         self.defective_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # Устанавливаем таблицу только для чтения
+        self.defective_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.defective_table.setFocusPolicy(Qt.ClickFocus)
+        self.defective_table.setSelectionBehavior(QTableWidget.SelectRows)  # Выделение только строк
         self.defective_table.setStyleSheet("""
             QTableWidget {
                 background-color: white;
@@ -379,6 +397,194 @@ class Ui_MainWindow(object):
         self.sessions_layout.addWidget(self.delete_all_sessions_button, 0, Qt.AlignRight)
         
         self.form_layout.addWidget(self.sessions_container)
+        
+        # Создаем контейнер для поля поиска и таблицы сотрудников
+        self.users_container = QWidget(self.content_area)
+        self.users_container.hide()
+        self.users_layout = QVBoxLayout(self.users_container)
+        self.users_layout.setContentsMargins(0, 0, 0, 0)
+        self.users_layout.setSpacing(0)
+        
+        # Создаем верхний виджет, где будет заголовок и поиск
+        self.users_header_widget = QWidget()
+        self.users_header_widget.setStyleSheet("""
+            background-color: #E3EEFF;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border: 1px solid #BDD7FB;
+        """)
+        self.header_layout = QHBoxLayout(self.users_header_widget)
+        self.header_layout.setContentsMargins(15, 15, 15, 15)
+        
+        # Заголовок слева
+        self.users_title_label = QLabel("Список сотрудников")
+        self.users_title_label.setStyleSheet("""
+            font-size: 20px;
+            font-weight: bold;
+            color: #1A4CA3;
+            padding: 5px 10px;
+            background-color: #C9E0FF;
+            border-radius: 8px;
+        """)
+        
+        # Поле для ввода поискового запроса (справа)
+        self.search_input = QLineEdit()
+        self.search_input.setPlaceholderText("Поиск...")
+        self.search_input.setStyleSheet("""
+            QLineEdit {
+                border: 1px solid #BDD7FB;
+                border-radius: 8px;
+                padding: 8px 12px;
+                font-size: 14px;
+                background-color: white;
+                max-width: 150px;
+            }
+            QLineEdit:focus {
+                border: 2px solid #5F7ADB;
+                background-color: #F7FAFF;
+            }
+        """)
+        self.search_input.setMaximumWidth(150)
+        self.search_input.textChanged.connect(self.filter_users_table)
+        
+        # Кнопка очистки поиска
+        self.clear_search_button = QPushButton("✕")
+        self.clear_search_button.setStyleSheet("""
+            QPushButton {
+                background-color: #6E8CD9;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 4px;
+                font-size: 12px;
+                min-width: 25px;
+                max-width: 25px;
+                min-height: 25px;
+                max-height: 25px;
+            }
+            QPushButton:hover {
+                background-color: #5A78C5;
+            }
+            QPushButton:pressed {
+                background-color: #4A68B5;
+            }
+        """)
+        self.clear_search_button.setFixedSize(25, 25)
+        self.clear_search_button.clicked.connect(self.clear_search)
+        
+        # Создаем виджет для поиска (обертка для поля ввода и кнопки)
+        self.search_widget = QWidget()
+        self.search_layout = QHBoxLayout(self.search_widget)
+        self.search_layout.setContentsMargins(0, 0, 0, 0)
+        self.search_layout.setSpacing(5)
+        self.search_layout.addWidget(self.search_input)
+        self.search_layout.addWidget(self.clear_search_button)
+        self.search_widget.setMaximumWidth(190)
+        
+        # Добавляем заголовок (слева) и поиск (справа) в верхний layout
+        self.header_layout.addWidget(self.users_title_label, 1, Qt.AlignLeft)
+        self.header_layout.addStretch(1)
+        self.header_layout.addWidget(self.search_widget, 0, Qt.AlignRight)
+        
+        # Добавляем верхний виджет в контейнер
+        self.users_layout.addWidget(self.users_header_widget)
+        
+        # Настраиваем таблицу
+        self.users_table = QTableWidget()
+        self.users_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.users_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.users_table.setSelectionMode(QTableWidget.SingleSelection)
+        self.users_table.verticalHeader().setVisible(False)
+        self.users_table.setAlternatingRowColors(True)
+        self.users_table.setColumnCount(5)
+        self.users_table.setHorizontalHeaderLabels(["ID", "Имя", "Фамилия", "Отдел", "Роль"])
+        self.users_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        # Настраиваем размеры столбцов
+        self.users_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.users_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        
+        # Стилизуем таблицу
+        self.users_table.setStyleSheet("""
+            QTableWidget {
+                background-color: white;
+                color: #333;
+                gridline-color: #E6F0FF;
+                border: 1px solid #BDD7FB;
+                border-top: none;
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }
+            QTableWidget::item {
+                padding: 8px;
+                font-size: 14px;
+                border-bottom: 1px solid #E6F0FF;
+            }
+            QTableWidget::item:selected {
+                background-color: #E6F0FF;
+                color: #1A4CA3;
+            }
+            QTableWidget::item:hover {
+                background-color: #F0F7FF;
+            }
+            QHeaderView::section {
+                background-color: #2A58AD;
+                color: white;
+                font-weight: bold;
+                padding: 10px;
+                border: none;
+                border-right: 1px solid #3968BD;
+                font-size: 14px;
+            }
+            QScrollBar:vertical {
+                background-color: #F0F7FF;
+                width: 12px;
+                margin: 0px;
+            }
+            QScrollBar::handle:vertical {
+                background-color: #BDD7FB;
+                min-height: 30px;
+                border-radius: 6px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background-color: #9ABDF5;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                border: none;
+                background: none;
+            }
+            QScrollBar:horizontal {
+                background-color: #F0F7FF;
+                height: 12px;
+                margin: 0px;
+            }
+            QScrollBar::handle:horizontal {
+                background-color: #BDD7FB;
+                min-width: 30px;
+                border-radius: 6px;
+            }
+            QScrollBar::handle:horizontal:hover {
+                background-color: #9ABDF5;
+            }
+            QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+                border: none;
+                background: none;
+            }
+        """)
+        
+        # Добавляем таблицу в контейнер
+        self.users_layout.addWidget(self.users_table, 1)
+        
+        # Основной контейнер
+        self.users_container.setStyleSheet("""
+            QWidget {
+                background-color: transparent;
+            }
+        """)
+        
+        # Добавляем контейнер в основной layout
+        self.form_layout.addWidget(self.users_container)
+        self.form_layout.setContentsMargins(10, 10, 10, 10)  # Добавляем отступы для основного layout
 
         self.form_layout.setContentsMargins(0, 0, 0, 0)
         
@@ -607,6 +813,7 @@ class Ui_MainWindow(object):
         self.reports_table.hide()
         self.sessions_container.hide()  # Скрываем таблицу сессий
         self.defective_table.hide()  # Скрываем таблицу бракованных деталей
+        self.users_container.hide()  # Скрываем контейнер сотрудников
         
         # Показать нужный контент в зависимости от выбранного элемента
         if item.text(0) == "Дэшборд":
@@ -695,6 +902,21 @@ class Ui_MainWindow(object):
             # Логируем для проверки
             log_event("Отображаем страницу активных сессий")
             log_event(f"Видимость таблицы: {self.sessions_table.isVisible()}, контейнера: {self.sessions_container.isVisible()}")
+        elif item.text(0) == "Сотрудники":
+            # Устанавливаем заголовок формы
+            self.form_title.setText("")  # Оставляем заголовок пустым, так как у нас уже есть заголовок в контейнере сотрудников
+            
+            # Показываем контейнер с пользователями
+            self.users_container.show()
+            
+            # Очищаем поле поиска
+            self.search_input.clear()
+            
+            # Обновляем данные таблицы
+            self.updateUsersTable()
+            
+            # Логирование
+            log_event("Отображаем страницу списка сотрудников")
         else:
             self.form_title.setText("")  # Если ничего не выбрано, скрываем заголовок
 
@@ -714,6 +936,9 @@ class Ui_MainWindow(object):
                 self.updateSessionsTable()
             if self.defective_table.isVisible():
                 self.updateDefectiveTable()
+            # Удалено обновление таблицы сотрудников
+            # if self.users_container.isVisible():
+            #     self.updateUsersTable()
     def show_dashboard(self):
         from Dash import Dashboard
         dashboard = Dashboard()
@@ -1184,6 +1409,88 @@ class Ui_MainWindow(object):
             error_item.setTextAlignment(Qt.AlignCenter)
             self.defective_table.setItem(0, 0, error_item)
             self.defective_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+
+    def updateUsersTable(self):
+        """Обновляет таблицу со списком всех сотрудников"""
+        query = {"type": "allUsers"}
+        if not hasattr(self, 'workers'):
+            self.workers = []
+        worker = DatabaseWorker(query)
+        worker.finished.connect(lambda result: self.on_users_finished(result))
+        worker.finished.connect(lambda: self.workers.remove(worker))
+        worker.finished.connect(worker.deleteLater)
+        self.workers.append(worker)
+        worker.start()
+        log_event("Отправлен запрос на получение списка всех сотрудников")
+
+    @Slot(dict)
+    def on_users_finished(self, result):
+        """Обрабатывает результат запроса на получение списка сотрудников"""
+        log_event(f"Получен ответ для таблицы сотрудников: {result}")
+        if result and result.get('status') == 'ok':
+            users = result['data']
+            log_event(f"Число полученных сотрудников: {len(users) if users else 0}")
+            
+            if users:  # Проверяем, есть ли данные
+                # Очищаем таблицу
+                self.users_table.clearContents()
+                self.users_table.setRowCount(len(users))
+                
+                for row, user in enumerate(users):
+                    self.users_table.setItem(row, 0, QTableWidgetItem(str(user.get("id", ""))))
+                    self.users_table.setItem(row, 1, QTableWidgetItem(user.get("name", "")))
+                    self.users_table.setItem(row, 2, QTableWidgetItem(user.get("surname", "")))
+                    self.users_table.setItem(row, 3, QTableWidgetItem(user.get("profession", "")))
+                    self.users_table.setItem(row, 4, QTableWidgetItem(user.get("uid", "")))
+                
+                # Обновляем таблицу и ее отображение
+                self.users_table.resizeColumnsToContents()
+                self.users_table.resizeRowsToContents()
+                self.users_table.viewport().update()
+                log_event("Таблица сотрудников обновлена")
+            else:
+                self.users_table.setRowCount(1)
+                empty_item = QTableWidgetItem("Список сотрудников пуст")
+                empty_item.setTextAlignment(Qt.AlignCenter)
+                self.users_table.setItem(0, 0, empty_item)
+                self.users_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+                log_event("Таблица сотрудников: список пуст")
+        else:
+            log_error("Ошибка при получении списка сотрудников из базы данных")
+            self.users_table.setRowCount(1)
+            error_item = QTableWidgetItem("Ошибка при получении данных")
+            error_item.setTextAlignment(Qt.AlignCenter)
+            self.users_table.setItem(0, 0, error_item)
+            self.users_table.setSpan(0, 0, 1, 5)  # Объединяем все ячейки в строке
+
+    def filter_users_table(self):
+        search_text = self.search_input.text().lower()
+        
+        # Если поле поиска пустое, показываем все строки
+        if not search_text:
+            for row in range(self.users_table.rowCount()):
+                self.users_table.setRowHidden(row, False)
+            return
+            
+        # Иначе фильтруем строки
+        for row in range(self.users_table.rowCount()):
+            hide_row = True
+            
+            # Проверяем все ячейки в строке
+            for col in range(self.users_table.columnCount()):
+                item = self.users_table.item(row, col)
+                if item and search_text in item.text().lower():
+                    hide_row = False
+                    break
+                    
+            # Скрываем или показываем строку
+            self.users_table.setRowHidden(row, hide_row)
+
+    def clear_search(self):
+        """Очищает поле поиска и показывает все строки таблицы"""
+        self.search_input.clear()
+        for row in range(self.users_table.rowCount()):
+            self.users_table.setRowHidden(row, False)
 
 class DetailInfoDialog(QDialog):
     """Диалоговое окно для отображения детальной информации о детали."""

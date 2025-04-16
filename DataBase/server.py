@@ -130,7 +130,6 @@ async def handle_client(reader, writer, pool):
                         response = {"status": "ok", "data": serialize_record(data)}
                     else:
                         response = {"status": "error", "message": "Users not found"}
-
                 elif json_data.get("type") == "getstats":
                     stats = await get_defective_counts(pool, json_data['name'])
                     if stats:

@@ -159,8 +159,8 @@ async def getDetails(pool, detail):
         print(f"Ошибка при выполнении запроса: {e}")
         return None
         
-async def allusers(pool, detail): 
-    # получение всех деталей где модель равана detail 
+async def allusers(pool): 
+    # получение всех пользователей из базы данных
     try: 
         async with pool.acquire() as conn: 
             query = "SELECT * FROM users" 
@@ -824,4 +824,17 @@ async def get_detailed_production_stats(pool, device_name=None, months=4):
         }
     except Exception as e:
         print(f"Ошибка при получении детальной статистики: {e}")
+        return None
+    
+async def allusers(pool): 
+    # получение всех пользователей из базы данных
+    try: 
+        async with pool.acquire() as conn: 
+            query = "SELECT * FROM users" 
+            users = await conn.fetch(query) 
+            if users: 
+                return users 
+            return None 
+    except Exception as e: 
+        print(f"Ошибка при выполнении запроса: {e}") 
         return None

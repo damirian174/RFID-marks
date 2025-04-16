@@ -5,7 +5,7 @@ from PySide6.QtGui import QPixmap, QIcon, QFont
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QSizePolicy, QCheckBox, QDialog, QTextEdit)
 import os
 import sys
-from detail_work import end_work, pause_work, couintine_work, update, zakurit
+from detail_work import end_work, pause_work, couintine_work, update, zakurit, getDetail
 # import button
 import database
 from datetime import datetime

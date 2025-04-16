@@ -3,7 +3,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QTimer, QRect)
 from PySide6.QtGui import QPixmap, QIcon, QFont
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox, QHBoxLayout, QLayout, QCheckBox, QTextEdit, QDialog)
-from detail_work import end_work, pause_work, couintine_work, update, zakurit
+from detail_work import end_work, pause_work, couintine_work, update, zakurit, getDetail
 import time
 import os
 import sys
