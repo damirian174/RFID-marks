@@ -1,0 +1,167 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>RFID_marks</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>RFID_marks</RootNamespace>
+    <ApplicationIcon>Resources\Images\favicon.ico</ApplicationIcon>
+    <StartupObject>RFID_marks.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.Collections.Generic" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Ports, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Ports.7.0.0\lib\net462\System.IO.Ports.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vs\GUI\FileContentIndex\0d915b1f-7839-4ad5-a008-cc824730fe3d.vsidx" />
+    <None Include=".vs\GUI\FileContentIndex\e1ed9985-9a65-4e3a-a478-af3dbd520f15.vsidx" />
+    <None Include=".vs\GUI\v17\.suo" />
+    <None Include=".vs\GUI\v17\DocumentLayout.json" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\RFID-marks-CSharp\FileContentIndex\56d5f13b-6cb1-4e83-9362-d7bcd07bb395.vsidx" />
+    <None Include=".vs\RFID-marks-CSharp\FileContentIndex\a619042b-24a7-4c61-8319-69b442441e40.vsidx" />
+    <None Include=".vs\RFID-marks-CSharp\v17\.wsuo" />
+    <None Include=".vs\RFID-marks-CSharp\v17\DocumentLayout.backup.json" />
+    <None Include=".vs\RFID-marks-CSharp\v17\DocumentLayout.json" />
+    <None Include=".vs\RFID_GUI\FileContentIndex\0b0281e6-9c75-4df6-a7e6-f9034fe57e9a.vsidx" />
+    <None Include=".vs\RFID_GUI\v17\.suo" />
+    <None Include=".vs\RFID_GUI\v17\DocumentLayout.json" />
+    <None Include=".vs\RFID_marks\FileContentIndex\ecd1e24e-1cf5-41f3-b7eb-4fb393def607.vsidx" />
+    <None Include=".vs\RFID_marks\v17\.suo" />
+    <None Include=".vs\RFID_marks\v17\DocumentLayout.backup.json" />
+    <None Include=".vs\RFID_marks\v17\DocumentLayout.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MarkPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PackingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Component.cs" />
+    <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Detail.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Operation.cs" />
+    <Compile Include="Models\Package.cs" />
+    <Compile Include="Models\Part.cs" />
+    <Compile Include="Models\PartHistory.cs" />
+    <Compile Include="Models\PartOperation.cs" />
+    <Compile Include="Models\Session.cs" />
+    <Compile Include="Models\TestRecord.cs" />
+    <Compile Include="Models\TestResult.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Services\Database.cs" />
+    <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\DetailService.cs" />
+    <Compile Include="Services\IDatabaseService.cs" />
+    <Compile Include="Services\IQrCodeService.cs" />
+    <Compile Include="Services\IRfidService.cs" />
+    <Compile Include="Services\Logger.cs" />
+    <Compile Include="Services\SerialManager.cs" />
+    <Compile Include="Views\BasePage.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarkPage.xaml.cs">
+      <DependentUpon>MarkPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PackingPage.xaml.cs">
+      <DependentUpon>PackingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkPage.xaml.cs">
+      <DependentUpon>WorkPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\favicon.ico" />
+    <Content Include="Resources\Images\loading.png" />
+    <Content Include="Resources\Images\main.jpg" />
+    <Content Include="Resources\Images\new_logo.jpg" />
+    <Content Include="Resources\Images\photo.jpg" />
+    <Content Include="Resources\Images\Метран.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

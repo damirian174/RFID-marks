@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFID_marks", "RFID_marks.csproj", "{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}.Debug|x86.ActiveCfg = Debug|x86
+		{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}.Debug|x86.Build.0 = Debug|x86
+		{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}.Release|x86.ActiveCfg = Release|x86
+		{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3FB5F95-A4BF-4E87-92D7-91F9CE536A87}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,443 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\testresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\testresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\testrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\testrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\partoperation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\partoperation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\parthistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\parthistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\part.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\part.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\package.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\package.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\detail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\detail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\models\\component.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:models\\component.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\serialmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\serialmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\irfidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\irfidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\iqrcodeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\iqrcodeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\idatabaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\idatabaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\detailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\detailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\services\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:services\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\views\\basepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:views\\basepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|c:\\users\\gilaz\\rfid-marks\\rfid-marks\\rfid-marks-csharp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8508DAE5-E420-8EEF-92AF-D6CDBBB6571E}|RFID_marks.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:27:03.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TestResult.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\TestResult.cs",
+              "RelativeDocumentMoniker": "Models\\TestResult.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\TestResult.cs",
+              "RelativeToolTip": "Models\\TestResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:27:02.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TestRecord.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\TestRecord.cs",
+              "RelativeDocumentMoniker": "Models\\TestRecord.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\TestRecord.cs",
+              "RelativeToolTip": "Models\\TestRecord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:27:02.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Session.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Session.cs",
+              "RelativeDocumentMoniker": "Models\\Session.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Session.cs",
+              "RelativeToolTip": "Models\\Session.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:27:01.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PartOperation.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\PartOperation.cs",
+              "RelativeDocumentMoniker": "Models\\PartOperation.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\PartOperation.cs",
+              "RelativeToolTip": "Models\\PartOperation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:27:00.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PartHistory.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\PartHistory.cs",
+              "RelativeDocumentMoniker": "Models\\PartHistory.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\PartHistory.cs",
+              "RelativeToolTip": "Models\\PartHistory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:59.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Part.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Part.cs",
+              "RelativeDocumentMoniker": "Models\\Part.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Part.cs",
+              "RelativeToolTip": "Models\\Part.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:59.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Package.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Package.cs",
+              "RelativeDocumentMoniker": "Models\\Package.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Package.cs",
+              "RelativeToolTip": "Models\\Package.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:58.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Operation.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Operation.cs",
+              "RelativeDocumentMoniker": "Models\\Operation.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Operation.cs",
+              "RelativeToolTip": "Models\\Operation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:57.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "Models\\Employee.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Employee.cs",
+              "RelativeToolTip": "Models\\Employee.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:57.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Detail.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Detail.cs",
+              "RelativeDocumentMoniker": "Models\\Detail.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Detail.cs",
+              "RelativeToolTip": "Models\\Detail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:56.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Config.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Config.cs",
+              "RelativeDocumentMoniker": "Models\\Config.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Config.cs",
+              "RelativeToolTip": "Models\\Config.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:56.161Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Component.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Component.cs",
+              "RelativeDocumentMoniker": "Models\\Component.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Models\\Component.cs",
+              "RelativeToolTip": "Models\\Component.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:55.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "SerialManager.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\SerialManager.cs",
+              "RelativeDocumentMoniker": "Services\\SerialManager.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\SerialManager.cs",
+              "RelativeToolTip": "Services\\SerialManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:49.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Logger.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\Logger.cs",
+              "RelativeDocumentMoniker": "Services\\Logger.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\Logger.cs",
+              "RelativeToolTip": "Services\\Logger.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:48.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IRfidService.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IRfidService.cs",
+              "RelativeDocumentMoniker": "Services\\IRfidService.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IRfidService.cs",
+              "RelativeToolTip": "Services\\IRfidService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:47.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IQrCodeService.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IQrCodeService.cs",
+              "RelativeDocumentMoniker": "Services\\IQrCodeService.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IQrCodeService.cs",
+              "RelativeToolTip": "Services\\IQrCodeService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:47.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "IDatabaseService.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IDatabaseService.cs",
+              "RelativeDocumentMoniker": "Services\\IDatabaseService.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\IDatabaseService.cs",
+              "RelativeToolTip": "Services\\IDatabaseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:46.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "DetailService.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\DetailService.cs",
+              "RelativeDocumentMoniker": "Services\\DetailService.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\DetailService.cs",
+              "RelativeToolTip": "Services\\DetailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:46.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "Services\\DatabaseService.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\DatabaseService.cs",
+              "RelativeToolTip": "Services\\DatabaseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:45.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Database.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\Database.cs",
+              "RelativeDocumentMoniker": "Services\\Database.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Services\\Database.cs",
+              "RelativeToolTip": "Services\\Database.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:44.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "BasePage.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Views\\BasePage.cs",
+              "RelativeDocumentMoniker": "Views\\BasePage.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Views\\BasePage.cs",
+              "RelativeToolTip": "Views\\BasePage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:26:39.289Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Views\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\Views\\MainWindow.xaml",
+              "RelativeToolTip": "Views\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-20T13:26:37.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T13:19:16.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\Gilaz\\RFID-marks\\RFID-marks\\RFID-marks-CSharp\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-20T13:19:13.919Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
