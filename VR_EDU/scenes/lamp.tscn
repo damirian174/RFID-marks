@@ -6,7 +6,7 @@
 
 [sub_resource type="Curve3D" id="Curve3D_60c0r"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 1.15933, -4.86374, 0, 0, 1, 0, 8.13936, 6.5943),
+"points": PackedVector3Array(0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 3.8442, 4.60675, 0, 0, 1, 0, 14.103, -4.49),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -219,7 +219,8 @@ script = ExtResource("2_60c0r")
 base = NodePath("Base")
 head = NodePath("LampHead")
 path_node = NodePath("Path3D")
-handle_length = 5.0
+handle_length = 6.0
+head_back_offset = Vector3(0, 0, 0)
 
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_60c0r")
@@ -233,7 +234,7 @@ mesh = SubResource("ArrayMesh_f3gd7")
 shape = SubResource("ConcavePolygonShape3D_f2tjl")
 
 [node name="LampHead" parent="." instance=ExtResource("2_f2tjl")]
-transform = Transform3D(1, 0, 0, 0, 0.231866, 0.972748, 0, -0.972748, 0.231867, 0, 8.23664, 6.61749)
+transform = Transform3D(1, 0, 0, 0, 0.6407, -0.767792, 0, 0.767792, 0.6407, 0, 14.103, -4.49)
 freeze = true
 
 [node name="Head" type="MeshInstance3D" parent="LampHead"]
@@ -294,17 +295,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 1.04308e-06, 0, -7.45058e-08, 1, 0, -3.43
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.1
 shadow_enabled = true
+omni_range = 28.119
 omni_attenuation = 1.766
 
 [node name="Neck" type="CSGPolygon3D" parent="."]
 top_level = true
-polygon = PackedVector2Array(-0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5)
+polygon = PackedVector2Array(0.5, 0, 0.353553, 0.353553, 3.06152e-17, 0.5, -0.353553, 0.353553, -0.5, 6.12303e-17, -0.353553, -0.353553, -9.18455e-17, -0.5, 0.353553, -0.353553)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 0
 path_interval = 1.0
 path_simplify_angle = 0.0
-path_rotation = 1
+path_rotation = 2
 path_rotation_accurate = false
 path_local = false
 path_continuous_u = true
@@ -312,3 +314,8 @@ path_u_distance = 1.0
 path_joined = false
 material = SubResource("StandardMaterial3D_60c0r")
 script = ExtResource("3_60c0r")
+radius = 0.5
+point_count = 8
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.3141, -6.7462)

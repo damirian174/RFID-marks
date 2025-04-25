@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwcxei7htsnuh"]
+
+[ext_resource type="Script" uid="uid://6yf0clkada3i" path="res://scenes/factory/objects_arrow_connecter.gd" id="1_ucfip"]
+
+[sub_resource type="Curve3D" id="Curve3D_i3hmm"]
+
+[node name="ObjectsArrowConnecter" type="Path3D" node_paths=PackedStringArray("object_b")]
+curve = SubResource("Curve3D_i3hmm")
+script = ExtResource("1_ucfip")
+object_b = NodePath("")
+color = Color(0.282353, 1, 1, 1)

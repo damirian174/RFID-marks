@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=4 uid="uid://10uk0qrxav2v"]
+[gd_scene load_steps=83 format=4 uid="uid://10uk0qrxav2v"]
 
 [ext_resource type="Script" uid="uid://b7wx3ojex6rhi" path="res://scenes/factory/mark_test.gd" id="1_6bk1i"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_d4xff"]
@@ -20,7 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://dm4rs6fmdhryh" path="res://scenes/ui/computer.tscn" id="16_talq1"]
 [ext_resource type="PackedScene" uid="uid://8e5kqlppu2sn" path="res://scenes/lamp.tscn" id="17_guehg"]
 [ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="18_wij2i"]
-[ext_resource type="Script" uid="uid://bhx1vwaobaghq" path="res://scenes/factory/¦¦¦-TА¦-¦-¦¦¦-_TБ_¦-TВ¦-¦¦TАTБTВ¦¬TП¦-¦¬.gd" id="21_cdtb3"]
+[ext_resource type="Script" uid="uid://b5kvc2tniqt5v" path="res://scenes/sticker.gd" id="19_s0p34"]
+[ext_resource type="CylinderMesh" uid="uid://c11qmksjxhwdn" path="res://resources/sticker_mesh.tres" id="20_2lox4"]
+[ext_resource type="Script" uid="uid://bhx1vwaobaghq" path="res://scenes/factory/scanner.gd" id="21_cdtb3"]
+[ext_resource type="Shape3D" uid="uid://7a6itlroqwk7" path="res://resources/sticker_shape.tres" id="21_t31h3"]
+[ext_resource type="Script" uid="uid://dkq7xxffhiu3f" path="res://addons/godot-xr-tools/objects/pickable.gd" id="22_t31h3"]
+[ext_resource type="PackedScene" uid="uid://dwcxei7htsnuh" path="res://scenes/factory/objects_arrow_connecter.tscn" id="25_t31h3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gcktq"]
 frequency = 0.0338
@@ -126,14 +131,14 @@ points = PackedVector3Array(0.807189, 0.652832, 1.11745, -0.79916, 0.548101, 1.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_s0p34"]
 size = Vector3(0.1, 0.1, 0.062207)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_talq1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdtb3"]
 albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 2.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_guehg"]
-material = SubResource("StandardMaterial3D_talq1")
+material = SubResource("StandardMaterial3D_cdtb3")
 top_radius = 0.04
 bottom_radius = 0.04
 height = 0.01
@@ -168,9 +173,6 @@ points = PackedVector3Array(0.981896, 0.183965, -0.611957, -0.981896, -0.183961,
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rhivs"]
 points = PackedVector3Array(0.981896, 0.183965, -0.611957, -0.981896, -0.183961, -0.611945, -0.947316, -0.305561, -0.609292, -0.0910617, 0.973013, 0.70151, 0.183951, -0.981897, 0.676611, -0.941522, -0.273247, 0.700806, -0.457225, 0.884073, -0.607684, -0.183969, -0.981895, -0.611944, 0.941757, 0.27332, 0.700983, 0.762034, -0.640199, -0.607699, 0.457061, 0.884161, -0.607749, -0.884034, 0.457298, 0.672656, 0.916301, -0.396919, 0.673834, -0.546774, -0.82006, 0.70091, 0.673389, 0.73478, 0.675209, -0.916222, 0.397067, -0.608961, -0.6734, -0.734772, -0.610466, -0.64008, 0.762132, 0.672631, 0.396902, -0.91631, -0.609025, 0.546576, -0.820076, 0.700923, 0.183951, 0.981897, -0.611945, 0.762034, 0.640199, -0.607699, 0.305544, 0.947302, 0.674073, 0.981896, -0.183965, -0.611957, -0.977935, 0.152778, 0.613102, -0.762042, -0.640189, 0.672555, -0.183969, -0.981895, 0.67661, -0.762042, 0.640189, -0.60769, 0.976782, -0.183007, 0.612446, -0.183969, 0.981895, 0.67661, -0.183969, 0.981895, -0.611944, 0.916301, 0.396919, 0.673834)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nw2h4"]
-points = PackedVector3Array(0, -0.005, -0.04, -0.00392326, -0.005, -0.0398121, 0, 0.005, -0.04, 0.00391543, -0.005, -0.0398121, -0.00392326, 0.005, -0.0398121, -0.00780736, -0.005, -0.0392326, 0.00391543, 0.005, -0.0398121, 0.00779953, -0.005, -0.0392326, -0.00780736, 0.005, -0.0392326, -0.0116132, -0.005, -0.038285, 0.00779953, 0.005, -0.0392326, 0.0116053, -0.005, -0.038285, -0.0116132, 0.005, -0.038285, -0.0153093, -0.005, -0.0369616, 0.0116053, 0.005, -0.038285, 0.0153015, -0.005, -0.0369616, -0.0153093, 0.005, -0.0369616, -0.0188567, -0.005, -0.035278, 0.0153015, 0.005, -0.0369616, 0.0188489, -0.005, -0.035278, -0.0188567, 0.005, -0.035278, -0.022224, -0.005, -0.0332655, 0.0188489, 0.005, -0.035278, 0.0222161, -0.005, -0.0332655, -0.022224, 0.005, -0.0332655, -0.0253798, -0.005, -0.030924, 0.0222161, 0.005, -0.0332655, 0.025372, -0.005, -0.030924, -0.0253798, 0.005, -0.030924, -0.028285, -0.005, -0.028285, 0.025372, 0.005, -0.030924, 0.0282772, -0.005, -0.028285, -0.028285, 0.005, -0.028285, -0.030924, -0.005, -0.0253798, 0.0282772, 0.005, -0.028285, 0.0309162, -0.005, -0.0253798, -0.030924, 0.005, -0.0253798, -0.0332655, -0.005, -0.022224, 0.0309162, 0.005, -0.0253798, 0.0332576, -0.005, -0.022224, -0.0332655, 0.005, -0.022224, -0.035278, -0.005, -0.0188567, 0.0332576, 0.005, -0.022224, 0.0352702, -0.005, -0.0188567, -0.035278, 0.005, -0.0188567, -0.0369616, -0.005, -0.0153093, 0.0352702, 0.005, -0.0188567, 0.0369538, -0.005, -0.0153093, -0.0369616, 0.005, -0.0153093, -0.038285, -0.005, -0.0116132, 0.0369538, 0.005, -0.0153093, 0.0382772, -0.005, -0.0116132, -0.038285, 0.005, -0.0116132, -0.0392326, -0.005, -0.00780736, 0.0382772, 0.005, -0.0116132, 0.0392247, -0.005, -0.00780736, -0.0392326, 0.005, -0.00780736, -0.0398121, -0.005, -0.00392326, 0.0392247, 0.005, -0.00780736, 0.0398042, -0.005, -0.00392326, -0.0398121, 0.005, -0.00392326, -0.04, -0.005, 0, 0.0398042, 0.005, -0.00392326, 0.04, -0.005, 0, -0.04, 0.005, 0, -0.0398121, -0.005, 0.00391543, 0.04, 0.005, 0, 0.0398042, -0.005, 0.00391543, -0.0398121, 0.005, 0.00391543, -0.0392326, -0.005, 0.00779953, 0.0398042, 0.005, 0.00391543, 0.0392247, -0.005, 0.00779953, -0.0392326, 0.005, 0.00779953, -0.038285, -0.005, 0.0116053, 0.0392247, 0.005, 0.00779953, 0.0382772, -0.005, 0.0116053, -0.038285, 0.005, 0.0116053, -0.0369616, -0.005, 0.0153015, 0.0382772, 0.005, 0.0116053, 0.0369538, -0.005, 0.0153015, -0.0369616, 0.005, 0.0153015, -0.035278, -0.005, 0.0188489, 0.0369538, 0.005, 0.0153015, 0.0352702, -0.005, 0.0188489, -0.035278, 0.005, 0.0188489, -0.0332655, -0.005, 0.0222161, 0.0352702, 0.005, 0.0188489, 0.0332576, -0.005, 0.0222161, -0.0332655, 0.005, 0.0222161, -0.030924, -0.005, 0.025372, 0.0332576, 0.005, 0.0222161, 0.0309162, -0.005, 0.025372, -0.030924, 0.005, 0.025372, -0.028285, -0.005, 0.0282772, 0.0309162, 0.005, 0.025372, 0.0282772, -0.005, 0.0282772, -0.028285, 0.005, 0.0282772, -0.0253798, -0.005, 0.0309162, 0.0282772, 0.005, 0.0282772, 0.025372, -0.005, 0.0309162, -0.0253798, 0.005, 0.0309162, -0.022224, -0.005, 0.0332576, 0.025372, 0.005, 0.0309162, 0.0222161, -0.005, 0.0332576, -0.022224, 0.005, 0.0332576, -0.0188567, -0.005, 0.0352702, 0.0222161, 0.005, 0.0332576, 0.0188489, -0.005, 0.0352702, -0.0188567, 0.005, 0.0352702, -0.0153093, -0.005, 0.0369538, 0.0188489, 0.005, 0.0352702, 0.0153015, -0.005, 0.0369538, -0.0153093, 0.005, 0.0369538, -0.0116132, -0.005, 0.0382772, 0.0153015, 0.005, 0.0369538, 0.0116053, -0.005, 0.0382772, -0.0116132, 0.005, 0.0382772, -0.00780736, -0.005, 0.0392247, 0.0116053, 0.005, 0.0382772, 0.00779953, -0.005, 0.0392247, -0.00780736, 0.005, 0.0392247, -0.00392326, -0.005, 0.0398042, 0.00779953, 0.005, 0.0392247, 0.00391543, -0.005, 0.0398042, -0.00392326, 0.005, 0.0398042, 0, -0.005, 0.04, 0.00391543, 0.005, 0.0398042, 0, 0.005, 0.04)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qmsla"]
 albedo_color = Color(0, 0, 0, 1)
 
@@ -204,20 +206,10 @@ size = Vector3(1, 7.495, 3.325)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1r04c"]
 points = PackedVector3Array(0.5, 3.7475, 1.6625, -0.5, 3.7475, 1.6625, 0.5, -3.7475, 1.6625, 0.5, 3.7475, -1.6625, -0.5, 3.7475, -1.6625, -0.5, -3.7475, 1.6625, 0.5, -3.7475, -1.6625, -0.5, -3.7475, -1.6625)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_cdtb3"]
-noise_type = 5
-frequency = 0.0221
-
-[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_s0p34"]
-width = 128
-height = 128
-depth = 128
-noise = SubResource("FastNoiseLite_cdtb3")
-
 [sub_resource type="FogMaterial" id="FogMaterial_s0p34"]
 density = 8.0
 albedo = Color(0, 0, 0, 1)
-density_texture = SubResource("NoiseTexture3D_s0p34")
+edge_fade = 0.34822
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s0p34"]
 albedo_color = Color(0, 0.433333, 1, 1)
@@ -334,6 +326,9 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_t31h3")
 size = Vector3(0.01, 0.01, 0.07)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fnvjc"]
+size = Vector3(0.0243408, 0.0368408, 0.0623352)
+
 [node name="MarkTest" type="Node3D"]
 script = ExtResource("1_6bk1i")
 
@@ -399,91 +394,89 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.614364)
 shape = SubResource("ConvexPolygonShape3D_hfwuk")
 
 [node name="Container" parent="." instance=ExtResource("11_nqhnh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.83218, 2.11528, -3.54475)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.95083, 1.21019, -3.93092)
 collision_layer = 5
 ranged_grab_method = 0
 second_hand_grab = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 mesh = ExtResource("12_nqhnh")
 
 [node name="CollisionShape3D17" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_cjxsw")
 
 [node name="CollisionShape3D16" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_ov04u")
 
 [node name="CollisionShape3D15" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_4rbjn")
 
 [node name="CollisionShape3D14" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_talq1")
 
 [node name="CollisionShape3D13" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_guehg")
 
 [node name="CollisionShape3D12" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_wij2i")
 
 [node name="CollisionShape3D11" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_qmsla")
 
 [node name="CollisionShape3D10" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_6bk1i")
 
 [node name="CollisionShape3D9" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_cdtb3")
 
 [node name="CollisionShape3D8" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_s0p34")
 
 [node name="CollisionShape3D7" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_fnvjc")
 
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_2lox4")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_t31h3")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_d4s1j")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_i3hmm")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Container"]
-transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0.30292, -0.831458, -0.783914)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_q3mwa")
 
 [node name="Area3D" type="Area3D" parent="Container"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.322829, -0.703663, -0.264794)
 collision_layer = 0
 collision_mask = 65536
 script = ExtResource("14_cdtb3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Container/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0188966)
 shape = SubResource("BoxShape3D_s0p34")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Container"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.32277, -0.711645, -0.245415)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("CylinderMesh_guehg")
 
@@ -559,73 +552,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04168, -4.55876)
 
 [node name="Stikers" type="Node3D" parent="."]
 
-[node name="Sticker" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.833072, 1.45113, -4.11225)
-mass = 0.1
-continuous_cd = true
-ranged_grab_method = 0
-second_hand_grab = 1
+[node name="Sticker" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.49045, -3.97323)
+collision_layer = 65536
+collision_mask = 196615
+freeze_mode = 1
+script = ExtResource("19_s0p34")
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/Sticker"]
-mesh = SubResource("CylinderMesh_guehg")
+[node name="PickableObject" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46006, -4.36087)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/Sticker"]
-shape = SubResource("ConvexPolygonShape3D_nw2h4")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/PickableObject"]
+mesh = ExtResource("20_2lox4")
 
-[node name="Sticker2" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2069, 1.50379, -4.28477)
-mass = 0.1
-continuous_cd = true
-ranged_grab_method = 0
-second_hand_grab = 1
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/PickableObject"]
+shape = ExtResource("21_t31h3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/Sticker2"]
-mesh = SubResource("CylinderMesh_guehg")
+[node name="XRToolsPickable" type="RigidBody3D" parent="Stikers" groups=["stickers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.479503, 1.40988, -3.89507)
+collision_layer = 5
+collision_mask = 196615
+script = ExtResource("22_t31h3")
+metadata/_custom_type_script = "uid://dkq7xxffhiu3f"
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/Sticker2"]
-shape = SubResource("ConvexPolygonShape3D_nw2h4")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/XRToolsPickable"]
+mesh = ExtResource("20_2lox4")
 
-[node name="Sticker3" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10452, 1.31513, -4.11225)
-mass = 0.1
-continuous_cd = true
-ranged_grab_method = 0
-second_hand_grab = 1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/Sticker3"]
-mesh = SubResource("CylinderMesh_guehg")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/Sticker3"]
-shape = SubResource("ConvexPolygonShape3D_nw2h4")
-
-[node name="Sticker4" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2069, 1.31513, -3.99249)
-mass = 0.1
-continuous_cd = true
-ranged_grab_method = 0
-second_hand_grab = 1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/Sticker4"]
-mesh = SubResource("CylinderMesh_guehg")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/Sticker4"]
-shape = SubResource("ConvexPolygonShape3D_nw2h4")
-
-[node name="Sticker5" parent="Stikers" groups=["stickers"] instance=ExtResource("11_nqhnh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2069, 1.31513, -4.11225)
-mass = 0.1
-continuous_cd = true
-ranged_grab_method = 0
-second_hand_grab = 1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stikers/Sticker5"]
-mesh = SubResource("CylinderMesh_guehg")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/Sticker5"]
-shape = SubResource("ConvexPolygonShape3D_nw2h4")
-
-[node name="Lamp" parent="." instance=ExtResource("17_guehg")]
-transform = Transform3D(0.0262766, 0, -0.0425387, 0, 0.05, 0, 0.0425387, 0, 0.0262766, 0.838314, 1.19296, -4.48736)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Stikers/XRToolsPickable"]
+shape = ExtResource("21_t31h3")
 
 [node name="Button" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.37555, 1.48271, -4.73818)
@@ -674,5 +629,20 @@ script = ExtResource("21_cdtb3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0305052, 0.117661, 0)
 mesh = SubResource("BoxMesh_d4s1j")
 
+[node name="ScanArea" type="Area3D" parent="КоробкаСОтверстиями"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0465841, 0.0952732, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="КоробкаСОтверстиями/ScanArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0164917, -0.00111085, -0.00174868)
+shape = SubResource("BoxShape3D_fnvjc")
+
+[node name="ObjectsArrowConnecter" parent="." node_paths=PackedStringArray("object_a", "object_b") instance=ExtResource("25_t31h3")]
+object_a = NodePath("../Container/Area3D")
+object_b = NodePath("../КоробкаСОтверстиями/ScanArea")
+
+[node name="Lamp" parent="." instance=ExtResource("17_guehg")]
+transform = Transform3D(-0.0393597, 0, 0.0308353, 0, 0.05, 0, -0.0308353, 0, -0.0393597, 0.836121, 1.18799, -4.56529)
+
 [connection signal="body_entered" from="Container/Area3D" to="Container/Area3D" method="_on_body_entered"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="ConeyorBelt" method="_on_interactable_area_button_button_pressed"]
+[connection signal="body_entered" from="КоробкаСОтверстиями/ScanArea" to="КоробкаСОтверстиями" method="_on_scan_area_body_entered"]

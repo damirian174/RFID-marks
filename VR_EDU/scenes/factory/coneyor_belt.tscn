@@ -59,6 +59,7 @@ shape = SubResource("ConvexPolygonShape3D_vyxxo")
 
 [node name="Debug" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0969391, 1.96625, 3.85062)
+visible = false
 mesh = SubResource("SphereMesh_4es4f")
 
 [node name="Belt" type="MeshInstance3D" parent="."]

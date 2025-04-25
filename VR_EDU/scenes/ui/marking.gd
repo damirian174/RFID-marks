@@ -25,6 +25,15 @@ var mark_active: bool = false:
 			stage.text = '...'
 
 
+
+func _ready() -> void:
+	AppManager.marking_stage_changed.connect(func(dis: bool): mark_active = true if dis else false)
+
+
+
+
+
 func _on_button_pressed() -> void:
-	app.send_mark_signal()
-	mark_active = false
+	if StageManager.current_stage == StageManager.MARK_STAGES.PRESS_MARK_BUTTON:
+		StageManager.current_stage = StageManager.MARK_STAGES.SCAN
+		AppManager.marking_stage_changed.emit(false)

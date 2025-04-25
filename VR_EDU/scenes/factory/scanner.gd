@@ -7,3 +7,9 @@ func _ready() -> void:
 	
 func change_color_to(color: Color):
 	material.albedo_color = color
+
+
+
+
+func _on_scan_area_body_entered(body: Node3D) -> void:
+	pass # Replace with function body.

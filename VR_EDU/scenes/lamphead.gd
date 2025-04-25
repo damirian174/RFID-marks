@@ -23,18 +23,19 @@ extends Node3D
 
 var _prev_base_transform: Transform3D
 var _prev_head_transform: Transform3D
+var _curve: Curve3D
+var _path_offset: Vector3
 
 func _ready():
+	_curve = path_node.curve
+	_path_offset = path_node.position
 	update_curve()
 	_store_transforms()
 
 func _physics_process(_delta):
 	if should_update():
-		
 		update_curve()
 		_store_transforms()
-		#neck.scale = Vector3.ONE / scale
-		
 
 func should_update() -> bool:
 	if not dynamic_update:
@@ -54,33 +55,31 @@ func update_curve():
 	if not is_instance_valid(base) or not is_instance_valid(head) or not is_instance_valid(path_node):
 		return
 	
-	var curve = path_node.curve
-	if not curve:
-		return
+	if !_curve:
+		_curve = Curve3D.new()
+		path_node.curve = _curve
 	
-	# Path's local offset from parent
-	var path_offset = path_node.position
+	# Cache frequently used values
+	var base_pos = base.position - _path_offset
+	var base_basis_y = base.transform.basis.y
+	var head_basis = head.transform.basis
 	
-	# Base point calculation
-	var base_pos = base.position - path_offset
-	var base_handle = base.position + base.transform.basis.y * handle_length - path_offset
+	# Calculate head position with single basis operation
+	var head_back = head.position + head_basis * head_back_offset
+	var head_back_pos = head_back - _path_offset
+	var head_basis_y = head_basis.y
 	
-	# Head point calculation with 3D offset
-	var head_back = head.position + head.transform.basis * head_back_offset
-	var head_back_pos = head_back - path_offset
-	var head_handle = head_back + -head.transform.basis.y * handle_length - path_offset
-	
-	# Update curve points
-	if curve.point_count < 2:
-		curve.clear_points()
-		curve.add_point(base_pos, Vector3.ZERO, base_handle - base_pos)
-		curve.add_point(head_back_pos, head_back_pos - head_handle, Vector3.ZERO)
+	# Update curve points with direct handle calculations
+	if _curve.point_count < 2:
+		_curve.clear_points()
+		_curve.add_point(base_pos, Vector3.ZERO, base_basis_y * handle_length)
+		_curve.add_point(head_back_pos, head_basis_y * handle_length, Vector3.ZERO)
 	else:
-		curve.set_point_position(0, base_pos)
-		curve.set_point_out(0, base_handle - base_pos)
-		curve.set_point_position(1, head_back_pos)
-		curve.set_point_in(1, head_back_pos - head_handle)
+		_curve.set_point_position(0, base_pos)
+		_curve.set_point_out(0, base_basis_y * handle_length)
+		_curve.set_point_position(1, head_back_pos)
+		_curve.set_point_in(1, head_basis_y * handle_length)
 	
-	# Force editor refresh
+	# Optimized editor refresh
 	if Engine.is_editor_hint():
-		path_node.curve = curve.duplicate()
+		path_node.curve = _curve.duplicate()

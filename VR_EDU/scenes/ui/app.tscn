@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bcqtcypux3l4l"]
 
 [ext_resource type="Script" uid="uid://ct0b65xbtcy8r" path="res://scenes/ui/app.gd" id="1_7ifyk"]
-[ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/маркировка.gd" id="1_qy8mf"]
+[ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/marking.gd" id="1_qy8mf"]
 [ext_resource type="Texture2D" uid="uid://b34l0oiml78e1" path="res://metran.png" id="1_t2d62"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qy8mf"]
