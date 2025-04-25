@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://8excouenmhi7"]
+
+[ext_resource type="ArrayMesh" uid="uid://djpyiyqfx81q0" path="res://scenes/factory/light.obj" id="1_xtfon"]
+
+[node name="CeilLight" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_xtfon")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.418967, 0)
+light_color = Color(1, 1, 0.823529, 1)
+light_energy = 2.224
+shadow_enabled = true
+omni_range = 23.607
+omni_attenuation = 1.766

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://dm4rs6fmdhryh"]
+
+[ext_resource type="Script" uid="uid://bfta7l1y8ww0q" path="res://scenes/ui/computer.gd" id="1_3xbw5"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="1_wibaa"]
+[ext_resource type="PackedScene" uid="uid://bcqtcypux3l4l" path="res://scenes/ui/app.tscn" id="2_3xbw5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wibaa"]
+albedo_color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_3xbw5"]
+material = SubResource("StandardMaterial3D_wibaa")
+size = Vector2(1.775, 0.998)
+
+[node name="Computer" type="Node3D"]
+script = ExtResource("1_3xbw5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0129511)
+mesh = SubResource("QuadMesh_3xbw5")
+
+[node name="Viewport2Din3D" parent="." instance=ExtResource("1_wibaa")]
+screen_size = Vector2(1.775, 0.998)
+scene = ExtResource("2_3xbw5")
+viewport_size = Vector2(1280, 720)
+scene_properties_keys = PackedStringArray("app.gd")

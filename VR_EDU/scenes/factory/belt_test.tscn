@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxwjm7esu87te"]
+
+[ext_resource type="PackedScene" uid="uid://64khcy7e0hjx" path="res://scenes/factory/coneyor_belt.tscn" id="1_jorrr"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="2_4qe86"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jorrr"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_4qe86"]
+sky_material = SubResource("ProceduralSkyMaterial_jorrr")
+
+[sub_resource type="Environment" id="Environment_jgaju"]
+background_mode = 2
+sky = SubResource("Sky_4qe86")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qe86"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jgaju"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="BeltTest" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jgaju")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="ConeyorBelt" parent="." instance=ExtResource("1_jorrr")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965007, 0.262223, 0, -0.262223, 0.965007, 0, 0.913685, 4.76806)
+
+[node name="PickableObject" parent="." instance=ExtResource("2_4qe86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889708, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickableObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.366852, 0)
+mesh = SubResource("BoxMesh_4qe86")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="PickableObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.366852, 0)
+shape = SubResource("ConvexPolygonShape3D_jgaju")

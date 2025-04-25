@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://7fbmt2e52fgx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mgt4j"]
+rough = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mgt4j"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0p4ho"]
+height = 1.5
+radius = 0.1
+
+[node name="RoundThing" type="AnimatableBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_mgt4j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mgt4j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_0p4ho")

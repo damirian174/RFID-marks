@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt3inoads41d8"]
+
+[sub_resource type="Environment" id="Environment_yilnh"]
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 0
+glow_enabled = true
+glow_blend_mode = 1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 16.0
+
+[node name="Environment" type="WorldEnvironment"]
+environment = SubResource("Environment_yilnh")

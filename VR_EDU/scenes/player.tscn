@@ -1,0 +1,83 @@
+[gd_scene load_steps=12 format=3 uid="uid://bvn2apk73fd28"]
+
+[ext_resource type="PackedScene" uid="uid://hpr0v012ghsb" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_tac_glove.tscn" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="2_dqkch"]
+[ext_resource type="PackedScene" uid="uid://dup2vp8v5rpi5" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_tac_glove.tscn" id="2_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="4_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://bft3xyxs31ci3" path="res://addons/godot-xr-tools/functions/function_pose_detector.tscn" id="4_ur7pv"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="5_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://b6otn4bj8fyt" path="res://scenes/player_hands_area.tscn" id="5_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="6_fjrip"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="6_smehm"]
+[ext_resource type="Script" uid="uid://c3w7a284g3qt2" path="res://addons/godot-xr-tools/overrides/ground_physics_settings.gd" id="8_smehm"]
+
+[sub_resource type="Resource" id="Resource_ur7pv"]
+script = ExtResource("8_smehm")
+flags = 0
+move_drag = 10.0
+move_traction = 30.0
+stop_on_slope = true
+move_max_slope = 45.0
+jump_max_slope = 45.0
+jump_velocity = 3.0
+bounciness = 0.0
+bounce_threshold = 1.0
+metadata/_custom_type_script = "uid://c3w7a284g3qt2"
+
+[node name="Player" type="XROrigin3D"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+
+[node name="Lefthand" type="XRController3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.519945)
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="Lefthand" instance=ExtResource("1_g2els")]
+
+[node name="FunctionPickup" parent="Lefthand/LeftHand" instance=ExtResource("2_dqkch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.125)
+grab_distance = 0.1
+
+[node name="MovementTurn" parent="Lefthand/LeftHand" instance=ExtResource("4_tuyoq")]
+turn_mode = 2
+
+[node name="FunctionPoseDetector" parent="Lefthand/LeftHand" instance=ExtResource("4_ur7pv")]
+collision_mask = 2228224
+
+[node name="PlayerHandsArea" parent="Lefthand/LeftHand" instance=ExtResource("5_y4r1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0218913)
+collision_layer = 131072
+collision_mask = 131072
+
+[node name="RaightHandController" type="XRController3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.519945)
+tracker = &"right_hand"
+
+[node name="RightHand" parent="RaightHandController" instance=ExtResource("2_qhqgy")]
+
+[node name="FunctionPickup" parent="RaightHandController/RightHand" instance=ExtResource("2_dqkch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00154138, 7.45058e-09, 0.125318)
+grab_distance = 0.1
+ranged_enable = false
+
+[node name="FunctionPoseDetector" parent="RaightHandController/RightHand" instance=ExtResource("4_ur7pv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00154138, 7.45058e-09, 0.000317752)
+collision_mask = 2228224
+
+[node name="FunctionPointer" parent="RaightHandController/RightHand" instance=ExtResource("6_fjrip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00154138, 7.45058e-09, 0.000317752)
+show_laser = 2
+laser_length = 1
+show_target = true
+target_radius = 0.01
+
+[node name="MovementDirect" parent="RaightHandController/RightHand" instance=ExtResource("6_smehm")]
+strafe = true
+
+[node name="PlayerHandsArea" parent="RaightHandController/RightHand" instance=ExtResource("5_y4r1p")]
+collision_layer = 131072
+collision_mask = 131072
+
+[node name="PlayerBody" parent="." instance=ExtResource("5_tuyoq")]
+player_radius = 0.25
+physics = SubResource("Resource_ur7pv")

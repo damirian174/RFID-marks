@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://64khcy7e0hjx"]
+
+[ext_resource type="Script" uid="uid://dvsttpydj8n27" path="res://scenes/factory/coneyor_belt.gd" id="1_4es4f"]
+[ext_resource type="Texture2D" uid="uid://bg43jg7ldyq6q" path="res://scenes/models/prod_line/textures/blue_metal_plate_diff_4k.png" id="2_jdb6l"]
+[ext_resource type="ArrayMesh" uid="uid://bnw8y04oramlw" path="res://scenes/factory/conv_belt.obj" id="3_4es4f"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jdb6l"]
+friction = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mqt0m"]
+albedo_texture = ExtResource("2_jdb6l")
+
+[sub_resource type="BoxMesh" id="BoxMesh_jdb6l"]
+material = SubResource("StandardMaterial3D_mqt0m")
+size = Vector3(0.25, 0.865, 10.495)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vyxxo"]
+points = PackedVector3Array(-0.125, -0.4325, -5.2475, 0.125, -0.4325, -5.2475, -0.125, -0.4325, 5.2475, -0.125, 0.4325, -5.2475, 0.125, 0.4325, -5.2475, 0.125, -0.4325, 5.2475, -0.125, 0.4325, 5.2475, 0.125, 0.4325, 5.2475)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_euji6"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4es4f"]
+material = SubResource("StandardMaterial3D_euji6")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4es4f"]
+friction = 0.0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jdb6l"]
+data = PackedVector3Array(4.5446, -0.3818, 1, 4.5446, -0.3818, -1, -4.3345, -0.3818, 1, -4.3345, -0.3818, 1, 4.5446, -0.3818, -1, -4.3345, -0.3818, -1, -4.4355, -0.3844, 1, -4.3345, -0.3818, 1, -4.4355, -0.3844, -1, -4.4355, -0.3844, -1, -4.3345, -0.3818, 1, -4.3345, -0.3818, -1, -4.5336, -0.3608, 1, -4.4355, -0.3844, 1, -4.5336, -0.3608, -1, -4.5336, -0.3608, -1, -4.4355, -0.3844, 1, -4.4355, -0.3844, -1, -4.6224, -0.3126, 1, -4.5336, -0.3608, 1, -4.6224, -0.3126, -1, -4.6224, -0.3126, -1, -4.5336, -0.3608, 1, -4.5336, -0.3608, -1, -4.6956, -0.2431, 1, -4.6224, -0.3126, 1, -4.6956, -0.2431, -1, -4.6956, -0.2431, -1, -4.6224, -0.3126, 1, -4.6224, -0.3126, -1, -4.7483, -0.1569, 1, -4.6956, -0.2431, 1, -4.7483, -0.1569, -1, -4.7483, -0.1569, -1, -4.6956, -0.2431, 1, -4.6956, -0.2431, -1, -4.7771, -0.0601, 1, -4.7483, -0.1569, 1, -4.7771, -0.0601, -1, -4.7771, -0.0601, -1, -4.7483, -0.1569, 1, -4.7483, -0.1569, -1, -4.7796, 0.0408, 1, -4.7771, -0.0601, 1, -4.7796, 0.0408, -1, -4.7796, 0.0408, -1, -4.7771, -0.0601, 1, -4.7771, -0.0601, -1, -4.756, 0.139, 1, -4.7796, 0.0408, 1, -4.756, 0.139, -1, -4.756, 0.139, -1, -4.7796, 0.0408, 1, -4.7796, 0.0408, -1, -4.7079, 0.2278, 1, -4.756, 0.139, 1, -4.7079, 0.2278, -1, -4.7079, 0.2278, -1, -4.756, 0.139, 1, -4.756, 0.139, -1, -4.6383, 0.301, 1, -4.7079, 0.2278, 1, -4.6383, 0.301, -1, -4.6383, 0.301, -1, -4.7079, 0.2278, 1, -4.7079, 0.2278, -1, -4.5522, 0.3537, 1, -4.6383, 0.301, 1, -4.5522, 0.3537, -1, -4.5522, 0.3537, -1, -4.6383, 0.301, 1, -4.6383, 0.301, -1, -4.4553, 0.3824, 1, -4.5522, 0.3537, 1, -4.4553, 0.3824, -1, -4.4553, 0.3824, -1, -4.5522, 0.3537, 1, -4.5522, 0.3537, -1, 4.4395, 0.3821, 1, -4.4396, 0.3821, 1, 4.4395, 0.3821, -1, 4.4395, 0.3821, -1, -4.4396, 0.3821, 1, -4.4396, 0.3821, -1, 4.4395, 0.3821, 1, 4.4395, 0.3821, -1, 4.5405, 0.3847, 1, 4.5405, 0.3847, 1, 4.4395, 0.3821, -1, 4.5405, 0.3847, -1, 4.5405, 0.3847, 1, 4.5405, 0.3847, -1, 4.6386, 0.3611, 1, 4.6386, 0.3611, 1, 4.5405, 0.3847, -1, 4.6386, 0.3611, -1, 4.6386, 0.3611, 1, 4.6386, 0.3611, -1, 4.7274, 0.3129, 1, 4.7274, 0.3129, 1, 4.6386, 0.3611, -1, 4.7274, 0.3129, -1, 4.7274, 0.3129, 1, 4.7274, 0.3129, -1, 4.8006, 0.2434, 1, 4.8006, 0.2434, 1, 4.7274, 0.3129, -1, 4.8006, 0.2434, -1, 4.8006, 0.2434, 1, 4.8006, 0.2434, -1, 4.8533, 0.1572, 1, 4.8533, 0.1572, 1, 4.8006, 0.2434, -1, 4.8533, 0.1572, -1, 4.8533, 0.1572, 1, 4.8533, 0.1572, -1, 4.882, 0.0604, 1, 4.882, 0.0604, 1, 4.8533, 0.1572, -1, 4.882, 0.0604, -1, 4.882, 0.0604, 1, 4.882, 0.0604, -1, 4.8847, -0.0405, 1, 4.8847, -0.0405, 1, 4.882, 0.0604, -1, 4.8847, -0.0405, -1, 4.8847, -0.0405, 1, 4.8847, -0.0405, -1, 4.861, -0.1387, 1, 4.861, -0.1387, 1, 4.8847, -0.0405, -1, 4.861, -0.1387, -1, 4.861, -0.1387, 1, 4.861, -0.1387, -1, 4.8129, -0.2275, 1, 4.8129, -0.2275, 1, 4.861, -0.1387, -1, 4.8129, -0.2275, -1, 4.8129, -0.2275, 1, 4.8129, -0.2275, -1, 4.7433, -0.3007, 1, 4.7433, -0.3007, 1, 4.8129, -0.2275, -1, 4.7433, -0.3007, -1, 4.7433, -0.3007, 1, 4.7433, -0.3007, -1, 4.6572, -0.3534, 1, 4.6572, -0.3534, 1, 4.7433, -0.3007, -1, 4.6572, -0.3534, -1, 4.6572, -0.3534, 1, 4.6572, -0.3534, -1, 4.5603, -0.3821, 1, 4.5603, -0.3821, 1, 4.6572, -0.3534, -1, 4.5603, -0.3821, -1, 4.5603, -0.3821, -1, 4.5446, -0.3818, -1, 4.5603, -0.3821, 1, 4.5603, -0.3821, 1, 4.5446, -0.3818, -1, 4.5446, -0.3818, 1, -4.4396, 0.3821, 1, -4.4553, 0.3824, 1, -4.4396, 0.3821, -1, -4.4396, 0.3821, -1, -4.4553, 0.3824, 1, -4.4553, 0.3824, -1)
+backface_collision = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_31lef"]
+size = Vector3(1.87488, 0.347092, 10.3011)
+
+[node name="ConeyorBelt" type="Node3D"]
+script = ExtResource("1_4es4f")
+max_speed = 0.5
+accel = 0.1
+
+[node name="Railings" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_jdb6l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Railings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04368, 0, 0)
+mesh = SubResource("BoxMesh_jdb6l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Railings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04368, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_vyxxo")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Railings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02961, 0, 0)
+mesh = SubResource("BoxMesh_jdb6l")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Railings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02961, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_vyxxo")
+
+[node name="Debug" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0969391, 1.96625, 3.85062)
+mesh = SubResource("SphereMesh_4es4f")
+
+[node name="Belt" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.65526e-08, 0, 1, 0, 1, 0, -1.065, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("3_4es4f")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Belt"]
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_4es4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Belt/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_jdb6l")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.460381, -0.033493)
+shape = SubResource("BoxShape3D_31lef")

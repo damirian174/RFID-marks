@@ -1,0 +1,68 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="vr"
+run/main_scene="uid://10uk0qrxav2v"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
+XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
+XrSimulator="*res://addons/xr-simulator/XRSimulator.tscn"
+
+[display]
+
+window/size/mode=4
+
+[editor]
+
+movie_writer/movie_file="D:/vr/video/bruh.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
+
+[global_group]
+
+stickers=""
+
+[layer_names]
+
+3d_physics/layer_1="Static World"
+3d_physics/layer_2="Dynamic World"
+3d_physics/layer_3="Pickable Objects"
+3d_physics/layer_4="Wall Walking"
+3d_physics/layer_5="Grappling Target"
+3d_physics/layer_17="Held Objects"
+3d_physics/layer_18="Player Hands"
+3d_physics/layer_19="Grab Handles"
+3d_physics/layer_20="Player Body"
+3d_physics/layer_21="Pointable Objects"
+3d_physics/layer_22="Hand Pose Areas"
+3d_physics/layer_23="UI Objects"
+
+[physics]
+
+common/physics_ticks_per_second=120
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+environment/volumetric_fog/volume_size=128
+environment/volumetric_fog/volume_depth=128
+
+[xr]
+
+openxr/enabled=true
+shaders/enabled=true
