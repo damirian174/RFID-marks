@@ -61,13 +61,25 @@ label_settings = SubResource("LabelSettings_qy8mf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 30
+
+[node name="MarkButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 46
-disabled = true
 text = "Маркировка"
+
+[node name="ReadButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 46
+text = "Считать
+"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MainWindow/TabContainer/Маркировка"]
 layout_mode = 2
@@ -77,97 +89,13 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2"]
 layout_mode = 2
+
+[node name="PropertyContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 30
-
-[node name="PanelContainer" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "Модель"
-horizontal_alignment = 1
-
-[node name="Model" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "---"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PanelContainer2" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "Брак"
-horizontal_alignment = 1
-
-[node name="Broken" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "---"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PanelContainer3" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer3"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "Идентификационныый номер"
-horizontal_alignment = 1
-
-[node name="Id" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "---"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PanelContainer4" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer4"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer4/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "Стадия"
-horizontal_alignment = 1
-
-[node name="Stage" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/PanelContainer4/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 20
-text = "---"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="MainWindow"]
 layout_mode = 2
@@ -200,4 +128,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/Button" to="MainWindow/TabContainer/Маркировка" method="_on_button_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/MarkButton" to="MainWindow/TabContainer/Маркировка" method="_on_mark_button_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ReadButton" to="MainWindow/TabContainer/Маркировка" method="_on_read_button_pressed"]

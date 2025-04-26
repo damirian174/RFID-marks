@@ -22,4 +22,5 @@ mesh = SubResource("QuadMesh_3xbw5")
 screen_size = Vector2(1.775, 0.998)
 scene = ExtResource("2_3xbw5")
 viewport_size = Vector2(1280, 720)
-scene_properties_keys = PackedStringArray("app.gd")
+scene_properties_keys = PackedStringArray("app.gd", "debug")
+debug = false

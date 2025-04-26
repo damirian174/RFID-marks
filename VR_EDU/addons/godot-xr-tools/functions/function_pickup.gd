@@ -473,6 +473,7 @@ func _remove_copied_collisions():
 
 
 func _on_button_pressed(p_button) -> void:
+	
 	if p_button == action_button_action and is_instance_valid(picked_up_object):
 		if picked_up_object.has_method("action"):
 			picked_up_object.action()
