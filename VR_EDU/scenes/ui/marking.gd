@@ -26,9 +26,8 @@ var mark_active: bool = false:
 
 
 
-func _ready() -> void:
-	AppManager.marking_stage_changed.connect(func(dis: bool): mark_active = true if dis else false)
-
+#func _ready() -> void:
+	#AppManager.data_read.connect()
 
 
 

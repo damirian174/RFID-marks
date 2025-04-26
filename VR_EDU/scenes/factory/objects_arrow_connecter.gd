@@ -1,89 +1,146 @@
+@tool
 extends Path3D
 
+## Target objects to connect between
 @export var object_a: Node3D
 @export var object_b: Node3D
+
+## Line visual properties
 @export var line_width: float = 0.1
-@export var color: Color = Color.WHITE
+@export var color: Color = Color.WHITE:
+	set(value):
+		color = value
+		if _material:
+			_material.albedo_color = color
+@export var point_count: int = 20:
+	set(value):
+		point_count = clamp(value, 2, 100)
+		_should_redraw = true
 
-var mesh_instance: MeshInstance3D
-var immediate_mesh: ImmediateMesh
-var material: StandardMaterial3D
+## Texture properties
+@export var line_texture: Texture2D:
+	set(value):
+		line_texture = value
+		if _material:
+			_material.albedo_texture = value
+@export var texture_scale: Vector2 = Vector2(1, 1):
+	set(value):
+		texture_scale = value
+		if _material:
+			_material.uv1_scale = Vector3(texture_scale.x, texture_scale.y, 1)
+@export var texture_offset: Vector2 = Vector2.ZERO:
+	set(value):
+		texture_offset = value
+		if _material:
+			_material.uv1_offset = Vector3(texture_offset.x, texture_offset.y, 0)
 
-func _ready():
-	# Verify curve has at least 2 points
+## Material properties
+@export_enum("Opaque", "Alpha", "Alpha Scissor", "Alpha Hash") var alpha_mode: int = 1:
+	set(value):
+		alpha_mode = value
+		if _material:
+			_configure_alpha_mode()
+@export var metallic: float = 0.0:
+	set(value):
+		metallic = value
+		if _material:
+			_material.metallic = metallic
+@export var roughness: float = 1.0:
+	set(value):
+		roughness = value
+		if _material:
+			_material.roughness = roughness
+
+var _mesh_instance: MeshInstance3D
+var _immediate_mesh: ImmediateMesh
+var _material: StandardMaterial3D
+var _prev_a_transform: Transform3D
+var _prev_b_transform: Transform3D
+var _should_redraw: bool = true
+
+@onready var _camera: Camera3D = get_viewport().get_camera_3d()
+
+func _ready() -> void:
+	if not is_inside_tree():
+		await ready
+	
 	if curve.get_point_count() < 2:
 		curve.add_point(Vector3.ZERO)
 		curve.add_point(Vector3(0, 0, 1))
 	
-	# Setup visualization
-	mesh_instance = MeshInstance3D.new()
-	add_child(mesh_instance)
+	_mesh_instance = MeshInstance3D.new()
+	_mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(_mesh_instance)
 	
-	immediate_mesh = ImmediateMesh.new()
-	mesh_instance.mesh = immediate_mesh
+	_immediate_mesh = ImmediateMesh.new()
+	_mesh_instance.mesh = _immediate_mesh
 	
-	material = StandardMaterial3D.new()
-	material.albedo_color = color
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	#material.double_sided = true
-	mesh_instance.material_override = material
+	_material = StandardMaterial3D.new()
+	_configure_material()
+	_mesh_instance.material_override = _material
+	
+	_capture_transforms()
+	update_curve()
 
-func _process(_delta):
-	if !object_a || !object_b:
+func _configure_material() -> void:
+	_material.albedo_color = color
+	_material.albedo_texture = line_texture
+	_material.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	_material.cull_mode = StandardMaterial3D.CULL_DISABLED
+	_material.uv1_scale = Vector3(texture_scale.x, texture_scale.y, 1)
+	_material.uv1_offset = Vector3(texture_offset.x, texture_offset.y, 0)
+	_material.metallic = metallic
+	_material.roughness = roughness
+	_configure_alpha_mode()
+
+func _configure_alpha_mode() -> void:
+	match alpha_mode:
+		0: # Opaque
+			_material.transparency = StandardMaterial3D.TRANSPARENCY_DISABLED
+		1: # Alpha
+			_material.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA
+		2: # Alpha Scissor
+			_material.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+		3: # Alpha Hash
+			_material.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA_HASH
+
+# Rest of the code remains the same until _draw_billboarded_curve
+
+func _draw_billboarded_curve() -> void:
+	_immediate_mesh.clear_surfaces()
+	if not _should_update():
 		return
 	
-	# Update path endpoints with object transforms
-	update_curve_points()
+	var baked_length: float = curve.get_baked_length()
+	var curve_data: Array[Dictionary] = []
 	
-	# Generate points along the curve with rotations
-	var curve_data = []
-	var baked_length = curve.get_baked_length()
-	for i in range(20):
-		var t = i / 19.0
-		var transform = curve.sample_baked_with_rotation(t * baked_length)
+	for i in point_count:
+		var t: float = i / float(point_count - 1)
+		var transform: Transform3D = curve.sample_baked_with_rotation(t * baked_length)
 		curve_data.append({
 			"position": transform.origin,
 			"tangent": transform.basis.z
 		})
 	
-	# Draw the billboarded line
-	draw_billboarded_curve(curve_data)
-
-func update_curve_points():
-	# Update first point with object_a's transform
-	var a_transform = object_a.global_transform
-	curve.set_point_position(0, a_transform.origin)
-	var a_forward = -a_transform.basis.z * 1.0
-	curve.set_point_out(0, a_forward)
+	var cam_pos: Vector3 = _camera.global_position
 	
-	# Update last point with object_b's transform
-	var last_idx = curve.get_point_count() - 1
-	var b_transform = object_b.global_transform
-	curve.set_point_position(last_idx, b_transform.origin)
-	var b_backward = b_transform.basis.z * 1.0
-	curve.set_point_in(last_idx, b_backward)
-
-func draw_billboarded_curve(curve_data: Array):
-	immediate_mesh.clear_surfaces()
-	immediate_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP)
-	
-	var camera = get_viewport().get_camera_3d()
-	var cam_pos = camera.global_transform.origin if camera else Vector3.ZERO
+	_immediate_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, _material)
 	
 	for data in curve_data:
-		var point_pos = data.position
-		var tangent = data.tangent
-		var to_camera = cam_pos - point_pos
+		var point_pos: Vector3 = data.position
+		var tangent: Vector3 = data.tangent
+		var to_camera: Vector3 = cam_pos - point_pos
 		
-		# Calculate billboarded right vector
-		var right = tangent.cross(to_camera)
+		var right: Vector3 = tangent.cross(to_camera)
 		if right.length() < 0.001:
 			right = tangent.cross(Vector3.UP)
 		right = right.normalized() * line_width
 		
-		immediate_mesh.surface_set_color(color)
-		immediate_mesh.surface_add_vertex(point_pos + right)
-		immediate_mesh.surface_add_vertex(point_pos - right)
+		var uv_x: float = float(curve_data.find(data)) / (point_count - 1)
+		_immediate_mesh.surface_set_uv(Vector2(uv_x, 0))
+		_immediate_mesh.surface_add_vertex(point_pos + right)
+		
+		_immediate_mesh.surface_set_uv(Vector2(uv_x, 1))
+		_immediate_mesh.surface_add_vertex(point_pos - right)
 	
-	immediate_mesh.surface_end()
+	_immediate_mesh.surface_end()

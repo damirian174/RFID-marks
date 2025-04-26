@@ -7,9 +7,9 @@ extends Area3D
 
 func _on_body_entered(body: Node3D) -> void:
 	
-	if not body.is_in_group("stickers"):
+	if not body.is_in_group("stickers") and true:
 		return
-	print(body)
+	#print(body)
 	mark_test.stage = 1.0
 	body.queue_free.call_deferred()
 	$"../MeshInstance3D2".visible = true

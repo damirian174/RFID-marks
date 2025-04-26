@@ -1,6 +1,8 @@
 @tool
 class_name Sticker extends XRToolsPickable
 
+@export var data: rfid_data
+
 const STICKER_SHAPE = preload("res://resources/sticker_shape.tres")
 const STICKER_MESH = preload("res://resources/sticker_mesh.tres")
 
