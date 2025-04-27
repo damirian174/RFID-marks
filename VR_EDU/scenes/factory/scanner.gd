@@ -3,6 +3,9 @@ extends MeshInstance3D
 
 enum STATES {OFF, NOT_ACCEPTING, ACCEPTING_READ, ACCEPTING_WRITE, ACCEPTED}
 
+
+var data_to_write_id: String
+
 const colors: Dictionary[STATES,Color] = {
 	STATES.OFF: Color.BLACK,
 	STATES.NOT_ACCEPTING: Color.RED,
@@ -54,12 +57,13 @@ func _on_scan_area_body_entered(body: Node3D) -> void:
 	
 	if state == STATES.ACCEPTING_READ:
 		#print_debug('scanner is reading')
-		AppManager.data_access.emit(body.data,AppManager.DATA_MODES.READ)
+		#print(StickerDb.get_data_by_id(body.data_id))
+		AppManager.data_access.emit(body,AppManager.DATA_MODES.READ)
 		state = STATES.NOT_ACCEPTING
 	
 	elif state == STATES.ACCEPTING_WRITE:
 		#print_debug('scanner is writing')
-		AppManager.data_access.emit(body.data,AppManager.DATA_MODES.WRITE)
+		AppManager.data_access.emit(body,AppManager.DATA_MODES.WRITE)
 		state = STATES.NOT_ACCEPTING
 	
 	

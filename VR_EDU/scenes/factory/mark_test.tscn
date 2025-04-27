@@ -561,6 +561,24 @@ script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
+[node name="Sticker2" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21552, 1.55972, -3.97474)
+collision_layer = 196608
+collision_mask = 196615
+freeze_mode = 1
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Sticker3" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.234237, 1.49045, -3.97323)
+collision_layer = 196608
+collision_mask = 196615
+freeze_mode = 1
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
 [node name="Button" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.37555, 1.48271, -4.73818)
 

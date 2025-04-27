@@ -1,7 +1,7 @@
 @tool
 class_name Sticker extends XRToolsPickable
 
-@export var data: rfid_data
+@export var data_id: String
 
 const STICKER_SHAPE = preload("res://resources/sticker_shape.tres")
 const STICKER_MESH = preload("res://resources/sticker_mesh.tres")
@@ -20,4 +20,8 @@ func _ready() -> void:
 	add_child(new_meshinstance)
 	add_child(new_coll)
 	add_to_group("stickers")
-	
+
+#func _process(delta: float) -> void:
+	#if Engine.is_editor_hint():
+		#return
+	#print(data_id)

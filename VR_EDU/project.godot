@@ -22,6 +22,7 @@ XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
 XrSimulator="*res://addons/xr-simulator/XRSimulator.tscn"
 StageManager="*res://global/stage_manager.gd"
 AppManager="*res://global/app_manager.gd"
+StickerDb="*res://global/sticker_db.gd"
 
 [editor]
 
