@@ -26,11 +26,11 @@ StickerDb="*res://global/sticker_db.gd"
 
 [editor]
 
-movie_writer/movie_file="D:/vr/video/bruh.avi"
+movie_writer/movie_file="E:/videos/bruh.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/onscreenkeyboard/plugin.cfg")
 
 [global_group]
 
@@ -43,7 +43,7 @@ stickers=""
 3d_physics/layer_3="Pickable Objects"
 3d_physics/layer_4="Wall Walking"
 3d_physics/layer_5="Grappling Target"
-3d_physics/layer_16="Scan Objects"
+3d_physics/layer_16="Stickers"
 3d_physics/layer_17="Held Objects"
 3d_physics/layer_18="Player Hands"
 3d_physics/layer_19="Grab Handles"

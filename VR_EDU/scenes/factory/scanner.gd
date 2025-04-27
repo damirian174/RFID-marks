@@ -48,10 +48,12 @@ func change_scan_state(mode: AppManager.DATA_MODES):
 	elif mode == AppManager.DATA_MODES.WRITE:
 		#print_debug('scanner is set to write')
 		state = STATES.ACCEPTING_WRITE
+	elif mode == AppManager.DATA_MODES.REST:
+		state = STATES.NOT_ACCEPTING
 
 
 func _on_scan_area_body_entered(body: Node3D) -> void:
-	
+	print(body)
 	if state == STATES.OFF:
 		return
 	

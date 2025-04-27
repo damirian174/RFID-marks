@@ -1,16 +1,23 @@
 extends Area3D
 
-@onready var mark_test: Node3D = $"../.."
-@onready var container: XRToolsPickable = $".."
 
 
+var active = true
+@onready var remote_transform_3d: RemoteTransform3D = $RemoteTransform3D
 
-func _on_body_entered(body: Node3D) -> void:
-	
-	if not body.is_in_group("stickers") and true:
+
+func _on_body_entered(body: Sticker) -> void:
+	if not active:
 		return
-	#print(body)
-	mark_test.stage = 1.0
-	body.queue_free.call_deferred()
-	$"../MeshInstance3D2".visible = true
-	queue_free.call_deferred()
+	for i in get_parent().get_children():
+		if i != self:
+			i.queue_free.call_deferred()
+	active = false
+	body.get_parent().remove_child(body)
+	add_child(body)
+	body.position = Vector3.ZERO
+	body.rotation = Vector3.ZERO
+	body.set_collision_layer_value(17,false)
+	#body.freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
+	remote_transform_3d.remote_path = body.get_path()
+	body.freeze = true

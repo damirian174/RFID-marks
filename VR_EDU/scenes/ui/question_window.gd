@@ -40,6 +40,7 @@ func _ready():
 	questions_container = VBoxContainer.new()
 	questions_container.name = "QuestionsContainer"
 	questions_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	questions_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(questions_container)
 	
 	questions = questions_pre
@@ -48,6 +49,7 @@ func _ready():
 	var submit_button = Button.new()
 	submit_button.text = "Submit Answers"
 	submit_button.pressed.connect(_on_submit_pressed)
+	submit_button.add_theme_font_size_override("font_size", 25)  # ADDED
 	main_vbox.add_child(submit_button)
 	
 	# Initial field creation
@@ -66,24 +68,26 @@ func _create_question_fields():
 	for question in questions:
 		
 		var vbox = VBoxContainer.new()
-		vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 		
 		# Question label
 		var label = Label.new()
 		label.text = question
+		label.add_theme_font_size_override("font_size", 25)  # ADDED
 		vbox.add_child(label)
 		
 		# Answer input
 		var line_edit = LineEdit.new()
 		line_edit.placeholder_text = _get_type_hint(questions[question])
+		line_edit.add_theme_font_size_override("font_size", 25)  # ADDED
+		line_edit.add_theme_font_size_override("placeholder_font_size", 25)  # ADDED
 		vbox.add_child(line_edit)
 		
 		# Error label
 		var error_label = Label.new()
 		error_label.add_theme_color_override("font_color", Color.RED)
+		error_label.add_theme_font_size_override("font_size", 25)  # ADDED
 		error_label.hide()
 		vbox.add_child(error_label)
-		#print(vbox.get_children())
 		questions_container.add_child(vbox)
 
 func _get_type_hint(answer_type: int) -> String:

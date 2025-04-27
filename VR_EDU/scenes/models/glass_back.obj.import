@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bmm781d7v7mq6"
+path="res://.godot/imported/glass_back.obj-3d38c09aa4eb8016e903d7464269724c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/glass_back.obj-3d38c09aa4eb8016e903d7464269724c.mesh"]
+
+source_file="res://scenes/models/glass_back.obj"
+dest_files=["res://.godot/imported/glass_back.obj-3d38c09aa4eb8016e903d7464269724c.mesh", "res://.godot/imported/glass_back.obj-3d38c09aa4eb8016e903d7464269724c.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

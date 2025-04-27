@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://18g54sxthn1b"
-path="res://.godot/imported/¦Ф¦-TВTЗ¦¬¦¦.blend-60b99439282bdb1b1e7d4dd83b0c23fc.scn"
+path="res://.godot/imported/datchik.blend-131a0e1c371a5448f3381161842262fe.scn"
 
 [deps]
 
-source_file="res://scenes/models/¦Ф¦-TВTЗ¦¬¦¦.blend"
-dest_files=["res://.godot/imported/¦Ф¦-TВTЗ¦¬¦¦.blend-60b99439282bdb1b1e7d4dd83b0c23fc.scn"]
+source_file="res://scenes/models/datchik.blend"
+dest_files=["res://.godot/imported/datchik.blend-131a0e1c371a5448f3381161842262fe.scn"]
 
 [params]
 

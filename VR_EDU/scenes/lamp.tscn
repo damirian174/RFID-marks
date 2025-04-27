@@ -294,6 +294,7 @@ shape = SubResource("ConvexPolygonShape3D_wb3uq")
 transform = Transform3D(1, 0, 0, 0, 1, 1.04308e-06, 0, -7.45058e-08, 1, 0, -3.43014, -0.103051)
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.1
+light_size = 0.05
 shadow_enabled = true
 omni_range = 28.119
 omni_attenuation = 1.766

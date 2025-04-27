@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvfp6efiiovay"]
+
+[ext_resource type="Script" uid="uid://bcoax4xynoiqr" path="res://scenes/factory/sticker_action.gd" id="1_7v12f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s0p34"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="StickerArea" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+collision_layer = 0
+collision_mask = 16384
+script = ExtResource("1_7v12f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.021582)
+shape = SubResource("BoxShape3D_s0p34")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
