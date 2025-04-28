@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://64khcy7e0hjx"]
+[gd_scene load_steps=16 format=4 uid="uid://64khcy7e0hjx"]
 
 [ext_resource type="Script" uid="uid://dvsttpydj8n27" path="res://scenes/factory/coneyor_belt.gd" id="1_4es4f"]
 [ext_resource type="Texture2D" uid="uid://bg43jg7ldyq6q" path="res://scenes/models/prod_line/textures/blue_metal_plate_diff_4k.png" id="2_jdb6l"]
-[ext_resource type="ArrayMesh" uid="uid://bnw8y04oramlw" path="res://scenes/factory/conv_belt.obj" id="3_4es4f"]
+[ext_resource type="Texture2D" uid="uid://dpt0iin0u4m10" path="res://scenes/factory/textures/empty-escalator-stairs.jpg" id="3_4es4f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jdb6l"]
 friction = 0.1
@@ -22,6 +22,40 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_4es4f"]
 material = SubResource("StandardMaterial3D_euji6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdb6l"]
+albedo_texture = ExtResource("3_4es4f")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_apbd4"]
+_surfaces = [{
+"aabb": AABB(-4.77956, -0.384396, -1, 9.66426, 0.769098, 2),
+"format": 34896613377,
+"index_count": 168,
+"index_data": PackedByteArray("AAABAAIAAwABAAAAAgABAAQABQABAAMABgACAAQAAwAHAAUACAACAAYACQAHAAMACgAIAAYACQALAAcADAAIAAoADQALAAkADgAMAAoADQAPAAsAEAAMAA4AEQAPAA0AEgAQAA4AEQATAA8AFAAQABIAFQATABEAFgAUABIAFQAXABMAGAAUABYAGQAXABUAGgAYABYAGQAbABcAHAAYABoAHQAbABkAHgAcABoAHQAfABsAIAAcAB4AIQAfAB0AIgAgAB4AIQAjAB8AJAAgACIAJQAjACEAJgAkACIAJQAnACMAKAAkACYAKQAnACUAKgAoACYAKQArACcALAAoACoALQArACkALgAsACoALQAvACsAMAAsAC4AMQAvAC0AMgAwAC4AMQAzAC8ANAAwADIANQAzADEANgA0ADIANQA3ADMANwA0ADYAMwA3ADYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 56,
+"vertex_data": PackedByteArray("/fbeAP//AAD99t4AAAAAAMoL3gD//wAAZ/fEAP//AADKC94AAAAAAGf3xAAAAAAAHQkAAAAAAAD4+U4KAAAAAB0JAAD//wAA+PlOCv//AACEBtoHAAAAAED83BsAAAAAhAbaB///AABA/Nwb//8AACoE5hcAAAAAGP48NAAAAAAqBOYX//8AABj+PDT//wAAOQILLwAAAABe/8VRAAAAADkCCy///wAAXv/FUf//AADUALVLAAAAAP//dHIAAAAA1AC1S///AAD//3Ry//8AABEA8GsAAAAA7f8OlAAAAAARAPBr//8AAO3/DpT//wAAAACKjQAAAAAq/0m0AAAAAAAAio3//wAAKv9JtP//AACgADmuAAAAAMX989AAAAAAoAA5rv//AADF/fPQ//8AAOYBwssAAAAA1PsY6AAAAADmAcLL//8AANT7GOj//wAAvgMi5AAAAAB6+ST4AAAAAL4DIuT//wAAevkk+P//AAAGBrD1AAAAAOH2//8AAAAABgaw9f//AADh9v////8AAJcIOv8AAAAANPQg/wAAAACXCDr///8AADT0IP///wAAAQkg/wAAAAABCSD///8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tgcrv"]
+_surfaces = [{
+"aabb": AABB(-4.77956, -0.384396, -1, 9.66426, 0.769098, 2),
+"attribute_data": PackedByteArray("NRxAaTUcvpYt5kBpLea+liAD/GgkAfxoIAMClyQBApcdBfxoIAP8aB0FApcgAwKXGQf8aB0F/GgZBwKXHQUClxYJ/GgZB/xoFgkClxkHApcSC/xoFgn8aBILApcWCQKXDw38aBIL/GgPDQKXEgsClwsP/GgPDfxoCw8Clw8NApcHEfxoCw/8aAcRApcLDwKXBBP8aAcR/GgEEwKXBxEClwAV/GgEE/xoABUClwQTApf9FvxoABX8aP0WApcAFQKX+Rj8aP0W/Gj5GAKX/RYCl8njvpbRGb6WyeNAadEZQGn7/1tp+/9SluT9W2nk/VKW5P1baeT9UpbN+1tpzftSls37W2nN+1KWtvlbabb5Upa2+VtptvlSlp/3W2mf91KWn/dbaZ/3UpaI9VtpiPVSloj1W2mI9VKWcfNbaXHzUpZx81tpcfNSllnxW2lZ8VKWWfFbaVnxUpZC71tpQu9SlkLvW2lC71KWK+1baSvtUpYr7VtpK+1SlhTrW2kU61KWFOtbaRTrUpb96Ftp/ehSlv3oW2n96FKW5uZbaebmUpaJ5kBpLeZAaYnmvpYt5r6WSBn8aPkY/GhIGQKX+RgClw=="),
+"format": 34896613399,
+"index_count": 168,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAdAB4AHgAdAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AMAAxADIAMgAxADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMARABFAEYARgBFAEcASABJAEoASgBJAEsATABNAE4ATgBNAE8AUABRAFIAUgBRAFMAVABVAFYAVgBVAFcAWABZAFoAWgBZAFsAXABdAF4AXgBdAF8AYABhAGIAYgBhAGMAZABlAGYAZgBlAGcAaABpAGoAagBpAGsAbABtAG4AbgBtAG8A"),
+"material": SubResource("StandardMaterial3D_jdb6l"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 112,
+"vertex_data": PackedByteArray("/fbeAP//AAD99t4AAAAAAMoL3gD//wAAygveAAAAAAAdCQAA//+/AMoL3gD//78AHQkAAAAAvwDKC94AAAC/AIQG2gf//8kGHQkAAP//yQaEBtoHAADJBh0JAAAAAMkGKgTmF///Qw6EBtoH//9DDioE5hcAAEMOhAbaBwAAQw45Agsv//+cFSoE5hf//5wVOQILLwAAnBUqBOYXAACcFdQAtUv//8AcOQILL///wBzUALVLAADAHDkCCy8AAMAcEQDwa///miPUALVL//+aIxEA8GsAAJoj1AC1SwAAmiMAAIqN//8NKhEA8Gv//w0qAACKjQAADSoRAPBrAAANKqAAOa7///ovAACKjf//+i+gADmuAAD6LwAAio0AAPov5gHCy///OjWgADmu//86NeYBwssAADo1oAA5rgAAOjW+AyLk//+gOeYBwsv//6A5vgMi5AAAoDnmAcLLAACgOQYGsPX///88vgMi5P///zwGBrD1AAD/PL4DIuQAAP88lwg6////KT8GBrD1//8pP5cIOv8AACk/Bgaw9QAAKT809CD/////vwEJIP////+/NPQg/wAA/78BCSD/AAD/vzT0IP///z//NPQg/wAAP//h9v////8//+H2//8AAD//4fb/////Nfnh9v//AAA1+Xr5JPj//zX5evkk+AAANfl6+ST4//+78Xr5JPgAALvx1PsY6P//u/HU+xjoAAC78dT7GOj//2Lq1PsY6AAAYurF/fPQ//9i6sX989AAAGLqxf3z0P//PuPF/fPQAAA+4yr/SbT//z7jKv9JtAAAPuMq/0m0//9k3Cr/SbQAAGTc7f8OlP//ZNzt/w6UAABk3O3/DpT///HV7f8OlAAA8dX//3Ry///x1f//dHIAAPHV//90cv//BND//3RyAAAE0F7/xVH//wTQXv/FUQAABNBe/8VR///Eyl7/xVEAAMTKGP48NP//xMoY/jw0AADEyhj+PDT//17GGP48NAAAXsZA/Nwb//9exkD83BsAAF7GQPzcG////8JA/NwbAAD/wvj5Tgr////C+PlOCgAA/8L4+U4K///VwPj5TgoAANXAZ/fEAP//1cBn98QAAADVwGf3xAAAAP4//fbeAAAA/j9n98QA///+P/323gD///4/AQkg/////j+XCDr////+PwEJIP8AAP4/lwg6/wAA/j//f/8//3//P/9//z//f/8/0oBpQNKAaUDSgGlA0oBpQJPD1viTw9b4k8PW+JPD1vg2x5HxNseR8TbHkfE2x5HxpMq06qTKtOqkyrTqpMq06gDO/eMAzv3jAM794wDO/eNm0THdZtEx3WbRMd1m0THd9tQQ1vbUENb21BDW9tQQ1tbYT87W2E/O1thPztbYT8463YnFOt2JxTrdicU63YnFbOIku2ziJLts4iS7bOIku+zoJa7s6CWu7OglruzoJa6e8cCcnvHAnJ7xwJye8cCc////f////3////9/////fyx/lb8sf5W/LH+Vvyx/lb9rPCgHazwoB2s8KAdrPCgHyDhtDsg4bQ7IOG0OyDhtDlo1ShVaNUoVWjVKFVo1ShX+MQEc/jEBHP4xARz+MQEcmC7NIpguzSKYLs0imC7NIggr7ikIK+4pCCvuKQgr7ikoJ68xKCevMSgnrzEoJ68xxCJ1OsQidTrEInU6xCJ1OpId2kSSHdpEkh3aRJId2kQSF9lREhfZURIX2VESF9lRYA4+Y2AOPmNgDj5jYA4+Y3UCOoF1AjqBdQI6gXUCOoGJ/cR+if3Efon9xH6J/cR+")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_apbd4")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4es4f"]
 friction = 0.0
@@ -64,7 +98,7 @@ mesh = SubResource("SphereMesh_4es4f")
 
 [node name="Belt" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.65526e-08, 0, 1, 0, 1, 0, -1.065, 0, -4.37114e-08, 0, 0, 0)
-mesh = ExtResource("3_4es4f")
+mesh = SubResource("ArrayMesh_tgcrv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Belt"]
 collision_layer = 3

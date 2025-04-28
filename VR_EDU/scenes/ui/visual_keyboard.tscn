@@ -1,0 +1,509 @@
+[gd_scene load_steps=2 format=3 uid="uid://6n7sgpkqv5jo"]
+
+[ext_resource type="Script" uid="uid://qahsoeynde0n" path="res://scenes/ui/visual_keyboard.gd" id="1_733yb"]
+
+[node name="KeyboardWindow" type="Window"]
+size = Vector2i(700, 350)
+script = ExtResource("1_733yb")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Digits" type="HBoxContainer" parent="Control/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.04
+
+[node name="Button" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "1"
+
+[node name="Button2" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "2"
+
+[node name="Button3" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "3"
+
+[node name="Button4" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "4"
+
+[node name="Button5" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "5"
+
+[node name="Button6" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "6"
+
+[node name="Button7" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "7"
+
+[node name="Button8" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "8"
+
+[node name="Button9" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "9"
+
+[node name="Button10" type="Button" parent="Control/Buttons/Digits"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "0"
+
+[node name="EngLetters" type="VBoxContainer" parent="Control/Buttons"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Buttons/EngLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "q"
+
+[node name="Button2" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "w"
+
+[node name="Button3" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "e"
+
+[node name="Button4" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "r"
+
+[node name="Button5" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "t"
+
+[node name="Button6" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "y"
+
+[node name="Button7" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "u"
+
+[node name="Button8" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "i"
+
+[node name="Button9" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "o"
+
+[node name="Button10" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "p"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Buttons/EngLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "a"
+
+[node name="Button2" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "s"
+
+[node name="Button3" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "d"
+
+[node name="Button4" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "f"
+
+[node name="Button5" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "g"
+
+[node name="Button6" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "h"
+
+[node name="Button7" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "j"
+
+[node name="Button8" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "k"
+
+[node name="Button9" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "l"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/Buttons/EngLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "z"
+
+[node name="Button2" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "x"
+
+[node name="Button3" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "c"
+
+[node name="Button4" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "v"
+
+[node name="Button5" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "b"
+
+[node name="Button6" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "n"
+
+[node name="Button7" type="Button" parent="Control/Buttons/EngLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "m"
+
+[node name="RuLetters" type="VBoxContainer" parent="Control/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Buttons/RuLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "	й"
+
+[node name="Button2" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ц"
+
+[node name="Button3" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "у"
+
+[node name="Button4" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "к"
+
+[node name="Button5" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "е"
+
+[node name="Button6" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "н"
+
+[node name="Button7" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "г"
+
+[node name="Button8" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ш"
+
+[node name="Button9" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "щ"
+
+[node name="Button10" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "з"
+
+[node name="Button11" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "х"
+
+[node name="Button12" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ъ"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Buttons/RuLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ф"
+
+[node name="Button2" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ы"
+
+[node name="Button3" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "в"
+
+[node name="Button4" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "а"
+
+[node name="Button5" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "п"
+
+[node name="Button6" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "р"
+
+[node name="Button7" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "о"
+
+[node name="Button8" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "л"
+
+[node name="Button9" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "д"
+
+[node name="Button10" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ж"
+
+[node name="Button11" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "э"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/Buttons/RuLetters"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "я"
+
+[node name="Button2" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ч"
+
+[node name="Button3" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "с"
+
+[node name="Button4" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "м"
+
+[node name="Button5" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "и"
+
+[node name="Button6" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "т"
+
+[node name="Button7" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ь"
+
+[node name="Button8" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "б"
+
+[node name="Button9" type="Button" parent="Control/Buttons/RuLetters/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "ю"
+
+[node name="Buttons" type="HBoxContainer" parent="Control/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Lang" type="Button" parent="Control/Buttons/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "RU"
+
+[node name="Caps" type="Button" parent="Control/Buttons/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "CapsLock"
+
+[node name="Space" type="Button" parent="Control/Buttons/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+theme_override_font_sizes/font_size = 25
+text = "Space"
+
+[node name="Enter" type="Button" parent="Control/Buttons/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "Enter"
+
+[node name="BackSpace" type="Button" parent="Control/Buttons/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "BackSpace"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="Control/Buttons/Buttons/Lang" to="." method="_on_lang_pressed"]
+[connection signal="pressed" from="Control/Buttons/Buttons/Caps" to="." method="_on_caps_pressed"]

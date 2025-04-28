@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://8excouenmhi7"]
 
-[ext_resource type="ArrayMesh" uid="uid://djpyiyqfx81q0" path="res://scenes/factory/light.obj" id="1_xtfon"]
+[ext_resource type="ArrayMesh" uid="uid://djpyiyqfx81q0" path="res://scenes/models/light.obj" id="1_xtfon"]
 
 [node name="CeilLight" type="Node3D"]
 

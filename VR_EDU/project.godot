@@ -24,6 +24,11 @@ StageManager="*res://global/stage_manager.gd"
 AppManager="*res://global/app_manager.gd"
 StickerDb="*res://global/sticker_db.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [editor]
 
 movie_writer/movie_file="E:/videos/bruh.avi"

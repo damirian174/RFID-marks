@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://ct0b65xbtcy8r" path="res://scenes/ui/app.gd" id="1_7ifyk"]
 [ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/marking.gd" id="1_qy8mf"]
 [ext_resource type="Texture2D" uid="uid://b34l0oiml78e1" path="res://metran.png" id="1_t2d62"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_qy8mf"]
-font_size = 91
+[ext_resource type="PackedScene" uid="uid://6n7sgpkqv5jo" path="res://scenes/ui/visual_keyboard.tscn" id="4_hfey3"]
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -15,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7ifyk")
+metadata/_edit_use_anchors_ = true
 
 [node name="MainWindow" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -53,31 +52,33 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 275
+alignment = 1
 
 [node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 100
 text = "00:00"
-label_settings = SubResource("LabelSettings_qy8mf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 theme_override_constants/separation = 30
 
 [node name="MarkButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 60
 text = "Маркировка"
 
 [node name="ReadButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 60
 text = "Считать
 "
 
@@ -96,27 +97,27 @@ theme_override_constants/separation = 30
 [node name="Button" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 40
 text = "Сообщить
 о браке"
 
 [node name="Button2" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 40
 text = "Сообщить
 об ошибке"
 
 [node name="Button3" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 40
 text = "Отойти"
 
 [node name="Button4" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 40
 text = "Завершить
 работу"
 
@@ -170,6 +171,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="KeyboardWindow" parent="." instance=ExtResource("4_hfey3")]
 
 [connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/MarkButton" to="MainWindow/TabContainer/Маркировка" method="_on_mark_button_pressed"]
 [connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ReadButton" to="MainWindow/TabContainer/Маркировка" method="_on_read_button_pressed"]

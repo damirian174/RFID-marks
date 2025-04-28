@@ -8,7 +8,6 @@ bake_interval = 0.01
 [node name="ObjectsArrowConnecter" type="Path3D"]
 curve = SubResource("Curve3D_i3hmm")
 script = ExtResource("1_ucfip")
-line_width = null
-color = null
-point_count = null
-texture_scale = null
+
+[node name="PathExtrude3D" type="PathExtrude3D" parent="." node_paths=PackedStringArray("path_3d")]
+path_3d = NodePath("..")
