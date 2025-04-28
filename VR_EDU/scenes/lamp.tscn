@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://8e5kqlppu2sn"]
+[gd_scene load_steps=28 format=4 uid="uid://8e5kqlppu2sn"]
 
 [ext_resource type="Script" uid="uid://bxfyvwxcvk8j7" path="res://scenes/lamphead.gd" id="2_60c0r"]
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="2_f2tjl"]
@@ -214,6 +214,12 @@ points = PackedVector3Array(3.94884, -4.09805, 3.31724, 1.26418, -4.25668, 4.422
 albedo_color = Color(0.57, 0.57, 0.57, 1)
 metallic = 0.42
 
+[sub_resource type="PathExtrudeProfileCircle" id="PathExtrudeProfileCircle_f2tjl"]
+radius = 0.5
+closed = false
+segments = 16
+smooth_normals = false
+
 [node name="Lamp" type="Node3D" node_paths=PackedStringArray("base", "head", "path_node")]
 script = ExtResource("2_60c0r")
 base = NodePath("Base")
@@ -301,6 +307,7 @@ omni_attenuation = 1.766
 
 [node name="Neck" type="CSGPolygon3D" parent="."]
 top_level = true
+visible = false
 polygon = PackedVector2Array(0.5, 0, 0.353553, 0.353553, 3.06152e-17, 0.5, -0.353553, 0.353553, -0.5, 6.12303e-17, -0.353553, -0.353553, -9.18455e-17, -0.5, 0.353553, -0.353553)
 mode = 2
 path_node = NodePath("../Path3D")
@@ -320,3 +327,8 @@ point_count = 8
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.3141, -6.7462)
+
+[node name="PathExtrude3D" type="PathExtrude3D" parent="." node_paths=PackedStringArray("path_3d")]
+path_3d = NodePath("../Path3D")
+profile = SubResource("PathExtrudeProfileCircle_f2tjl")
+tessellation_tolerance_degrees = 0.0

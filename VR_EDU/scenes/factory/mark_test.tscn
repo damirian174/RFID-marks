@@ -541,12 +541,60 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_rhivs")
 
 [node name="Computer" parent="." instance=ExtResource("16_talq1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04168, -4.55876)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32372, 2.44454, -4.55876)
 
 [node name="Stikers" type="Node3D" parent="."]
 
 [node name="Sticker" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.49045, -3.97323)
+collision_layer = 114688
+collision_mask = 196615
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+freeze_mode = 1
+continuous_cd = true
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Sticker2" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.62407, -3.90698)
+collision_layer = 114688
+collision_mask = 196615
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+freeze_mode = 1
+continuous_cd = true
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Sticker3" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.49045, -4.0982)
+collision_layer = 114688
+collision_mask = 196615
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+freeze_mode = 1
+continuous_cd = true
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Sticker5" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0838456, 1.49045, -3.97323)
+collision_layer = 114688
+collision_mask = 196615
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+freeze_mode = 1
+continuous_cd = true
+script = ExtResource("19_s0p34")
+picked_up_layer = 98304
+metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Sticker4" type="RigidBody3D" parent="Stikers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.217155, 1.56662, -3.97323)
 collision_layer = 114688
 collision_mask = 196615
 mass = 0.1

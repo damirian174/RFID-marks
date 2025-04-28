@@ -9,18 +9,18 @@ albedo_color = Color(0.301961, 0.301961, 0.301961, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_3xbw5"]
 material = SubResource("StandardMaterial3D_wibaa")
-size = Vector2(1.775, 0.998)
+size = Vector2(3.376, 2)
 
 [node name="Computer" type="Node3D"]
 script = ExtResource("1_3xbw5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0129511)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.015)
 mesh = SubResource("QuadMesh_3xbw5")
 
 [node name="Viewport2Din3D" parent="." instance=ExtResource("1_wibaa")]
-screen_size = Vector2(1.775, 0.998)
+screen_size = Vector2(3.376, 2)
 scene = ExtResource("2_3xbw5")
-viewport_size = Vector2(1280, 720)
+viewport_size = Vector2(1920, 1080)
 scene_properties_keys = PackedStringArray("app.gd", "debug")
 debug = false

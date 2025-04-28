@@ -5,7 +5,9 @@ extends HBoxContainer
 
 @onready var app: Control = $"../../.."
 
-@onready var property_container: VBoxContainer = $MarginContainer2/ScrollContainer/PropertyContainer
+
+@onready var property_container: VBoxContainer = $MarginContainer3/ScrollContainer/PanelContainer/PropertyContainer
+
 
 const PROPERTY_INFO_PANEL = preload("res://scenes/ui/property_info_panel.tscn")
 const ERROR_WINDOW = preload("res://scenes/ui/error_window.tscn")

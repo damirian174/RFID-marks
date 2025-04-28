@@ -30,7 +30,7 @@ movie_writer/movie_file="E:/videos/bruh.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/onscreenkeyboard/plugin.cfg")
+enabled=PackedStringArray("res://addons/PathMesh3D/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg", "res://addons/onscreenkeyboard/plugin.cfg")
 
 [global_group]
 
@@ -54,6 +54,7 @@ stickers=""
 
 [physics]
 
+3d/run_on_separate_thread=true
 common/physics_ticks_per_second=120
 3d/physics_engine="Jolt Physics"
 
