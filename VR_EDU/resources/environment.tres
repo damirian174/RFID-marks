@@ -1,0 +1,15 @@
+[gd_resource type="Environment" format=3 uid="uid://ptm0351uj0ay"]
+
+[resource]
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 0
+glow_enabled = true
+glow_blend_mode = 1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 16.0

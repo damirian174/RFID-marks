@@ -15,6 +15,7 @@ var questions: Dictionary = {}:
 func _init(initial_questions: Dictionary = {}):
 	size = Vector2i(1440.0, 810.0)
 	title = "Маркировать детали"
+	add_theme_font_size_override('title_font_size', 40)
 	close_requested.connect(queue_free)
 	questions_pre = initial_questions
 

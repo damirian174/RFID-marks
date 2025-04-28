@@ -28,6 +28,7 @@ StickerDb="*res://global/sticker_db.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=4
 
 [editor]
 

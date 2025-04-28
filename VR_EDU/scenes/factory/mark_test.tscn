@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://10uk0qrxav2v"]
+[gd_scene load_steps=83 format=4 uid="uid://10uk0qrxav2v"]
 
 [ext_resource type="Script" uid="uid://b7wx3ojex6rhi" path="res://scenes/factory/mark_test.gd" id="1_6bk1i"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_d4xff"]
@@ -8,14 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://dp6m5f51saj0f" path="res://scenes/factory/textures/painted_concrete_02_nor_gl_4k.png" id="3_r4sdt"]
 [ext_resource type="Texture2D" uid="uid://cuhc8lcd4hufd" path="res://scenes/factory/textures/painted_concrete_02_arm_4k.png" id="4_gcktq"]
 [ext_resource type="PackedScene" uid="uid://bvn2apk73fd28" path="res://scenes/player.tscn" id="5_d4xff"]
-[ext_resource type="ArrayMesh" uid="uid://chtnm0jm1odj6" path="res://scenes/models/walls.obj" id="7_r4sdt"]
+[ext_resource type="ArrayMesh" uid="uid://dguax34xwou63" path="res://scenes/models/walls.obj" id="7_r4sdt"]
 [ext_resource type="PackedScene" uid="uid://8excouenmhi7" path="res://scenes/factory/ceil_light.tscn" id="9_aqukf"]
 [ext_resource type="PackedScene" uid="uid://64khcy7e0hjx" path="res://scenes/factory/coneyor_belt.tscn" id="10_aqukf"]
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="11_nqhnh"]
 [ext_resource type="ArrayMesh" uid="uid://bah2fpp57cfmr" path="res://scenes/models/Container.obj" id="12_nqhnh"]
-[ext_resource type="ArrayMesh" uid="uid://blq74rxef01bt" path="res://scenes/models/¦ЪTАTЛTИ¦¦¦-.obj" id="13_4rbjn"]
+[ext_resource type="ArrayMesh" path="res://scenes/models/¦ЪTАTЛTИ¦¦¦-.obj" id="13_4rbjn"]
 [ext_resource type="PackedScene" uid="uid://bvfp6efiiovay" path="res://scenes/factory/sticker_area.tscn" id="14_s0p34"]
-[ext_resource type="ArrayMesh" uid="uid://c4lwnhn6vbno8" path="res://scenes/models/¦ЪTАTЛTИ¦¦¦-¦б¦Э¦-¦+¦¬¦¬TБTМTО.obj" id="14_talq1"]
+[ext_resource type="ArrayMesh" path="res://scenes/models/¦ЪTАTЛTИ¦¦¦-¦б¦Э¦-¦+¦¬¦¬TБTМTО.obj" id="14_talq1"]
 [ext_resource type="ArrayMesh" uid="uid://bmeelbjjdyxrn" path="res://scenes/models/middle.obj" id="15_guehg"]
 [ext_resource type="PackedScene" uid="uid://dm4rs6fmdhryh" path="res://scenes/ui/computer.tscn" id="16_talq1"]
 [ext_resource type="PackedScene" uid="uid://8e5kqlppu2sn" path="res://scenes/lamp.tscn" id="17_guehg"]
@@ -319,11 +319,23 @@ size = Vector3(0.01, 0.01, 0.07)
 size = Vector3(0.0243408, 0.0368408, 0.0623352)
 
 [sub_resource type="Curve3D" id="Curve3D_fnvjc"]
+bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0.150951, 0, -1.052, 1.38718, -3.85717, 0, 0.150951, 0, 0, 0, 0, -0.763818, 1.40072, -4.38759),
+"points": PackedVector3Array(0, 0, 0, 0.2, -1.74846e-08, -8.74228e-09, -1.06729, 2.13813, -3.85717, 8.74228e-09, 0.2, -3.82137e-16, 0, 0, 0, 0.45648, 1.62495, -3.97323),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
+
+[sub_resource type="PathExtrudeProfileCircle" id="PathExtrudeProfileCircle_fnvjc"]
+radius = 0.01
+closed = false
+segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lox4"]
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 2.0
+disable_receive_shadows = true
 
 [node name="MarkTest" type="Node3D"]
 script = ExtResource("1_6bk1i")
@@ -390,7 +402,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.614364)
 shape = SubResource("ConvexPolygonShape3D_hfwuk")
 
 [node name="Container" parent="." instance=ExtResource("11_nqhnh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.57365, 1.21127, -3.85717)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.57365, 1.96222, -3.85717)
 collision_layer = 5
 physics_material_override = SubResource("PhysicsMaterial_s0p34")
 ranged_grab_method = 0
@@ -470,6 +482,7 @@ shape = SubResource("ConvexPolygonShape3D_q3mwa")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.175908, 0.521649)
 
 [node name="Marker3D" type="Marker3D" parent="Container/StickerAreas/StickerArea"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0, -0.0152872, 0)
 
 [node name="StickerArea2" parent="Container/StickerAreas" instance=ExtResource("14_s0p34")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.176, -0.522)
@@ -562,7 +575,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32372, 2.44454, -4.55876)
 [node name="Stikers" type="Node3D" parent="."]
 
 [node name="Sticker" type="RigidBody3D" parent="Stikers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.49045, -3.97323)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45648, 1.62495, -3.97323)
 collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
@@ -572,6 +585,9 @@ continuous_cd = true
 script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Marker3D" type="Marker3D" parent="Stikers/Sticker"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
 
 [node name="Sticker2" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.62407, -3.90698)
@@ -585,6 +601,8 @@ script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
+[node name="Marker3D" type="Marker3D" parent="Stikers/Sticker2"]
+
 [node name="Sticker3" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.49045, -4.0982)
 collision_layer = 114688
@@ -596,6 +614,8 @@ continuous_cd = true
 script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Marker3D" type="Marker3D" parent="Stikers/Sticker3"]
 
 [node name="Sticker5" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0838456, 1.49045, -3.97323)
@@ -609,6 +629,8 @@ script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
+[node name="Marker3D" type="Marker3D" parent="Stikers/Sticker5"]
+
 [node name="Sticker4" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.217155, 1.56662, -3.97323)
 collision_layer = 114688
@@ -620,6 +642,8 @@ continuous_cd = true
 script = ExtResource("19_s0p34")
 picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
+
+[node name="Marker3D" type="Marker3D" parent="Stikers/Sticker4"]
 
 [node name="Button" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.37555, 1.48271, -4.73818)
@@ -678,15 +702,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0164917, -0.00111085, -0.00
 shape = SubResource("BoxShape3D_fnvjc")
 
 [node name="ConnectorMarker" type="Marker3D" parent="Scanner/ScanArea"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Lamp" parent="." instance=ExtResource("17_guehg")]
 transform = Transform3D(-0.0379727, 0, 0.0325281, 0, 0.05, 0, -0.0325281, 0, -0.0379727, 0.879351, 1.22584, -4.36321)
 
-[node name="ObjectsArrowConnecter" parent="." instance=ExtResource("23_fnvjc")]
+[node name="ObjectsArrowConnecter" parent="." node_paths=PackedStringArray("node_a", "node_b") instance=ExtResource("23_fnvjc")]
 curve = SubResource("Curve3D_fnvjc")
-start_target = NodePath("../Container/StickerAreas/StickerArea/Marker3D")
-end_target = NodePath("../Scanner/ScanArea/ConnectorMarker")
+node_a = NodePath("../Container/StickerAreas/StickerArea/Marker3D")
+node_b = NodePath("../Stikers/Sticker/Marker3D")
+handle_length = 0.2
+
+[node name="PathExtrude3D" type="PathExtrude3D" parent="ObjectsArrowConnecter" node_paths=PackedStringArray("path_3d")]
+path_3d = NodePath("..")
+profile = SubResource("PathExtrudeProfileCircle_fnvjc")
+material = SubResource("StandardMaterial3D_2lox4")
+cast_shadow = 0
 
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="ConeyorBelt" method="_on_interactable_area_button_button_pressed"]
 [connection signal="body_entered" from="Scanner/ScanArea" to="Scanner" method="_on_scan_area_body_entered"]

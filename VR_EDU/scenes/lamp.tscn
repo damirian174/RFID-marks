@@ -1,12 +1,12 @@
-[gd_scene load_steps=28 format=4 uid="uid://8e5kqlppu2sn"]
+[gd_scene load_steps=26 format=4 uid="uid://8e5kqlppu2sn"]
 
 [ext_resource type="Script" uid="uid://bxfyvwxcvk8j7" path="res://scenes/lamphead.gd" id="2_60c0r"]
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="2_f2tjl"]
-[ext_resource type="Script" uid="uid://csrpskw533fy8" path="res://scenes/lampneck.gd" id="3_60c0r"]
 
-[sub_resource type="Curve3D" id="Curve3D_60c0r"]
+[sub_resource type="Curve3D" id="Curve3D_hxjgs"]
+bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 3.8442, 4.60675, 0, 0, 1, 0, 14.103, -4.49),
+"points": PackedVector3Array(0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 2.09752, 5.62143, 0, 0, 1, 0, 10.6761, 2.54),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -210,10 +210,6 @@ points = PackedVector3Array(-4.10719, -3.15029, -1.42234, -2.05411, -4.25668, -4
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wb3uq"]
 points = PackedVector3Array(3.94884, -4.09805, 3.31724, 1.26418, -4.25668, 4.4229, 4.4229, -4.25668, 1.26418, 1.26418, -0.623189, 1.26418, 1.89614, -3.94049, 4.7387, 4.7387, -3.78222, 1.42243, 1.26418, -1.09729, 1.26418, 1.58033, -0.781461, 1.58033, 1.26418, -3.78222, 4.7387, 3.63304, -3.94049, 3.63304, 3.31724, -4.25668, 3.94884, 4.265, -3.94049, 2.84389, 4.89731, -4.25668, 1.26418, 2.84389, -3.94049, 4.265, 1.42243, -0.939376, 1.89614, 1.89614, -0.939376, 1.42243, 1.58033, -4.25668, 4.89731, 2.21229, -1.25521, 1.26418, 4.7387, -4.25668, 2.05404, 4.7387, -3.94049, 1.89614, 1.58033, -2.36098, 3.31724, 3.31724, -2.36098, 1.58033, 1.26418, -0.939376, 1.89614, 4.7387, -3.78222, 1.26418, 2.37019, -4.25668, 4.5808, 1.89614, -1.25521, 1.89614, 1.26418, -4.25668, 4.89731, 3.79094, -3.30812, 2.52809, 2.52809, -3.30812, 3.79094, 3.94884, -4.25668, 3.31724, 4.89731, -4.09805, 1.58033, 1.42243, -3.78222, 4.7387)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60c0r"]
-albedo_color = Color(0.57, 0.57, 0.57, 1)
-metallic = 0.42
-
 [sub_resource type="PathExtrudeProfileCircle" id="PathExtrudeProfileCircle_f2tjl"]
 radius = 0.5
 closed = false
@@ -229,7 +225,7 @@ handle_length = 6.0
 head_back_offset = Vector3(0, 0, 0)
 
 [node name="Path3D" type="Path3D" parent="."]
-curve = SubResource("Curve3D_60c0r")
+curve = SubResource("Curve3D_hxjgs")
 
 [node name="Base" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_f3gd7")
@@ -240,7 +236,7 @@ mesh = SubResource("ArrayMesh_f3gd7")
 shape = SubResource("ConcavePolygonShape3D_f2tjl")
 
 [node name="LampHead" parent="." instance=ExtResource("2_f2tjl")]
-transform = Transform3D(1, 0, 0, 0, 0.6407, -0.767792, 0, 0.767792, 0.6407, 0, 14.103, -4.49)
+transform = Transform3D(1, 0, 0, 0, 0.349586, -0.936905, 0, 0.936905, 0.349586, 0, 10.6761, 2.54)
 freeze = true
 
 [node name="Head" type="MeshInstance3D" parent="LampHead"]
@@ -304,26 +300,6 @@ light_size = 0.05
 shadow_enabled = true
 omni_range = 28.119
 omni_attenuation = 1.766
-
-[node name="Neck" type="CSGPolygon3D" parent="."]
-top_level = true
-visible = false
-polygon = PackedVector2Array(0.5, 0, 0.353553, 0.353553, 3.06152e-17, 0.5, -0.353553, 0.353553, -0.5, 6.12303e-17, -0.353553, -0.353553, -9.18455e-17, -0.5, 0.353553, -0.353553)
-mode = 2
-path_node = NodePath("../Path3D")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 0.0
-path_rotation = 2
-path_rotation_accurate = false
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = false
-material = SubResource("StandardMaterial3D_60c0r")
-script = ExtResource("3_60c0r")
-radius = 0.5
-point_count = 8
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.3141, -6.7462)

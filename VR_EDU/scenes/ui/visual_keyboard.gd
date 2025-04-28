@@ -17,6 +17,9 @@ func _on_close_requested() -> void:
 	
 
 func _ready() -> void:
+	
+	
+	
 	conserned_buttons.append_array(digits.get_children())
 	for i in eng_letters.get_children():
 		conserned_buttons.append_array(i.get_children())
@@ -33,7 +36,7 @@ func _ready() -> void:
 	conserned_buttons.pop_back()
 	
 	#AppManager.virtual_keyboard_press.connect(func(key): print(key))
-
+	#popup_centered()
 
 func _on_caps_pressed() -> void:
 	for i: Button in conserned_buttons:

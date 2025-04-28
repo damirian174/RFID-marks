@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcqtcypux3l4l"]
+[gd_scene load_steps=6 format=3 uid="uid://bcqtcypux3l4l"]
 
 [ext_resource type="Script" uid="uid://ct0b65xbtcy8r" path="res://scenes/ui/app.gd" id="1_7ifyk"]
 [ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/marking.gd" id="1_qy8mf"]
 [ext_resource type="Texture2D" uid="uid://b34l0oiml78e1" path="res://metran.png" id="1_t2d62"]
 [ext_resource type="PackedScene" uid="uid://6n7sgpkqv5jo" path="res://scenes/ui/visual_keyboard.tscn" id="4_hfey3"]
+[ext_resource type="Script" uid="uid://b7a55x6ix8bym" path="res://scenes/ui/keyboard_button.gd" id="4_jiih4"]
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -15,30 +16,57 @@ grow_vertical = 2
 script = ExtResource("1_7ifyk")
 metadata/_edit_use_anchors_ = true
 
-[node name="MainWindow" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = -62
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("1_t2d62")
+
+[node name="MainWindow" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TabContainer" type="TabContainer" parent="MainWindow"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/MainWindow"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 51
 tab_alignment = 1
 current_tab = 0
 
-[node name="Маркировка" type="HBoxContainer" parent="MainWindow/TabContainer"]
+[node name="Маркировка" type="HBoxContainer" parent="VBoxContainer/MainWindow/TabContainer"]
 layout_mode = 2
 script = ExtResource("1_qy8mf")
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MainWindow/TabContainer/Маркировка"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
@@ -47,34 +75,34 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="PanelContainer" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 275
 alignment = 1
 
-[node name="Label" type="Label" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 30
 
-[node name="MarkButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="MarkButton" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 60
 text = "Маркировка"
 
-[node name="ReadButton" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="ReadButton" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -82,46 +110,46 @@ theme_override_font_sizes/font_size = 60
 text = "Считать
 "
 
-[node name="MarginContainer2" type="MarginContainer" parent="MainWindow/TabContainer/Маркировка"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 
-[node name="Button" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 text = "Сообщить
 о браке"
 
-[node name="Button2" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
+[node name="Button2" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 text = "Сообщить
 об ошибке"
 
-[node name="Button3" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
+[node name="Button3" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 text = "Отойти"
 
-[node name="Button4" type="Button" parent="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
+[node name="Button4" type="Button" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 text = "Завершить
 работу"
 
-[node name="MarginContainer3" type="MarginContainer" parent="MainWindow/TabContainer/Маркировка"]
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 40
@@ -129,39 +157,25 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer3"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer3"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer3/ScrollContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer3/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PropertyContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer3/ScrollContainer/PanelContainer"]
+[node name="PropertyContainer" type="VBoxContainer" parent="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer3/ScrollContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 
-[node name="PanelContainer" type="PanelContainer" parent="MainWindow"]
+[node name="KeyboardButton" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("keyboard_window")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="ColorRect" type="ColorRect" parent="MainWindow/PanelContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MainWindow/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="TextureRect" type="TextureRect" parent="MainWindow/PanelContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("1_t2d62")
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 40
+text = "Клавиатура"
+script = ExtResource("4_jiih4")
+keyboard_window = NodePath("../../KeyboardWindow")
 
 [node name="Login" type="PanelContainer" parent="."]
 visible = false
@@ -173,6 +187,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="KeyboardWindow" parent="." instance=ExtResource("4_hfey3")]
+position = Vector2i(610, 365)
+visible = false
 
-[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/MarkButton" to="MainWindow/TabContainer/Маркировка" method="_on_mark_button_pressed"]
-[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ReadButton" to="MainWindow/TabContainer/Маркировка" method="_on_read_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/MarkButton" to="VBoxContainer/MainWindow/TabContainer/Маркировка" method="_on_mark_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ReadButton" to="VBoxContainer/MainWindow/TabContainer/Маркировка" method="_on_read_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/KeyboardButton" to="VBoxContainer/KeyboardButton" method="_on_pressed"]

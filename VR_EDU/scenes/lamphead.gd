@@ -1,7 +1,7 @@
 @tool
 extends Node3D
 
-@onready var neck: CSGPolygon3D = $Neck
+
 
 @export var dynamic_update: bool = true :
 	set(value):
@@ -79,7 +79,7 @@ func update_curve():
 		_curve.set_point_out(0, base_basis_y * handle_length)
 		_curve.set_point_position(1, head_back_pos)
 		_curve.set_point_in(1, head_basis_y * handle_length)
-	
+	_curve.bake_interval = 0.01
 	# Optimized editor refresh
 	if Engine.is_editor_hint():
 		path_node.curve = _curve.duplicate()
