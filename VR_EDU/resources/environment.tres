@@ -3,6 +3,8 @@
 [resource]
 tonemap_mode = 2
 ssr_enabled = true
+ssr_max_steps = 512
+ssr_depth_tolerance = 128.0
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true

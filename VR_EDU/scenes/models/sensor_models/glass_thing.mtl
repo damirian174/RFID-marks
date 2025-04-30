@@ -1,0 +1,13 @@
+# Blender 4.4.3 MTL File: 'datchik.blend'
+# www.blender.org
+
+newmtl Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd D:/RFID-marks/VR_EDU/scenes/models/sensor_textures/PaintedMetal002_2K-PNG_Color.png
+map_Ns D:/RFID-marks/VR_EDU/scenes/models/sensor_textures/PaintedMetal002_2K-PNG_Roughness.png
+map_refl D:/RFID-marks/VR_EDU/scenes/models/sensor_textures/PaintedMetal002_2K-PNG_Metalness.png

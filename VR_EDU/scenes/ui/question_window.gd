@@ -13,23 +13,34 @@ var questions: Dictionary = {}:
 		_create_question_fields()
 
 func _init(initial_questions: Dictionary = {}):
-	size = Vector2i(1440.0, 810.0)
+	size = Vector2i(1000.0, 800.0)
 	title = "Маркировать детали"
 	add_theme_font_size_override('title_font_size', 40)
 	close_requested.connect(queue_free)
 	questions_pre = initial_questions
 
 func _ready():
+	# Create main margin container
+	var margin_container = MarginContainer.new()
+	margin_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	margin_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	margin_container.anchor_bottom = 1.0
+	margin_container.anchor_top = 0.0
+	margin_container.anchor_left = 0.0
+	margin_container.anchor_right = 1.0
+	add_child(margin_container)
+	
+	# Set margins to 10 on all sides
+	margin_container.add_theme_constant_override("margin_top", 10)
+	margin_container.add_theme_constant_override("margin_left", 10)
+	margin_container.add_theme_constant_override("margin_right", 10)
+	margin_container.add_theme_constant_override("margin_bottom", 10)
+	
 	# Create main container
-	#always_on_top = true
 	var main_vbox = VBoxContainer.new()
 	main_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	main_vbox.anchor_bottom = 1.0
-	main_vbox.anchor_top = 0.0
-	main_vbox.anchor_left = 0.0
-	main_vbox.anchor_right = 1.0
-	add_child(main_vbox)
+	margin_container.add_child(main_vbox)
 	
 	# Create scroll container
 	var scroll = ScrollContainer.new()
@@ -154,8 +165,8 @@ func _on_virtual_key_pressed(key: String) -> void:
 		var regex = RegEx.new()
 		regex.compile("[A-Za-zА-Яа-я0-9]")
 		if regex.search(key):
-			line_edit.text += key  # Simply append to the end
-			line_edit.caret_column = len(line_edit.text)  # Move cursor to end
+			line_edit.text += key
+			line_edit.caret_column = len(line_edit.text)
 	
 	# Handle Enter
 	elif key == "Enter":
@@ -164,14 +175,11 @@ func _on_virtual_key_pressed(key: String) -> void:
 	elif key == "BackSpace":
 		if line_edit.text.length() > 0:
 			line_edit.text = line_edit.text.substr(0, line_edit.text.length() - 1)
-			line_edit.caret_column = len(line_edit.text)  # Update cursor position
+			line_edit.caret_column = len(line_edit.text)
 	
 	elif key == 'Space':
-		line_edit.text += ' '  # Simply append to the end
-		line_edit.caret_column = len(line_edit.text)  # Move cursor to end
-	
-	
-
+		line_edit.text += ' '
+		line_edit.caret_column = len(line_edit.text)
 
 func _to_string():
 	return "[QuestionWindow:%d]" % get_instance_id()

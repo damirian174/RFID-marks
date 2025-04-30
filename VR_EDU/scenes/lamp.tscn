@@ -298,6 +298,7 @@ light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.1
 light_size = 0.05
 shadow_enabled = true
+shadow_bias = 0.01
 omni_range = 28.119
 omni_attenuation = 1.766
 

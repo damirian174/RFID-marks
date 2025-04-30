@@ -3,6 +3,10 @@ extends Path3D  # Changed from Node3D to Path3D
 
 class_name PathConnector
 
+@onready var path_extrude_3d: PathExtrude3D = $PathExtrude3D
+
+
+
 @export var dynamic_update: bool = true :
 	set(value):
 		dynamic_update = value
@@ -31,10 +35,12 @@ var _curve: Curve3D
 
 func _ready():
 	_curve = curve
+	
 	update_curve()
 	_store_transforms()
 
 func _physics_process(_delta):
+	
 	if should_update():
 		update_curve()
 		_store_transforms()
@@ -43,13 +49,16 @@ func should_update() -> bool:
 	if not dynamic_update:
 		return false
 	if Engine.is_editor_hint():
+		# Check if both nodes are valid before accessing their transforms
+		if not is_instance_valid(node_a) or not is_instance_valid(node_b):
+			return false
 		return (
 			node_a.global_transform != _prev_a_transform || 
 			node_b.global_transform != _prev_b_transform
 		)
 	return true
-
 func _store_transforms():
+	
 	if node_a:
 		_prev_a_transform = node_a.global_transform
 	if node_b:
@@ -57,12 +66,15 @@ func _store_transforms():
 
 func update_curve():
 	if !is_instance_valid(node_a) || !is_instance_valid(node_b):
+		if path_extrude_3d:
+			path_extrude_3d.visible = false
 		return
+	path_extrude_3d.visible = true
 	
 	if !_curve:
 		_curve = Curve3D.new()
 		curve = _curve
-	
+	#print('updating')
 	# Get positions with offset in path's local space
 	var a_pos = _get_offset_position(node_a, node_a_offset)
 	var b_pos = _get_offset_position(node_b, node_b_offset)

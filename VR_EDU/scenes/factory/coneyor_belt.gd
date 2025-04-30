@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 	for body in area_3d.get_overlapping_bodies():
 		if body is RigidBody3D:
 			#body.linear_velocity = lerp(body.linear_velocity, speed * -global_dir * 5, 0.5 * delta)
-			var force = global_dir * -speed * body.mass * 100
+			var force = global_dir * -speed * body.mass * 200
 			#print(force)
 			body.apply_central_force(force * delta)
 

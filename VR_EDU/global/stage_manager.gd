@@ -1,12 +1,16 @@
 extends Node
 
 
-enum MARK {GET_BOX,ATTACH_STICKER,PRESS_MARK_BUTTON,SCAN}
+enum MARK {
+	NOTHING,
+	PRESS_BUTTON,
+	GET_BOX,
+	ATTACH_STICKER,
+	PRESS_MARK_BUTTON,
+	FILL_PROPERTIES,
+	SCAN,
+}
 
-
-
-enum STAGES {MARK}
-
-
-
-var arrow_connecter: PathConnector
+enum STAGES {
+	MARK,
+}
