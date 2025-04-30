@@ -36,5 +36,5 @@ func _physics_process(delta: float) -> void:
 
 
 
-func _on_interactable_area_button_button_pressed(button: Variant) -> void:
+func _on_interactable_area_button_button_pressed(_button: Variant) -> void:
 	on = not on

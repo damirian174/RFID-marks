@@ -73,6 +73,7 @@ max_speed = 0.5
 accel = 0.1
 
 [node name="Railings" type="StaticBody3D" parent="."]
+collision_layer = 524295
 physics_material_override = SubResource("PhysicsMaterial_jdb6l")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Railings"]
@@ -101,14 +102,15 @@ transform = Transform3D(-4.65526e-08, 0, 1, 0, 1, 0, -1.065, 0, -4.37114e-08, 0,
 mesh = SubResource("ArrayMesh_tgcrv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Belt"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 589831
 physics_material_override = SubResource("PhysicsMaterial_4es4f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Belt/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jdb6l")
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00262451, 0.350903, -0.033493)

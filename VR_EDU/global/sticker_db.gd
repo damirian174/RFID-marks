@@ -10,7 +10,7 @@ func get_data_by_id(data_id: String) -> rfid_data:
 	for data: rfid_data in data_base:
 		if data.data_id == data_id:
 			return data
-			print(data)
+			
 	return null
 
 

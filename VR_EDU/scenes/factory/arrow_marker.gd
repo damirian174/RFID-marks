@@ -18,7 +18,7 @@ extends MeshInstance3D
 
 var _last_target_transform: Transform3D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not target_node:
 		return
 	

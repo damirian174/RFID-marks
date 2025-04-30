@@ -98,12 +98,12 @@ func get_resource_properties(res: Resource) -> Dictionary:
 	var properties := {}
 	for property in res.get_property_list():
 		#print(property)
-		var name: String = property["name"]
+		var property_name: String = property["name"]
 		# Filter out built-in properties and methods
-		if name.begins_with("_"):
+		if property_name.begins_with("_"):
 			continue
 		if property["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE:
-			properties[name] = res.get(name)
+			properties[property_name] = res.get(property_name)
 			
 	return properties
 

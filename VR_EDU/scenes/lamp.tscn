@@ -6,7 +6,7 @@
 [sub_resource type="Curve3D" id="Curve3D_hxjgs"]
 bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 2.09752, 5.62143, 0, 0, 1, 0, 10.6761, 2.54),
+"points": PackedVector3Array(0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 3.5797, 4.81516, 0, 0, 1, 0, 9.54308, -3.74313),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -236,7 +236,7 @@ mesh = SubResource("ArrayMesh_f3gd7")
 shape = SubResource("ConcavePolygonShape3D_f2tjl")
 
 [node name="LampHead" parent="." instance=ExtResource("2_f2tjl")]
-transform = Transform3D(1, 0, 0, 0, 0.349586, -0.936905, 0, 0.936905, 0.349586, 0, 10.6761, 2.54)
+transform = Transform3D(1, 0, 0, 0, 0.596617, -0.802527, 0, 0.802527, 0.596617, 0, 9.54308, -3.74313)
 freeze = true
 
 [node name="Head" type="MeshInstance3D" parent="LampHead"]
