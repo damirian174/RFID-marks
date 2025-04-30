@@ -1,10 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcqtcypux3l4l"]
+[gd_scene load_steps=9 format=3 uid="uid://bcqtcypux3l4l"]
 
 [ext_resource type="Script" uid="uid://ct0b65xbtcy8r" path="res://scenes/ui/app.gd" id="1_7ifyk"]
 [ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/marking.gd" id="1_qy8mf"]
 [ext_resource type="Texture2D" uid="uid://b34l0oiml78e1" path="res://metran.png" id="1_t2d62"]
+[ext_resource type="Script" uid="uid://cngwabbv5tea" path="res://scenes/ui/login.gd" id="4_1w378"]
 [ext_resource type="PackedScene" uid="uid://6n7sgpkqv5jo" path="res://scenes/ui/visual_keyboard.tscn" id="4_hfey3"]
 [ext_resource type="Script" uid="uid://b7a55x6ix8bym" path="res://scenes/ui/keyboard_button.gd" id="4_jiih4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfu02"]
+bg_color = Color(0.4, 0.698039, 1, 1)
+border_width_left = 100
+border_width_top = 100
+border_width_right = 100
+border_width_bottom = 100
+border_color = Color(0.4, 0.698039, 1, 1)
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cl742"]
+bg_color = Color(0, 0.467797, 0.787064, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0, 0.466667, 0.788235, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -25,16 +50,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = -62
 
-[node name="Login" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 2
 offset_right = 216.0
 offset_bottom = 56.0
@@ -59,6 +76,7 @@ size_flags_vertical = 0
 texture = ExtResource("1_t2d62")
 
 [node name="MainWindow" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 2
 offset_right = 1920.0
 offset_bottom = 1079.0
@@ -181,6 +199,42 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
+
+[node name="Login" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cfu02")
+script = ExtResource("4_1w378")
+
+[node name="PanelContainer" type="PanelContainer" parent="Login"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_cl742")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Login/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 170
+
+[node name="Label" type="Label" parent="Login/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 40
+text = "Введите свой идентификационный номер"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="Login/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 40
+placeholder_text = "Ваш номер..."
+alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

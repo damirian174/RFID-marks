@@ -3,6 +3,7 @@ extends Control
 @onready var mark: HBoxContainer = $MainWindow/TabContainer/Маркировка
 
 var time: float = 0.0
+var auth: bool = false
 
 @export var debug: bool
 @onready var time_labels: Array[Label] = [
@@ -15,6 +16,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if not auth:
+		return
+		
 	time += delta
 	
 	for label: Label in time_labels:
