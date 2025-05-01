@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 		return
 	speed += accel * delta
 	speed = clamp(speed, 0.0, max_speed)
-	#$Belt/StaticBody3D.physics_material_override.friction = lerp(1.0, 0.0,speed/max_speed)
+	$Belt/StaticBody3D.physics_material_override.friction = 0.0 if speed else 1.0
 	
 	# Convert local direction to global space
 	var global_dir = global_transform.basis * Vector3.FORWARD

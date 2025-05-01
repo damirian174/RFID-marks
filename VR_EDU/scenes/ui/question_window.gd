@@ -150,10 +150,11 @@ func _on_submit_pressed():
 			answers[question] = value
 			error_label.hide()
 	
-	AppManager.submitted_mark_parameters.emit()
+		
 	submitted.emit(answers, errors)
 	if errors.is_empty():
-		hide()
+		AppManager.submitted_mark_parameters.emit()
+		queue_free()
 
 func _on_virtual_key_pressed(key: String) -> void:
 	if not current_focused_line_edit or not is_instance_valid(current_focused_line_edit):

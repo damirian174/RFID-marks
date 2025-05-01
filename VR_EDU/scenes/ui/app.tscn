@@ -259,6 +259,15 @@ theme_override_font_sizes/font_size = 40
 placeholder_text = "Ваш номер..."
 alignment = 1
 
+[node name="WrongLabel" type="Label" parent="Login/PanelContainer/VBoxContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Такой идентификационный номер не существует. проверьте правильность написания"
+autowrap_mode = 3
+
 [node name="Button" type="Button" parent="Login/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40

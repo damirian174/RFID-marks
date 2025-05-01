@@ -8,6 +8,7 @@ var current_focused_line_edit: LineEdit = null  # Track focused LineEdit
 @onready var app: Control = $".."
 
 
+@onready var wrong_label: Label = $PanelContainer/VBoxContainer/VBoxContainer/WrongLabel
 
 
 func _ready():
@@ -64,8 +65,11 @@ func _on_button_pressed() -> void:
 		app.auth = true
 		AppManager.authed.emit()
 		current_focused_line_edit.text = ''
+		current_focused_line_edit = null
+		wrong_label.hide()
 		
-
+	else:
+		wrong_label.show()
 
 func _on_line_edit_focus_entered() -> void:
 	#print('hint keyboard')

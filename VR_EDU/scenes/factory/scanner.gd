@@ -53,7 +53,7 @@ func change_scan_state(mode: AppManager.DATA_MODES):
 
 
 func _on_scan_area_body_entered(body: Node3D) -> void:
-	print(body)
+	#print(body)
 	if state == STATES.OFF:
 		return
 	

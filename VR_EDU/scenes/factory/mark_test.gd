@@ -57,8 +57,14 @@ var current_stage: StageManager.MARK = StageManager.MARK.NOTHING:
 	set(value):
 		current_stage = value
 		if mode != MODE.TUTORIAL:
-			return
+			arrow_connecter.node_a = null
+			arrow_connecter.node_b = null
+			arrow_pointer.target_node = null
 		match current_stage:
+			StageManager.MARK.NOTHING:
+				arrow_connecter.node_a = null
+				arrow_connecter.node_b = null
+				arrow_pointer.target_node = null
 			StageManager.MARK.PRESS_BUTTON:
 				arrow_pointer.target_node = button_hint_marker
 				arrow_connecter.node_a = null
@@ -111,9 +117,13 @@ func _ready() -> void:
 		
 	AppManager.authed.connect(_on_authed)
 	AppManager.hint_keyboard.connect(_on_keyboard_hint)
-	AppManager.submitted_mark_parameters.connect(func() -> void: current_stage = StageManager.MARK.SCAN)
-	AppManager.submitted_mark_parameters.connect(func() -> void: current_stage = StageManager.MARK.FILL_PROPERTIES)
-	
+	AppManager.submitted_mark_parameters.connect(func() -> void: if attached_sticker: current_stage = StageManager.MARK.SCAN)
+	AppManager.started_filling_in.connect(func() -> void: if attached_sticker: current_stage = StageManager.MARK.FILL_PROPERTIES)
+	AppManager.data_access.connect(func(body:Sticker, readwrite_mode: AppManager.DATA_MODES):
+									if readwrite_mode == AppManager.DATA_MODES.WRITE and attached_sticker:
+										mode = MODE.SANDBOX
+										current_stage = StageManager.MARK.NOTHING
+									)
 	
 func _on_authed():
 	if current_stage == StageManager.MARK.PRESS_MARK_BUTTON:
