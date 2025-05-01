@@ -4,6 +4,8 @@ extends Control
 
 var time: float = 0.0
 var auth: bool = false
+var tutorial: bool = false
+var napping: bool = false
 
 @export var debug: bool
 @onready var time_labels: Array[Label] = [
@@ -16,7 +18,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not auth:
+	if not auth or tutorial or napping:
 		return
 		
 	time += delta
@@ -30,7 +32,7 @@ func format_mmss() -> String:
 
 
 func add_test_window():
-	var questions: Dictionary = mark.get_resource_properties_and_types(rfid_data.new())
+	var questions: Dictionary = mark.get_resource_properties_and_types(RFIDData.new())
 	#print(questions)
 	var q_window = QuestionWindow.new(questions)
 	

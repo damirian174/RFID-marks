@@ -23,6 +23,7 @@ XrSimulator="*res://addons/xr-simulator/XRSimulator.tscn"
 StageManager="*res://global/stage_manager.gd"
 AppManager="*res://global/app_manager.gd"
 StickerDb="*res://global/sticker_db.gd"
+HumanDb="*res://global/human_db.gd"
 
 [display]
 
@@ -67,6 +68,7 @@ common/physics_jitter_fix=2.0
 
 [rendering]
 
+anti_aliasing/quality/msaa_3d=1
 environment/volumetric_fog/volume_size=128
 environment/volumetric_fog/volume_depth=128
 anti_aliasing/quality/screen_space_aa=1

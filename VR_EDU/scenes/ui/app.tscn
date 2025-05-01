@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcqtcypux3l4l"]
+[gd_scene load_steps=11 format=3 uid="uid://bcqtcypux3l4l"]
 
 [ext_resource type="Script" uid="uid://ct0b65xbtcy8r" path="res://scenes/ui/app.gd" id="1_7ifyk"]
 [ext_resource type="Script" uid="uid://bdph0rwr3av0n" path="res://scenes/ui/marking.gd" id="1_qy8mf"]
 [ext_resource type="Texture2D" uid="uid://b34l0oiml78e1" path="res://metran.png" id="1_t2d62"]
 [ext_resource type="Script" uid="uid://cngwabbv5tea" path="res://scenes/ui/login.gd" id="4_1w378"]
+[ext_resource type="Script" uid="uid://cy5h4yw4y8gw" path="res://scenes/ui/margin_container_2.gd" id="4_cfu02"]
 [ext_resource type="PackedScene" uid="uid://6n7sgpkqv5jo" path="res://scenes/ui/visual_keyboard.tscn" id="4_hfey3"]
 [ext_resource type="Script" uid="uid://b7a55x6ix8bym" path="res://scenes/ui/keyboard_button.gd" id="4_jiih4"]
 
@@ -30,6 +31,8 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="Theme" id="Theme_cfu02"]
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -147,6 +150,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_bottom = 40
+script = ExtResource("4_cfu02")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainWindow/TabContainer/Маркировка/MarginContainer2"]
 layout_mode = 2
@@ -200,6 +204,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 
+[node name="Сборка" type="Control" parent="MainWindow/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Тестировка" type="Control" parent="MainWindow/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Упаковка" type="Control" parent="MainWindow/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
 [node name="Login" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -218,7 +237,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cl742")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Login/PanelContainer"]
 layout_mode = 2
-theme_override_constants/separation = 170
+theme_override_constants/separation = 155
 
 [node name="Label" type="Label" parent="Login/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -229,12 +248,21 @@ text = "Введите свой идентификационный номер"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="LineEdit" type="LineEdit" parent="Login/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Login/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LineEdit" type="LineEdit" parent="Login/PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 2
 theme_override_font_sizes/font_size = 40
 placeholder_text = "Ваш номер..."
 alignment = 1
+
+[node name="Button" type="Button" parent="Login/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Войти"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -247,6 +275,7 @@ offset_left = -246.0
 offset_top = -63.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = SubResource("Theme_cfu02")
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
@@ -259,10 +288,27 @@ script = ExtResource("4_jiih4")
 keyboard_window = NodePath("../../KeyboardWindow")
 metadata/_edit_use_anchors_ = true
 
+[node name="BlockInput" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
 [node name="KeyboardWindow" parent="." instance=ExtResource("4_hfey3")]
-position = Vector2i(610, 365)
+position = Vector2i(1135, 85)
 visible = false
 
 [connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/MarkButton" to="MainWindow/TabContainer/Маркировка" method="_on_mark_button_pressed"]
 [connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ReadButton" to="MainWindow/TabContainer/Маркировка" method="_on_read_button_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/Broke" to="MainWindow/TabContainer/Маркировка/MarginContainer2" method="_on_broke_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/Error" to="MainWindow/TabContainer/Маркировка/MarginContainer2" method="_on_error_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/TakeANap" to="MainWindow/TabContainer/Маркировка/MarginContainer2" method="_on_take_a_nap_pressed"]
+[connection signal="pressed" from="MainWindow/TabContainer/Маркировка/MarginContainer2/VBoxContainer/EndWork" to="MainWindow/TabContainer/Маркировка/MarginContainer2" method="_on_end_work_pressed"]
+[connection signal="focus_entered" from="Login/PanelContainer/VBoxContainer/VBoxContainer/LineEdit" to="Login" method="_on_line_edit_focus_entered"]
+[connection signal="focus_exited" from="Login/PanelContainer/VBoxContainer/VBoxContainer/LineEdit" to="Login" method="_on_line_edit_focus_exited"]
+[connection signal="pressed" from="Login/PanelContainer/VBoxContainer/VBoxContainer/Button" to="Login" method="_on_button_pressed"]
 [connection signal="pressed" from="MarginContainer/KeyboardButton" to="MarginContainer/KeyboardButton" method="_on_pressed"]

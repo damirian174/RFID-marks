@@ -19,7 +19,7 @@ var data_to_write_id: String
 
 func _ready() -> void:
 	AppManager.data_access.connect(readwrite_data)
-	#print(get_resource_properties(rfid_data.new()))
+	#print(get_resource_properties(RFIDData.new()))
 
 
 func readwrite_data(body_with_data: Sticker, mode: AppManager.DATA_MODES):
@@ -30,7 +30,7 @@ func readwrite_data(body_with_data: Sticker, mode: AppManager.DATA_MODES):
 		if StickerDb.get_data_by_id(body_with_data.data_id) == null:
 			#print('data is seeemingly null')
 			
-			var properties: Dictionary = get_resource_properties(rfid_data.new())
+			var properties: Dictionary = get_resource_properties(RFIDData.new())
 			for property_name in properties:
 				var new_property_container: PanelContainer = PROPERTY_INFO_PANEL.instantiate()
 				property_container.add_child(new_property_container)
@@ -52,11 +52,11 @@ func readwrite_data(body_with_data: Sticker, mode: AppManager.DATA_MODES):
 
 func _on_mark_button_pressed() -> void:
 	AppManager.set_data_access.emit(AppManager.DATA_MODES.REST)
-	var questions: Dictionary = get_resource_properties_and_types(rfid_data.new())
+	var questions: Dictionary = get_resource_properties_and_types(RFIDData.new())
 	#print(questions)
 	var q_window = QuestionWindow.new(questions)
 	
-	
+	AppManager.started_filling_in.emit()
 	add_child(q_window)
 	q_window.submitted.connect(_on_answers)
 	q_window.popup_centered()
@@ -72,7 +72,7 @@ func _on_read_button_pressed() -> void:
 func _on_answers(answers: Dictionary, errors: Dictionary):
 	if errors.size() != 0:
 		return
-	var data_to_write: rfid_data = rfid_data.new()
+	var data_to_write: RFIDData = RFIDData.new()
 	
 	for property: String in answers:
 		data_to_write.set(property,answers[property])

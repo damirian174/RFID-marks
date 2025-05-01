@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=4 uid="uid://10uk0qrxav2v"]
+[gd_scene load_steps=85 format=4 uid="uid://10uk0qrxav2v"]
 
 [ext_resource type="Script" uid="uid://dckrjdb0kk36" path="res://scenes/factory/mark_test.gd" id="1_6bk1i"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_d4xff"]
@@ -306,13 +306,13 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_t31h3")
 size = Vector3(0.01, 0.01, 0.07)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fnvjc"]
-size = Vector3(0.0243408, 0.0368408, 0.0623352)
+[sub_resource type="SphereShape3D" id="SphereShape3D_d4s1j"]
+radius = 0.0361884
 
-[sub_resource type="Curve3D" id="Curve3D_d4s1j"]
+[sub_resource type="Curve3D" id="Curve3D_i3hmm"]
 bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, -0.2, -1.37555, 1.48271, -4.73818, 0, -1.74846e-08, 0.2, 0, 0, 0, -1.47396, 2.28641, -3.31717),
+"points": PackedVector3Array(0, 0, 0, -8.74228e-09, 0.2, -3.82138e-16, -6.3608, 1.17818, -3.97378, 3.49691e-08, 0, 0.4, 0, 0, 0, -0.763818, 1.39595, -4.4178),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -334,6 +334,9 @@ render_priority = 0
 shader = ExtResource("21_s0p34")
 shader_parameter/gradient_texture = SubResource("GradientTexture2D_q3mwa")
 shader_parameter/scroll_speed = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i3hmm"]
+size = Vector3(4.37268, 3.49438, 2.15637)
 
 [node name="MarkTest" type="Node3D" node_paths=PackedStringArray("container", "arrow_connecter", "arrow_pointer")]
 script = ExtResource("1_6bk1i")
@@ -571,7 +574,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.255534, 2.24398, -4.70619)
 transform = Transform3D(0.34202, -0.664463, -0.664463, 0, 0.707107, -0.707107, 0.939693, 0.241845, 0.241845, -0.889964, -0.359211, 0)
 
 [node name="KeyboardMarker" type="Marker3D" parent="Computer"]
-transform = Transform3D(0.34202, -0.664463, -0.664463, 0, 0.707107, -0.707107, 0.939693, 0.241845, 0.241845, 1.52358, -0.924975, 0)
+transform = Transform3D(-0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, 0.5, -0.5, 1.52358, -0.924975, 0)
+
+[node name="AuthMarker" type="Marker3D" parent="Computer"]
+transform = Transform3D(0.34202, -0.664463, -0.664463, 0, 0.707107, -0.707107, 0.939693, 0.241845, 0.241845, -0.0447473, -0.120727, 0)
 
 [node name="Stikers" type="Node3D" parent="."]
 
@@ -588,10 +594,10 @@ picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
 [node name="StickerMarker" type="Marker3D" parent="Stikers/Sticker"]
-transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Sticker2" type="RigidBody3D" parent="Stikers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.31856, -3.90698)
+transform = Transform3D(0.631434, -0.77543, 0, 0.77543, 0.631434, 0, 0, 0, 1, 0.0904113, 1.31856, -3.90698)
 collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
@@ -603,6 +609,7 @@ picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
 [node name="StickerMarker" type="Marker3D" parent="Stikers/Sticker2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Sticker3" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0904113, 1.18494, -4.0982)
@@ -617,6 +624,7 @@ picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
 [node name="StickerMarker" type="Marker3D" parent="Stikers/Sticker3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Sticker5" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0838456, 1.18494, -3.97323)
@@ -631,6 +639,7 @@ picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
 [node name="StickerMarker" type="Marker3D" parent="Stikers/Sticker5"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Sticker4" type="RigidBody3D" parent="Stikers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.217155, 1.26111, -3.97323)
@@ -645,6 +654,7 @@ picked_up_layer = 98304
 metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 
 [node name="StickerMarker" type="Marker3D" parent="Stikers/Sticker4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Button" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15552, 1.43452, -4.73818)
@@ -697,22 +707,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0305052, 0.117661, 0)
 mesh = SubResource("BoxMesh_d4s1j")
 
 [node name="ScanArea" type="Area3D" parent="Scanner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0465841, 0.0952732, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0465841, 0.0928919, 0)
 collision_layer = 0
 collision_mask = 32768
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Scanner/ScanArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0164917, -0.00111085, -0.00174868)
-shape = SubResource("BoxShape3D_fnvjc")
+shape = SubResource("SphereShape3D_d4s1j")
 
 [node name="ConnectorMarker" type="Marker3D" parent="Scanner/ScanArea"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0151017, 0, 0)
 
 [node name="Lamp" parent="." instance=ExtResource("17_guehg")]
 transform = Transform3D(-0.0379727, 0, 0.0325281, 0, 0.05, 0, -0.0325281, 0, -0.0379727, 0.740182, 1.22584, -4.52176)
 
 [node name="ObjectsArrowConnecter" parent="." instance=ExtResource("23_fnvjc")]
-curve = SubResource("Curve3D_d4s1j")
+curve = SubResource("Curve3D_i3hmm")
 handle_length = 0.2
 
 [node name="PathExtrude3D" type="PathExtrude3D" parent="ObjectsArrowConnecter" node_paths=PackedStringArray("path_3d")]
@@ -724,13 +734,25 @@ material = SubResource("ShaderMaterial_s0p34")
 visible = false
 cast_shadow = 0
 
-[node name="ArrowMarker" parent="." instance=ExtResource("22_s0p34")]
-transform = Transform3D(0.759271, -0.650774, 0, 0.602103, 0.702485, -0.379456, 0.24694, 0.28811, 0.92521, -1.89617, 2.0447, -4.38893)
-visible = false
+[node name="ArrowMarker" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("22_s0p34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07091, 6.95692, -5.00253)
 script = ExtResource("23_2lox4")
+target_node = NodePath("../StartTest/Marker3D")
 vertical_offset = 0.8
+
+[node name="StartTest" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 524288
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.221313, 1.28134, -2.84305)
+shape = SubResource("BoxShape3D_i3hmm")
+
+[node name="Marker3D" type="Marker3D" parent="StartTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07091, 6.15692, -5.00253)
 
 [connection signal="body_exited" from="ConeyorBelt/GetBoxArea" to="." method="_on_get_box_area_body_exited"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="." method="_on_interactable_area_button_button_pressed"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="ConeyorBelt" method="_on_interactable_area_button_button_pressed"]
 [connection signal="body_entered" from="Scanner/ScanArea" to="Scanner" method="_on_scan_area_body_entered"]
+[connection signal="body_entered" from="StartTest" to="." method="_on_start_test_body_entered"]

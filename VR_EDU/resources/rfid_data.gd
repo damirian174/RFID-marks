@@ -1,4 +1,4 @@
-class_name rfid_data extends Resource
+class_name RFIDData extends Resource
 
 
 

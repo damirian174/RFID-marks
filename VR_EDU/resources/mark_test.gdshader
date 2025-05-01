@@ -1,5 +1,5 @@
 shader_type spatial;
-
+render_mode cull_disabled;
 // Gradient texture input
 uniform sampler2D gradient_texture;
 // Scroll speed (negative values scroll left, positive scroll right)

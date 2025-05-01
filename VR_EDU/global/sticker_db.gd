@@ -1,20 +1,20 @@
 extends Node
 
 
-var data_base: Array[rfid_data]
+var data_base: Array[RFIDData]
 
 
 
-func get_data_by_id(data_id: String) -> rfid_data:
+func get_data_by_id(data_id: String) -> RFIDData:
 	
-	for data: rfid_data in data_base:
+	for data: RFIDData in data_base:
 		if data.data_id == data_id:
 			return data
 			
 	return null
 
 
-func add_data(data: rfid_data) -> Error:
+func add_data(data: RFIDData) -> Error:
 	if not check_valid_data(data):
 		return ERR_ALREADY_EXISTS
 	
@@ -22,8 +22,8 @@ func add_data(data: rfid_data) -> Error:
 	return OK
 
 
-func check_valid_data(data: rfid_data) -> bool:
-	for db_data: rfid_data in data_base:
+func check_valid_data(data: RFIDData) -> bool:
+	for db_data: RFIDData in data_base:
 		if db_data.data_id == data.data_id:
 			return false
 	return true
@@ -31,7 +31,7 @@ func check_valid_data(data: rfid_data) -> bool:
 	
 func generate_unique_id() -> String:
 	var strings: Array[String]
-	for i: rfid_data in data_base:
+	for i: RFIDData in data_base:
 		strings.append(i.data_id)
 	
 	if strings.is_empty():

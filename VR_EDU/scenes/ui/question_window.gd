@@ -150,6 +150,7 @@ func _on_submit_pressed():
 			answers[question] = value
 			error_label.hide()
 	
+	AppManager.submitted_mark_parameters.emit()
 	submitted.emit(answers, errors)
 	if errors.is_empty():
 		hide()
