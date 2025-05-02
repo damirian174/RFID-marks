@@ -420,6 +420,7 @@ shape = SubResource("ConvexPolygonShape3D_hfwuk")
 transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -5.39359, 1.17818, -3.97378)
 collision_layer = 5
 physics_material_override = SubResource("PhysicsMaterial_s0p34")
+can_sleep = false
 ranged_grab_method = 0
 second_hand_grab = 1
 
@@ -531,6 +532,7 @@ collision_layer = 2
 collision_mask = 81926
 mass = 0.2
 physics_material_override = SubResource("PhysicsMaterial_fnvjc")
+can_sleep = false
 ranged_grab_method = 0
 second_hand_grab = 1
 
@@ -548,6 +550,7 @@ collision_layer = 2
 collision_mask = 81926
 mass = 0.2
 physics_material_override = SubResource("PhysicsMaterial_fnvjc")
+can_sleep = false
 ranged_grab_method = 0
 second_hand_grab = 1
 
@@ -565,6 +568,7 @@ collision_layer = 2
 collision_mask = 81926
 mass = 0.2
 physics_material_override = SubResource("PhysicsMaterial_fnvjc")
+can_sleep = false
 ranged_grab_method = 0
 second_hand_grab = 1
 
@@ -596,6 +600,7 @@ collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+can_sleep = false
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("19_s0p34")
@@ -611,6 +616,7 @@ collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+can_sleep = false
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("19_s0p34")
@@ -626,6 +632,7 @@ collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+can_sleep = false
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("19_s0p34")
@@ -641,6 +648,7 @@ collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+can_sleep = false
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("19_s0p34")
@@ -656,6 +664,7 @@ collision_layer = 114688
 collision_mask = 196615
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_cdtb3")
+can_sleep = false
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("19_s0p34")
@@ -749,7 +758,7 @@ visible = false
 cast_shadow = 0
 
 [node name="ArrowMarker" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("22_s0p34")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07091, 6.95692, -5.00253)
+transform = Transform3D(-0.98814, -0.153555, 0, 0.153555, -0.98814, 0, 0, 0, 1, -2.19375, 6.34246, -5.00253)
 script = ExtResource("23_2lox4")
 target_node = NodePath("../StartTest/Marker3D")
 vertical_offset = 0.8
@@ -763,7 +772,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.221313, 1.28134, -2.84305)
 shape = SubResource("BoxShape3D_i3hmm")
 
 [node name="Marker3D" type="Marker3D" parent="StartTest"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07091, 6.15692, -5.00253)
+transform = Transform3D(-0.98814, -0.153555, 0, 0.153555, -0.98814, 0, 0, 0, 1, -2.07091, 7.13297, -5.00253)
+
+[node name="bageSpawnMarker" type="Marker3D" parent="."]
+transform = Transform3D(0.897963, -0.368166, 0.241072, 0.240961, 0.869731, 0.430704, -0.368238, -0.328667, 0.8697, -0.592807, 2.14816, -4.29092)
+gizmo_extents = 1.0
 
 [connection signal="body_exited" from="ConeyorBelt/GetBoxArea" to="." method="_on_get_box_area_body_exited"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="." method="_on_interactable_area_button_button_pressed"]

@@ -7,6 +7,8 @@ var questions_container: VBoxContainer
 var questions_pre: Dictionary
 var current_focused_line_edit: LineEdit = null  # Track focused LineEdit
 
+
+
 var questions: Dictionary = {}:
 	set(value):
 		questions = value

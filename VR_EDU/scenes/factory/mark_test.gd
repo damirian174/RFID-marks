@@ -44,6 +44,13 @@ var sticker_in_hand: Sticker
 ## Указать на сканнер
 @onready var connector_marker: Marker3D = $Scanner/ScanArea/ConnectorMarker
 
+
+## Бэйдж который нужно тепнуть
+const BAGE = preload("res://scenes/factory/bage.tscn")
+@onready var bage_spawn_marker: Marker3D = $bageSpawnMarker
+var bage_teleported: bool = false
+
+
 @onready var stickers: Array[Node] = $Stikers.get_children()
 @onready var preferred_sticker: Sticker = $Stikers/Sticker
 
@@ -78,7 +85,12 @@ var current_stage: StageManager.MARK = StageManager.MARK.NOTHING:
 			StageManager.MARK.ATTACH_STICKER:
 				arrow_connecter.node_a = preferred_sticker.get_child(0)
 			StageManager.MARK.PRESS_MARK_BUTTON:
-				
+				if not bage_teleported:
+					var bage: XRToolsPickable = BAGE.instantiate()
+					bage.global_transform = bage_spawn_marker.global_transform
+					add_child(bage)
+					bage.get_node("Dissolver").dissolve()
+					bage_teleported = true
 				if (not app.auth) and (keyboard_hinted == 1):
 					arrow_connecter.node_a = null
 					arrow_connecter.node_b = null
