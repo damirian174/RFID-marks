@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://10uk0qrxav2v"]
+[gd_scene load_steps=89 format=4 uid="uid://10uk0qrxav2v"]
 
 [ext_resource type="Script" uid="uid://dckrjdb0kk36" path="res://scenes/factory/mark_test.gd" id="1_6bk1i"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_d4xff"]
@@ -22,10 +22,13 @@
 [ext_resource type="PackedScene" uid="uid://cme66uldrjl2i" path="res://addons/godot-xr-tools/interactables/interactable_area_button.tscn" id="18_wij2i"]
 [ext_resource type="Script" uid="uid://b5kvc2tniqt5v" path="res://scenes/sticker.gd" id="19_s0p34"]
 [ext_resource type="Script" uid="uid://bhx1vwaobaghq" path="res://scenes/factory/scanner.gd" id="21_cdtb3"]
+[ext_resource type="Script" uid="uid://bkmrixbjkhws" path="res://scenes/factory/press_sound_controller.gd" id="21_hfwuk"]
 [ext_resource type="Shader" uid="uid://d0s148ujh83q8" path="res://resources/mark_test.gdshader" id="21_s0p34"]
 [ext_resource type="PackedScene" uid="uid://cje3k6iud1wdw" path="res://scenes/factory/arrow_marker.tscn" id="22_s0p34"]
+[ext_resource type="AudioStream" uid="uid://bxiiu35h73sx2" path="res://resources/sounds/press.mp3" id="22_vfyyc"]
 [ext_resource type="Script" uid="uid://b0hmerutq8q8j" path="res://scenes/factory/arrow_marker.gd" id="23_2lox4"]
 [ext_resource type="PackedScene" uid="uid://dwcxei7htsnuh" path="res://scenes/factory/objects_arrow_connecter.tscn" id="23_fnvjc"]
+[ext_resource type="AudioStream" uid="uid://bpeut5hc8u46" path="res://resources/sounds/unpress.mp3" id="23_rjswn"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gcktq"]
 frequency = 0.0338
@@ -581,7 +584,7 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_rhivs")
 
 [node name="Computer" parent="." instance=ExtResource("16_talq1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.255534, 2.24398, -4.70619)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.436397, 2.34108, -4.70619)
 
 [node name="MarkMarker" type="Marker3D" parent="Computer"]
 transform = Transform3D(0.34202, -0.664463, -0.664463, 0, 0.707107, -0.707107, 0.939693, 0.241845, 0.241845, -0.889964, -0.359211, 0)
@@ -675,7 +678,7 @@ metadata/_custom_type_script = "uid://b5kvc2tniqt5v"
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Button" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15552, 1.43452, -4.73818)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33638, 1.35496, -4.57947)
 
 [node name="ButtonBase" type="MeshInstance3D" parent="Button"]
 mesh = SubResource("BoxMesh_6bk1i")
@@ -690,6 +693,17 @@ displacement = Vector3(0, 0, -0.02)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Button/InteractableAreaButton"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.422454)
 shape = SubResource("BoxShape3D_snqj2")
+
+[node name="PressSoundController" type="Node" parent="Button/InteractableAreaButton"]
+script = ExtResource("21_hfwuk")
+
+[node name="PressSound" type="AudioStreamPlayer3D" parent="Button/InteractableAreaButton"]
+stream = ExtResource("22_vfyyc")
+volume_db = -15.0
+
+[node name="UnPressSound" type="AudioStreamPlayer3D" parent="Button/InteractableAreaButton"]
+stream = ExtResource("23_rjswn")
+volume_db = -15.0
 
 [node name="ButtonMesh" type="MeshInstance3D" parent="Button"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.0862784)
@@ -781,5 +795,7 @@ gizmo_extents = 1.0
 [connection signal="body_exited" from="ConeyorBelt/GetBoxArea" to="." method="_on_get_box_area_body_exited"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="." method="_on_interactable_area_button_button_pressed"]
 [connection signal="button_pressed" from="Button/InteractableAreaButton" to="ConeyorBelt" method="_on_interactable_area_button_button_pressed"]
+[connection signal="button_pressed" from="Button/InteractableAreaButton" to="Button/InteractableAreaButton/PressSoundController" method="_on_interactable_area_button_button_pressed"]
+[connection signal="button_released" from="Button/InteractableAreaButton" to="Button/InteractableAreaButton/PressSoundController" method="_on_interactable_area_button_button_released"]
 [connection signal="body_entered" from="Scanner/ScanArea" to="Scanner" method="_on_scan_area_body_entered"]
 [connection signal="body_entered" from="StartTest" to="." method="_on_start_test_body_entered"]
