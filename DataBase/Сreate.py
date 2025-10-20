@@ -112,6 +112,42 @@ async def create_and_insert_data():
             );
         """)
 
+        # Таблица для информации о компании (whitepaper)
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS company_info (
+                id SERIAL PRIMARY KEY,
+                company_name VARCHAR(255) NOT NULL,
+                inn VARCHAR(12) NOT NULL UNIQUE,
+                logo_path VARCHAR(500) DEFAULT NULL,
+                description TEXT DEFAULT NULL,
+                address TEXT DEFAULT NULL,
+                phone VARCHAR(50) DEFAULT NULL,
+                email VARCHAR(100) DEFAULT NULL,
+                website VARCHAR(255) DEFAULT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+
+        # Таблица для производственных продуктов (whitepaper)
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS products (
+                id SERIAL PRIMARY KEY,
+                product_name VARCHAR(255) NOT NULL,
+                product_code VARCHAR(100) NOT NULL UNIQUE,
+                category VARCHAR(100) NOT NULL,
+                description TEXT DEFAULT NULL,
+                specifications JSONB DEFAULT NULL,
+                price DECIMAL(10,2) DEFAULT NULL,
+                currency VARCHAR(3) DEFAULT 'RUB',
+                production_capacity INTEGER DEFAULT NULL,
+                unit_of_measure VARCHAR(50) DEFAULT 'шт',
+                is_active BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+
         print("База данных и таблицы успешно созданы.")
     except Exception as e:
         print(f"Ошибка при создании базы данных и таблиц: {e}")

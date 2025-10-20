@@ -37,6 +37,17 @@ from database import (
     get_monthly_production_stats,
     get_defects_by_stage,
 )
+from whitepaper_functions import (
+    add_company_info,
+    get_company_info,
+    update_company_info,
+    delete_company_info,
+    add_product,
+    get_products,
+    update_product,
+    delete_product,
+    get_product_categories,
+)
 
 # Логгер
 logger = logging.getLogger('server')
@@ -286,6 +297,160 @@ async def send_logs_to_usb():
     except Exception as e:
         logger.error(f"Ошибка при отправке логов: {e}")
         raise HTTPException(status_code=500, detail=f"Ошибка при отправке логов: {e}")
+
+
+# ====== API endpoints для whitepaper ======
+
+# Информация о компании
+@app.post('/company')
+async def create_company(
+    company_name: str = Body(...),
+    inn: str = Body(...),
+    logo_path: Optional[str] = Body(None),
+    description: Optional[str] = Body(None),
+    address: Optional[str] = Body(None),
+    phone: Optional[str] = Body(None),
+    email: Optional[str] = Body(None),
+    website: Optional[str] = Body(None),
+    pool=Depends(get_pool)
+):
+    res = await add_company_info(pool, company_name, inn, logo_path, description, address, phone, email, website)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+@app.get('/company')
+async def get_company(inn: Optional[str] = Query(None), pool=Depends(get_pool)):
+    data = await get_company_info(pool, inn)
+    return {"status": "ok", "data": serialize_record(data) if data else []}
+
+
+@app.put('/company/{inn}')
+async def update_company(
+    inn: str,
+    company_name: Optional[str] = Body(None),
+    logo_path: Optional[str] = Body(None),
+    description: Optional[str] = Body(None),
+    address: Optional[str] = Body(None),
+    phone: Optional[str] = Body(None),
+    email: Optional[str] = Body(None),
+    website: Optional[str] = Body(None),
+    pool=Depends(get_pool)
+):
+    kwargs = {}
+    if company_name is not None:
+        kwargs['company_name'] = company_name
+    if logo_path is not None:
+        kwargs['logo_path'] = logo_path
+    if description is not None:
+        kwargs['description'] = description
+    if address is not None:
+        kwargs['address'] = address
+    if phone is not None:
+        kwargs['phone'] = phone
+    if email is not None:
+        kwargs['email'] = email
+    if website is not None:
+        kwargs['website'] = website
+    
+    res = await update_company_info(pool, inn, **kwargs)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+@app.delete('/company/{inn}')
+async def delete_company(inn: str, pool=Depends(get_pool)):
+    res = await delete_company_info(pool, inn)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+# Продукты
+@app.post('/products')
+async def create_product(
+    product_name: str = Body(...),
+    product_code: str = Body(...),
+    category: str = Body(...),
+    description: Optional[str] = Body(None),
+    specifications: Optional[dict] = Body(None),
+    price: Optional[float] = Body(None),
+    currency: str = Body('RUB'),
+    production_capacity: Optional[int] = Body(None),
+    unit_of_measure: str = Body('шт'),
+    pool=Depends(get_pool)
+):
+    res = await add_product(pool, product_name, product_code, category, description, specifications, price, currency, production_capacity, unit_of_measure)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+@app.get('/products')
+async def get_products_list(
+    product_code: Optional[str] = Query(None),
+    category: Optional[str] = Query(None),
+    is_active: Optional[bool] = Query(None),
+    pool=Depends(get_pool)
+):
+    data = await get_products(pool, product_code, category, is_active)
+    return {"status": "ok", "data": serialize_record(data) if data else []}
+
+
+@app.put('/products/{product_code}')
+async def update_product_info(
+    product_code: str,
+    product_name: Optional[str] = Body(None),
+    category: Optional[str] = Body(None),
+    description: Optional[str] = Body(None),
+    specifications: Optional[dict] = Body(None),
+    price: Optional[float] = Body(None),
+    currency: Optional[str] = Body(None),
+    production_capacity: Optional[int] = Body(None),
+    unit_of_measure: Optional[str] = Body(None),
+    is_active: Optional[bool] = Body(None),
+    pool=Depends(get_pool)
+):
+    kwargs = {}
+    if product_name is not None:
+        kwargs['product_name'] = product_name
+    if category is not None:
+        kwargs['category'] = category
+    if description is not None:
+        kwargs['description'] = description
+    if specifications is not None:
+        kwargs['specifications'] = specifications
+    if price is not None:
+        kwargs['price'] = price
+    if currency is not None:
+        kwargs['currency'] = currency
+    if production_capacity is not None:
+        kwargs['production_capacity'] = production_capacity
+    if unit_of_measure is not None:
+        kwargs['unit_of_measure'] = unit_of_measure
+    if is_active is not None:
+        kwargs['is_active'] = is_active
+    
+    res = await update_product(pool, product_code, **kwargs)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+@app.delete('/products/{product_code}')
+async def delete_product_info(product_code: str, pool=Depends(get_pool)):
+    res = await delete_product(pool, product_code)
+    if res == 'OK':
+        return {"status": "ok"}
+    raise HTTPException(status_code=400, detail=str(res))
+
+
+@app.get('/products/categories')
+async def get_categories(pool=Depends(get_pool)):
+    data = await get_product_categories(pool)
+    return {"status": "ok", "data": data if data else []}
 
 
 if __name__ == '__main__':
